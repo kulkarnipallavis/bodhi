@@ -20,8 +20,6 @@ const writeUserData = (uid, name, location) => {
   });
 }
 
-
-
 const updateUserData = (name, location) => {
   // A request entry.
   const newUserKey = database.ref().child('Users').push().key;
@@ -45,6 +43,7 @@ const updateUserData = (name, location) => {
 
   return database.ref().update(updates);
 }
+
 
 
 function updateRequestData(uid, title, desc, tag, location) {
