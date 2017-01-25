@@ -1,7 +1,7 @@
 {
-  "name": "__BONES_NEEDS_A_NAME__",
+  "name": "bohdi",
   "version": "0.0.1",
-  "description": "A happy little skeleton.",
+  "description": "A progressive web app for doing good deeds in your community, built with React.",
   "main": "index.js",
   "scripts": {
     "test": "check-node-version --node '>= 6.7.0' && bin/setup && mocha --compilers js:babel-register app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
@@ -16,38 +16,33 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/queerviolet/bones.git"
+    "url": "https://github.com/kulkarnipallavis/bodhi.git"
   },
   "keywords": [
     "react",
     "redux",
     "skeleton"
   ],
-  "author": "Ashi Krishnan <me@ashi.works>",
+  "authors": "Bohdi by: Ya-wen Chang, Mariana Templin, Chloe Rice, and Anna Brown; Skeleton by: Ashi Krishnan <me@ashi.works>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/queerviolet/bones/issues"
+    "url": "https://github.com/kulkarnipallavis/bodhi.git/issues"
   },
-  "homepage": "https://github.com/queerviolet/bones#readme",
+  "homepage": "https://github.com/kulkarnipallavis/bodhi.git#readme  ",
   "dependencies": {
     "axios": "^0.15.2",
     "babel-preset-stage-2": "^6.18.0",
     "bcryptjs": "^2.4.0",
-    "body-parser": "^1.15.2",
     "chai-enzyme": "^0.5.2",
     "chalk": "^1.1.3",
     "check-node-version": "^1.1.2",
-    "cookie-session": "^2.0.0-alpha.1",
     "enzyme": "^2.5.1",
+<<<<<<< HEAD
     "express": "^4.14.0",
     "firebase": "^3.6.7",
+=======
+>>>>>>> 33e66494f87de76423c6eba05e907f91b68a8c5c
     "nodemon": "^1.11.0",
-    "passport": "^0.3.2",
-    "passport-facebook": "^2.1.1",
-    "passport-github2": "^0.1.10",
-    "passport-google-oauth": "^1.0.0",
-    "passport-local": "^1.0.0",
-    "pg": "^6.1.0",
     "pretty-error": "^2.0.2",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
@@ -56,7 +51,6 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.7.0",
     "redux-thunk": "^2.1.0",
-    "sequelize": "^3.24.6",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0"
   },
