@@ -9,7 +9,7 @@
     "build": "check-node-version --node '>= 6.7.0' && bin/setup && webpack",
     "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
     "build-branch": "bin/build-branch.sh",
-    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js",
+    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js"
   },
   "repository": {
     "type": "git",
@@ -53,6 +53,7 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "chai": "^3.5.0",
+    "lighthouse": "^1.4.1",
     "mocha": "^3.1.2",
     "supertest": "^2.0.1",
     "supertest-as-promised": "^4.0.1",
