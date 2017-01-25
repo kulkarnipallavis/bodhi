@@ -10,7 +10,7 @@ return database.ref('/Users').once('value').then(function(snapshot) {
 
 function writeUserData(userId, name, email, badges, helper_tags, imageUrl){
   database.ref('users/' + userId).set({
-     username: name,
+    username: name,
     email: email,
     badges: badges,
     helper_tags : helper_tags,
@@ -41,7 +41,7 @@ function updateUserData(userId, name, email, badges, helper_tags, imageUrl) {
 }
 
 
-function updateRequestData(userId, title, desc, tag) {
+function updateReequestData(userId, title, desc, tag) {
   // A request entry.
   var requestData = {
   	userId : userId,
