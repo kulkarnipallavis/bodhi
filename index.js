@@ -54,6 +54,3 @@ module.exports = {
   package: pkg,
   env,
 }
-
-const dataRead = require("./firebase/database");
-console.log(dataRead.readDataOnce());
