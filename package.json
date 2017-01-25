@@ -10,7 +10,8 @@
     "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
     "build-branch": "bin/build-branch.sh",
     "deploy-heroku": "bin/deploy-heroku.sh",
-    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js",
+    "start1": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js",
+    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon index.js",
     "seed": "node db/seed.js"
   },
   "repository": {
@@ -39,6 +40,7 @@
     "cookie-session": "^2.0.0-alpha.1",
     "enzyme": "^2.5.1",
     "express": "^4.14.0",
+    "firebase": "^3.6.7",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
