@@ -3,39 +3,45 @@ var database = require("./firebase_config").database;
 const readDataOnce = () => {
 
 return database.ref('/Users').once('value').then(function(snapshot) {
-  console.log(snapshot.val());
+  // console.log(snapshot.val());
   return snapshot.val();
 });
 }
 
-function writeUserData(userId, name, email, badges, helper_tags, imageUrl){
-  database.ref('users/' + userId).set({
-     username: name,
-    email: email,
-    badges: badges,
-    helper_tags : helper_tags,
-    profile_picture : imageUrl
+const writeUserData = (userId, name, location) => {
+  database.ref('Users/' + userId).set({
+    uid: userId,
+    username: name,
+    // email: email,
+    // badges: badges,
+    // helper_tags : helper_tags,
+    // profile_picture : imageUrl
+    location : location
   });
 }
 
 
 
-function updateUserData(userId, name, email, badges, helper_tags, imageUrl) {
+const updateUserData = (name, location) => {
   // A request entry.
-  var userData = {
+  const newUserKey = database.ref().child('Users').push().key;
+  console.log("newUserKey", newUserKey);
+
+  const userData = {
+    uid : newUserKey,
     username: name,
-    email: email,
-    badges: badges,
-    helper_tags : helper_tags,
-    profile_picture : imageUrl
+    // email: email,
+    // badges: badges,
+    // helper_tags : helper_tags,
+    // profile_picture : imageUrl
+    location : location
   };
 
   // Get a key for a new request.
-  var newUserKey = database.ref().child('users').push().key;
-
+ 
   // Write the new user data in the users list.
   var updates = {};
-  updates['/users/' + newUserKey] = userData;
+  updates['/Users/' + newUserKey] = userData;
 
   return database.ref().update(updates);
 }
@@ -51,18 +57,20 @@ function updateRequestData(userId, title, desc, tag) {
   };
 
   // Get a key for a new request.
-  var newRequestKey = database.ref().child('requests').push().key;
+  var newRequestKey = database.ref().child('Requests').push().key;
 
   // Write the new requests data simultaneously in the requests list and the user's request list.
   var updates = {};
-  updates['/users/user-requests/' + newRequestKey] = requestData;
-  updates['/requests/' + newRequestKey + '/' + userId] = requestData;
+  updates['/Users/' + userId + '/requests/' + newRequestKey] = requestData;
+  updates['/Requests/' + newRequestKey + '/users/' + userId] = requestData;
 
   return firebase.database().ref().update(updates);
 }
 
 module.exports = {
-  readDataOnce : readDataOnce
+  readDataOnce : readDataOnce,
+  writeUserData : writeUserData,
+  updateUserData : updateUserData
 }
 
 
