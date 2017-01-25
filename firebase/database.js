@@ -47,13 +47,14 @@ const updateUserData = (name, location) => {
 }
 
 
-function updateRequestData(uid, title, desc, tag) {
+function updateRequestData(uid, title, desc, tag, location) {
   // A request entry.
   var requestData = {
   	uid : uid,
     title: title,
     desc: desc,
-    tag : tag
+    tag : tag,
+    location: location
   };
 
   // Get a key for a new request.
