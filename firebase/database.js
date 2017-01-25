@@ -8,9 +8,9 @@ return database.ref('/Users').once('value').then(function(snapshot) {
 });
 }
 
-const writeUserData = (userId, name, location) => {
-  database.ref('Users/' + userId).set({
-    uid: userId,
+const writeUserData = (uid, name, location) => {
+  database.ref('Users/' + uid).set({
+    uid: uid,
     username: name,
     // email: email,
     // badges: badges,
@@ -47,10 +47,10 @@ const updateUserData = (name, location) => {
 }
 
 
-function updateRequestData(userId, title, desc, tag) {
+function updateRequestData(uid, title, desc, tag) {
   // A request entry.
   var requestData = {
-  	userId : userId,
+  	uid : uid,
     title: title,
     desc: desc,
     tag : tag
@@ -61,16 +61,17 @@ function updateRequestData(userId, title, desc, tag) {
 
   // Write the new requests data simultaneously in the requests list and the user's request list.
   var updates = {};
-  updates['/Users/' + userId + '/requests/' + newRequestKey] = requestData;
-  updates['/Requests/' + newRequestKey + '/users/' + userId] = requestData;
+  updates['/Users/' + uid + '/requests/requestId'] = newRequestKey;
+  updates['/Requests/' + newRequestKey] = requestData;
 
-  return firebase.database().ref().update(updates);
+  return database.ref().update(updates);
 }
 
 module.exports = {
   readDataOnce : readDataOnce,
   writeUserData : writeUserData,
-  updateUserData : updateUserData
+  updateUserData : updateUserData,
+  updateRequestData: updateRequestData
 }
 
 
