@@ -9,7 +9,9 @@
     "build": "check-node-version --node '>= 6.7.0' && bin/setup && webpack",
     "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
     "build-branch": "bin/build-branch.sh",
-    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js"
+    "start1": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js",
+    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon index.js",
+    "seed": "node db/seed.js"
   },
   "repository": {
     "type": "git",
@@ -35,10 +37,14 @@
     "check-node-version": "^1.1.2",
     "enzyme": "^2.5.1",
     "material-ui": "^0.16.7",
+    "express": "^4.14.0",
+    "firebase": "^3.6.7",
+    "firebase-tools": "^3.2.1",
     "nodemon": "^1.11.0",
     "pretty-error": "^2.0.2",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-google-maps": "^6.0.1",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^2.0.1",
