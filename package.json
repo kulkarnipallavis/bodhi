@@ -1,5 +1,5 @@
 {
-  "name": "bohdi",
+  "name": "bodhi",
   "version": "0.0.1",
   "description": "A progressive web app for doing good deeds in your community, built with React.",
   "main": "index.js",
@@ -9,7 +9,6 @@
     "build": "check-node-version --node '>= 6.7.0' && bin/setup && webpack",
     "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
     "build-branch": "bin/build-branch.sh",
-    "deploy-heroku": "bin/deploy-heroku.sh",
     "start1": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js",
     "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon index.js",
     "seed": "node firebase/seed.js"
@@ -21,14 +20,15 @@
   "keywords": [
     "react",
     "redux",
-    "skeleton"
+    "pwa",
+    "firebase"
   ],
   "authors": "Bohdi by: Ya-wen Chang, Mariana Templin, Chloe Rice, and Anna Brown; Skeleton by: Ashi Krishnan <me@ashi.works>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kulkarnipallavis/bodhi.git/issues"
   },
-  "homepage": "https://github.com/kulkarnipallavis/bodhi.git#readme  ",
+  "homepage": "https://github.com/kulkarnipallavis/bodhi.git#readme",
   "dependencies": {
     "axios": "^0.15.2",
     "babel-preset-stage-2": "^6.18.0",
@@ -40,6 +40,8 @@
     "express": "^4.14.0",
     "firebase": "^3.6.7",
     "firebase-tools": "^3.2.1",
+    "material-ui": "^0.16.7",
+    "material-ui-chip-input": "^0.12.1",
     "nodemon": "^1.11.0",
     "pretty-error": "^2.0.2",
     "react": "^15.3.2",
@@ -47,6 +49,7 @@
     "react-google-maps": "^6.0.1",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.0",
     "redux-thunk": "^2.1.0",
@@ -60,6 +63,7 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "chai": "^3.5.0",
+    "lighthouse": "^1.4.1",
     "mocha": "^3.1.2",
     "supertest": "^2.0.1",
     "supertest-as-promised": "^4.0.1",

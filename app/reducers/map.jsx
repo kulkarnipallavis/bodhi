@@ -8,7 +8,7 @@ let initialState = {
 const reducer = (state=initialState, action) => {
   switch(action.type) {
   case GET_ALL_MARKERS:
-    return {markers: action.markers, selectedMarker: state.selectedMarker} 
+    return {markers: action.markers, selectedMarker: state.selectedMarker}
   }
   return state
 }
@@ -26,10 +26,10 @@ export const getSelectedMarker = (marker) => ({
 })
 
 //getAllMarkers, getSelectedMarker, addMarker, removeMarker
-export const getMarkers = () => 
-  dispatch => 
+export const getMarkers = () =>
+  dispatch =>
     firebase.database().ref('Requests')
-    .on('value', snapshot => 
+    .on('value', snapshot =>
       dispatch(getAllMarkers(snapshot.val()))
   )
 
