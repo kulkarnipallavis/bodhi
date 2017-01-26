@@ -3,20 +3,14 @@ var database = require("./firebase_config").database;
 const readDataOnce = () => {
 
 return database.ref('/Users').once('value').then(function(snapshot) {
-  // console.log(snapshot.val());
   return snapshot.val();
 });
 }
-
 
 const writeUserData = (uid, name, location) => {
   database.ref('Users/' + uid).set({
     uid: uid,
     username: name,
-    // email: email,
-    // badges: badges,
-    // helper_tags : helper_tags,
-    // profile_picture : imageUrl
     location : location
   });
 }
@@ -26,28 +20,19 @@ const writeUserData = (uid, name, location) => {
 const updateUserData = (name, location) => {
   // A request entry.
   const newUserKey = database.ref().child('Users').push().key;
-  console.log("newUserKey", newUserKey);
-
+ 
   const userData = {
     uid : newUserKey,
     username: name,
-    // email: email,
-    // badges: badges,
-    // helper_tags : helper_tags,
-    // profile_picture : imageUrl
     location : location
   };
 
-  // Get a key for a new request.
- 
   // Write the new user data in the users list.
   var updates = {};
   updates['/Users/' + newUserKey] = userData;
 
   return database.ref().update(updates);
 }
-
-
 
 function updateRequestData(uid, title, desc, tag, location) {
   // A request entry.
