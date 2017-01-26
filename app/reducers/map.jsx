@@ -29,8 +29,14 @@ export const getSelectedMarker = (marker) => ({
 export const getMarkers = () => 
   dispatch => 
     firebase.database().ref('Requests')
-    .on('value', snapshot => 
-      dispatch(getAllMarkers(snapshot.val()))
-  )
+    .on('value', snapshot => { 
+      let requestObjects = snapshot.val()
+      let markers = [];
+
+      for (let object in requestObjects) {
+        markers.push({location: requestObjects[object].location, tag: requestObjects[object].tag, title: requestObjects[object].title})
+      }
+      dispatch(getAllMarkers(markers))
+  })
 
 export default reducer
