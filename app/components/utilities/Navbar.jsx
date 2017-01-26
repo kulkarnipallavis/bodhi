@@ -17,8 +17,8 @@ const Navbar = () => (
           iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-          <Link to="/map"><MenuItem primaryText="Offer Help"/></Link>
-          <Link to="/request"><MenuItem primaryText="Request Help"/></Link>
+          <Link to="/map"><MenuItem primaryText="Who's in Need?"/></Link>
+          <Link to="/request"><MenuItem primaryText="I Need Help!"/></Link>
         </IconMenu>
       }/>
   </div>

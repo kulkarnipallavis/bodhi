@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
-import { addRequest } from '../reducers/requestReducer.jsx'
+import { addRequest } from '../reducers/request-actions.jsx'
 import FlatButton from 'material-ui/FlatButton'
-
-// import { updateRequestData } from '../../firebase/database'
 
 class Request extends Component {
 
@@ -16,57 +14,49 @@ class Request extends Component {
       title: '',
       description: '',
       tag: '',
-      location: {
-        latitude: null,
-        longitude: null
-      }
+      location: {}
     }
 
     this.handleChangeTitle = this.handleChangeTitle.bind(this)
     this.handleChangeDesc = this.handleChangeDesc.bind(this)
     this.handleChangeTag = this.handleChangeTag.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.grabUserLocation = this.grabUserLocation.bind(this)
+  }
+
+  componentDidMount() {
+    this.grabUserLocation()
+  }
+
+  grabUserLocation() {
+    navigator.geolocation.watchPosition(Position => {
+      this.setState({
+        location: {
+          latitude: Position.coords.latitude,
+          longitude: Position.coords.longitude }
+      })
+    })
   }
 
   handleChangeTitle(event) {
     this.setState({title: event.target.value})
-    //console.log("state", this.state)
   }
 
   handleChangeDesc(event) {
     this.setState({description: event.target.value})
-    //console.log("state", this.state)
   }
 
   handleChangeTag(event) {
     this.setState({tag: event.target.value})
-    //console.log("state", this.state)
   }
 
   handleSubmit(event){
-    event.preventDefault();
-    
-    //console.log("location", location)
-    console.log(Object.assign({}, this.state, {location}));
-    //addRequest(Object.assign({location}, this.state));
-  }
-
-  componentDidMount(){
-   navigator.geolocation.getCurrentPosition(Position => {
-      return { latitude: Position.coords.latitude, longitude: Position.coords.longitude }
-    })
-   .then(location => {
-    console.log("componentdidmount loc", location)
-   })
-    //console.log(location);
-    //this.setState({location: location}) 
+    event.preventDefault()
+    this.props.handleSubmitRequest(this.state)
   }
 
   render() {
-    var location = navigator.geolocation.getCurrentPosition(Position => {
-      return { latitude: Position.coords.latitude, longitude: Position.coords.longitude }
-    })
-    console.log("loc in render", location);
+
     return (
       <div>
         <TextField
@@ -90,10 +80,14 @@ class Request extends Component {
           onChange={this.handleChangeDesc}
           errorText="Please describe the help you are requesting."/>
         <br />
-        <FlatButton label="submitRequest" onClick={this.handleSubmit}/>
+        <FlatButton label="Submit Request" onClick={this.handleSubmit}/>
     </div>
     )
   }
 }
 
-export default connect(state => ({}))(Request)
+const mapDispatch = (dispatch) => ({
+  handleSubmitRequest: (request) => dispatch(addRequest(request))
+})
+
+export default connect(state => ({}), mapDispatch)(Request)
