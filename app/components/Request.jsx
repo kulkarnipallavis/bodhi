@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import { addRequest } from '../reducers/request-actions.jsx'
-import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 
 class Request extends Component {
 
@@ -58,7 +58,7 @@ class Request extends Component {
   render() {
 
     return (
-      <div>
+      <form>
         <TextField
           id="title"
           hintText="Title"
@@ -80,10 +80,18 @@ class Request extends Component {
           onChange={this.handleChangeDesc}
           errorText="Please describe the help you are requesting."/>
         <br />
-        <FlatButton label="Submit Request" onClick={this.handleSubmit}/>
-    </div>
+        <RaisedButton
+          labelColor="white"
+          backgroundColor="#607D8B"
+          label="Submit Request"
+          onClick={this.handleSubmit}/>
+      </form>
     )
   }
+}
+
+Request.propTypes = {
+  handleSubmitRequest: PropTypes.func.isRequired
 }
 
 const mapDispatch = (dispatch) => ({

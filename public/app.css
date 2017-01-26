@@ -50,7 +50,7 @@ table {
 /*____________________________________________________________*/
 /* DO NOT EDIT ABOVE ^THIS LINE, CSS RESET!!! */
 
-/* NAVBAR */
+/* APP */
 a {
   text-decoration: none !important;
 }
@@ -64,4 +64,10 @@ a {
   color: white;
   margin: 0;
   width: 100px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 25px;
 }

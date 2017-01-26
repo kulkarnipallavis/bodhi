@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
@@ -11,11 +11,17 @@ class App extends Component {
       <MuiThemeProvider muitheme={Theme}>
         <div>
           <Navbar />
-          { this.props.children && React.cloneElement(this.props.children, this.props) }
+          <div className="container">
+            { this.props.children && React.cloneElement(this.props.children, this.props) }
+          </div>
         </div>
       </MuiThemeProvider>
     )
   }
+}
+
+App.propTypes = {
+  children: PropTypes.node
 }
 
 const mapState = (state, ownProps) => {
