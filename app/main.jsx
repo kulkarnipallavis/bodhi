@@ -20,7 +20,7 @@ render(
     <Router history={hashHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
         <Route path="/map" component={MapContainer} />
-        <Route path="/request" compent={Request}/>
+        <Route path="/request" component={Request}/>
       </Route>
     </Router>
   </Provider>,

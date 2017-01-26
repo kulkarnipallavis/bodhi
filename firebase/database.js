@@ -3,42 +3,34 @@ var database = require("./firebase_config").database;
 const readDataOnce = () => {
 
 return database.ref('/Users').once('value').then(function(snapshot) {
-  // console.log(snapshot.val());
   return snapshot.val();
 });
 }
 
+// DONT USE! THIS RESETS THE DATABASE!!!
 const writeUserData = (uid, name, location) => {
   database.ref('Users/' + uid).set({
     uid: uid,
     username: name,
-    // email: email,
-    // badges: badges,
-    // helper_tags : helper_tags,
-    // profile_picture : imageUrl
     location : location
   });
 }
 
-
-
 const updateUserData = (name, location) => {
   // A request entry.
   const newUserKey = database.ref().child('Users').push().key;
-  console.log("newUserKey", newUserKey);
-
+ 
   const userData = {
     uid : newUserKey,
     username: name,
-    // email: email,
-    // badges: badges,
-    // helper_tags : helper_tags,
-    // profile_picture : imageUrl
     location : location
   };
 
+<<<<<<< HEAD
   // Get a key for a new request.
- 
+
+=======
+>>>>>>> a44a9d1a7a164014c9cfe474a9563ba97879fb1a
   // Write the new user data in the users list.
   var updates = {};
   updates['/Users/' + newUserKey] = userData;
@@ -46,11 +38,15 @@ const updateUserData = (name, location) => {
   return database.ref().update(updates);
 }
 
+<<<<<<< HEAD
 
+function updateRequestData(userId, title, desc, tag, location) {
+=======
 function updateRequestData(uid, title, desc, tag, location) {
+>>>>>>> a44a9d1a7a164014c9cfe474a9563ba97879fb1a
   // A request entry.
   var requestData = {
-  	uid : uid,
+    uid : userId,
     title: title,
     desc: desc,
     tag : tag,
@@ -74,5 +70,3 @@ module.exports = {
   updateUserData : updateUserData,
   updateRequestData: updateRequestData
 }
-
-

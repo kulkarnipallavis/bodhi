@@ -11,5 +11,4 @@ public/bundle.js.map
 # NPM errors
 npm-debug.log
 
-#Firebase Config
-firebase_config.js
+.DS_Store
