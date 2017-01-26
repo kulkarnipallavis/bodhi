@@ -33,11 +33,4 @@ export const getMarkers = () =>
       dispatch(getAllMarkers(snapshot.val()))
   )
 
-
-// export const selectMarker = () => 
-//   dispatch => 
-//    var latLng = {event.lat, event.lng}
-//    selectedMarker = latLng
-//   )
-
 export default reducer
