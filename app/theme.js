@@ -1,4 +1,4 @@
-import { tealA400 } from 'material-ui/styles/colors'
+import { tealA700 } from 'material-ui/styles/colors'
 import spacing from 'material-ui/styles/spacing'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 

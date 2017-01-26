@@ -13,25 +13,33 @@ class Request extends Component {
       uid: '1',
       title: '',
       description: '',
-      tag: '',
-      location: navigator.geolocation.getCurrentPosition(Position => ({ lat: Position.coords.latitude, long: Position.coords.longitude }))
+      tag: ''
     }
 
     this.handleChangeTitle = this.handleChangeTitle.bind(this)
     this.handleChangeDesc = this.handleChangeDesc.bind(this)
     this.handleChangeTag = this.handleChangeTag.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChangeTitle(event) {
     this.setState({title: event.target.value})
+    console.log("state", this.state)
   }
 
   handleChangeDesc(event) {
     this.setState({description: event.target.value})
+    console.log("state", this.state)
   }
 
   handleChangeTag(event) {
     this.setState({tag: event.target.value})
+    console.log("state", this.state)
+  }
+
+  handleSubmit(event){
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(Position => ({ latitude: Position.coords.latitude, longitude: Position.coords.longitude }))
   }
 
   render() {
