@@ -9,6 +9,7 @@ import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import MapContainer from './components/MapContainer'
+// import firebase, {database} from '../firebase.jsx';
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -22,13 +23,17 @@ const ExampleApp = connect(
     </div>
 )
 
+const onMapEnter = () => {
+  // TODO: Move getMarkers dispatch in here.
+}
+
 render (
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" component={ExampleApp}>
         <IndexRedirect to="/jokes" />
         <Route path="/jokes" component={Jokes} />
-        <Route path="/map" component={MapContainer} />
+        <Route path="/map" component={MapContainer} onEnter={onMapEnter}/>
       </Route>
     </Router>
   </Provider>,

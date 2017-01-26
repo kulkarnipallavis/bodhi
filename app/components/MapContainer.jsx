@@ -17,7 +17,7 @@ export class MapContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.getMarkers())
+    this.props.getMarkers()
   }
 
   handleMapLoad(map) {
