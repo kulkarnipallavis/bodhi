@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
 
-const rootReducer = combineReducers({
+import requestReducer from './requestReducer'
 
+const rootReducer = combineReducers({
+  requests: requestReducer
 })
 
 export default rootReducer

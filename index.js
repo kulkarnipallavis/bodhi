@@ -1,4 +1,4 @@
  'use strict'
 
-const dataRead = require("./firebase/database");
+const dataRead = require('./firebase/database');
 console.log(dataRead.readDataOnce());

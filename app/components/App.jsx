@@ -1,28 +1,25 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import MUIThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import Theme from '../theme'
-import Navbar from '.utilities/Navbar'
+import Navbar from './utilities/Navbar'
 
 const App = (props) => (
-  <MUIThemeProvider muitheme={Theme}>
-    <Navbar />
-    { props.children && React.cloneElement(props.children, props) }
-  </MUIThemeProvider>
+  <MuiThemeProvider muitheme={Theme}>
+    <div>
+      <Navbar />
+      { props.children && React.cloneElement(props.children, props) }
+    </div>
+  </MuiThemeProvider>
 )
 
 App.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-const mapState = (state) => ({
-
+const mapState = (state, ownProps) => ({
+  children: ownProps.children
 })
 
-const mapDispatch = (dispatch) => ({
-
-})
-
-export default connect(mapState, mapDispatch)(App)
+export default connect(mapState)(App)

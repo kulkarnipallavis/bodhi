@@ -12,4 +12,4 @@ public/bundle.js.map
 npm-debug.log
 
 #Firebase Config
-firebase/firebase_config.js
+firebase_config.js

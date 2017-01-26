@@ -1,9 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import MapComponent from './MapComponent'
-import _ from 'lodash'
 
-
-export default class MapContainer extends React.Component {
+export default class MapContainer extends Component {
 
   constructor(props) {
     super(props)
@@ -11,23 +9,19 @@ export default class MapContainer extends React.Component {
     this.handleMapLoad = this.handleMapLoad.bind(this)
   }
 
-
   handleMapLoad(map) {
-    this._mapComponent = map;
-    if (map) {
-      console.log(map.getZoom());
-    }
+    this._mapComponent = map
+    if (map) map.getZoom()
   }
-  render() {
 
-    return(
-        <div style={{ height: '100%' }}>
-        <MapComponent
-          containerElement={  <div style={{ height: '100vh', width: 'auto '}} />  }
-          mapElement={  <div style={{ height: '100vh', width: '100vw '}} />  }
-          onMapLoad={this.handleMapLoad}
-        />
-        </div>
+  render() {
+    return (
+      <div style={{ height: '100%' }}>
+      <MapComponent
+        containerElement={  <div style={{ height: '100vh', width: 'auto' }} />  }
+        mapElement={  <div style={{ height: '100vh', width: '100vw' }} />  }
+        onMapLoad={this.handleMapLoad}/>
+      </div>
     )
   }
 }
