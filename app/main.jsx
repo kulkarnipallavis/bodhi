@@ -9,6 +9,12 @@ import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import MapContainer from './components/MapContainer'
+import OfferHelp from './components/OfferHelp'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// import {green100, green500, green700} from 'material-ui/styles/colors';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -22,15 +28,25 @@ const ExampleApp = connect(
     </div>
 )
 
+const muiTheme = getMuiTheme({
+  fontFamily: 'Roboto, sans-serif',
+  palette: {
+    primary1Color: "#607D8B",
+  }
+});
+
 render (
-  <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={ExampleApp}>
-        <IndexRedirect to="/jokes" />
-        <Route path="/jokes" component={Jokes} />
-        <Route path="/map" component={MapContainer} />
-      </Route>
-    </Router>
-  </Provider>,
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <Provider store={store}>
+      <Router history={hashHistory}>
+        <Route path="/" component={ExampleApp}>
+          <IndexRedirect to="/jokes" />
+          <Route path="/jokes" component={Jokes} />
+          <Route path="/map" component={MapContainer} />
+        </Route>
+        <Route path="/offerhelp" component={OfferHelp} />
+      </Router>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('main')
 )
