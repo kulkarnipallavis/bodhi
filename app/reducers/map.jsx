@@ -32,11 +32,11 @@ export const getMarkers = () =>
     .on('value', snapshot => { 
       let requestObjects = snapshot.val()
       let markers = [];
-
+ 
       Object.keys(requestObjects).forEach(key => {
-        markers.push({location: requestObjects[key].location, tag: requestObjects[key].tag, title: requestObjects[key].title})
+        console.log(requestObjects[key].location.latitude)
+        markers.push({position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, tag: requestObjects[key].tag, title: requestObjects[key].title})
       })
-
       dispatch(getAllMarkers(markers))
   })
 
