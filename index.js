@@ -1,4 +1,4 @@
- 'use strict'
+'use strict'
 
 // const {resolve} = require('path')
 // const chalk = require('chalk')
@@ -55,5 +55,4 @@
 //   env,
 // }
 
-const dataRead = require("./firebase/database");
-console.log(dataRead.readDataOnce());
+
