@@ -7,7 +7,7 @@ const theme = getMuiTheme({
   zIndex: 0,
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: tealA400,
+    primary1Color: tealA700,
   }
 })
 

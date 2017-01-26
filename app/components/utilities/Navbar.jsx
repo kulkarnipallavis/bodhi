@@ -9,14 +9,16 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 const Navbar = () => (
   <div>
     <AppBar
-      title={<Link to="/"><span>Bodhi</span></Link>}
+      id="navbar"
+      showMenuIconButton={false}
+      title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
       iconElementRight={
         <IconMenu
           iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-          <MenuItem primaryText={<Link to="/map">Offer Help</Link>}/>
-          <MenuItem primaryText={<Link to="/request">Request Help</Link>}/>
+          <Link to="/map"><MenuItem primaryText="Offer Help"/></Link>
+          <Link to="/request"><MenuItem primaryText="Request Help"/></Link>
         </IconMenu>
       }/>
   </div>
