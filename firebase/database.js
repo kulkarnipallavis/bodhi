@@ -9,17 +9,17 @@ return database.ref('/Users').once('value').then(function(snapshot) {
 }
 
 // DONT USE! THIS RESETS THE DATABASE!!!
-// const writeUserData = (uid, name, location) => {
-//   database.ref('Users/' + uid).set({
-//     uid: uid,
-//     username: name,
-//     // email: email,
-//     // badges: badges,
-//     // helper_tags : helper_tags,
-//     // profile_picture : imageUrl
-//     location : location
-//   });
-// }
+const writeUserData = (uid, name, location) => {
+  database.ref('Users/' + uid).set({
+    uid: uid,
+    username: name,
+    // email: email,
+    // badges: badges,
+    // helper_tags : helper_tags,
+    // profile_picture : imageUrl
+    location : location
+  });
+}
 
 const updateUserData = (name, location) => {
   // A request entry.
@@ -51,7 +51,7 @@ function updateRequestData(userId, title, desc, tag, location) {
   var requestData = {
     uid : userId,
     title: title,
-    desc: desc,git
+    desc: desc,
     tag : tag,
     location: location
   };

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import TimeRangePicker from './components/utilities/TimeRange'
-import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
-import ChipInput from 'material-ui-chip-input'
+
+// import { updateRequestData } from '../../firebase/database'
 
 class Request extends Component {
 
@@ -11,12 +10,16 @@ class Request extends Component {
     super(props)
 
     this.state = {
+      uid: '1',
       title: '',
       description: '',
+      tag: '',
+      location: navigator.geolocation.getCurrentPosition(Position => ({ lat: Position.coords.latitude, long: Position.coords.longitude }))
     }
+
     this.handleChangeTitle = this.handleChangeTitle.bind(this)
     this.handleChangeDesc = this.handleChangeDesc.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChangeTag = this.handleChangeTag.bind(this)
   }
 
   handleChangeTitle(event) {
@@ -27,8 +30,8 @@ class Request extends Component {
     this.setState({description: event.target.value})
   }
 
-  handleSubmit (event) {
-    // dispatch the firebase thunk
+  handleChangeTag(event) {
+    this.setState({tag: event.target.value})
   }
 
   render() {
@@ -41,7 +44,12 @@ class Request extends Component {
           onChange={this.handleChangeTitle}
           errorText="A request title is required."/>
         <br/>
-
+          <TextField
+            id="tag"
+            hintText="Tag"
+            value={this.state.tag}
+            onChange={this.handleChangeTag}
+            errorText="Please enter a tag to categorize your request."/>
         <br/>
         <TextField
           id="description"
@@ -55,6 +63,4 @@ class Request extends Component {
   }
 }
 
-const mapState = (state) => ({})
-
-export default connect(mapState)(Request)
+export default connect(state => ({}))(Request)
