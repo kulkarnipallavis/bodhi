@@ -57,30 +57,43 @@ class Request extends Component {
 
   render() {
 
+    const styles = {
+      errorStyle: {color: '#00BFA5'},
+      floatingLabelStyle: {color: '#00BFA5'}
+    }
+
     return (
       <form>
         <TextField
           id="title"
-          hintText="Title"
+          floatingLabelStyle={styles.floatingLabelStyle}
+          floatingLabelText="Title"
           value={this.state.title}
           onChange={this.handleChangeTitle}
+          errorStyle={styles.errorStyle}
           errorText="A request title is required."/>
         <br/>
           <TextField
             id="tag"
-            hintText="Tag"
+            floatingLabelStyle={styles.floatingLabelStyle}
+            floatingLabelText="Tag"
             value={this.state.tag}
             onChange={this.handleChangeTag}
-            errorText="Please enter a tag to categorize your request."/>
+            errorStyle={styles.errorStyle}
+            errorText="Enter a tag to categorize your request."/>
         <br/>
         <TextField
           id="description"
-          hintText="Description"
+          floatingLabelStyle={styles.floatingLabelStyle}
+          floatingLabelText="Description"
           value={this.state.description}
+          multiLine={true}
           onChange={this.handleChangeDesc}
-          errorText="Please describe the help you are requesting."/>
+          errorStyle={styles.errorStyle}
+          errorText="Describe the help you are requesting."/>
         <br />
         <RaisedButton
+          className="form-button"
           labelColor="white"
           backgroundColor="#607D8B"
           label="Submit Request"
