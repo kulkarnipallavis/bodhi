@@ -13,3 +13,4 @@ npm-debug.log
 
 #Firebase Config
 firebase/firebase_config.js
+app/firebase.jsx
