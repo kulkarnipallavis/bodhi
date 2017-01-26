@@ -22,9 +22,6 @@ export class MapContainer extends React.Component {
 
   handleMapLoad(map) {
     this._mapComponent = map;
-    // if (map) {
-    //   console.log(map.getZoom());
-    // }
   }
   render() {
     
