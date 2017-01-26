@@ -10,7 +10,8 @@
     "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
     "build-branch": "bin/build-branch.sh",
     "start1": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js",
-    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon index.js"
+    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon index.js",
+    "seed": "node firebase/seed.js"
   },
   "repository": {
     "type": "git",

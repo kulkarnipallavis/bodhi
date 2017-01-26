@@ -27,7 +27,9 @@ class Request extends Component {
     this.setState({description: event.target.value})
   }
 
-  handleSubmit
+  handleSubmit (event) {
+    // dispatch the firebase thunk
+  }
 
   render() {
     return (
