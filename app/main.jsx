@@ -1,34 +1,26 @@
 'use strict'
+
 import React from 'react'
-import {Router, Route, IndexRedirect, hashHistory, browserHistory} from 'react-router'
-import {render} from 'react-dom'
-import {connect, Provider} from 'react-redux'
+import { Router, Route, hashHistory } from 'react-router'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import store from './store'
-import Jokes from './components/Jokes'
-import Login from './components/Login'
-import WhoAmI from './components/WhoAmI'
+import App from './components/App'
 import MapContainer from './components/MapContainer'
+import Request from './components/Request'
 
-const ExampleApp = connect(
-  ({ auth }) => ({ user: auth })
-) (
-  ({ user, children }) =>
-    <div>
-      <nav>
-        {user ? <WhoAmI/> : <Login/>}
-      </nav>
-      {children}
-    </div>
-)
+const onEnterApp = () => {
+  injectTapEventPlugin()
+}
 
-render (
+render(
   <Provider store={store}>
     <Router history={hashHistory}>
-      <Route path="/" component={ExampleApp}>
-        <IndexRedirect to="/jokes" />
-        <Route path="/jokes" component={Jokes} />
+      <Route path="/" component={App} onEnter={onEnterApp}>
         <Route path="/map" component={MapContainer} />
+        <Route path="/request" component={Request}/>
       </Route>
     </Router>
   </Provider>,
