@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
+import { addRequest } from '../reducers/requestReducer.jsx'
+import FlatButton from 'material-ui/FlatButton'
 
 // import { updateRequestData } from '../../firebase/database'
 
@@ -13,7 +15,11 @@ class Request extends Component {
       uid: '1',
       title: '',
       description: '',
-      tag: ''
+      tag: '',
+      location: {
+        latitude: null,
+        longitude: null
+      }
     }
 
     this.handleChangeTitle = this.handleChangeTitle.bind(this)
@@ -24,25 +30,43 @@ class Request extends Component {
 
   handleChangeTitle(event) {
     this.setState({title: event.target.value})
-    console.log("state", this.state)
+    //console.log("state", this.state)
   }
 
   handleChangeDesc(event) {
     this.setState({description: event.target.value})
-    console.log("state", this.state)
+    //console.log("state", this.state)
   }
 
   handleChangeTag(event) {
     this.setState({tag: event.target.value})
-    console.log("state", this.state)
+    //console.log("state", this.state)
   }
 
   handleSubmit(event){
     event.preventDefault();
-    navigator.geolocation.getCurrentPosition(Position => ({ latitude: Position.coords.latitude, longitude: Position.coords.longitude }))
+    
+    //console.log("location", location)
+    console.log(Object.assign({}, this.state, {location}));
+    //addRequest(Object.assign({location}, this.state));
+  }
+
+  componentDidMount(){
+   navigator.geolocation.getCurrentPosition(Position => {
+      return { latitude: Position.coords.latitude, longitude: Position.coords.longitude }
+    })
+   .then(location => {
+    console.log("componentdidmount loc", location)
+   })
+    //console.log(location);
+    //this.setState({location: location}) 
   }
 
   render() {
+    var location = navigator.geolocation.getCurrentPosition(Position => {
+      return { latitude: Position.coords.latitude, longitude: Position.coords.longitude }
+    })
+    console.log("loc in render", location);
     return (
       <div>
         <TextField
@@ -66,6 +90,7 @@ class Request extends Component {
           onChange={this.handleChangeDesc}
           errorText="Please describe the help you are requesting."/>
         <br />
+        <FlatButton label="submitRequest" onClick={this.handleSubmit}/>
     </div>
     )
   }
