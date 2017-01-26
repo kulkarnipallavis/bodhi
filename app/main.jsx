@@ -9,7 +9,7 @@ import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import MapContainer from './components/MapContainer'
-// import firebase, {database} from '../firebase.jsx';
+import {getMarkers} from './reducers/map'
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -25,6 +25,7 @@ const ExampleApp = connect(
 
 const onMapEnter = () => {
   // TODO: Move getMarkers dispatch in here.
+  store.dispatch(getMarkers());
 }
 
 render (
