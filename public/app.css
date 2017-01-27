@@ -51,6 +51,11 @@ table {
 /* DO NOT EDIT ABOVE ^THIS LINE, CSS RESET!!! */
 
 /* APP */
+
+body {
+  font-family: "Roboto";
+}
+
 a {
   text-decoration: none !important;
 }
@@ -60,7 +65,7 @@ a {
 }
 
 #navbar-brand {
-  font-size: 1.5em;
+  font-size: 1em;
   color: white;
   margin: 0;
   width: 100px;
@@ -69,8 +74,21 @@ a {
 .container {
   display: flex;
   justify-content: center;
+  height: 85vh;
+  width: 100%
+}
+
+h1 {
+  font-size: 3em;
+  color: #607D8B;
+  margin: 50px 0px 25px 0px;
+  text-align: center;
+}
+
+form {
+  margin-left: 15px !important;
 }
 
 .form-button {
-  margin: 25px 0px 0px 55px !important;
+  margin: 35px 0px 0px 60px !important;
 }

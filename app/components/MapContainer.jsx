@@ -21,12 +21,10 @@ class MapContainer extends Component {
 
   render() {
     return (
-      <div style={{ height: '100%' }}>
       <MapComponent
-        containerElement={  <div style={{ height: '100vh', width: 'auto' }} />  }
-        mapElement={  <div style={{ height: '100vh', width: '100vw' }} />  }
+        containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }
+        mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
         onMapLoad={this.handleMapLoad}/>
-      </div>
     )
   }
 }

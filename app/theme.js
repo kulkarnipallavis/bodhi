@@ -1,14 +1,12 @@
-import { tealA700 } from 'material-ui/styles/colors'
+import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import spacing from 'material-ui/styles/spacing'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-const theme = getMuiTheme({
+export const theme = {
   spacing,
   zIndex: 0,
   fontFamily: 'Roboto, sans-serif',
   palette: {
     primary1Color: tealA700,
+    secondary1Color: blueGrey500
   }
-})
-
-export default theme
+}
