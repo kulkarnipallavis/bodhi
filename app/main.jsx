@@ -16,35 +16,25 @@ import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
 import Account from './components/Account'
 
+
 const onEnterApp = () => {
   injectTapEventPlugin()
 }
 
-
-const muiTheme = getMuiTheme({
-  fontFamily: 'Roboto, sans-serif',
-  palette: {
-    primary1Color: "#607D8B",
-  }
-});
-
 render(
-
-  <MuiThemeProvider muiTheme={muiTheme}>
-    <Provider store={store}>
-      <Router history={hashHistory}>
-        <Route path="/" component={App} onEnter={onEnterApp}>
-          <Route path="/map" component={MapContainer} />
-          <Route path="/request" component={Request}/>
-          <Route path="/offerhelp" component={OfferHelp} />
+  <Provider store={store}>
+    <Router history={hashHistory}>
+      <Route path="/" component={App} onEnter={onEnterApp}>
+        <Route path="/map" component={MapContainer} />
+        <Route path="/request" component={Request}/>
+        <Route path="/offerhelp" component={OfferHelp} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/loginenter" component={LoginEnter} />
           <Route path="/account" component={Account} />
         </Route>
       </Router>
-    </Provider>
-  </MuiThemeProvider>,
+    </Provider>,
 
   document.getElementById('main')
 )
