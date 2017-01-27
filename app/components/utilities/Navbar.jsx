@@ -43,7 +43,7 @@ return (
           <Link to="/map"><MenuItem primaryText="Who's in Need?"/></Link>
           <Link to="/request"><MenuItem primaryText="I Need Help!"/></Link>
           {
-          user ?
+          !user ?
           <div>
             <Link to="/login"><MenuItem primaryText="Log in"/></Link>
             <Link to="/signup"><MenuItem primaryText="Sign up"/></Link>
