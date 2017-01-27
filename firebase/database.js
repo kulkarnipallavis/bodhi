@@ -1,3 +1,4 @@
+
 var database = require("./firebase_config").database;
 
 const readDataOnce = () => {
@@ -61,5 +62,3 @@ module.exports = {
   updateUserData : updateUserData,
   updateRequestData: updateRequestData
 }
-
-

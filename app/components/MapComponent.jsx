@@ -1,5 +1,5 @@
 import React from 'react'
-import { withGoogleMap, GoogleMap, InfoWindow, Marker } from 'react-google-maps'
+import { withGoogleMap, GoogleMap } from 'react-google-maps'
 
 const MapComponent = withGoogleMap(props => {
 
