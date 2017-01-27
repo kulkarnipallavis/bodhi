@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
+import { connect } from 'react-redux'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
@@ -7,8 +8,10 @@ import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import {auth} from '../../firebase.jsx'
 
+const mapStateToProps = (state) => ({ auth: auth })
 
-export default class Navbar extends React.Component {
+
+export default connect(mapStateToProps)(class Navbar extends React.Component {
 
 constructor() {
   super()
@@ -20,6 +23,7 @@ logout(e) {
   e.preventDefault()
   auth().signOut()
   .then( () => {
+    browserHistory.push('/')
     console.log('sign-out successful')
   }, (err) => {
     console.log(err)
@@ -27,8 +31,9 @@ logout(e) {
 }
 
 render() {
-const user = auth().currentUser
-console.log('user', user)
+
+const user = this.props.auth
+
 return (
   <div>
     <AppBar
@@ -45,7 +50,7 @@ return (
           {
           !user ?
           <div>
-            <Link to="/login"><MenuItem primaryText="Log in"/></Link>
+            <Link to="/loginenter"><MenuItem primaryText="Log in"/></Link>
             <Link to="/signup"><MenuItem primaryText="Sign up"/></Link>
           </div>
           : <Link onClick={this.logout}><MenuItem primaryText="Log out" /></Link>
@@ -54,4 +59,4 @@ return (
       }/>
   </div>
 )}
-}
+})

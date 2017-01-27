@@ -42,7 +42,7 @@ handleSubmit(e) {
   e.preventDefault()
   auth().signInWithEmailAndPassword(this.state.email, this.state.password)
   .then(user =>  console.log(user))
-  .then(() =>  browserHistory.push('/#/account'))
+  .then(() =>  browserHistory.push('/account'))
   .catch( err => {
     if (err.code === "auth/invalid-email" || err.code === "auth/user-disabled" || err.code === "auth/user-not-found") {
       this.setState({ errmsgEmail: err.message })

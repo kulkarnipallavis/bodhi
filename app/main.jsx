@@ -1,7 +1,7 @@
 'use strict'
 
 import React from 'react'
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, Route, hashHistory, browserHistory } from 'react-router'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -17,23 +17,25 @@ import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
 import Account from './components/Account'
 
+import { loggedIn, loggedOut } from './reducers/auth'
 
+
+auth().onAuthStateChanged(function(user) {
+  if (user) {
+    store.dispatch(loggedIn(user))
+  } else {
+    store.dispatch(loggedOut())
+  }
+});
 
 const onEnterApp = () => {
   injectTapEventPlugin()
   //get currently signed-in user
-  const user = auth().currentUser
-  if (user) {
-    // put user on state?
-    console.log('user is signed in. user obj: ', user)
-  } else {
-    console.log('no user signed in')
-  }
 }
 
 render(
   <Provider store={store}>
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request}/>
