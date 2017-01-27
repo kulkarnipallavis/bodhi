@@ -18,13 +18,17 @@ constructor(props) {
   this.state = {
     name: "",
     email: "",
-    password: ""
+    password: "",
+    errmsgEmail: "",
+    errmsgPassword: "",
+    //submitDisabled: true
   }
 
   // this.handleChangeName = this.handleChangeName.bind(this)
   this.handleChangeEmail = this.handleChangeEmail.bind(this)
   this.handleChangePassword = this.handleChangePassword.bind(this)
   this.handleSubmit = this.handleSubmit.bind(this)
+ // this.handleSubmitDisabled = this.handleSubmitDisabled.bind(this)
 }
 
 // ComponentWillMount() {
@@ -38,20 +42,33 @@ constructor(props) {
 
 handleChangeEmail(e) {
   this.setState({ email: e.target.value })
+  console.log('email ', this.state.email)
 }
 
 handleChangePassword(e) {
   this.setState({ password: e.target.value })
+  console.log('password ', this.state)
 }
+
+// handleSubmitDisabled() {
+//   if (this.state.email && this.state.password) {
+//     this.setState({ submitDisabled: false })
+//   } else {
+//     this.setState({ submitDisabled: true })
+//   }
+// }
 
 handleSubmit(e) {
   e.preventDefault()
-  console.log("handleSubmit!")
-  console.log('this.state ', this.state)
   auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
   .then(user => console.log(user))
   .then(() =>  browserHistory.push('/#/account'))
   .catch( err => {
+    if (err.code === "auth/email-already-in-use" || err.code === "auth/invalid-email") {
+      this.setState({ errmsgEmail: err.message })
+    } else if (err.code === "auth/weak-password") {
+      this.setState({ errmsgPassword: err.message })
+    }
     console.log('error code: ', err.code)
     console.log('error msg: ', err.message)
   } )
@@ -80,6 +97,7 @@ render () {
           floatingLabelText="Email"
           value={this.state.email}
           onChange={this.handleChangeEmail}
+          errorText={this.state.errmsgEmail}
           />
           <br />
         <TextField
@@ -88,6 +106,7 @@ render () {
           floatingLabelText="Password"
           value={this.state.password}
           onChange={this.handleChangePassword}
+          errorText={this.state.errmsgPassword}
           />
           <br />
         <div id="div_btn">
@@ -103,6 +122,7 @@ render () {
           labelColor="white"
           backgroundColor="#607D8B"
           label="Submit"
+          //disabled={this.state.submitDisabled}
           />
         </div>
       </form>

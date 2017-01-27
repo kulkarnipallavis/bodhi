@@ -19,7 +19,9 @@ constructor(props) {
   super(props)
   this.state = {
     email: "",
-    password: ""
+    password: "",
+    errmsgEmail: "",
+    errmsgPassword: ""
   }
 
   this.handleChangeEmail = this.handleChangeEmail.bind(this)
@@ -39,16 +41,18 @@ handleChangePassword(e) {
 handleSubmit(e) {
   e.preventDefault()
   auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-  .then(user => {
-    console.log(user)
-
-  })
+  .then(user =>  console.log(user))
   .then(() =>  browserHistory.push('/#/account'))
   .catch( err => {
+    if (err.code === "auth/invalid-email" || err.code === "auth/user-disabled" || err.code === "auth/user-not-found") {
+      this.setState({ errmsgEmail: err.message })
+    } else if (err.code === "auth/wrong-password") {
+      this.setState({ errmsgPassword: err.message })
+    }
     console.log('error code: ', err.code)
     console.log('error msg: ', err.message)
   } )
-  //if new account is created, user is signed in automatically
+
 }
 
 render () {
@@ -73,6 +77,7 @@ render () {
           floatingLabelText="Email"
           value={this.state.email}
           onChange={this.handleChangeEmail}
+          errorText={this.state.errmsgEmail}
           />
           <br />
         <TextField
@@ -81,6 +86,7 @@ render () {
           floatingLabelText="Password"
           value={this.state.password}
           onChange={this.handleChangePassword}
+          errorText={this.state.errmsgPassword}
           />
           <br />
         <div id="div_btn">

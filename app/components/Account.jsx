@@ -9,7 +9,7 @@ export default () => {
         <div>
 
         {
-          user?
+          user ?
           <div>
           Welcome!
 

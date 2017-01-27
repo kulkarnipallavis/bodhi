@@ -5,6 +5,7 @@ import { Router, Route, hashHistory } from 'react-router'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { auth } from './firebase'
 
 import store from './store'
 import App from './components/App'
@@ -17,8 +18,17 @@ import LoginEnter from './components/LoginEnter'
 import Account from './components/Account'
 
 
+
 const onEnterApp = () => {
   injectTapEventPlugin()
+  //get currently signed-in user
+  const user = auth().currentUser
+  if (user) {
+    // put user on state?
+    console.log('user is signed in. user obj: ', user)
+  } else {
+    console.log('no user signed in')
+  }
 }
 
 render(
