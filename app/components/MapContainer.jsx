@@ -33,11 +33,11 @@ class MapContainer extends Component {
 }
 
 MapContainer.propTypes = {
-  markers: PropTypes.array.isRequired,
-  getMarkers: PropTypes.func.isRequired
+  markers: PropTypes.array,
+  getMarkers: PropTypes.func
 }
 
-const mapStateToProps = (state) => ({ markers: state.markers })
+const mapStateToProps = (state) => ({ markers: state.map.markers })
 const mapDispatchToProps = { getMarkers }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)
