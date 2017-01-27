@@ -14,6 +14,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Request from './components/Request'
 import Signup from './components/Signup'
+import Login from './components/Login'
+import LoginEnter from './components/LoginEnter'
+import Account from './components/Account'
 
 const onEnterApp = () => {
   injectTapEventPlugin()
@@ -36,6 +39,9 @@ render(
           <Route path="/request" component={Request}/>
           <Route path="/offerhelp" component={OfferHelp} />
           <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Route path="/loginenter" component={LoginEnter} />
+          <Route path="/account" component={Account} />
         </Route>
       </Router>
     </Provider>

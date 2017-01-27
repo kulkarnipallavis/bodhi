@@ -1,9 +1,11 @@
 import React from 'react'
+import {browserHistory} from 'react-router'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import {connect} from 'react-redux'
-import {browserHistory} from 'react-router'
 import firebase, {auth} from '../firebase.jsx'
+
+import {connect} from 'react-redux'
+
 
 const mapStateToProps = (state) => ({})
 
@@ -11,30 +13,20 @@ const mapDispatchToProps = (dispatch) => ({})
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends React.Component {
+export default connect(mapStateToProps, mapDispatchToProps)(class Login extends React.Component {
 
 constructor(props) {
   super(props)
   this.state = {
-    name: "",
     email: "",
     password: ""
   }
 
-  // this.handleChangeName = this.handleChangeName.bind(this)
   this.handleChangeEmail = this.handleChangeEmail.bind(this)
   this.handleChangePassword = this.handleChangePassword.bind(this)
   this.handleSubmit = this.handleSubmit.bind(this)
 }
 
-// ComponentWillMount() {
-//   var provider = new firebase.auth.GoogleAuthProvider()
-//   firebase.auth().signInWithRedirect(provider)
-// }
-
-// handleChangeName(e) {
-//   this.setState({ name: e.target.value })
-// }
 
 handleChangeEmail(e) {
   this.setState({ email: e.target.value })
@@ -46,10 +38,11 @@ handleChangePassword(e) {
 
 handleSubmit(e) {
   e.preventDefault()
-  console.log("handleSubmit!")
-  console.log('this.state ', this.state)
-  auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-  .then(user => console.log(user))
+  auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+  .then(user => {
+    console.log(user)
+
+  })
   .then(() =>  browserHistory.push('/#/account'))
   .catch( err => {
     console.log('error code: ', err.code)
@@ -61,7 +54,7 @@ handleSubmit(e) {
 render () {
   return (
     <div id="div_signup">
-    Sign Up
+    Log In
 
       <form onSubmit={this.handleSubmit}>
       {
