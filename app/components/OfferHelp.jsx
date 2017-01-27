@@ -23,23 +23,20 @@ export default connect(null, mapDispatchToProps)(
         message: '',
         disabled: true,
         validationStateDate: true,
-        validationStateMessage: true,
-        errorTextMessage: '',
-        errorTextDate: ''
+        validationStateMessage: true
       }
 
       this.handleChange = this.handleChange.bind(this)
       this.validateSubmit = this.validateSubmit.bind(this)
       this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
-      this.checkInputs = this.checkInputs.bind(this)
     }
 
     handleChange(event, date, type) {
       // form validation
       if (type === 'message') {
         const message = event.target.value
-        if (!message) this.setState({ message, validationStateMessage: false })
+        if (!message) this.setState({ message, validationStateMessage: false, disabled: true })
         else {
           this.setState({ message, validationStateMessage: true })
           // submit enabled only if both inputs are valid
@@ -56,14 +53,6 @@ export default connect(null, mapDispatchToProps)(
     validateSubmit() {
       if (this.state.date && this.state.message) {
         this.setState({ disabled: false })
-      }
-    }
-
-    checkInputs(){
-      if (this.state.date && this.state.message) {
-        this.setState({
-          disabled: false
-        })
       }
     }
 

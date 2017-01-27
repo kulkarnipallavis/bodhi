@@ -17,18 +17,43 @@ class Request extends Component {
       tag: '',
       location: {},
       disabled: true,
-      errorTextTitle: '',
-      errorTextTag: '',
-      errorTextDesc: ''
+      validationStateTitle : true,
+      validationStateTag : true,
+      validationStateDescription : true
     }
 
-    this.handleChangeTitle = this.handleChangeTitle.bind(this)
-    this.handleChangeDesc = this.handleChangeDesc.bind(this)
-    this.handleChangeTag = this.handleChangeTag.bind(this)
     this.clearForm = this.clearForm.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.grabUserLocation = this.grabUserLocation.bind(this)
-    this.checkInputs = this.checkInputs.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event, type) {
+      // form validation
+    if (type === 'title') {
+      const title = event.target.value
+      if (!title) this.setState({ title, validationStateTitle: false, disabled: true })
+      else {
+        this.setState({ title, validationStateMessage: true })
+        
+      }
+    } 
+    else if(type === 'tag'){
+      const tag = event.target.value
+      if (!tag) this.setState({ tag, validationStateTag: false, disabled: true })
+      else {
+        this.setState({ tag, validationStateTag: true })
+      }
+    }
+    else {
+      const description = event.target.value
+      if (!description) this.setState({ description, validationStateDescription: false, disabled: true })
+      else {
+        this.setState({ description, validationStateDescription: true })
+        // submit enabled only if both inputs are valid
+        if (this.state.title && this.state.tag) this.setState({ disabled: false })
+      }
+    }
   }
 
   componentDidMount() {
@@ -45,54 +70,7 @@ class Request extends Component {
     })
   }
 
-  handleChangeTitle(event) {
-    const title = event.target.value
-    if(!title){
-      this.setState({
-        errorTextTitle : "Please enter a Title.",
-        title,
-        disabled : true
-      })
-    }else{
-    this.setState({
-      title,
-      errorTextTitle : ""
-    })
-    }
-  }
-
-  handleChangeDesc(event) {
-    const description = event.target.value
-    if(!description){
-      this.setState({
-        errorTextDesc : "Please enter a description.",
-        description,
-        disabled : true
-      })
-    }else{
-    this.setState({
-      description,
-      errorTextDesc : ""
-     })
-    }
-    this.checkInputs()
-  }
-
-  handleChangeTag(event) {
-    const tag = event.target.value
-    if(!tag){
-      this.setState({
-        errorTextTag : "Please enter a tag.",
-        tag,
-        disabled : true
-      })
-    }else{
-      this.setState({
-        tag,
-        errorTextTag : ""
-      })
-    }
-  }
+  
 
   clearForm() {
     this.setState({
@@ -111,15 +89,6 @@ class Request extends Component {
     this.props.handleSubmitRequest(newRequest)
   }
 
-
-  checkInputs(){
-    if(this.state.title && this.state.tag && this.state.description){
-        this.setState({
-          disabled : false
-        })
-    }
-  }
-
   render() {
 
     const styles = {
@@ -136,18 +105,18 @@ class Request extends Component {
             floatingLabelText="Title"
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
             value={this.state.title}
-            onChange={this.handleChangeTitle}
+            onChange={(event, type) => this.handleChange(event, 'title')}
             underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.errorTextTitle}/>
+            errorText={this.state.validationStateTitle ? '' : 'Please enter a title.'}/>
           <br/>
             <TextField
               id="tag"
               floatingLabelText="Tag"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               value={this.state.tag}
-              onChange={this.handleChangeTag}
+              onChange={(event, type) => this.handleChange(event, 'tag')}
               underlineFocusStyle={styles.underlineFocusStyle}
-              errorText={this.state.errorTextTag}/>
+              errorText={this.state.validationStateTag ? '' : 'Please enter a tag.'}/>
           <br/>
           <TextField
             id="description"
@@ -156,9 +125,9 @@ class Request extends Component {
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
             value={this.state.description}
             multiLine={true}
-            onChange={this.handleChangeDesc}
+            onChange={(event, type) => this.handleChange(event,'description')}
             underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.errorTextDesc}/>
+            errorText={this.state.validationStateDescription ? '' : 'Please enter a description.'}/>
           <br />
         </form>
         <RaisedButton
