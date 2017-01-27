@@ -1,9 +1,12 @@
 import React from 'react'
 import {auth} from '../firebase.jsx'
+import { connect } from 'react-redux'
 
-export default () => {
+const mapStateToProps = (state) => ({ auth: state.auth })
 
-  const user = auth().currentUser
+export default connect(mapStateToProps)((props) => {
+
+  const user = props.auth
 
   return(
         <div>
@@ -24,3 +27,4 @@ export default () => {
 
         </div>
 )}
+)

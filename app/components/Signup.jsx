@@ -62,7 +62,7 @@ handleSubmit(e) {
   e.preventDefault()
   auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
   .then(user => console.log(user))
-  .then(() =>  browserHistory.push('/#/account'))
+  .then(() =>  browserHistory.push('/account'))
   .catch( err => {
     if (err.code === "auth/email-already-in-use" || err.code === "auth/invalid-email") {
       this.setState({ errmsgEmail: err.message })
