@@ -11,7 +11,7 @@ class Request extends Component {
     super(props)
 
     this.state = {
-      uid: '1',
+      uid: '',
       title: '',
       description: '',
       tag: '',
@@ -21,6 +21,7 @@ class Request extends Component {
     this.handleChangeTitle = this.handleChangeTitle.bind(this)
     this.handleChangeDesc = this.handleChangeDesc.bind(this)
     this.handleChangeTag = this.handleChangeTag.bind(this)
+    this.clearForm = this.clearForm.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.grabUserLocation = this.grabUserLocation.bind(this)
   }
@@ -51,10 +52,23 @@ class Request extends Component {
     this.setState({tag: event.target.value})
   }
 
+  clearForm() {
+    this.setState({
+      uid: '',
+      title: '',
+      description: '',
+      tag: '',
+      location: {}
+    })
+  }
+
   handleSubmit(event){
     event.preventDefault()
-    this.props.handleSubmitRequest(this.state)
+    const newRequest = this.state
+    this.clearForm()
+    this.props.handleSubmitRequest(newRequest)
   }
+
 
   render() {
 

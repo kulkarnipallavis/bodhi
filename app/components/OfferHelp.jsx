@@ -14,16 +14,41 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(null, mapDispatchToProps)(
 
-  class OfferHelp extends Component{
+  class OfferHelp extends Component {
 
-    constructor() {
-      super();
+    constructor(props) {
+      super(props)
+
+      this.state = {
+        date: {},
+        message: ''
+      }
+      this.handleMessage = this.handleMessage.bind(this)
+      this.handleDatePick = this.handleDatePick.bind(this)
+      this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleSubmit(evt) {
-      evt.preventDefault();
-      this.props.submitOfferDispatch(evt.target.date.value, evt.target.msg.value)
+    handleDatePick(event, date) {
+      this.setState({ date })
+    }
+
+    handleMessage(event) {
+      this.setState({ message: event.target.value })
+    }
+
+    clearForm() {
+      this.setState({
+        date: null,
+        message: ''
+      })
+    }
+
+    handleSubmit(event) {
+      event.preventDefault()
+      const newOffer = this.state
+      this.clearForm()
+      this.props.submitOfferDispatch(newOffer)
     }
 
     render() {
@@ -34,12 +59,16 @@ export default connect(null, mapDispatchToProps)(
           <form onSubmit={this.handleSubmit}>
             <DatePicker
               name="date"
+              value={this.state.date}
+              onChange={this.handleDatePick}
               floatingLabelText="Choose a date"
               locale="en-US"
               style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }} />
             <br/>
             <TextField
               name="msg"
+              value={this.state.message}
+              onChange={this.handleMessage}
               multiLine={true}
               hintText="Message To Requester"
               floatingLabelText="Message To Requester"
@@ -49,7 +78,6 @@ export default connect(null, mapDispatchToProps)(
             <RaisedButton
               className="form-button"
               type="submit"
-              value="Offer Help"
               label="Offer Help"
               backgroundColor={ blueGrey500 }
               labelStyle={{color: 'white'}}/>
