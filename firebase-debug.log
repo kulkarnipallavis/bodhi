@@ -1,14 +1,14 @@
 [debug] ----------------------------------------------------------------------
-[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] Command:      /Users/yawenchang/.nvm/versions/node/v7.4.0/bin/node /Users/yawenchang/.nvm/versions/node/v7.4.0/bin/firebase serve
 [debug] CLI Version:  3.2.1
 [debug] Platform:     darwin
-[debug] Node Version: v6.9.1
-[debug] Time:         Thu Jan 26 2017 13:51:03 GMT-0500 (EST)
+[debug] Node Version: v7.4.0
+[debug] Time:         Thu Jan 26 2017 17:58:06 GMT-0500 (EST)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [info] Starting Firebase development server...
 [info] 
-[info] Project Directory: /Users/Chloe/Documents/code/grace_hopper/bodhi
+[info] Project Directory: /Users/yawenchang/GHA/bodhi
 [info] Public Directory: public
 [info] 
 [info] Server listening at: http://localhost:5000

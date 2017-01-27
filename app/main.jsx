@@ -10,6 +10,7 @@ import store from './store'
 import App from './components/App'
 import MapContainer from './components/MapContainer'
 import Request from './components/Request'
+import Signup from './components/Signup'
 
 const onEnterApp = () => {
   injectTapEventPlugin()
@@ -21,6 +22,7 @@ render(
       <Route path="/" component={App} onEnter={onEnterApp}>
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request}/>
+        <Route path="/signup" component={Signup} />
       </Route>
     </Router>
   </Provider>,
