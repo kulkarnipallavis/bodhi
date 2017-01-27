@@ -11,12 +11,12 @@ class Request extends Component {
     super(props)
 
     this.state = {
-      uid: '',
+      userKey: '',
       title: '',
       description: '',
       tag: '',
       location: {},
-      disabled : true,
+      disabled: true,
       errorTextTitle: '',
       errorTextTag: '',
       errorTextDesc: ''
@@ -69,7 +69,7 @@ class Request extends Component {
         description,
         disabled : true
       })
-    }else{     
+    }else{
     this.setState({
       description,
       errorTextDesc : ""
@@ -117,7 +117,7 @@ class Request extends Component {
         this.setState({
           disabled : false
         })
-    }  
+    }
   }
 
   render() {

@@ -19,58 +19,52 @@ export default connect(null, mapDispatchToProps)(
     constructor(props) {
       super(props);
       this.state = {
-      	date : {},
-      	message: '',
-      	disabled : true,
-      	errorTextMessage : '',
-      	errorTextDate : ''
+        date: null,
+        message: '',
+        disabled: true,
+        validationStateDate: true,
+        validationStateMessage: true,
+        errorTextMessage: '',
+        errorTextDate: ''
       }
 
-      this.handleMessage = this.handleMessage.bind(this)
-      this.handleDatePick = this.handleDatePick.bind(this)
+      this.handleChange = this.handleChange.bind(this)
+      this.validateSubmit = this.validateSubmit.bind(this)
       this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
       this.checkInputs = this.checkInputs.bind(this)
     }
 
-    handleDatePick(event, date) {
-      if(!date){
-	      	this.setState({
-	      		errorTextDate : "Please select a date.",
-	      		date,
-	      		disabled : true
-	      	})
-      }else{
-      		this.setState({
-      			errorTextDate : "",
-      			date
-      		})
+    handleChange(event, date, type) {
+      // form validation
+      if (type === 'message') {
+        const message = event.target.value
+        if (!message) this.setState({ message, validationStateMessage: false })
+        else {
+          this.setState({ message, validationStateMessage: true })
+          // submit enabled only if both inputs are valid
+          if (this.state.date) this.setState({ disabled: false })
+        }
+      } else {
+        if (!date) this.setState({ date, validationStateDate: false })
+        else {
+          this.setState({ date, validationStateDate: true })
+        }
       }
     }
 
-    handleMessage(event) {
-    const message = event.target.value
-      if(!message){
-    		this.setState({
-    			errorTextMessage : "Please enter message.",
-    			message,
-    			disabled : true
-    		})
-    	}else{
-    		this.setState({
-    			errorTextMessage : "",
-    			message 
-    		})
-    	}
-    	this.checkInputs()
+    validateSubmit() {
+      if (this.state.date && this.state.message) {
+        this.setState({ disabled: false })
+      }
     }
 
     checkInputs(){
-    	if(this.state.date && this.state.message){
-	        this.setState({
-	          disabled : false
-	        })
-    	}
+      if (this.state.date && this.state.message) {
+        this.setState({
+          disabled: false
+        })
+      }
     }
 
     clearForm() {
@@ -97,21 +91,21 @@ export default connect(null, mapDispatchToProps)(
               name="date"
               floatingLabelText="Select a date"
               value={this.state.date}
-              onChange={this.handleDatePick}
+              onChange={(event, date) => this.handleChange(event, date, 'date')}
               locale="en-US"
-              style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }} 
-              errorText={this.state.errorTextDate}/>
+              style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }}
+              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}/>
             <br/>
             <TextField
               name="msg"
               value={this.state.message}
-              onChange={this.handleMessage}
+              onChange={(event) => this.handleChange(event, null, 'message')}
               multiLine={true}
               hintText="Message To Requester"
               floatingLabelText="Message To Requester"
               floatingLabelFocusStyle={{ color: tealA700 }}
               underlineFocusStyle={{ borderColor: tealA700 }}
-              errorText={this.state.errorTextMessage}/>
+              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
             <br/>
             <RaisedButton
               className="form-button"
