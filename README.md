@@ -1,12 +1,3 @@
-A README.md that explains:
-
-    what your goal for the MVP was
-    which parts work
-    which parts don't work yet
-    open / unresolved questions
-    particular parts of the code you'd like us to look at
-    and instructions for building and using the project.
-
 
     Most Valuable Product(MVP)
 
@@ -50,6 +41,9 @@ INSTRUCTIONS FOR BUILDING:
     -firebase login
     -firebase serve
     -npm run build-watch
+
+Particular Parts of the Code to Look at:
+  -Is Map implemented in best way?
 
 
 
