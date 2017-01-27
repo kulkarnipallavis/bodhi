@@ -17,7 +17,7 @@ const MapComponent = withGoogleMap(props => (
     	       { <div>
 	    	       	 <h2>{marker.title}</h2>
 	    	         <h3 id="description">{marker.description}</h3>
-	    	         <button type="button" onClick={() => props.handleClick()}>Offer Help</button>
+	    	         <button type="button" onClick={() => props.handleButtonClick()}>Offer Help</button>
     	         </div>
     	       }
     	     </InfoWindow>
