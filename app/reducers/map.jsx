@@ -34,11 +34,11 @@ export const getMarkers = () =>
       let markers = [];
 
       Object.keys(requestObjects).forEach(key => {
-        console.log(requestObjects[key].location)
         if (requestObjects[key].location.latitude) {
-          markers.push({position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, tag: requestObjects[key].tag, title: requestObjects[key].title})
+          markers.push({position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, description: requestObjects[key].desc, tag: requestObjects[key].tag, title: requestObjects[key].title})
         }
       })
+
       dispatch(getAllMarkers(markers))
     })
 
