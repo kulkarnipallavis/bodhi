@@ -14,55 +14,77 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(null, mapDispatchToProps)(
 
-  class OfferHelp extends Component{
+  class OfferHelp extends Component {
 
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
-      	date : "",
+      	date : {},
+      	message: '',
       	disabled : true,
-      	errorText : ""
+      	errorTextMessage : '',
+      	errorTextDate : ''
       }
+
+      this.handleMessage = this.handleMessage.bind(this)
+      this.handleDatePick = this.handleDatePick.bind(this)
+      this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
-      this.handleChangeMessage = this.handleChangeMessage.bind(this)
-      this.handleChangeDate = this.handleChangeDate.bind(this)
+      this.checkInputs = this.checkInputs.bind(this)
     }
 
-    handleSubmit(evt) {
-      evt.preventDefault();
-      this.props.submitOfferDispatch(evt.target.date.value, evt.target.msg.value)
+    handleDatePick(event, date) {
+      if(!date){
+	      	this.setState({
+	      		errorTextDate : "Please select a date.",
+	      		date,
+	      		disabled : true
+	      	})
+      }else{
+      		this.setState({
+      			errorTextDate : "",
+      			date
+      		})
+      }
     }
 
-    handleChangeMessage(evt){
-    	console.log(this.state.date);
-    	if(!evt.target.value){
+    handleMessage(event) {
+    const message = event.target.value
+      if(!message){
     		this.setState({
-    			errorText : "Please enter message.",
+    			errorTextMessage : "Please enter message.",
+    			message,
     			disabled : true
     		})
     	}else{
     		this.setState({
-    			disabled : false
+    			errorTextMessage : "",
+    			message 
     		})
+    	}
+    	this.checkInputs()
+    }
+
+    checkInputs(){
+    	if(this.state.date && this.state.message){
+	        this.setState({
+	          disabled : false
+	        })
     	}
     }
 
-    handleChangeDate(evt){
-    	// console.log("date selected", evt.target.date.value);
-    	// this.setState({
-    	// 	date : evt.target.date.value
-    	// })
-    	// if(!evt.target.value){
-    	// 	console.log("in if");
-    	// 	this.setState({
-    	// 		errorText : "Please select a date."
-    	// 	})
-    	// }else{
-    	// 	console.log("in else");
-    	// 	this.setState({
-    	// 		disabled : false
-    	// 	})
-    	// }
+    clearForm() {
+      this.setState({
+        date: null,
+        message: ''
+      })
+    }
+
+    handleSubmit(event) {
+      event.preventDefault()
+      const newOffer = this.state
+      this.clearForm()
+      this.props.submitOfferDispatch(newOffer)
     }
 
     render() {
@@ -74,25 +96,26 @@ export default connect(null, mapDispatchToProps)(
             <DatePicker
               name="date"
               floatingLabelText="Select a date"
+              value={this.state.date}
+              onChange={this.handleDatePick}
               locale="en-US"
               style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }} 
-              onChange={this.handleChangeDate}
-              />
+              errorText={this.state.errorTextDate}/>
             <br/>
             <TextField
               name="msg"
+              value={this.state.message}
+              onChange={this.handleMessage}
               multiLine={true}
               hintText="Message To Requester"
               floatingLabelText="Message To Requester"
               floatingLabelFocusStyle={{ color: tealA700 }}
-              underlineFocusStyle={{ borderColor: tealA700 }} 
-              onChange={this.handleChangeMessage}
-              errorText={this.state.errorText}/>
+              underlineFocusStyle={{ borderColor: tealA700 }}
+              errorText={this.state.errorTextMessage}/>
             <br/>
             <RaisedButton
               className="form-button"
               type="submit"
-              value="Offer Help"
               label="Offer Help"
               backgroundColor={ blueGrey500 }
               labelStyle={{color: 'white'}}

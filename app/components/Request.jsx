@@ -11,23 +11,24 @@ class Request extends Component {
     super(props)
 
     this.state = {
-      uid: '1',
+      uid: '',
       title: '',
       description: '',
       tag: '',
       location: {},
       disabled : true,
-      errorTextTitle: "",
-      errorTextTag: "",
-      errorTextDesc: ""
+      errorTextTitle: '',
+      errorTextTag: '',
+      errorTextDesc: ''
     }
 
     this.handleChangeTitle = this.handleChangeTitle.bind(this)
     this.handleChangeDesc = this.handleChangeDesc.bind(this)
     this.handleChangeTag = this.handleChangeTag.bind(this)
+    this.clearForm = this.clearForm.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.grabUserLocation = this.grabUserLocation.bind(this)
-    this.check = this.check.bind(this)
+    this.checkInputs = this.checkInputs.bind(this)
   }
 
   componentDidMount() {
@@ -45,30 +46,78 @@ class Request extends Component {
   }
 
   handleChangeTitle(event) {
-    this.setState({title: event.target.value})
+    const title = event.target.value
+    if(!title){
+      this.setState({
+        errorTextTitle : "Please enter a Title.",
+        title,
+        disabled : true
+      })
+    }else{
+    this.setState({
+      title,
+      errorTextTitle : ""
+    })
+    }
   }
 
   handleChangeDesc(event) {
-    this.setState({description: event.target.value})
-    this.check()
+    const description = event.target.value
+    if(!description){
+      this.setState({
+        errorTextDesc : "Please enter a description.",
+        description,
+        disabled : true
+      })
+    }else{     
+    this.setState({
+      description,
+      errorTextDesc : ""
+     })
+    }
+    this.checkInputs()
   }
 
   handleChangeTag(event) {
-    this.setState({tag: event.target.value})
+    const tag = event.target.value
+    if(!tag){
+      this.setState({
+        errorTextTag : "Please enter a tag.",
+        tag,
+        disabled : true
+      })
+    }else{
+      this.setState({
+        tag,
+        errorTextTag : ""
+      })
+    }
+  }
+
+  clearForm() {
+    this.setState({
+      uid: '',
+      title: '',
+      description: '',
+      tag: '',
+      location: {}
+    })
   }
 
   handleSubmit(event){
     event.preventDefault()
-    this.props.handleSubmitRequest(this.state)
+    const newRequest = this.state
+    this.clearForm()
+    this.props.handleSubmitRequest(newRequest)
   }
 
-  check(){
+
+  checkInputs(){
     if(this.state.title && this.state.tag && this.state.description){
         this.setState({
           disabled : false
         })
-    }
-    
+    }  
   }
 
   render() {
