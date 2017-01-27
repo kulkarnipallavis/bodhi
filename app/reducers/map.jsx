@@ -5,21 +5,21 @@ let initialState = {
   selectedMarker: {}
 }
 
-const reducer = (state=initialState, action) => {
-  switch(action.type) {
-  case GET_ALL_MARKERS:
-    return {markers: action.markers, selectedMarker: state.selectedMarker}
+const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
+const GET_SELECTED_MARKER = 'GET_SELECTED_MARKER'
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ALL_MARKERS: return {markers: action.markers, selectedMarker: state.selectedMarker}
+    default: return state
   }
-  return state
 }
 
-const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
 export const getAllMarkers = (markers) => ({
   type: GET_ALL_MARKERS,
   markers
 })
 
-const GET_SELECTED_MARKER = 'GET_SELECTED_MARKER'
 export const getSelectedMarker = (marker) => ({
   type: GET_SELECTED_MARKER,
   selectedMarker: marker
@@ -29,15 +29,17 @@ export const getSelectedMarker = (marker) => ({
 export const getMarkers = () =>
   dispatch =>
     firebase.database().ref('Requests')
-    .on('value', snapshot => { 
+    .on('value', snapshot => {
       let requestObjects = snapshot.val()
       let markers = [];
- 
+
       Object.keys(requestObjects).forEach(key => {
-        console.log(requestObjects[key].location.latitude)
-        markers.push({position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, tag: requestObjects[key].tag, title: requestObjects[key].title})
+        console.log(requestObjects[key].location)
+        if (requestObjects[key].location.latitude) {
+          markers.push({position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, tag: requestObjects[key].tag, title: requestObjects[key].title})
+        }
       })
       dispatch(getAllMarkers(markers))
-  })
+    })
 
 export default reducer
