@@ -15,7 +15,11 @@ class Request extends Component {
       title: '',
       description: '',
       tag: '',
-      location: {}
+      location: {},
+      disabled : true,
+      errorTextTitle: "",
+      errorTextTag: "",
+      errorTextDesc: ""
     }
 
     this.handleChangeTitle = this.handleChangeTitle.bind(this)
@@ -23,6 +27,7 @@ class Request extends Component {
     this.handleChangeTag = this.handleChangeTag.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.grabUserLocation = this.grabUserLocation.bind(this)
+    this.check = this.check.bind(this)
   }
 
   componentDidMount() {
@@ -45,6 +50,7 @@ class Request extends Component {
 
   handleChangeDesc(event) {
     this.setState({description: event.target.value})
+    this.check()
   }
 
   handleChangeTag(event) {
@@ -54,6 +60,15 @@ class Request extends Component {
   handleSubmit(event){
     event.preventDefault()
     this.props.handleSubmitRequest(this.state)
+  }
+
+  check(){
+    if(this.state.title && this.state.tag && this.state.description){
+        this.setState({
+          disabled : false
+        })
+    }
+    
   }
 
   render() {
@@ -73,7 +88,8 @@ class Request extends Component {
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
             value={this.state.title}
             onChange={this.handleChangeTitle}
-            underlineFocusStyle={styles.underlineFocusStyle}/>
+            underlineFocusStyle={styles.underlineFocusStyle}
+            errorText={this.state.errorTextTitle}/>
           <br/>
             <TextField
               id="tag"
@@ -81,7 +97,8 @@ class Request extends Component {
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               value={this.state.tag}
               onChange={this.handleChangeTag}
-              underlineFocusStyle={styles.underlineFocusStyle}/>
+              underlineFocusStyle={styles.underlineFocusStyle}
+              errorText={this.state.errorTextTag}/>
           <br/>
           <TextField
             id="description"
@@ -91,7 +108,8 @@ class Request extends Component {
             value={this.state.description}
             multiLine={true}
             onChange={this.handleChangeDesc}
-            underlineFocusStyle={styles.underlineFocusStyle}/>
+            underlineFocusStyle={styles.underlineFocusStyle}
+            errorText={this.state.errorTextDesc}/>
           <br />
         </form>
         <RaisedButton
@@ -99,7 +117,8 @@ class Request extends Component {
           labelColor="white"
           backgroundColor={ blueGrey500 }
           label="Submit Request"
-          onClick={this.handleSubmit}/>
+          onClick={this.handleSubmit}
+          disabled={this.state.disabled}/>
       </div>
     )
   }
