@@ -20,7 +20,7 @@ export default connect(null, mapDispatchToProps)(
       super(props)
 
       this.state = {
-        date: null,
+        date: {},
         message: ''
       }
       this.handleMessage = this.handleMessage.bind(this)
@@ -78,7 +78,6 @@ export default connect(null, mapDispatchToProps)(
             <RaisedButton
               className="form-button"
               type="submit"
-              value="Offer Help"
               label="Offer Help"
               backgroundColor={ blueGrey500 }
               labelStyle={{color: 'white'}}/>
