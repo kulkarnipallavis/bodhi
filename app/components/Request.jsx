@@ -11,7 +11,7 @@ class Request extends Component {
     super(props)
 
     this.state = {
-      uid: '1',
+      userKey: '1',
       title: '',
       description: '',
       tag: '',
