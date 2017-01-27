@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import { addRequest } from '../reducers/request-actions.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
+import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 
 class Request extends Component {
 
@@ -57,35 +58,49 @@ class Request extends Component {
 
   render() {
 
+    const styles = {
+      floatingLabelFocusStyle: { color: tealA700 },
+      underlineFocusStyle: { borderColor: tealA700 }
+    }
+
     return (
-      <form>
-        <TextField
-          id="title"
-          hintText="Title"
-          value={this.state.title}
-          onChange={this.handleChangeTitle}
-          errorText="A request title is required."/>
-        <br/>
+      <div>
+        <h1>Request Help</h1>
+        <form style={{margin: '25px 0px 0px 0px'}}>
           <TextField
-            id="tag"
-            hintText="Tag"
-            value={this.state.tag}
-            onChange={this.handleChangeTag}
-            errorText="Please enter a tag to categorize your request."/>
-        <br/>
-        <TextField
-          id="description"
-          hintText="Description"
-          value={this.state.description}
-          onChange={this.handleChangeDesc}
-          errorText="Please describe the help you are requesting."/>
-        <br />
+            id="title"
+            floatingLabelText="Title"
+            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+            value={this.state.title}
+            onChange={this.handleChangeTitle}
+            underlineFocusStyle={styles.underlineFocusStyle}/>
+          <br/>
+            <TextField
+              id="tag"
+              floatingLabelText="Tag"
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              value={this.state.tag}
+              onChange={this.handleChangeTag}
+              underlineFocusStyle={styles.underlineFocusStyle}/>
+          <br/>
+          <TextField
+            id="description"
+            floatingLabelText="Description"
+            hintText="Description"
+            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+            value={this.state.description}
+            multiLine={true}
+            onChange={this.handleChangeDesc}
+            underlineFocusStyle={styles.underlineFocusStyle}/>
+          <br />
+        </form>
         <RaisedButton
+          className="form-button"
           labelColor="white"
-          backgroundColor="#607D8B"
+          backgroundColor={ blueGrey500 }
           label="Submit Request"
           onClick={this.handleSubmit}/>
-      </form>
+      </div>
     )
   }
 }
