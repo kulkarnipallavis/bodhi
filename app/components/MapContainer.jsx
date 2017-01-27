@@ -7,6 +7,7 @@ class MapContainer extends Component {
 
   constructor(props) {
     super(props)
+
     this.handleMapLoad = this.handleMapLoad.bind(this)
   }
 
@@ -20,13 +21,14 @@ class MapContainer extends Component {
   }
 
   render() {
-    return (
-      <div style={{ height: '100%' }}>
+
+    return(
       <MapComponent
-        containerElement={  <div style={{ height: '100vh', width: 'auto' }} />  }
-        mapElement={  <div style={{ height: '100vh', width: '100vw' }} />  }
-        onMapLoad={this.handleMapLoad}/>
-      </div>
+        containerElement={  <div style={{ height: '90vh', width: '100%'}} />  }
+        mapElement={  <div style={{ height: '100%', width: '100%'}} />  }
+        onMapLoad={this.handleMapLoad}
+        markers={this.props.markers}
+      />
     )
   }
 }
