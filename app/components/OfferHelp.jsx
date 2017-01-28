@@ -17,24 +17,43 @@ export default connect(null, mapDispatchToProps)(
   class OfferHelp extends Component {
 
     constructor(props) {
-      super(props)
-
+      super(props);
       this.state = {
-        date: {},
-        message: ''
+        date: null,
+        message: '',
+        disabled: true,
+        validationStateDate: true,
+        validationStateMessage: true
       }
-      this.handleMessage = this.handleMessage.bind(this)
-      this.handleDatePick = this.handleDatePick.bind(this)
+
+      this.handleChange = this.handleChange.bind(this)
+      this.validateSubmit = this.validateSubmit.bind(this)
       this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleDatePick(event, date) {
-      this.setState({ date })
+    handleChange(event, date, type) {
+      // form validation
+      if (type === 'message') {
+        const message = event.target.value
+        if (!message) this.setState({ message, validationStateMessage: false, disabled: true })
+        else {
+          this.setState({ message, validationStateMessage: true })
+          // submit enabled only if both inputs are valid
+          if (this.state.date) this.setState({ disabled: false })
+        }
+      } else {
+        if (!date) this.setState({ date, validationStateDate: false })
+        else {
+          this.setState({ date, validationStateDate: true })
+        }
+      }
     }
 
-    handleMessage(event) {
-      this.setState({ message: event.target.value })
+    validateSubmit() {
+      if (this.state.date && this.state.message) {
+        this.setState({ disabled: false })
+      }
     }
 
     clearForm() {
@@ -59,28 +78,31 @@ export default connect(null, mapDispatchToProps)(
           <form onSubmit={this.handleSubmit}>
             <DatePicker
               name="date"
+              floatingLabelText="Select a date"
               value={this.state.date}
-              onChange={this.handleDatePick}
-              floatingLabelText="Choose a date"
+              onChange={(event, date) => this.handleChange(event, date, 'date')}
               locale="en-US"
-              style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }} />
+              style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }}
+              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}/>
             <br/>
             <TextField
               name="msg"
               value={this.state.message}
-              onChange={this.handleMessage}
+              onChange={(event) => this.handleChange(event, null, 'message')}
               multiLine={true}
               hintText="Message To Requester"
               floatingLabelText="Message To Requester"
               floatingLabelFocusStyle={{ color: tealA700 }}
-              underlineFocusStyle={{ borderColor: tealA700 }} />
+              underlineFocusStyle={{ borderColor: tealA700 }}
+              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
             <br/>
             <RaisedButton
               className="form-button"
               type="submit"
               label="Offer Help"
               backgroundColor={ blueGrey500 }
-              labelStyle={{color: 'white'}}/>
+              labelStyle={{color: 'white'}}
+              disabled={this.state.disabled}/>
           </form>
         </div>
       )
