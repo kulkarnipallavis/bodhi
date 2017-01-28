@@ -2,15 +2,17 @@ import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
 import { getMarkers } from '../reducers/map'
+import {browserHistory} from 'react-router'
 
 class MapContainer extends Component {
 
   constructor(props) {
     super(props)
 
-    this.handleMarkerClick = this.handleMarkerClick.bind(this);
-    this.handleMarkerClose = this.handleMarkerClose.bind(this);
+    this.handleMarkerClick = this.handleMarkerClick.bind(this)
+    this.handleMarkerClose = this.handleMarkerClose.bind(this)
     this.handleMapLoad = this.handleMapLoad.bind(this)
+    this.handleButtonClick = this.handleButtonClick.bind(this)
   }
 
   componentDidMount() {
@@ -35,8 +37,12 @@ class MapContainer extends Component {
      markers: this.props.markers.map(marker => {
        if (marker === targetMarker) marker.showDesc = false
        return marker;
-     }),
+     })
    })
+  }
+
+  handleButtonClick() {
+    browserHistory.push('/offerhelp');
   }
 
   render() {
@@ -48,6 +54,7 @@ class MapContainer extends Component {
         markers={this.props.markers}
         onMarkerClick={this.handleMarkerClick}
         onMarkerClose={this.handleMarkerClose}
+        handleButtonClick={this.handleButtonClick}
       />
     )
   }
