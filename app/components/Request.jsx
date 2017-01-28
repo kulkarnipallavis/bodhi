@@ -34,7 +34,7 @@ class Request extends Component {
       const title = event.target.value
       if (!title) this.setState({ title, validationStateTitle: false, disabled: true })
       else {
-        this.setState({ title, validationStateMessage: true })
+        this.setState({ title, validationStateTitle: true })
         
       }
     } 
