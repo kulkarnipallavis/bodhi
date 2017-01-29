@@ -17,28 +17,28 @@ export const loggedIn = (user) => {
   return dispatch => {
   	//return database.ref('/Users' + user.uid).once('value').then(function(snapshot){
 	return database
-		.ref('/Users/-KbMhCodpMcAMlVjBQG-')
+    .ref('Users').orderByChild('uid').equalTo(user.uid)
+		// .ref('/Users/-KbMhCodpMcAMlVjBQG-')
 		.once('value', function(snapshot){
-  		console.log("snapshot", snapshot.val())
-  		// if(!snapshot){
-  		// 	return database().ref('Users' + user.uid).set({
-  		// 		uid: uid
-  		// 	})
-  		// } else {
-  		// 	console.log("User is in the database: snapshot", snapshot)
-  		// }
+   		console.log("snapshot", snapshot.val())
+
+  		if(!snapshot.val()){
+  			return database.ref('Users').set({ uid: user.uid, email: user.email })
+  		} else {
+  			console.log("User is in the database: snapshot", snapshot.val())
+  		}
   		// return
   	})
-  	// .then((user) => ({
-  	// 	type: LOGGED_IN,
-  	// 	user
- // 	})
+  	.then((user) => ({
+  	 	type: LOGGED_IN,
+  	 	user
+  	}))
   }
 }
 
 
 
-// export const loggedIn = (user) => 
+// export const loggedIn = (user) =>
 
 export const loggedOut = () => ({
   type: LOGGED_OUT
