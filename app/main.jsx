@@ -20,6 +20,7 @@ import Account from './components/Account'
 import { loggedIn, loggedOut } from './reducers/auth'
 
 
+
 auth().onAuthStateChanged(function(user) {
   if (user) {
     store.dispatch(loggedIn(user))

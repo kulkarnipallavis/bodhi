@@ -15,24 +15,26 @@ export default reducer
 
 export const loggedIn = (user) => {
   return dispatch => {
+
   	//return database.ref('/Users' + user.uid).once('value').then(function(snapshot){
 	return database
     .ref('Users').orderByChild('uid').equalTo(user.uid)
 		// .ref('/Users/-KbMhCodpMcAMlVjBQG-')
 		.once('value', function(snapshot){
    		console.log("snapshot", snapshot.val())
+      console.log('user ', user)
 
-  		if(!snapshot.val()){
-  			return database.ref('Users').set({ uid: user.uid, email: user.email })
-  		} else {
-  			console.log("User is in the database: snapshot", snapshot.val())
-  		}
+  		// if(!snapshot.val()){
+  		// 	 database.ref('Users').child('uid').set(user.uid)
+  		// } else {
+  		// 	console.log("User is in the database: snapshot", snapshot.val())
+  		// }
   		// return
   	})
-  	.then((user) => ({
-  	 	type: LOGGED_IN,
-  	 	user
-  	}))
+  	// .then((user) => ({
+  	//  	type: LOGGED_IN,
+  	//  	user
+  	// }))
   }
 }
 
