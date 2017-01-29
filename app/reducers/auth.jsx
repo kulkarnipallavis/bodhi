@@ -18,18 +18,25 @@ export const loggedIn = (user) => {
 
   	//return database.ref('/Users' + user.uid).once('value').then(function(snapshot){
 	return database
-    .ref('Users').orderByChild('uid').equalTo(user.uid)
+    .ref()
+    .orderByChild('uid')
+    .equalTo(user.uid)
 		// .ref('/Users/-KbMhCodpMcAMlVjBQG-')
 		.once('value', function(snapshot){
    		console.log("snapshot", snapshot.val())
       console.log('user ', user)
 
-  		// if(!snapshot.val()){
-  		// 	 database.ref('Users').child('uid').set(user.uid)
-  		// } else {
-  		// 	console.log("User is in the database: snapshot", snapshot.val())
-  		// }
-  		// return
+  		if(!snapshot.val()){
+  			 database.ref(`Users/${user.uid}`).update({
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName
+         })
+
+  		} else {
+  			console.log("User is in the database: snapshot", snapshot.val())
+  		}
+
   	})
   	// .then((user) => ({
   	//  	type: LOGGED_IN,
