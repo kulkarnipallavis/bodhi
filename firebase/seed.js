@@ -14,7 +14,7 @@ const seedUsers = Promise.all([
 		let idArr = [];
 
 		for(var user in users){
-			idArr.push(users[user].uid)
+			idArr.push(users[user].userKey)
 		}
 		
 		updateRequestData(idArr[0], "Moving", "A Couch", "Heavy Lifting", { latitude: 40.1052644, longitude: -73.109087 });

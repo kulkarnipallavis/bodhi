@@ -8,9 +8,9 @@ return database.ref('/Users').once('value').then(function(snapshot) {
 });
 }
 
-const writeUserData = (uid, name, location) => {
-  database.ref('Users/' + uid).set({
-    uid: uid,
+const writeUserData = (userKey, name, location) => {
+  database.ref('Users/' + userKey).set({
+    userKey: userKey,
     username: name,
     location : location
   });
@@ -23,7 +23,7 @@ const updateUserData = (name, location) => {
   const newUserKey = database.ref().child('Users').push().key;
  
   const userData = {
-    uid : newUserKey,
+    userKey : newUserKey,
     username: name,
     location : location
   };
@@ -35,10 +35,10 @@ const updateUserData = (name, location) => {
   return database.ref().update(updates);
 }
 
-function updateRequestData(uid, title, desc, tag, location) {
+function updateRequestData(userKey, title, desc, tag, location) {
   // A request entry.
   var requestData = {
-  	uid : uid,
+  	userKey : userKey,
     title: title,
     desc: desc,
     tag : tag,
@@ -50,7 +50,7 @@ function updateRequestData(uid, title, desc, tag, location) {
 
   // Write the new requests data simultaneously in the requests list and the user's request list.
   var updates = {};
-  updates['/Users/' + uid + '/requests/requestId'] = newRequestKey;
+  updates['/Users/' + userKey + '/requests/requestId'] = newRequestKey;
   updates['/Requests/' + newRequestKey] = requestData;
 
   return database.ref().update(updates);
