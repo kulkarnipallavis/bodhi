@@ -5,6 +5,13 @@ import { addRequest } from '../reducers/request-actions.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 
+
+/* 
+Here you have just one component for Request, but for Map you had container / component architecture.
+Try to keep the same architecture throughout your application. It'll give you a better sense
+of where things are!
+*/
+
 class Request extends Component {
 
   constructor(props) {

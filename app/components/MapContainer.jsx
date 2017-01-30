@@ -40,6 +40,9 @@ class MapContainer extends Component {
   }
 
   render() {
+
+/* You have different styles for your applying your css. 
+*/
     return (
       <MapComponent
         containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }

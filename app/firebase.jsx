@@ -1,5 +1,7 @@
 import firebase from "firebase";
 
+/* This file should be .gitignored. Security issues with having your api key public. */
+
 var config = {
    apiKey: "AIzaSyBv8n5SQNo2WTWYpoZOXv7YEMPuQu9kpPQ",
    authDomain: "bodhi-7ad02.firebaseapp.com",

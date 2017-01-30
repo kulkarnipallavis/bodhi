@@ -8,7 +8,11 @@ let initialState = {
 const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
 const GET_SELECTED_MARKER = 'GET_SELECTED_MARKER'
 
-const reducer = (state = initialState, action) => {
+/* 
+You copied over your state by hand, use Object.assign to make 
+your life easier and your code cleaner. 
+*/
+econst reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_MARKERS: return {markers: action.markers, selectedMarker: state.selectedMarker}
     default: return state
