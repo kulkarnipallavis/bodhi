@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import { Grid } from 'react-bootstrap'
 
 import { theme } from '../theme'
 import Navbar from './utilities/Navbar'
@@ -28,9 +29,9 @@ class App extends Component {
       <MuiThemeProvider muitheme={getMuiTheme(theme)}>
         <div>
           <Navbar />
-          <div className="container">
+          <Grid responsive>
             { this.props.children && React.cloneElement(this.props.children, this.props) }
-          </div>
+          </Grid>
         </div>
       </MuiThemeProvider>
     )

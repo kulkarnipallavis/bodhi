@@ -15,30 +15,58 @@ export default reducer
 
 export const loggedIn = (user) => {
   return dispatch => {
-  	//return database.ref('/Users' + user.uid).once('value').then(function(snapshot){
-	return database
-		.ref('/Users/-KbMhCodpMcAMlVjBQG-')
-		.once('value', function(snapshot){
-  		console.log("snapshot", snapshot.val())
-  		// if(!snapshot){
-  		// 	return database().ref('Users' + user.uid).set({
-  		// 		uid: uid
-  		// 	})
-  		// } else {
-  		// 	console.log("User is in the database: snapshot", snapshot)
-  		// }
-  		// return
+    return database
+      .ref('Users').child(user.uid)
+      // .orderByChild('authUid')
+      // .equalTo(user.uid)
+		  .once('value', function(snapshot){
+
+  		if(!snapshot.val()){
+        const date = new Date
+        const theDate = date.toString()
+
+  			database.ref(`Users/${user.uid}`).set({
+          email: user.email,
+          name: user.displayName,
+          picture: '',
+          dateJoined: theDate,
+          badges: ''
+        })
+        const newUser = {
+          authUid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          picture: '',
+          dateJoined: theDate,
+          badges: ''
+        }
+        dispatch({
+          type: LOGGED_IN,
+          user: newUser
+        })
+  		} else {
+          const newUser = {
+            authUid: user.uid,
+            email: user.email,
+            name: snapshot.val().name,
+            picture: snapshot.val().picture,
+            dateJoined: snapshot.val().dateJoined,
+            badges: snapshot.val().badges
+          }
+        dispatch({
+          type: LOGGED_IN,
+          user: newUser
+        })
+  		}
   	})
-  	// .then((user) => ({
-  	// 	type: LOGGED_IN,
-  	// 	user
- // 	})
+
+
   }
 }
 
 
 
-// export const loggedIn = (user) => 
+// export const loggedIn = (user) =>
 
 export const loggedOut = () => ({
   type: LOGGED_OUT

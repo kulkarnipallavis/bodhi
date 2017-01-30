@@ -12,3 +12,7 @@ public/bundle.js.map
 npm-debug.log
 
 .DS_Store
+
+
+# Firebase Debug Log
+firebase-debug.log
