@@ -17,43 +17,22 @@ class Request extends Component {
       tag: '',
       location: {},
       disabled: true,
-      validationStateTitle : true,
-      validationStateTag : true,
-      validationStateDescription : true
+      titleIsValid: true,
+      tagIsValid: true,
+      descriptionIsValid: true,
     }
 
     this.clearForm = this.clearForm.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.grabUserLocation = this.grabUserLocation.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange(event, type) {
-      // form validation
-    if (type === 'title') {
-      const title = event.target.value
-      if (!title) this.setState({ title, validationStateTitle: false, disabled: true })
-      else {
-        this.setState({ title, validationStateTitle: true })
-        
-      }
-    } 
-    else if(type === 'tag'){
-      const tag = event.target.value
-      if (!tag) this.setState({ tag, validationStateTag: false, disabled: true })
-      else {
-        this.setState({ tag, validationStateTag: true })
-      }
-    }
-    else {
-      const description = event.target.value
-      if (!description) this.setState({ description, validationStateDescription: false, disabled: true })
-      else {
-        this.setState({ description, validationStateDescription: true })
-        // submit enabled only if both inputs are valid
-        if (this.state.title && this.state.tag) this.setState({ disabled: false })
-      }
-    }
+  handleChange = type => event => {
+    const {value} = event.target
+    this.setState({
+      [type]: value,
+      [`${type}IsValid`]: !!value,
+    })
   }
 
   componentDidMount() {
@@ -89,6 +68,12 @@ class Request extends Component {
     this.props.handleSubmitRequest(newRequest)
   }
 
+  isInvalid() {
+    if (!this.state) return false
+    const {titleIsValid, tagIsValid, descriptionIsValid} = this.state
+    return !(titleIsValid && tagIsValid && descriptionIsValid)
+  }
+
   render() {
 
     const styles = {
@@ -105,18 +90,18 @@ class Request extends Component {
             floatingLabelText="Title"
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
             value={this.state.title}
-            onChange={(event, type) => this.handleChange(event, 'title')}
+            onChange={this.handleChange('title')}
             underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.validationStateTitle ? '' : 'Please enter a title.'}/>
+            errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}/>
           <br/>
             <TextField
               id="tag"
               floatingLabelText="Tag"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               value={this.state.tag}
-              onChange={(event, type) => this.handleChange(event, 'tag')}
+              onChange={this.handleChange('tag')}
               underlineFocusStyle={styles.underlineFocusStyle}
-              errorText={this.state.validationStateTag ? '' : 'Please enter a tag.'}/>
+              errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}/>
           <br/>
           <TextField
             id="description"
@@ -125,9 +110,9 @@ class Request extends Component {
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
             value={this.state.description}
             multiLine={true}
-            onChange={(event, type) => this.handleChange(event,'description')}
+            onChange={this.handleChange('description')}
             underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.validationStateDescription ? '' : 'Please enter a description.'}/>
+            errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}/>
           <br />
         </form>
         <RaisedButton
@@ -136,7 +121,7 @@ class Request extends Component {
           backgroundColor={ blueGrey500 }
           label="Submit Request"
           onClick={this.handleSubmit}
-          disabled={this.state.disabled}/>
+          disabled={this.isInvalid()}/>
       </div>
     )
   }

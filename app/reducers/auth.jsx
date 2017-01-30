@@ -16,9 +16,9 @@ export default reducer
 export const loggedIn = (user) => {
   return dispatch => {
     return database
-      .ref('Users')
-      .orderByChild('authUid')
-      .equalTo(user.uid)
+      .ref('Users').child(user.uid)
+      // .orderByChild('authUid')
+      // .equalTo(user.uid)
 		  .once('value', function(snapshot){
 
   		if(!snapshot.val()){
@@ -32,21 +32,18 @@ export const loggedIn = (user) => {
           dateJoined: theDate,
           badges: ''
         })
-        //.then(() => {
-          const newUser = {
-            authUid: user.uid,
-            email: user.email,
-            name: user.displayName,
-            picture: '',
-            dateJoined: theDate,
-            badges: ''
-          }
-          dispatch({
-            type: LOGGED_IN,
-            user: newUser
-          })
-      //  })
-      //  .catch(err => console.log(err))
+        const newUser = {
+          authUid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          picture: '',
+          dateJoined: theDate,
+          badges: ''
+        }
+        dispatch({
+          type: LOGGED_IN,
+          user: newUser
+        })
   		} else {
           const newUser = {
             authUid: user.uid,
