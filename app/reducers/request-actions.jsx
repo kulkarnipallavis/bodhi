@@ -25,7 +25,7 @@ export const addRequest = (request) =>  {
     const newRequestKey = database.ref().child('Requests').push().key;
 
     let updates = {};
-    updates['/Users/' + request.uid + '/requests/requestId'] = newRequestKey;
+    updates['/Users/' + request.userKey + '/requests/requestId'] = newRequestKey;
     updates['/Requests/' + newRequestKey] = request;
 
     return database.ref().update(updates);
