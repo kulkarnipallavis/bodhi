@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import {auth} from '../../firebase.jsx'
 
-const mapStateToProps = (state) => ({ auth: state.auth })
+const mapStateToProps = (state) => ({ currentUser: state.currentUser })
 
 
 export default connect(mapStateToProps)(class Navbar extends React.Component {
@@ -32,7 +32,7 @@ logout(e) {
 
 render() {
 
-const user = this.props.auth
+const user = this.props.currentUser
 
 return (
   <div>
