@@ -16,7 +16,7 @@ import Request from './components/Request'
 import Signup from './components/Signup'
 import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
-import Account from './components/Account'
+import Profile from './components/Profile'
 
 import { loggedIn, loggedOut } from './reducers/auth'
 
@@ -44,7 +44,7 @@ render(
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/loginenter" component={LoginEnter} />
-          <Route path="/account" component={Account} />
+          <Route path="/profile" component={Profile} />
         </Route>
       </Router>
     </Provider>,

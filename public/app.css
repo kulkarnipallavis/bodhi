@@ -75,7 +75,12 @@ a {
   display: flex;
   justify-content: center;
   height: 85vh;
-  width: 100%
+  width: 100%;
+  padding-top: 60px;
+}
+
+.layout {
+  flex-direction: column;
 }
 
 h1 {
@@ -92,3 +97,18 @@ form {
 .form-button {
   margin: 35px 0px 0px 60px !important;
 }
+
+/* PROFILE VIEW */
+
+#heading {
+  height: 100px;
+  width: 70%;
+}
+
+
+
+
+
+
+
+
