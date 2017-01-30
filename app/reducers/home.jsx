@@ -17,6 +17,8 @@ const reducer = (state = initialState, action) => {
 		case CLOSED_REQUESTS:
 			newState.closedRequests = action.closedRequests;
 			break;
+		default:
+			return state;
 	}
 	return newState;
 };
