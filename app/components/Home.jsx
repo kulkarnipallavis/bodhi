@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import Paper from 'material-ui/Paper';
-import {getOpenRequests, getClosedRequests} from '../reducers/home';
-import { blueGrey500 } from 'material-ui/styles/colors';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import Paper from 'material-ui/Paper'
+import {getOpenRequests, getClosedRequests} from '../reducers/home'
+import { blueGrey500 } from 'material-ui/styles/colors'
 
 const style = {
 	  height: 200,
@@ -11,39 +11,40 @@ const style = {
 	  textAlign: 'center',
 	  display: 'block',
 	  color: blueGrey500
-	};
+	}
 
 const mapStateToProps = (state) => {
 	return {
 		openRequests: state.home.openRequests,
-		closedRequests: state.home.closedRequests
-	};
-};
+		closedRequests: state.home.closedRequests,
+		currentUser: state.currentUser
+	}
+}
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getOpenRequestsDispatch: () => {
-			dispatch(getOpenRequests());
+			dispatch(getOpenRequests())
 		},
 		getClosedRequestsDispatch: () => {
-			dispatch(getClosedRequests());
+			dispatch(getClosedRequests())
 		}
-	};
-};
+	}
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(
 
 class Home extends Component {
 	render() {
 
-	const openReq = this.props.openRequests;
-	const openReqKeys = Object.keys(openReq);
+	const openReq = this.props.openRequests
+	const openReqKeys = Object.keys(this.props.openRequests)
 
-	const closedReq = this.props.closedRequests;
-	const closedReqKeys = Object.keys(closedReq);
-
+	const closedReq = this.props.closedRequests
+	const closedReqKeys = Object.keys(closedReq)
 		return (
 			<div>
+				<h1>Welcome !</h1>
 				<Paper style={style} zDepth={2} >
 					<h1>Open Requests</h1>
 				{
@@ -61,6 +62,6 @@ class Home extends Component {
 				}
 				</Paper>
 			</div>
-		);
+		)
 	}
-});
+})

@@ -1,44 +1,44 @@
-'use strict';
+'use strict'
 
-import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import { auth } from './firebase';
+import React from 'react'
+import { Router, Route, browserHistory } from 'react-router'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import { auth } from './firebase'
 
-import store from './store';
-import App from './components/App';
-import MapContainer from './components/MapContainer';
-import OfferHelp from './components/OfferHelp';
-import Request from './components/Request';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import LoginEnter from './components/LoginEnter';
-import Account from './components/Account';
-import Home from './components/Home';
-import {getOpenRequests, getClosedRequests} from './reducers/home';
-import { loggedIn, loggedOut } from './reducers/auth';
+import store from './store'
+import App from './components/App'
+import MapContainer from './components/MapContainer'
+import OfferHelp from './components/OfferHelp'
+import Request from './components/Request'
+import Signup from './components/Signup'
+import Login from './components/Login'
+import LoginEnter from './components/LoginEnter'
+import Account from './components/Account'
+import Home from './components/Home'
+import {getOpenRequests, getClosedRequests} from './reducers/home'
+import { loggedIn, loggedOut } from './reducers/auth'
 
 
 
 auth().onAuthStateChanged(function(user) {
   if (user) {
-    store.dispatch(loggedIn(user));
+    store.dispatch(loggedIn(user))
   } else {
-    store.dispatch(loggedOut());
+    store.dispatch(loggedOut())
   }
-});
+})
 
 const onEnterApp = () => {
-  injectTapEventPlugin();
+  injectTapEventPlugin()
   //get currently signed-in user
-};
+}
 
 const onHomeEnter = () => {
-  store.dispatch(getOpenRequests());
-  store.dispatch(getClosedRequests());
-};
+  store.dispatch(getOpenRequests())
+  store.dispatch(getClosedRequests())
+}
 
 render(
   <Provider store={store}>

@@ -6,4 +6,4 @@ const rootReducer = combineReducers({
   home: require('./home').default
 });
 
-export default rootReducer;
+export default rootReducer
