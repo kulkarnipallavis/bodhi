@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
-import { getMarkers } from '../reducers/map'
+import { getMarkers, getUserLocation } from '../reducers/map'
 
 class MapContainer extends Component {
 
@@ -15,6 +15,7 @@ class MapContainer extends Component {
 
   componentDidMount() {
     this.props.getMarkers()
+    this.props.getUserLocation()
   }
 
   handleMapLoad(map) {
@@ -46,6 +47,7 @@ class MapContainer extends Component {
         mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
         onMapLoad={this.handleMapLoad}
         markers={this.props.markers}
+        center={this.props.center}
         onMarkerClick={this.handleMarkerClick}
         onMarkerClose={this.handleMarkerClose}
       />
@@ -58,7 +60,7 @@ MapContainer.propTypes = {
   getMarkers: PropTypes.func
 }
 
-const mapStateToProps = (state) => ({ markers: state.map.markers })
-const mapDispatchToProps = { getMarkers }
+const mapStateToProps = (state) => ({ markers: state.map.markers, center: state.map.center })
+const mapDispatchToProps = { getMarkers, getUserLocation }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)
