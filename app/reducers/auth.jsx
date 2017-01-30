@@ -20,14 +20,12 @@ export const loggedIn = (user) => {
       .orderByChild('authUid')
       .equalTo(user.uid)
 		  .once('value', function(snapshot){
-   		console.log("snapshot", snapshot.val())
 
   		if(!snapshot.val()){
-        const newUserKey = database.ref().child('Users').push().key
         const date = new Date
         const theDate = date.toString()
-  			database.ref(`Users/${newUserKey}`).update({
-          authUid: user.uid,
+
+  			database.ref(`Users/${user.uid}`).set({
           email: user.email,
           name: user.displayName,
           picture: '',
@@ -35,15 +33,20 @@ export const loggedIn = (user) => {
           badges: ''
         })
         .then((result) => {
-          console.log("result in IF", result)
-            // dispatch({
-            //   type: LOGGED_IN,
-            //   user: result.val()
-            // })
+          const newUser = { [user.uid]: {
+            email: user.email,
+            name: user.displayName,
+            picture: '',
+            dateJoined: theDate,
+            badges: ''
+          }}
+          dispatch({
+            type: LOGGED_IN,
+            user: newUser
           })
+        })
         .catch(err => console.log(err))
   		} else {
-  			console.log("User is in the database: snapshot.val(): ", snapshot.val())
 
         dispatch({
           type: LOGGED_IN,
