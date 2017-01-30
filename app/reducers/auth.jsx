@@ -15,35 +15,44 @@ export default reducer
 
 export const loggedIn = (user) => {
   return dispatch => {
-
-  	//return database.ref('/Users' + user.uid).once('value').then(function(snapshot){
-	return database
-    //.ref()
-    .ref('Users')
-    .orderByChild('uid')
-    .equalTo(user.uid)
-		// .ref('/Users/-KbMhCodpMcAMlVjBQG-')
-		.once('value', function(snapshot){
+    return database
+      .ref('Users')
+      .orderByChild('authUid')
+      .equalTo(user.uid)
+		  .once('value', function(snapshot){
    		console.log("snapshot", snapshot.val())
-      console.log('user ', user)
 
   		if(!snapshot.val()){
-  			return database.ref(`Users/${user.uid}`).update({
-          uid: user.uid,
+        const newUserKey = database.ref().child('Users').push().key
+        const date = new Date
+        const theDate = date.toString()
+  			database.ref(`Users/${newUserKey}`).update({
+          authUid: user.uid,
           email: user.email,
-          name: user.displayName
-         })
+          name: user.displayName,
+          picture: '',
+          dateJoined: theDate,
+          badges: ''
+        })
+        .then((result) => {
+          console.log("result in IF", result)
+            // dispatch({
+            //   type: LOGGED_IN,
+            //   user: result.val()
+            // })
+          })
+        .catch(err => console.log(err))
   		} else {
   			console.log("User is in the database: snapshot.val(): ", snapshot.val())
+
+        dispatch({
+          type: LOGGED_IN,
+          user: snapshot.val()
+        })
   		}
   	})
-  	.then(() => {
-      console.log("user??", user)
-      dispatch({
-    	 	type: LOGGED_IN,
-    	 	user
-     })
-  	})
+
+
   }
 }
 
