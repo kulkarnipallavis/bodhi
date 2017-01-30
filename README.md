@@ -15,14 +15,15 @@
 
     What is working:
       -New Users can Sign Up for App
+      -Users can Login and Stay Logged In
       -Users can Create Requests with location and time
       -Map shows Current Requests via Markers
       -Clicking on Marker gives you Request Detail
+      -Offer Help Button on Marker links up to Offer Help Detail View
       -Offer Help can be submitted
 
     What doesn't work yet:
-      -Users can Login and Stay Logged In(todo)
-      -Offer Help Button on Marker links up to Offer Help Detail View(todo)
+      -New Users are added to database(todo)
       -Help requester will be notified when help is offered(todo)
       -Closed Request will disappear from map(todo)
 
