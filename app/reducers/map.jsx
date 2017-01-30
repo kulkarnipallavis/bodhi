@@ -47,7 +47,7 @@ export const getMarkers = () =>
 
       Object.keys(requestObjects).forEach(key => {
         if (requestObjects[key].location.latitude) {
-          markers.push({position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, description: requestObjects[key].desc, tag: requestObjects[key].tag, title: requestObjects[key].title})
+          markers.push({id: requestObjects[key].iud, position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, description: requestObjects[key].desc, tag: requestObjects[key].tag, title: requestObjects[key].title})
         }
       })
 
