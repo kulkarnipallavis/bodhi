@@ -32,25 +32,33 @@ export const loggedIn = (user) => {
           dateJoined: theDate,
           badges: ''
         })
-        .then((result) => {
-          const newUser = { [user.uid]: {
+        //.then(() => {
+          const newUser = {
+            authUid: user.uid,
             email: user.email,
             name: user.displayName,
             picture: '',
             dateJoined: theDate,
             badges: ''
-          }}
+          }
           dispatch({
             type: LOGGED_IN,
             user: newUser
           })
-        })
-        .catch(err => console.log(err))
+      //  })
+      //  .catch(err => console.log(err))
   		} else {
-
+          const newUser = {
+            authUid: user.uid,
+            email: user.email,
+            name: snapshot.val().name,
+            picture: snapshot.val().picture,
+            dateJoined: snapshot.val().dateJoined,
+            badges: snapshot.val().badges
+          }
         dispatch({
           type: LOGGED_IN,
-          user: snapshot.val()
+          user: newUser
         })
   		}
   	})
