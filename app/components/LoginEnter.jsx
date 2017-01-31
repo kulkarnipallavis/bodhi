@@ -1,36 +1,16 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton'
 import { red700, blueGrey500 } from 'material-ui/styles/colors'
 import { auth } from '../firebase.jsx'
+import { connect } from 'react-redux'
 
-export default class LoginEnter extends Component {
+export default connect(state => ({ currentUser: state.currentUser }))(class LoginEnter extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.handleClickGmail = this.handleClickGmail.bind(this)
   }
-
-  // componentWillMount() {
-  //   auth().getRedirectResult().then((result) => {
-  //     if (result.credential) {
-  //       // This gives you a Google Access Token. You can use it to access the Google API.
-  //       var token = result.credential.accessToken
-  //     }
-  //     // The signed-in user info.
-  //     var user = result.user
-  //   })
-  //   .catch(error => {
-  //     // Handle Errors here.
-  //     var errorCode = error.code;
-  //     var errorMessage = error.message;
-  //     // The email of the user's account used.
-  //     var email = error.email;
-  //     // The firebase.auth.AuthCredential type that was used.
-  //     var credential = error.credential;
-  //     // ...
-  //   })
-  // }
 
   handleClickGmail() {
     var provider = new auth.GoogleAuthProvider()
@@ -62,3 +42,4 @@ export default class LoginEnter extends Component {
       </div>
     )}
   }
+)

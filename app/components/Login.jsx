@@ -52,7 +52,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
     const { email, password } = this.state
     this.clearForm()
     auth().signInWithEmailAndPassword(email, password)
-    .then(() =>  browserHistory.push('/profile'))
+    .then(() =>  browserHistory.push('/'))
     .catch( err => {
       if (err.code === 'auth/invalid-email' || err.code === 'auth/user-disabled' || err.code === 'auth/user-not-found') {
         this.setState({ errmsgEmail: err.message })
