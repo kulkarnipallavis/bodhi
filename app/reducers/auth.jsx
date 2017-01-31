@@ -13,18 +13,18 @@ const reducer = (state = null, action) => {
 
 export default reducer
 
-export const loggedIn = (user) => {
-  return dispatch => {
-    return database
-      .ref('Users').child(user.uid)
-      // .equalTo(user.uid)
-		  .once('value', function(snapshot){
 
-  		if(!snapshot.val()){
+export const loggedIn = (user) => dispatch => {
+  return database
+    .ref('Users').child(user.uid)
+    // .orderByChild('authUid')
+    // .equalTo(user.uid)
+	  .once('value', function(snapshot){
+      if (!snapshot.val()) {
         const date = new Date
         const theDate = date.toString()
 
-  			database.ref(`Users/${user.uid}`).set({
+        database.ref(`Users/${user.uid}`).set({
           email: user.email,
           name: user.displayName,
           picture: '',
@@ -43,37 +43,19 @@ export const loggedIn = (user) => {
           type: LOGGED_IN,
           user: newUser
         })
-  		} else {
-          const newUser = {
-            authUid: user.uid,
-            email: user.email,
-            name: snapshot.val().name,
-            picture: snapshot.val().picture,
-            dateJoined: snapshot.val().dateJoined,
-            badges: snapshot.val().badges
-          }
-        dispatch({
-          type: LOGGED_IN,
-          user: newUser
-        })
-  		}
-  	})
+      } else {
+        const newUser = {
+          authUid: user.uid,
+          email: user.email,
+          name: snapshot.val().name,
+          picture: snapshot.val().picture,
+          dateJoined: snapshot.val().dateJoined,
+          badges: snapshot.val().badges
+        }
 
-
-  }
+        dispatch({ type: LOGGED_IN, user: newUser })
+      }
+    })
 }
 
-
-
-// export const loggedIn = (user) =>
-
-export const loggedOut = () => ({
-  type: LOGGED_OUT
-})
-
-
-
-
-
-
-
+export const loggedOut = () => ({ type: LOGGED_OUT })

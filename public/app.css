@@ -71,37 +71,49 @@ a {
   width: 100px;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  height: 85vh;
-  width: 100%;
-  padding-top: 60px;
+.flex-container {
+  padding-top: 50px;
 }
 
-.layout {
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.flex-col {
+  flex-basis: auto;
   flex-direction: column;
+  background: rgb(0, 191, 165);
+  border-radius: 10px;
+  margin: 25px;
+  padding: 15px;
+  line-height: 1.5em;
+  color: white;
 }
 
 h1 {
   font-size: 3em;
   color: #607D8B;
-  margin: 50px 0px 25px 0px;
+  margin: 0px;
   text-align: center;
 }
 
 form {
-  margin-left: 15px !important;
+  margin-left: 0px !important;
 }
 
 .form-button {
-  margin: 35px 0px 0px 60px !important;
+  margin-top: 25px !important;
 }
 
 /* PROFILE VIEW */
 
-#heading {
-  height: 100%;
+/*#heading {
+  height: inherit;
   background: rgb(0, 191, 165);
   border-radius: 10px;
   margin: 25px;
@@ -138,4 +150,4 @@ form {
   padding: 15px;
   line-height: 1.5em;
   color: white;
-}
+}*/

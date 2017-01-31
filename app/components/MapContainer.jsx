@@ -56,21 +56,23 @@ class MapContainer extends Component {
 
   render() {
     return (
-      <MapComponent
-        containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }
-        mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
-        onMapLoad={this.handleMapLoad}
-        markers={this.props.markers}
-        center={this.props.center}
-        onMarkerClick={this.handleMarkerClick}
-        onMarkerClose={this.handleMarkerClose}
-        handleButtonClick={this.handleButtonClick}
-      />
+      <div className="flex-row">
+        <MapComponent
+          containerElement={  <div style={{ height: '100vh', width: '100%' }} />  }
+          mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
+          onMapLoad={this.handleMapLoad}
+          markers={this.props.markers}
+          center={this.props.center}
+          onMarkerClick={this.handleMarkerClick}
+          onMarkerClose={this.handleMarkerClose}
+          handleButtonClick={this.handleButtonClick} />
+      </div>
     )
   }
 }
 
 MapContainer.propTypes = {
+  center: PropTypes.object,
   markers: PropTypes.array,
   getMarkers: PropTypes.func
 }

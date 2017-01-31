@@ -9,7 +9,9 @@ export const submitOffer = (newOffer) => {
 		// 	offerId: newOfferKey
 		// }
 
-    var updates = {['/Offers/' + newOfferKey] : newOffer}
+
+    var updates = {['/Offers/' + newOfferKey]: offerData}
+
     return firebase.database().ref().update(updates)
 	}
 }
