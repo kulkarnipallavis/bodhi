@@ -55,7 +55,7 @@ export default connect(mapStateToProps)(props => {
           <div className="flex-row">
             <div>
               <ul>
-              { /* Right now markers are add to state by componentDidMount in /map, so no markers here! */ }
+              { /* Right now markers are added to state by componentDidMount in /map, so no markers here! */ }
               { props.markers && props.markers.filter(marker => marker.uid === user.uid).map(marker => (
                 <Link to="/request"><li>{marker.title}</li></Link>
               )) }

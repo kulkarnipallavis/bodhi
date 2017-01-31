@@ -5,6 +5,8 @@ import { addRequest } from '../reducers/request-actions.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 
+let geoWatchId
+
 class Request extends Component {
 
   constructor(props) {
@@ -19,7 +21,7 @@ class Request extends Component {
       disabled: false,
       titleIsValid: true,
       tagIsValid: true,
-      descriptionIsValid: true,
+      descriptionIsValid: true
     }
 
     this.clearForm = this.clearForm.bind(this)
@@ -29,10 +31,6 @@ class Request extends Component {
 
   componentDidMount() {
     this.grabUserLocation()
-  }
-
-  componenetWillUnmount() {
-    navigator.geolocation.clearWatch()
   }
 
   isInvalid() {
@@ -49,7 +47,7 @@ class Request extends Component {
   }
 
   grabUserLocation() {
-    navigator.geolocation.watchPosition(Position => {
+    geoWatchId = navigator.geolocation.getCurrentPosition(Position => {
       this.setState({
         location: {
           latitude: Position.coords.latitude,
