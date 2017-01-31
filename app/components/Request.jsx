@@ -11,7 +11,7 @@ class Request extends Component {
     super(props)
 
     this.state = {
-      userKey: '1',
+      uid: this.props.uid,
       title: '',
       description: '',
       tag: '',
@@ -49,19 +49,18 @@ class Request extends Component {
     })
   }
 
-  
+
 
   clearForm() {
     this.setState({
-      uid: '',
       title: '',
       description: '',
-      tag: '',
-      location: {}
+      tag: ''
     })
   }
 
   handleSubmit(event){
+
     event.preventDefault()
     const newRequest = this.state
     this.clearForm()
@@ -81,6 +80,7 @@ class Request extends Component {
       underlineFocusStyle: { borderColor: tealA700 }
     }
 
+console.log('PROPS ', this.props)
     return (
       <div>
         <h1>Request Help</h1>
@@ -131,8 +131,12 @@ Request.propTypes = {
   handleSubmitRequest: PropTypes.func.isRequired
 }
 
+const mapState = (state) => ({
+  uid: state.currentUser.uid
+})
+
 const mapDispatch = (dispatch) => ({
   handleSubmitRequest: (request) => dispatch(addRequest(request))
 })
 
-export default connect(state => ({}), mapDispatch)(Request)
+export default connect(mapState, mapDispatch)(Request)

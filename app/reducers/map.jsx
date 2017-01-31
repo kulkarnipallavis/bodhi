@@ -25,7 +25,7 @@ export const getSelectedMarker = (marker) => ({
   selectedMarker: marker
 })
 
-//action-creators 
+//action-creators
 export const getMarkers = () =>
   dispatch =>
     firebase.database().ref('Requests')
