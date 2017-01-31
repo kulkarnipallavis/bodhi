@@ -6,9 +6,9 @@ const MapComponent = withGoogleMap(props => (
     ref={ props.onMapLoad }
     defaultZoom={9}
     defaultCenter={{ lat: 40.6944, lng: -73.9213 }}>
-    { props.markers && props.markers.map((marker, index) => 
-    	<Marker 
-    	 key={index} 
+    { props.markers && props.markers.map((marker, index) =>
+    	<Marker
+    	 key={index}
     	 position={marker.position}
     	 onClick={() => props.onMarkerClick(marker)}
     	 >
@@ -17,7 +17,7 @@ const MapComponent = withGoogleMap(props => (
     	       { <div>
 	    	       	 <h2>{marker.title}</h2>
 	    	         <h3 id="description">{marker.description}</h3>
-	    	         <button type="button" onClick={() => props.handleButtonClick()}>Offer Help</button>
+	    	         <button type="button" onClick={props.handleButtonClick}>Offer Help</button>
     	         </div>
     	       }
     	     </InfoWindow>
