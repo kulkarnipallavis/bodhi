@@ -69,7 +69,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
           <h1>Login</h1>
         </div>
         <div className="flex-row">
-          <form onSubmit={this.handleSubmit}>
+          <form>
             <TextField
               id="email"
               type="email"
@@ -92,6 +92,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
         </div>
         <div className="flex-row">
           <RaisedButton
+           onClick={this.handleSubmit}
            className="form-button"
            type="submit"
            labelColor="white"

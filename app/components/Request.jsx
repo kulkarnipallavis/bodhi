@@ -31,6 +31,10 @@ class Request extends Component {
     this.grabUserLocation()
   }
 
+  componenetWillUnmount() {
+    navigator.geolocation.clearWatch()
+  }
+
   isInvalid() {
     const { title, tag, description, titleIsValid, tagIsValid, descriptionIsValid } = this.state
     return !(title && tag && description && titleIsValid && tagIsValid && descriptionIsValid)
