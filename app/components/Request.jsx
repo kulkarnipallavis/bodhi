@@ -11,7 +11,7 @@ class Request extends Component {
     super(props)
 
     this.state = {
-      uid: this.props.uid,
+      //uid: this.props.uid,
       title: '',
       description: '',
       tag: '',
@@ -63,7 +63,15 @@ class Request extends Component {
   handleSubmit(event){
 
     event.preventDefault()
-    const newRequest = this.state
+    const newRequest = {
+      uid: this.props.uid,
+      title: this.state.title,
+      description: this.state.description,
+      tag: this.state.tag,
+      location: this.state.location,
+      status: this.state.status
+    }
+
     this.clearForm()
     this.props.handleSubmitRequest(newRequest)
   }
