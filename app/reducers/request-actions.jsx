@@ -24,8 +24,6 @@ import firebase from 'firebase'
 export const addRequest = (request) =>  {
   return dispatch => {
     const newRequestKey = database.ref().child('Requests').push().key;
-    const date = new Date
-    const theDate = date.toString()
 
     const time = firebase.database.ServerValue.TIMESTAMP
 
