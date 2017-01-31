@@ -27,12 +27,11 @@ export const setLocation = (center) => ({
 })
 
 
-//action-creators 
-export const getUserLocation = () => 
-  dispatch =>  
+//action-creators
+export const getUserLocation = () =>
+  dispatch =>
     firebase.database().ref('Users')
     .on('value', snapshot => {
-      //testing out dispatcher
       let userLocation = {lat: 40.705175, lng: -74.009252}
       dispatch(setLocation(userLocation))
     })
@@ -47,7 +46,7 @@ export const getMarkers = () =>
 
       Object.keys(requestObjects).forEach(key => {
         if (requestObjects[key].location.latitude) {
-          markers.push({id: requestObjects[key].iud, position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, description: requestObjects[key].desc, tag: requestObjects[key].tag, title: requestObjects[key].title})
+          markers.push({uid: requestObjects[key].uid, position: {lat: requestObjects[key].location.latitude, lng: requestObjects[key].location.longitude}, description: requestObjects[key].description, tag: requestObjects[key].tag, title: requestObjects[key].title})
         }
       })
 

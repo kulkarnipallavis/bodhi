@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Router, Route, browserHistory } from 'react-router'
-
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -20,15 +19,13 @@ import Profile from './components/Profile'
 
 import { loggedIn, loggedOut } from './reducers/auth'
 
-
-
-auth().onAuthStateChanged(function(user) {
+auth().onAuthStateChanged(user => {
   if (user) {
     store.dispatch(loggedIn(user))
   } else {
     store.dispatch(loggedOut())
   }
-});
+})
 
 const onEnterApp = () => {
   injectTapEventPlugin()
