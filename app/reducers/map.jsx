@@ -2,7 +2,7 @@ import firebase from '../firebase.jsx';
 
 let initialState = {
   markers: [],
-  //selectedMarker hardcoded until selectedMarker is placed on state
+  center: {},
   selectedMarker: {
             lat: 40.7052005, 
             lng: -74.0091016, 
@@ -15,13 +15,14 @@ let initialState = {
 }
 
 const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
-const GET_SELECTED_MARKER = 'GET_SELECTED_MARKER'
+const SET_LOCATION = 'SET_LOCATION'
 
 const reducer = (state = initialState, action) => {
   
   const newState = Object.assign({}, state)
 
   switch (action.type) {
+
     case GET_ALL_MARKERS: 
       newState.markers = action.markers
       break
@@ -29,7 +30,7 @@ const reducer = (state = initialState, action) => {
     case GET_SELECTED_MARKER:
       newState.selectedMarker = action.marker
       break
-
+      
     default: return state
   }
 
@@ -41,12 +42,21 @@ export const getAllMarkers = (markers) => ({
   markers
 })
 
-export const getSelectedMarker = (marker) => ({
-  type: GET_SELECTED_MARKER,
-  selectedMarker: marker
+export const setLocation = (center) => ({
+  type: SET_LOCATION,
+  center
 })
 
-//action-creators
+//action-creators 
+export const getUserLocation = () => 
+  dispatch =>  
+    firebase.database().ref('Users')
+    .on('value', snapshot => {
+      //testing out dispatcher
+      let userLocation = {lat: 40.705175, lng: -74.009252}
+      dispatch(setLocation(userLocation))
+    })
+
 export const getMarkers = () =>
   dispatch =>
     firebase.database().ref('Requests')
