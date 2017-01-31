@@ -1,11 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react'
 // import { auth } from '../firebase.jsx'
 import { connect } from 'react-redux'
 import Avatar from 'material-ui/Avatar'
 import { Link } from 'react-router'
+import { getMarkers, getUserLocation } from '../reducers/map'
 
 const currentUser = {
-  uid: 1,
+  uid: "7iiHpoNyiKRHLqEfTjP1Q7aAfNq1",
   picture: '/img/avatar-w.svg',
   name: 'Chloe',
   date: 'August 2016',
@@ -15,11 +16,15 @@ const currentUser = {
   skills: ['vegan ninja', 'dog-jogger', 'coding warrior']
 }
 
-const mapStateToProps = (state) => ({ currentUser, markers: state.map.markers })
+class Profile extends Component {
 
-export default connect(mapStateToProps)(props => {
+  componentDidMount() {
+    this.props.getMarkers();
+  }
+
+  render () {
   const user = currentUser
-
+  console.log('markers', this.props.markers)
   return (
     <div className="profile">
       {
@@ -53,11 +58,10 @@ export default connect(mapStateToProps)(props => {
             </div>
           </div>
           <div className="flex-row">
-            <div>
+            <div className="flex-col">
               <ul>
-              { /* Right now markers are added to state by componentDidMount in /map, so no markers here! */ }
-              { props.markers && props.markers.filter(marker => marker.uid === user.uid).map(marker => (
-                <Link to="/request"><li>{marker.title}</li></Link>
+              { this.props.markers && this.props.markers.filter(marker => marker.uid === user.uid).map((marker, index) => (
+                <Link to="/request" key={index}><li>{marker.title}</li></Link>
               )) }
               </ul>
             </div>
@@ -70,4 +74,8 @@ export default connect(mapStateToProps)(props => {
       }
     </div>
   )}
-)
+}
+
+const mapStateToProps = (state) => ({ currentUser, markers: state.map.markers })
+const mapDispatchToProps = { getMarkers, getUserLocation }
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
