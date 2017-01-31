@@ -25,6 +25,7 @@ class MapContainer extends Component {
   }
 
     handleMarkerClick(targetMarker) {
+      console.log('targetMarker', targetMarker)
        this.setState({
          markers: this.props.markers.map(marker => {
            if (marker === targetMarker) marker.showDesc = true
@@ -41,8 +42,13 @@ class MapContainer extends Component {
    })
   }
 
-  handleButtonClick() {
-    browserHistory.push('/offerhelp');
+  handleButtonClick(evt) {
+    console.log('evt.target', evt.target)
+    // this.props.markers.map(marker => {
+    //    if (marker === targetMarker) marker.showDesc = false
+    //    return marker;
+    //  })
+    //browserHistory.push('/offerhelp');
   }
 
   render() {
