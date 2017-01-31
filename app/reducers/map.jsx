@@ -32,6 +32,10 @@ const reducer = (state = initialState, action) => {
       newState.selectedMarker = action.selectedMarker
       break
 
+    case SET_LOCATION:
+      newState.center = action.center
+      break;
+
     default: return state
   }
 
