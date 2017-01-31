@@ -30,7 +30,9 @@ class MapContainer extends Component {
       console.log('targetMarker', targetMarker)
        this.setState({
          markers: this.props.markers.map(marker => {
-           if (marker === targetMarker) marker.showDesc = true
+          if (marker === targetMarker) marker.showDesc = true
+          else marker.showDesc = false
+
       })
     })
   }
