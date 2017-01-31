@@ -12,7 +12,14 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-export default connect(null, mapDispatchToProps)(
+const mapStateToProps = (state) => {
+  return {
+    selectedRequest: state.map.selectedMarker,
+    currentUser: state.currentUser
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
 
   class OfferHelp extends Component {
 
@@ -68,7 +75,9 @@ export default connect(null, mapDispatchToProps)(
       const newOffer = {
         date: this.state.date,
         message: this.state.message,
-        
+        reqUid: this.props.selectedRequest.uid,
+        reqKey: this.props.selectedRequest.key,
+        offUid: this.props.currentUser.uid
       }
 
       this.clearForm()
@@ -76,7 +85,7 @@ export default connect(null, mapDispatchToProps)(
     }
 
     render() {
-
+      console.log(this.props)
       return (
         <div>
           <h1>Offer Help</h1>
