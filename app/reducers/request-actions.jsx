@@ -2,6 +2,7 @@
 
 //import { RECEIVE_REQUESTS } from './constants'
 import { database } from '../firebase.jsx'
+import firebase from 'firebase'
 
 
 // const requestReducer = (requests = [], action) => {
@@ -23,12 +24,22 @@ import { database } from '../firebase.jsx'
 export const addRequest = (request) =>  {
   return dispatch => {
     const newRequestKey = database.ref().child('Requests').push().key;
+    const date = new Date
+    const theDate = date.toString()
+
+    const time = firebase.database.ServerValue.TIMESTAMP
+
+    request.date = time;
+
+    // database.ref(`Users/${request.uid}/requests/${newRequestKey}`).set({ date: theDate })
 
     let updates = {};
-    updates['/Users/' + request.userKey + '/requests/requestId'] = newRequestKey;
-    updates['/Requests/' + newRequestKey] = request;
+    updates['/Requests/' + newRequestKey] = request
 
     return database.ref().update(updates);
   }
 }
 //export default requestReducer
+
+
+

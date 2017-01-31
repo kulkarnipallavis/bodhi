@@ -5,7 +5,7 @@ import { Router, Route, browserHistory } from 'react-router'
 
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import { auth } from './firebase'
 
 import store from './store'
@@ -17,7 +17,8 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
 import Account from './components/Account'
-
+import Home from './components/Home'
+import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
 
 
@@ -28,27 +29,33 @@ auth().onAuthStateChanged(function(user) {
   } else {
     store.dispatch(loggedOut())
   }
-});
+})
 
 const onEnterApp = () => {
   injectTapEventPlugin()
   //get currently signed-in user
 }
 
+const onHomeEnter = () => {
+  store.dispatch(getOpenRequests())
+  store.dispatch(getClosedRequests())
+}
+
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
-        <Route path="/map" component={MapContainer} />
-        <Route path="/request" component={Request}/>
-        <Route path="/offerhelp" component={OfferHelp} />
+          <Route path="/map" component={MapContainer} />
+          <Route path="/request" component={Request} />
+          <Route path="/offerhelp" component={OfferHelp} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/loginenter" component={LoginEnter} />
           <Route path="/account" component={Account} />
-        </Route>
-      </Router>
-    </Provider>,
+          <Route path="/home" component={Home} onEnter={onHomeEnter} />
+      </Route>
+    </Router>
+  </Provider>,
 
   document.getElementById('main')
-)
+);

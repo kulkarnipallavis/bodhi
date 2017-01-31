@@ -1,12 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
-<<<<<<< HEAD
 import { getMarkers, getUserLocation } from '../reducers/map'
-=======
-import { getMarkers } from '../reducers/map'
 import {browserHistory} from 'react-router'
->>>>>>> 71876c4889152388e72043e0a34b0bcbefa0217e
+
 
 class MapContainer extends Component {
 
@@ -30,6 +27,7 @@ class MapContainer extends Component {
   }
 
     handleMarkerClick(targetMarker) {
+      console.log('targetMarker', targetMarker)
        this.setState({
          markers: this.props.markers.map(marker => {
            if (marker === targetMarker) marker.showDesc = true
@@ -46,8 +44,13 @@ class MapContainer extends Component {
    })
   }
 
-  handleButtonClick() {
-    browserHistory.push('/offerhelp');
+  handleButtonClick(evt) {
+    console.log('evt.target', evt.target)
+    // this.props.markers.map(marker => {
+    //    if (marker === targetMarker) marker.showDesc = false
+    //    return marker;
+    //  })
+    //browserHistory.push('/offerhelp');
   }
 
   render() {
