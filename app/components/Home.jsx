@@ -38,17 +38,17 @@ class Home extends Component {
 	render() {
 
 	const openReq = this.props.openRequests
-	const openReqKeys = Object.keys(this.props.openRequests)
+	const openReqKeys = openReqKeys ? Object.keys(openReq) : []
 
 	const closedReq = this.props.closedRequests
-	const closedReqKeys = Object.keys(closedReq)
+	const closedReqKeys = closedReq ? Object.keys(closedReq) : []
 		return (
 			<div>
-				<h1>Welcome !</h1>
+				<h1>Welcome Bodhi buddy!</h1>
 				<Paper style={style} zDepth={2} >
 					<h1>Open Requests</h1>
 				{
-					openReqKeys.map((reqKey, index) => (
+					openReqKeys && openReqKeys.map((reqKey, index) => (
 						<div key={index}>{openReq[reqKey].title} {openReq[reqKey].tag} {openReq[reqKey].description}</div>
 					))
 				}
@@ -56,7 +56,7 @@ class Home extends Component {
 				<Paper style={style} zDepth={2} >
 					<h1>Closed Requests</h1>
 					{
-					closedReqKeys.map((reqKey, index) => (
+					closedReqKeys && closedReqKeys.map((reqKey, index) => (
 						<div key={index}>{closedReq[reqKey].title} {closedReq[reqKey].tag} {closedReq[reqKey].description}</div>
 					))
 				}
