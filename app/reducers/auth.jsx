@@ -17,7 +17,6 @@ export const loggedIn = (user) => {
   return dispatch => {
     return database
       .ref('Users').child(user.uid)
-      // .orderByChild('uid')
       // .equalTo(user.uid)
 		  .once('value', function(snapshot){
 
@@ -33,7 +32,7 @@ export const loggedIn = (user) => {
           badges: ''
         })
         const newUser = {
-          uid: user.uid,
+          authUid: user.uid,
           email: user.email,
           name: user.displayName,
           picture: '',
@@ -46,7 +45,7 @@ export const loggedIn = (user) => {
         })
   		} else {
           const newUser = {
-            uid: user.uid,
+            authUid: user.uid,
             email: user.email,
             name: snapshot.val().name,
             picture: snapshot.val().picture,
