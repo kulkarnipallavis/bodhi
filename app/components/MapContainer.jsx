@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
-import { getMarkers } from '../reducers/map'
+import { getMarkers, getUserLocation } from '../reducers/map'
 import {browserHistory} from 'react-router'
+
 
 class MapContainer extends Component {
 
@@ -17,6 +18,7 @@ class MapContainer extends Component {
 
   componentDidMount() {
     this.props.getMarkers()
+    this.props.getUserLocation()
   }
 
   handleMapLoad(map) {
@@ -28,7 +30,9 @@ class MapContainer extends Component {
       console.log('targetMarker', targetMarker)
        this.setState({
          markers: this.props.markers.map(marker => {
-           if (marker === targetMarker) marker.showDesc = true
+          if (marker === targetMarker) marker.showDesc = true
+          else marker.showDesc = false
+
       })
     })
   }
@@ -58,6 +62,7 @@ class MapContainer extends Component {
         mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
         onMapLoad={this.handleMapLoad}
         markers={this.props.markers}
+        center={this.props.center}
         onMarkerClick={this.handleMarkerClick}
         onMarkerClose={this.handleMarkerClose}
         handleButtonClick={this.handleButtonClick}
@@ -71,7 +76,7 @@ MapContainer.propTypes = {
   getMarkers: PropTypes.func
 }
 
-const mapStateToProps = (state) => ({ markers: state.map.markers })
-const mapDispatchToProps = { getMarkers }
+const mapStateToProps = (state) => ({ markers: state.map.markers, center: state.map.center })
+const mapDispatchToProps = { getMarkers, getUserLocation }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)
