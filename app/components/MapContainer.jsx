@@ -1,14 +1,18 @@
 import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
-import { getMarkers, getUserLocation } from '../reducers/map'
+import { getMarkers, getUserLocation, setSelectedMarker } from '../reducers/map'
 import {browserHistory} from 'react-router'
+import store from '../store'
 
 
 class MapContainer extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      markers: props.markers
+    }
 
     this.handleMarkerClick = this.handleMarkerClick.bind(this)
     this.handleMarkerClose = this.handleMarkerClose.bind(this)
@@ -27,13 +31,13 @@ class MapContainer extends Component {
   }
 
     handleMarkerClick(targetMarker) {
-       this.setState({
+    this.setState({
          markers: this.props.markers.map(marker => {
           if (marker === targetMarker) marker.showDesc = true
           else marker.showDesc = false
-
       })
     })
+    store.dispatch(setSelectedMarker(targetMarker))
   }
 
   handleMarkerClose(targetMarker) {
@@ -45,16 +49,15 @@ class MapContainer extends Component {
    })
   }
 
-  handleButtonClick(evt) {
-    console.log('evt.target', evt.target)
-    // this.props.markers.map(marker => {
-    //    if (marker === targetMarker) marker.showDesc = false
-    //    return marker;
-    //  })
-    //browserHistory.push('/offerhelp');
+  handleButtonClick() {
+    browserHistory.push('/offerhelp');
   }
 
   render() {
+
+    console.log('PROPS ' , this.props)
+    console.log('STATE ' , this.state)
+
     return (
       <MapComponent
         containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }
@@ -75,7 +78,11 @@ MapContainer.propTypes = {
   getMarkers: PropTypes.func
 }
 
-const mapStateToProps = (state) => ({ markers: state.map.markers, center: state.map.center })
-const mapDispatchToProps = { getMarkers, getUserLocation }
+const mapStateToProps = (state) => ({
+  markers: state.map.markers,
+  center: state.map.center
+})
+
+const mapDispatchToProps = { getMarkers, getUserLocation, setSelectedMarker }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)
