@@ -8,7 +8,7 @@ import { submitOffer } from '../reducers/offer-help'
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg))
+		submitOfferDispatch: (offer) => dispatch(submitOffer(offer))
 	}
 }
 
@@ -96,13 +96,16 @@ export default connect(null, mapDispatchToProps)(
               underlineFocusStyle={{ borderColor: tealA700 }}
               errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
             <br/>
+            
             <RaisedButton
               className="form-button"
               type="submit"
               label="Offer Help"
               backgroundColor={ blueGrey500 }
               labelStyle={{color: 'white'}}
-              disabled={this.state.disabled}/>
+              disabled={!this.state.disabled}
+              onClick={()=>window.location=`sms:+19292695307&body=${this.state.message}`}>
+              </RaisedButton>            
           </form>
         </div>
       )
