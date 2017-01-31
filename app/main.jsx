@@ -16,14 +16,11 @@ import Request from './components/Request'
 import Signup from './components/Signup'
 import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
-<<<<<<< HEAD
+
 import Profile from './components/Profile'
 
-=======
-import Account from './components/Account'
 import Home from './components/Home'
 import {getOpenRequests, getClosedRequests} from './reducers/home'
->>>>>>> cfd9ebe3fc5c471f601c37439bb1a3cf389aefdd
 import { loggedIn, loggedOut } from './reducers/auth'
 
 
@@ -56,18 +53,11 @@ render(
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/loginenter" component={LoginEnter} />
-<<<<<<< HEAD
           <Route path="/profile" component={Profile} />
-        </Route>
-      </Router>
-    </Provider>,
-=======
-          <Route path="/account" component={Account} />
           <Route path="/home" component={Home} onEnter={onHomeEnter} />
       </Route>
     </Router>
   </Provider>,
->>>>>>> cfd9ebe3fc5c471f601c37439bb1a3cf389aefdd
 
   document.getElementById('main')
 );

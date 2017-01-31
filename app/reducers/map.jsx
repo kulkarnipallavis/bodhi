@@ -62,7 +62,6 @@ export const getUserLocation = () =>
   dispatch =>
     firebase.database().ref('Users')
     .on('value', snapshot => {
-      //testing out dispatcher
       let userLocation = {lat: 40.705175, lng: -74.009252}
       dispatch(setLocation(userLocation))
     })
@@ -73,7 +72,6 @@ export const getMarkers = () =>
     .on('value', snapshot => {
       let requestObjects = snapshot.val()
       let markers = [];
-      console.log(requestObjects)
       Object.keys(requestObjects).forEach(key => {
         if (requestObjects[key].location.latitude) {
           markers.push({position: {
