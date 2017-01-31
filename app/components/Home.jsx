@@ -1,17 +1,29 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import Paper from 'material-ui/Paper'
 import {getOpenRequests, getClosedRequests} from '../reducers/home'
 import { blueGrey500 } from 'material-ui/styles/colors'
 
 const style = {
+	container : {
 	  height: 200,
 	  width: 500,
 	  margin: 20,
 	  textAlign: 'center',
 	  display: 'block',
 	  color: blueGrey500
+	},
+
+	link : {
+		margin: 20,
+		padding : 10,
+		display: 'inline-block',
+		textAlign: 'center',
+		fontSize : 25
 	}
+
+}
 
 const mapStateToProps = (state) => {
 	return {
@@ -38,14 +50,20 @@ class Home extends Component {
 	render() {
 
 	const openReq = this.props.openRequests
-	const openReqKeys = openReqKeys ? Object.keys(openReq) : []
+	const openReqKeys = openReq ? Object.keys(openReq) : []
 
 	const closedReq = this.props.closedRequests
 	const closedReqKeys = closedReq ? Object.keys(closedReq) : []
 		return (
 			<div>
 				<h1>Welcome Bodhi buddy!</h1>
-				<Paper style={style} zDepth={2} >
+				<div style={style.link}>
+					<Link to="/request">Need a Help</Link>
+				</div>
+				<div style={style.link}>
+					<Link to="/offerhelp">Offer Help</Link>
+				</div>
+				<Paper style={style.container} zDepth={2} >
 					<h1>Open Requests</h1>
 				{
 					openReqKeys && openReqKeys.map((reqKey, index) => (
@@ -53,7 +71,7 @@ class Home extends Component {
 					))
 				}
 				</Paper>
-				<Paper style={style} zDepth={2} >
+				<Paper style={style.container} zDepth={2} >
 					<h1>Closed Requests</h1>
 					{
 					closedReqKeys && closedReqKeys.map((reqKey, index) => (
