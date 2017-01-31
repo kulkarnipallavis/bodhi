@@ -27,9 +27,9 @@ const reducer = (state = initialState, action) => {
       newState.markers = action.markers
       break
     
-    case GET_SELECTED_MARKER:
-      newState.selectedMarker = action.marker
-      break
+    // case GET_SELECTED_MARKER:
+    //   newState.selectedMarker = action.marker
+    //   break
       
     default: return state
   }
