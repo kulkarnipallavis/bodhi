@@ -65,7 +65,12 @@ export default connect(null, mapDispatchToProps)(
 
     handleSubmit(event) {
       event.preventDefault()
-      const newOffer = this.state
+      const newOffer = {
+        date: this.state.date,
+        message: this.state.message,
+        
+      }
+
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
     }
