@@ -42,12 +42,10 @@ constructor(props) {
 
 handleChangeEmail(e) {
   this.setState({ email: e.target.value })
-  console.log('email ', this.state.email)
 }
 
 handleChangePassword(e) {
   this.setState({ password: e.target.value })
-  console.log('password ', this.state)
 }
 
 // handleSubmitDisabled() {
@@ -61,7 +59,9 @@ handleChangePassword(e) {
 handleSubmit(e) {
   e.preventDefault()
   auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-  .then(user => console.log(user))
+  .then(user => {
+    console.log(user)
+  })
   .then(() =>  browserHistory.push('/account'))
   .catch( err => {
     if (err.code === "auth/email-already-in-use" || err.code === "auth/invalid-email") {
