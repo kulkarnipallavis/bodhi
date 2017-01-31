@@ -20,6 +20,7 @@ class Request extends Component {
       titleIsValid: true,
       tagIsValid: true,
       descriptionIsValid: true,
+      status: 'open'
     }
 
     this.clearForm = this.clearForm.bind(this)
