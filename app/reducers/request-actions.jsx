@@ -23,10 +23,13 @@ import { database } from '../firebase.jsx'
 export const addRequest = (request) =>  {
   return dispatch => {
     const newRequestKey = database.ref().child('Requests').push().key;
+    const date = new Date
+    const theDate = date.toString()
+
+    database.ref(`Users/${request.uid}/requests/${newRequestKey}`).set({ date: theDate })
 
     let updates = {};
-    updates['/Users/' + request.uid + '/requests/requestId'] = newRequestKey;
-    updates['/Requests/' + newRequestKey] = request;
+    updates['/Requests/' + newRequestKey] = request
 
     return database.ref().update(updates);
   }
