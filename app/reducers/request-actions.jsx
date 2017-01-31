@@ -2,13 +2,16 @@
 
 //import { RECEIVE_REQUESTS } from './constants'
 import { database } from '../firebase.jsx'
+import firebase from 'firebase'
 
 export const addRequest = (request) => dispatch => {
-    const newRequestKey = database.ref().child('Requests').push().key;
+  const newRequestKey = database.ref().child('Requests').push().key;
+  const time = firebase.database.ServerValue.TIMESTAMP
 
-    let updates = {};
-    updates['/Users/' + request.uid + '/requests/requestId'] = newRequestKey;
-    updates['/Requests/' + newRequestKey] = request;
+  request.date = time
 
-    return database.ref().update(updates);
-  }
+  let updates = {};
+  updates['/Requests/' + newRequestKey] = request
+
+  return database.ref().update(updates)
+}

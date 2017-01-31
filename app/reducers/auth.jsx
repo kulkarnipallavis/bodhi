@@ -11,50 +11,48 @@ const reducer = (state = null, action) => {
   }
 }
 
-export default reducer
+export const loggedOut = () => ({ type: LOGGED_OUT })
 
 export const loggedIn = (user) => dispatch => {
-  return database
-    .ref('Users').child(user.uid)
-    // .orderByChild('authUid')
-    // .equalTo(user.uid)
-	  .once('value', function(snapshot){
-      if (!snapshot.val()) {
-        const date = new Date
-        const theDate = date.toString()
+    return database
+      .ref('Users').child(user.uid)
+		  .once('value', snapshot => {
+        if (!snapshot.val()) {
+          const date = new Date
+          const theDate = date.toString()
 
-        database.ref(`Users/${user.uid}`).set({
-          email: user.email,
-          name: user.displayName,
-          picture: '',
-          dateJoined: theDate,
-          badges: ''
-        })
-        const newUser = {
-          authUid: user.uid,
-          email: user.email,
-          name: user.displayName,
-          picture: '',
-          dateJoined: theDate,
-          badges: ''
-        }
-        dispatch({
-          type: LOGGED_IN,
-          user: newUser
-        })
-      } else {
-        const newUser = {
-          authUid: user.uid,
-          email: user.email,
-          name: snapshot.val().name,
-          picture: snapshot.val().picture,
-          dateJoined: snapshot.val().dateJoined,
-          badges: snapshot.val().badges
-        }
+          database.ref(`Users/${user.uid}`).set({
+            email: user.email,
+            name: user.displayName,
+            picture: '',
+            dateJoined: theDate,
+            badges: ''
+          })
+          const newUser = {
+            authUid: user.uid,
+            email: user.email,
+            name: user.displayName,
+            picture: '',
+            dateJoined: theDate,
+            badges: ''
+          }
+          dispatch({
+            type: LOGGED_IN,
+            user: newUser
+          })
+        } else {
+          const newUser = {
+            authUid: user.uid,
+            email: user.email,
+            name: snapshot.val().name,
+            picture: snapshot.val().picture,
+            dateJoined: snapshot.val().dateJoined,
+            badges: snapshot.val().badges
+          }
 
-        dispatch({ type: LOGGED_IN, user: newUser })
-      }
+          dispatch({ type: LOGGED_IN, user: newUser })
+        }
     })
 }
 
-export const loggedOut = () => ({ type: LOGGED_OUT })
+export default reducer

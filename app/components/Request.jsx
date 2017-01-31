@@ -13,7 +13,6 @@ class Request extends Component {
     super(props)
 
     this.state = {
-      uid: '',
       title: '',
       description: '',
       tag: '',
@@ -21,7 +20,8 @@ class Request extends Component {
       disabled: false,
       titleIsValid: true,
       tagIsValid: true,
-      descriptionIsValid: true
+      descriptionIsValid: true,
+      status: 'open'
     }
 
     this.clearForm = this.clearForm.bind(this)
@@ -56,13 +56,16 @@ class Request extends Component {
     })
   }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> cfd9ebe3fc5c471f601c37439bb1a3cf389aefdd
   clearForm() {
     this.setState({
-      uid: '',
       title: '',
       description: '',
-      tag: '',
-      location: {}
+      tag: ''
     })
   }
 
@@ -71,7 +74,7 @@ class Request extends Component {
     const { title, description, tag, location } = this.state
     this.clearForm()
     this.props.handleSubmitRequest({
-      uid: this.props.currentUser.authUid,
+      uid: this.props.uid,
       title, description, tag, location })
   }
 
@@ -139,8 +142,7 @@ Request.propTypes = {
   handleSubmitRequest: PropTypes.func.isRequired
 }
 
-const mapDispatch = (dispatch) => ({
-  handleSubmitRequest: (request) => dispatch(addRequest(request))
-})
+const mapState = state => ({ uid: state.currentUser.uid })
+const mapDispatch = dispatch => ({ handleSubmitRequest: (request) => dispatch(addRequest(request)) })
 
-export default connect(state => ({ currentUser: state.currentUser }), mapDispatch)(Request)
+export default connect(mapState, mapDispatch)(Request)

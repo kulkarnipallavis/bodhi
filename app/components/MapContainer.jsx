@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
 import { getMarkers, getUserLocation } from '../reducers/map'
-import {browserHistory} from 'react-router'
-
 
 class MapContainer extends Component {
 
@@ -26,10 +24,11 @@ class MapContainer extends Component {
     if (map) map.getZoom()
   }
 
-    handleMarkerClick(targetMarker) {
-       this.setState({
-         markers: this.props.markers.map(marker => {
-           if (marker === targetMarker) marker.showDesc = true
+  handleMarkerClick(targetMarker) {
+     this.setState({
+       markers: this.props.markers.map(marker => {
+        if (marker === targetMarker) marker.showDesc = true
+        else marker.showDesc = false
       })
     })
   }
@@ -43,8 +42,13 @@ class MapContainer extends Component {
    })
   }
 
-  handleButtonClick() {
-    browserHistory.push('/offerhelp');
+  handleButtonClick(evt) {
+    console.log('evt.target', evt.target)
+    // this.props.markers.map(marker => {
+    //    if (marker === targetMarker) marker.showDesc = false
+    //    return marker;
+    //  })
+    //browserHistory.push('/offerhelp');
   }
 
   render() {
