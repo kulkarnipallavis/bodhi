@@ -7,7 +7,7 @@ import firebase from 'firebase'
 
 // const requestReducer = (requests = [], action) => {
 //   switch (action.type) {
-//     case RECEIVE_REQUESTS:
+//     case RECEIVE_USER_REQUESTS:
 //     	return action.requests
 
 //     default: return requests
@@ -37,6 +37,9 @@ export const addRequest = (request) =>  {
     return database.ref().update(updates);
   }
 }
+
+
+
 //export default requestReducer
 
 

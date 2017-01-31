@@ -3,15 +3,7 @@ import firebase from '../firebase.jsx';
 let initialState = {
   markers: [],
   center: {},
-  selectedMarker: {
-            lat: 40.7052005,
-            lng: -74.0091016,
-            description: "NOW!",
-            tag: "i want a puppy",
-            title: "OMG!",
-            uid: "7iiHpoNyiKRHLqEfTjP1Q7aAfNq1",
-            key: "-Kbph4JKnNazcJxFo0pt"
-  }
+  selectedMarker: {}
 }
 
 const GET_ALL_MARKERS = 'GET_ALL_MARKERS'

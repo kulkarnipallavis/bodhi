@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -7,9 +8,9 @@ import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
 
 const mapDispatchToProps = (dispatch) => {
-	return {
+  return {
 		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg))
-	}
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -77,11 +78,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         message: this.state.message,
         reqUid: this.props.selectedRequest.uid,
         reqKey: this.props.selectedRequest.key,
-        offUid: this.props.currentUser.uid
+        offUid: this.props.currentUser.uid,
+        status: 'pending'
       }
 
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
+      browserHistory.push('/')
     }
 
     render() {
