@@ -27,7 +27,6 @@ class MapContainer extends Component {
   }
 
     handleMarkerClick(targetMarker) {
-      console.log('targetMarker', targetMarker)
        this.setState({
          markers: this.props.markers.map(marker => {
           if (marker === targetMarker) marker.showDesc = true
