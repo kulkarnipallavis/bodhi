@@ -17,6 +17,7 @@ import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
 
 import Profile from './components/Profile'
+import EditableProfile from './components/EditableProfile'
 
 import Home from './components/Home'
 import {getOpenRequests, getClosedRequests} from './reducers/home'
@@ -51,6 +52,7 @@ render(
           <Route path="/login" component={Login} />
           <Route path="/loginenter" component={LoginEnter} />
           <Route path="/profile" component={Profile} />
+          <Route path="/editableprofile" component={EditableProfile} />
           <Route path="/home" component={Home} onEnter={onHomeEnter} />
       </Route>
     </Router>

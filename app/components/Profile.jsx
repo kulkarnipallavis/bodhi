@@ -2,29 +2,34 @@ import React, {Component} from 'react'
 // import { auth } from '../firebase.jsx'
 import { connect } from 'react-redux'
 import Avatar from 'material-ui/Avatar'
+import TextField from 'material-ui/TextField';
 import { Link } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
 
-const currentUser = {
-  uid: "7iiHpoNyiKRHLqEfTjP1Q7aAfNq1",
-  picture: '/img/avatar-w.svg',
-  name: 'Chloe',
-  date: 'August 2016',
-  email: 'chloe@awesome.net',
-  badges: ['/img/badge1.svg', '/img/badge2.svg'],
-  bio: 'Oakland girl with a NY dream',
-  skills: ['vegan ninja', 'dog-jogger', 'coding warrior']
-}
-
 class Profile extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      user: {
+        uid: "7iiHpoNyiKRHLqEfTjP1Q7aAfNq1",
+        picture: '/img/avatar-w.svg',
+        name: 'Chloe',
+        date: 'August 2016',
+        email: 'chloe@awesome.net',
+        badges: ['/img/badge1.svg', '/img/badge2.svg'],
+        bio: 'Oakland girl with a NY dream',
+        skills: ['vegan ninja', 'dog-jogger', 'coding warrior']
+      }
+    }
+  }
 
   componentDidMount() {
     this.props.getMarkers();
   }
 
   render () {
-  const user = currentUser
-  console.log('markers', this.props.markers)
+  const user = this.state.user
   return (
     <div className="profile">
       {
@@ -76,6 +81,6 @@ class Profile extends Component {
   )}
 }
 
-const mapStateToProps = (state) => ({ currentUser, markers: state.map.markers })
+const mapStateToProps = (state) => ({markers: state.map.markers })
 const mapDispatchToProps = { getMarkers, getUserLocation }
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
