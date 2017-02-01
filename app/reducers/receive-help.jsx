@@ -26,17 +26,33 @@ export const findOffers = (uid) => {
     .equalTo(uid)
     .once('value', function(snapshot) {
       if (snapshot.val()) {
-      	const offUids = [];
+      	let offUids = [];
 
       	for(let offer in snapshot.val()){
-      		offUids.push(offer.offUid)
+      		offUids.push(snapshot.val()[offer].offUid)
       	}
 
-      	console.log("OFFUIDS", offUids)
+
+      	// findHelper(offUids[0]).then(helper => {
+      	// 	console.log("HELPER CALLED", helper)
+      	// })
+      	//console.log("HELPER", findHelper(offUids[0]))
 
       	//if there is an offer
-        console.log('snapshot.val in IF ', snapshot.val())
-        dispatch(getOffers(snapshot.val()))
+
+      	let offers = [];
+
+				 for(let offer in snapshot.val()){
+				 	const offerObj = snapshot.val()[offer];
+				 	findHelper(offerObj.offUid).then(helper => {
+				 		offerObj.offUser = helper
+				 	})
+				 	offerObj.offKey = offer;
+				 	offers.push(offerObj)
+				 }
+				 console.log("OFFERS", offers)
+        //console.log('snapshot.val in IF ', snapshot.val())
+        dispatch(getOffers(offers))
       } else {
         console.log('ELSE')
       }
@@ -44,22 +60,33 @@ export const findOffers = (uid) => {
 }
 
 
-const getHelpers = (users) => {
+const getHelpers = (users) => ({
 	type: GET_HELPERS,
 	helpers: users
-}
+})
 
 const findHelper = (offUid) => {
-	return (dispatch) =>
-		return database
-		  .ref('Users').child(offUid)
-			  .once('value', function(snapshot){
-			  	const helper = {
-			  		name: snapshot.val().name,
-			  		picture: snapshot.val().picture
-			  	}
+	// return (dispatch) =>{
 
-			  }
+		// let helper = {}; 
+ // const findingHelper = () => {
+		return database
+	  .ref('Users')
+	  .child(offUid)
+	  .once('value').then(function(snapshot){
+	  	let helper = {
+	  		name: snapshot.val().name,
+	  		picture: snapshot.val().picture
+	  	}
+	  	return helper
+	  })
+	  //.then((helper) => helper.data)
+	 // }
+ // }
+
+ // return findingHelper()
+ // .then(helper => helper)
+
 }
 
 

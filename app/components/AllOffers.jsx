@@ -8,14 +8,6 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
 
 
 
-<TableRow key={index} selected={row.selected}>
-                <TableRowColumn>{index}</TableRowColumn>
-                <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.status}</TableRowColumn>
-              </TableRow>
-
-
-
 class AllOffers extends Component {
 	constructor(props){
 		super(props)
@@ -29,7 +21,7 @@ class AllOffers extends Component {
 
 		// }
 
-		const offers = [];
+		let offers = [];
 
 		for(let offer in this.props.offersReceived){
 			offers.push(offer)
