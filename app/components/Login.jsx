@@ -56,9 +56,15 @@ handleSubmit(e) {
 }
 
 render () {
+  const styles = {
+    floatingLabelFocusStyle: { color: 'white' },
+    underlineFocusStyle: { borderColor: 'white' },
+    inputText: {color: 'white'}
+  }
+
   return (
     <div id="div_signup">
-    Log In
+      <h1>Log In</h1>
 
       <form onSubmit={this.handleSubmit}>
       {
@@ -74,8 +80,11 @@ render () {
         <TextField
           id="email"
           type="email"
+          inputStyle={styles.inputText}
           floatingLabelText="Email"
+          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
           value={this.state.email}
+          underlineFocusStyle={styles.underlineFocusStyle}
           onChange={this.handleChangeEmail}
           errorText={this.state.errmsgEmail}
           />
@@ -83,24 +92,27 @@ render () {
         <TextField
           id="password"
           type="password"
+          inputStyle={styles.inputText}
           floatingLabelText="Password"
+          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
           value={this.state.password}
+          underlineFocusStyle={styles.underlineFocusStyle}
           onChange={this.handleChangePassword}
           errorText={this.state.errmsgPassword}
           />
-          <br />
+          <br /><br /><br />
         <div id="div_btn">
         <RaisedButton
           type="reset"
-          labelColor="white"
-          backgroundColor="#607D8B"
+          labelColor="#533BD7"
+          backgroundColor="white"
           label="Reset"
           />
           &nbsp;
          <RaisedButton
           type="submit"
-          labelColor="white"
-          backgroundColor="#607D8B"
+          labelColor="#533BD7"
+          backgroundColor="white"
           label="Submit"
           />
         </div>

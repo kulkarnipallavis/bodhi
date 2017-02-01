@@ -85,8 +85,9 @@ class Request extends Component {
   render() {
 
     const styles = {
-      floatingLabelFocusStyle: { color: tealA700 },
-      underlineFocusStyle: { borderColor: tealA700 }
+      floatingLabelFocusStyle: { color: 'white' },
+      underlineFocusStyle: { borderColor: 'white' },
+      inputText: {color: 'white'}
     }
     
     return (
@@ -95,6 +96,7 @@ class Request extends Component {
         <form style={{margin: '25px 0px 0px 0px'}}>
           <TextField
             id="title"
+            inputStyle={styles.inputText}
             floatingLabelText="Title"
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
             value={this.state.title}
@@ -104,6 +106,7 @@ class Request extends Component {
           <br/>
             <TextField
               id="tag"
+              inputStyle={styles.inputText}
               floatingLabelText="Tag"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               value={this.state.tag}
@@ -113,6 +116,7 @@ class Request extends Component {
           <br/>
           <TextField
             id="description"
+            textareaStyle={styles.inputText}
             floatingLabelText="Description"
             hintText="Description"
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}

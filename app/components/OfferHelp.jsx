@@ -85,7 +85,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     render() {
-      console.log(this.props)
+
+      const styles = {
+        floatingLabelFocusStyle: { color: 'white' },
+        underlineFocusStyle: { borderColor: 'white' },
+        inputText: {color: 'white'}
+      }
+
       return (
         <div>
           <h1>Offer Help</h1>
@@ -101,13 +107,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             <br/>
             <TextField
               name="msg"
+              textareaStyle={styles.inputText}
               value={this.state.message}
               onChange={(event) => this.handleChange(event, null, 'message')}
               multiLine={true}
               hintText="Message To Requester"
               floatingLabelText="Message To Requester"
-              floatingLabelFocusStyle={{ color: tealA700 }}
-              underlineFocusStyle={{ borderColor: tealA700 }}
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              underlineFocusStyle={styles.underlineFocusStyle}
               errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
             <br/>
             <RaisedButton
