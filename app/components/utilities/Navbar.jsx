@@ -48,13 +48,15 @@ return (
       showMenuIconButton={offers ? true : false}
       title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
       iconElementLeft={offers ?
-        <Badge
-          style={{ padding: '2px'}}
-          badgeContent={Object.keys(offers).length}>
-            <IconButton tooltip="Notifications">
-              <NotificationsIcon />
-            </IconButton>
-        </Badge>
+        <Link to="/offers">
+          <Badge
+            style={{ padding: '2px'}}
+            badgeContent={Object.keys(offers).length}>
+              <IconButton tooltip="Notifications">
+                <NotificationsIcon />
+              </IconButton>
+          </Badge>
+        </Link>
           : null}
       iconElementRight={<IconMenu
           iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}

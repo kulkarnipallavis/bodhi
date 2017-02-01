@@ -18,6 +18,21 @@ const getOffers = (offers) => ({
   offers
 })
 
+
+const findHelper = (offer) => {
+  return database
+    .ref('Users')
+    .child(offer.offUid)
+    .once('value').then(function(snapshot){
+      offer.offUser = {
+        name: snapshot.val().name,
+        picture: snapshot.val().picture
+      }
+      return offer
+    })
+}
+
+
 export const findOffers = (uid) => {
   return (dispatch) =>
   database
@@ -25,69 +40,31 @@ export const findOffers = (uid) => {
     .orderByChild('reqUid')
     .equalTo(uid)
     .once('value', function(snapshot) {
-      if (snapshot.val()) {
-      	let offUids = [];
 
-      	for(let offer in snapshot.val()){
-      		offUids.push(snapshot.val()[offer].offUid)
-      	}
+      let offers = [];
+      if (snapshot.val()) {   //if there is an offer
 
+         for(let offer in snapshot.val()){
+          const offerObj = snapshot.val()[offer];
+          offerObj.offKey = offer;
+          offers.push(offerObj)
+         }
 
-      	// findHelper(offUids[0]).then(helper => {
-      	// 	console.log("HELPER CALLED", helper)
-      	// })
-      	//console.log("HELPER", findHelper(offUids[0]))
+         const addingUsers = offers.map(findHelper)
 
-      	//if there is an offer
+         Promise.all(addingUsers)
+         .then(offers => dispatch(getOffers(offers)))
 
-      	let offers = [];
-
-				 for(let offer in snapshot.val()){
-				 	const offerObj = snapshot.val()[offer];
-				 	findHelper(offerObj.offUid).then(helper => {
-				 		offerObj.offUser = helper
-				 	})
-				 	offerObj.offKey = offer;
-				 	offers.push(offerObj)
-				 }
-				 console.log("OFFERS", offers)
-        //console.log('snapshot.val in IF ', snapshot.val())
-        dispatch(getOffers(offers))
-      } else {
-        console.log('ELSE')
       }
     })
 }
 
 
 const getHelpers = (users) => ({
-	type: GET_HELPERS,
-	helpers: users
+  type: GET_HELPERS,
+  helpers: users
 })
 
-const findHelper = (offUid) => {
-	// return (dispatch) =>{
-
-		// let helper = {}; 
- // const findingHelper = () => {
-		return database
-	  .ref('Users')
-	  .child(offUid)
-	  .once('value').then(function(snapshot){
-	  	let helper = {
-	  		name: snapshot.val().name,
-	  		picture: snapshot.val().picture
-	  	}
-	  	return helper
-	  })
-	  //.then((helper) => helper.data)
-	 // }
- // }
-
- // return findingHelper()
- // .then(helper => helper)
-
-}
 
 
 

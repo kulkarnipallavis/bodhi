@@ -35,7 +35,7 @@ auth().onAuthStateChanged(function(user) {
 
 const onEnterApp = () => {
   injectTapEventPlugin()
-  //get currently signed-in user
+
 }
 
 const onHomeEnter = () => {
