@@ -38,7 +38,14 @@ export const addRequest = (request) =>  {
   }
 }
 
+export const updateRequestStatus = (status, markerKey) => {
+  return dispatch => {
+    let statusUpdate = {}
+    statusUpdate[`Requests/${markerKey}/status`] = 'pending'
 
+    return database.ref().update(statusUpdate)
+  }
+}
 
 //export default requestReducer
 

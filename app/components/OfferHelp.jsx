@@ -6,10 +6,12 @@ import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
+import { updateRequestStatus } from '../reducers/request-actions'
 
 const mapDispatchToProps = (dispatch) => {
   return {
-		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg))
+		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg)),
+    updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey))
   }
 }
 
@@ -84,11 +86,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
+      this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
       browserHistory.push('/')
     }
 
     render() {
-      console.log(this.props)
+
       return (
         <div>
           <h1>Offer Help</h1>

@@ -40,19 +40,21 @@ render() {
 
 const user = this.props.currentUser
 const offers = this.props.offersReceived
-//console.log('offers.length', offers.length)
 
 return (
   <div>
     <AppBar
       id="navbar"
-
+      showMenuIconButton={offers ? true : false}
       title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
-      iconElementLeft={offers ? <Badge style={{ padding: '2px'}}badgeContent={Object.keys(offers).length}>
+      iconElementLeft={offers ?
+        <Badge
+          style={{ padding: '2px'}}
+          badgeContent={Object.keys(offers).length}>
             <IconButton tooltip="Notifications">
               <NotificationsIcon />
             </IconButton>
-          </Badge>
+        </Badge>
           : null}
       iconElementRight={<IconMenu
           iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
