@@ -10,7 +10,6 @@ import {auth} from '../../firebase.jsx'
 
 const mapStateToProps = (state) => ({ currentUser: state.currentUser })
 
-
 export default connect(mapStateToProps)(class Navbar extends React.Component {
 
 constructor() {
@@ -38,6 +37,7 @@ return (
   <div>
     <AppBar
       id="navbar"
+      className="gradient-nav"
       showMenuIconButton={false}
       title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
       iconElementRight={

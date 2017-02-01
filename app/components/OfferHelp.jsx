@@ -114,8 +114,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               className="form-button"
               type="submit"
               label="Offer Help"
-              backgroundColor={ blueGrey500 }
-              labelStyle={{color: 'white'}}
+              backgroundColor="white"
+              labelColor="#533BD7"
               disabled={this.state.disabled}/>
           </form>
         </div>

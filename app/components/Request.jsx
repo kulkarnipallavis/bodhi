@@ -125,8 +125,8 @@ class Request extends Component {
         </form>
         <RaisedButton
           className="form-button"
-          labelColor="white"
-          backgroundColor={ blueGrey500 }
+          labelColor="#533BD7"
+          backgroundColor="white"
           label="Submit Request"
           onClick={this.handleSubmit}
           disabled={this.isInvalid()}/>
