@@ -20,12 +20,13 @@ import Account from './components/Account'
 import Home from './components/Home'
 import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-
+import { findOffers } from './reducers/offer-help'
 
 
 auth().onAuthStateChanged(function(user) {
   if (user) {
     store.dispatch(loggedIn(user))
+    store.dispatch(findOffers(user.uid))
   } else {
     store.dispatch(loggedOut())
   }
