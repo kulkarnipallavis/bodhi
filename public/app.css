@@ -71,6 +71,10 @@ a {
   width: 100px;
 }
 
+.nav-item {
+  color: #533BD7 !important;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -91,7 +95,7 @@ form {
 
 .form-button {
   margin: 35px 0px 0px 60px !important;
-  color: rgb(83, 59, 215) !important; 
+  color: rgb(83, 59, 215) !important;
 }
 .gradient-body {
     background-color: #cf716c;
@@ -104,7 +108,7 @@ form {
     background-image: repeating-linear-gradient(to bottom right,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
     background-image: -ms-repeating-linear-gradient(top left,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
 }
- 
+
 /* IE8- CSS hack */
 @media \0screen\,screen\9 {
     .gradient-body {
@@ -123,7 +127,7 @@ form {
     background-image: repeating-linear-gradient(to top left,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
     background-image: -ms-repeating-linear-gradient(bottom right,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
 }
- 
+
 /* IE8- CSS hack */
 @media \0screen\,screen\9 {
     .gradient-nav {

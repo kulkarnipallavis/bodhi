@@ -89,7 +89,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       const styles = {
         floatingLabelFocusStyle: { color: 'white' },
         underlineFocusStyle: { borderColor: 'white' },
-        inputText: {color: 'white'}
+        inputText: { color: 'white' },
+        errorStyle: { color: '#F0B259' }
       }
 
       return (
@@ -98,12 +99,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(
           <form onSubmit={this.handleSubmit}>
             <DatePicker
               name="date"
+              inputStyle={styles.inputText}
               floatingLabelText="Select a date"
               value={this.state.date}
               onChange={(event, date) => this.handleChange(event, date, 'date')}
               locale="en-US"
               style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }}
-              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}/>
+              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}
+              errorStyle={styles.errorStyle}/>
             <br/>
             <TextField
               name="msg"
@@ -115,7 +118,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               floatingLabelText="Message To Requester"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               underlineFocusStyle={styles.underlineFocusStyle}
-              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
+              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}
+              errorStyle={styles.errorStyle}/>
             <br/>
             <RaisedButton
               className="form-button"

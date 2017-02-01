@@ -67,16 +67,6 @@ render () {
       <h1>Log In</h1>
 
       <form onSubmit={this.handleSubmit}>
-      {
-        // <TextField
-        //   id="name"
-        //   type="text"
-        //   floatingLabelText="Name"
-        //   value={this.state.name}
-        //   onChange={this.handleChangeName}
-        //   />
-        //   <br />
-      }
         <TextField
           id="email"
           type="email"

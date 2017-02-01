@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import AppBar from 'material-ui/AppBar'
+import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
@@ -45,15 +46,16 @@ return (
           iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-          <Link to="/map"><MenuItem primaryText="Who's in Need?"/></Link>
-          <Link to="/request"><MenuItem primaryText="I Need Help!"/></Link>
+          <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
+          <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
+          <Divider/>
           {
           !user ?
           <div>
-            <Link to="/loginenter"><MenuItem primaryText="Log in"/></Link>
-            <Link to="/signup"><MenuItem primaryText="Sign up"/></Link>
+            <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
+            <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
           </div>
-          : <Link onClick={this.logout}><MenuItem primaryText="Log out" /></Link>
+          : <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
           }
         </IconMenu>
       }/>
