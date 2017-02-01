@@ -17,7 +17,6 @@ export const loggedIn = (user) => {
   return dispatch => {
     return database
       .ref('Users').child(user.uid)
-      // .orderByChild('authUid')
       // .equalTo(user.uid)
 		  .once('value', function(snapshot){
 
