@@ -5,6 +5,7 @@ import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
+import smsLink from 'sms-link'
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -85,7 +86,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     render() {
-      console.log(this.props)
       return (
         <div>
           <h1>Offer Help</h1>
@@ -118,7 +118,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               backgroundColor={ blueGrey500 }
               labelStyle={{color: 'white'}}
               disabled={!this.state.disabled}
-              onClick={()=>window.location=`sms:+19292695307&body=${this.state.message}`}>
+                                                    
+              onClick={()=>window.location=smsLink({phone:'+19292695307', body:`${this.state.message}`})}>
               </RaisedButton>            
           </form>
         </div>
