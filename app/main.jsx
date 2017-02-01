@@ -18,9 +18,10 @@ import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
 import Account from './components/Account'
 import Home from './components/Home'
+import AllOffers from './components/AllOffers'
 import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-import { findOffers } from './reducers/offer-help'
+import { findOffers } from './reducers/receive-help'
 
 
 auth().onAuthStateChanged(function(user) {
@@ -54,6 +55,7 @@ render(
           <Route path="/loginenter" component={LoginEnter} />
           <Route path="/account" component={Account} />
           <Route path="/home" component={Home} onEnter={onHomeEnter} />
+          <Route path="/offers" component={AllOffers} />
       </Route>
     </Router>
   </Provider>,

@@ -11,6 +11,7 @@ const reducer = (state = null, action) => {
   }
 }
 
+
 export default reducer
 
 export const loggedIn = (user) => {
