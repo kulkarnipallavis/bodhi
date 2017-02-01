@@ -1,14 +1,14 @@
-import { database } from '../firebase'
+import { database } from '../firebase.jsx'
+import firebase from 'firebase'
 
 //updateUser
 
-
-const reducer = (state = null, action) => {
-  switch (action.type) {
-    default: return state
-  }
+export const updateUser = (userId, state) => {
+	const valueKeys = Object.keys(state)
+    
+	valueKeys.forEach(value => {
+		database.ref('Users/' + userId).update({
+			[value] : state[value]
+		})
+	})
 }
-
-
-
-export default reducer

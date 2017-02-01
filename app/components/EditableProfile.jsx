@@ -6,11 +6,13 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/FlatButton'
 import { Link } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
+import { updateUser } from '../reducers/user'
 
 class EditableProfile extends Component {
 
   constructor(props){
     super(props);
+    this.state = {}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -19,12 +21,17 @@ class EditableProfile extends Component {
     this.props.getMarkers();
   }
 
-  handleChange(event, type) {
-  // 
+  handleChange(event, field) {
+    const value = event.target.value
+    this.setState({
+      [field]: value
+    })
   }
 
-  handleSubmit(event){
+  handleSubmit(event, id){
     event.preventDefault()
+    const user = this.props.currentUser;
+    this.props.updateUser(user.authUid, this.state)
   }
 
   render () {
@@ -34,18 +41,20 @@ class EditableProfile extends Component {
       {
         user ?
         <div>
-          <RaisedButton label="Submit Changes" primary={true} type="submit" onClick={this.handleSubmit}/>
+        <form onSubmit={this.handleSubmit}>
+          <RaisedButton label="Submit Changes" primary={true} type="submit"/>
           <div className="flex-row">
             <div className="flex-col">
               <Avatar src={user.picture}/>
               <p> Name:</p>
               <TextField
                 defaultValue={user.name}
-                onChange={(event)=> this.handleChange(event, "name")}
+                onChange={(event) => this.handleChange(event, "name")}
               />
               <p>Email:</p>
               <TextField 
                   defaultValue = {`${user.email}`}
+                  onChange={(event)=> this.handleChange(event, "email")}
               />
               <p>{`Member since: ${user.date}`}</p>
             </div>
@@ -86,6 +95,7 @@ class EditableProfile extends Component {
               </ul>
             </div>
           </div>
+          </form>
         </div>
         :
         <div>
@@ -97,5 +107,5 @@ class EditableProfile extends Component {
 }
 
 const mapStateToProps = (state) => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, getUserLocation }
+const mapDispatchToProps = { getMarkers, getUserLocation, updateUser }
 export default connect(mapStateToProps, mapDispatchToProps)(EditableProfile)
