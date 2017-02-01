@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
-  from 'material-ui/Table';
+  from 'material-ui/Table'
+import RaisedButton from 'material-ui/RaisedButton'
 
 
 
@@ -45,6 +46,10 @@ class AllOffers extends Component {
           <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
           <TableRowColumn>{offer.offUser.name}</TableRowColumn>
           <TableRowColumn>{offer.message}</TableRowColumn>
+          <TableRowColumn>
+              <RaisedButton label="Yes, Please" primary={true} style={{margin:12}} />
+              <RaisedButton label="No, Thanks" secondary={true} style={{margin:12}} />
+          </TableRowColumn>
         </TableRow>
         )
     })
@@ -56,7 +61,7 @@ class AllOffers extends Component {
             displaySelectAll={false}
             adjustForCheckbox={false}>
           <TableRow>
-            <TableHeaderColumn colSpan="3" tooltip="Super Header" style={{textAlign: 'center'}}>
+            <TableHeaderColumn colSpan="4" tooltip="Responses" style={{textAlign: 'center'}}>
                 Responses
             </TableHeaderColumn>
           </TableRow>
