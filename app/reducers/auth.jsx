@@ -11,6 +11,7 @@ const reducer = (state = null, action) => {
   }
 }
 
+
 export default reducer
 
 export const loggedIn = (user) => {
@@ -32,7 +33,7 @@ export const loggedIn = (user) => {
           badges: ''
         })
         const newUser = {
-          authUid: user.uid,
+          uid: user.uid,
           email: user.email,
           name: user.displayName,
           picture: '',
@@ -45,7 +46,7 @@ export const loggedIn = (user) => {
         })
   		} else {
           const newUser = {
-            authUid: user.uid,
+            uid: user.uid,
             email: user.email,
             name: snapshot.val().name,
             picture: snapshot.val().picture,

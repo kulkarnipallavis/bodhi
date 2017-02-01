@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
+import { updateRequestStatus } from '../reducers/request-actions'
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg))
-	}
+  return {
+		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg)),
+    updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey))
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -77,15 +80,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         message: this.state.message,
         reqUid: this.props.selectedRequest.uid,
         reqKey: this.props.selectedRequest.key,
-        offUid: this.props.currentUser.uid
+        offUid: this.props.currentUser.uid,
+        status: 'pending'
       }
 
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
+      this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
+      browserHistory.push('/')
     }
 
     render() {
-      console.log(this.props)
+
       return (
         <div>
           <h1>Offer Help</h1>

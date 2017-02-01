@@ -92,3 +92,8 @@ form {
 .form-button {
   margin: 35px 0px 0px 60px !important;
 }
+
+.badge-icon {
+  padding: 0px 0px;
+  background-color: pink
+}
