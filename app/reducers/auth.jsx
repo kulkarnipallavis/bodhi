@@ -2,10 +2,12 @@ import { database } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
 const LOGGED_OUT = 'LOGGED_OUT'
+const UPDATE_USER = 'GET_USER'
 
 const reducer = (state = null, action) => {
   switch (action.type) {
     case LOGGED_IN: return action.user
+    case UPDATE_USER: return action.updatedUser
     case LOGGED_OUT: return null
     default: return state
   }
@@ -18,14 +20,13 @@ export const loggedIn = (user) => {
   return dispatch => {
     return database
       .ref('Users').child(user.uid)
-      // .equalTo(user.uid)
-		  .once('value', function(snapshot){
+      .once('value', function(snapshot){
 
-  		if(!snapshot.val()){
+      if(!snapshot.val()){
         const date = new Date
         const theDate = date.toString()
 
-  			database.ref(`Users/${user.uid}`).set({
+        database.ref(`Users/${user.uid}`).set({
           email: user.email,
           name: user.displayName,
           picture: '',
@@ -46,7 +47,7 @@ export const loggedIn = (user) => {
           type: LOGGED_IN,
           user: newUser
         })
-  		} else {
+      } else {
           const newUser = {
             uid: user.uid,
             email: user.email,
@@ -62,21 +63,33 @@ export const loggedIn = (user) => {
         })
   		}
   	})
-
-
   }
 }
 
+export const updateUser = updatedUser => dispatch => {
 
+  dispatch({type: UPDATE_USER, updatedUser})
 
-// export const loggedIn = (user) =>
+  console.log("updatedUser", updatedUser)
+
+  const updates = {
+    badges: updatedUser.badges,
+    dateJoined: updatedUser.dateJoined,
+    email: updatedUser.email,
+    name: updatedUser.name,
+    phone: updatedUser.phone,
+    picture: updatedUser.picture       
+  }
+
+  database.ref('Users').child(updatedUser.uid)
+    .update(updates)
+
+}
+
 
 export const loggedOut = () => ({
   type: LOGGED_OUT
 })
-
-
-
 
 
 

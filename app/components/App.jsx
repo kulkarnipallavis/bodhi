@@ -24,13 +24,12 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <MuiThemeProvider muitheme={getMuiTheme(theme)}>
         <div>
           <Navbar />
-          <div className="container">
-            { this.props.children && React.cloneElement(this.props.children, this.props) }
-          </div>
+          { this.props.children && React.cloneElement(this.props.children, this.props) }
         </div>
       </MuiThemeProvider>
     )

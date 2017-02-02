@@ -8,7 +8,7 @@ import firebase from 'firebase'
 // const requestReducer = (requests = [], action) => {
 //   switch (action.type) {
 //     case RECEIVE_USER_REQUESTS:
-//     	return action.requests
+//      return action.requests
 
 //     default: return requests
 //   }
@@ -48,6 +48,5 @@ export const updateRequestStatus = (status, markerKey) => {
 }
 
 //export default requestReducer
-
 
 
