@@ -4,10 +4,7 @@ import {Link} from 'react-router'
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
   from 'material-ui/Table'
 import RaisedButton from 'material-ui/RaisedButton'
-
-
-
-
+import smsLink from 'sms-link'
 
 class AllOffers extends Component {
   constructor(props){
@@ -25,7 +22,6 @@ class AllOffers extends Component {
     };
   }
 
-
   render(){
     console.log(this.props)
 
@@ -40,14 +36,15 @@ class AllOffers extends Component {
         console.log('OFFER in MAP', JSON.stringify(offer))
         console.log('OFFER object keys in MAP ', Object.keys(offer))
         console.log('OFFER.offUser in MAP', offer['offUser'])
-
+        console.log("*********offer.offUser.phone", offer.offUser.phone)
+        console.log("offer.message", offer.message)
       return (
         <TableRow key={index}>
           <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
           <TableRowColumn>{offer.offUser.name}</TableRowColumn>
           <TableRowColumn>{offer.message}</TableRowColumn>
           <TableRowColumn>
-              <RaisedButton label="Yes, Please" primary={true} style={{margin:12}} />
+              <RaisedButton label="Yes, Please" primary={true} style={{margin:12}} onClick={()=>window.location=smsLink({phone:`${offer.offUser.phone}`, body:`${offer.message}`})}/>
               <RaisedButton label="No, Thanks" secondary={true} style={{margin:12}} />
           </TableRowColumn>
         </TableRow>
