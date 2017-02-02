@@ -50,7 +50,7 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
           id="navbar"
           className="gradient-nav"
           zDepth={0}
-          showMenuIconButton={!!this.stateoffers}
+          showMenuIconButton={!!this.state.offers}
           title={
           <Link to="/">
             <FlatButton>
