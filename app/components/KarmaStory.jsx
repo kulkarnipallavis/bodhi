@@ -7,7 +7,7 @@ const KarmaStory = (props) => (
     <Avatar
       style={props.styles}
       className="helperAvatar"
-      src={props.story.offUser.picture}/>
+      src={props.story && props.story.offUser.picture}/>
     <p>{`${props.story.offUser.name} helped ${props.story.req.reqUser.name}`}</p>
     <Avatar
       style={props.styles}

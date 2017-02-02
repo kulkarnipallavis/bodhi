@@ -23,7 +23,6 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
 
   constructor() {
     super()
-    this.state = {}
     this.logout = this.logout.bind(this)
   }
 
@@ -39,8 +38,7 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
       notificationIcon: { color: '#F0B259' }
     }
     const user = this.props.user
-    const offers = this.props.offers.filter(offer => offer.reqUid === user.uid)
-
+    const offers = user ? this.props.offers.filter(offer => offer.reqUid === user.uid) : false
     return (
       <div>
         <AppBar
@@ -64,8 +62,7 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
                     <NotificationsIcon/>
                   </IconButton>
               </Badge>
-            </Link>
-              : null}
+            </Link> : null }
           iconElementRight={
             <IconMenu
               iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}

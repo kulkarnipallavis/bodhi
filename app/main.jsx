@@ -31,6 +31,7 @@ const onEnterHome = () => {
       store.dispatch(loggedIn(user))
     } else {
       store.dispatch(loggedOut())
+      browserHistory.push('/loginenter')
     }
   })
 

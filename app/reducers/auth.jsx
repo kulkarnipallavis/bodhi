@@ -23,33 +23,36 @@ export const loggedIn = user => dispatch => {
           let date = new Date
           date = date.toDateString()
 
-          database.ref(`Users/${user.uid}`).set({
-            email: user.email,
-            name: user.displayName,
-            picture: '',
-            dateJoined: date,
-            badges: ''
-          })
-          const newUser = {
-            authUid: user.uid,
-            email: user.email,
-            name: user.displayName,
-            picture: '',
-            dateJoined: date,
-            badges: ''
-          }
-          dispatch({
-            type: LOGGED_IN,
-            user: newUser
-          })
-        } else {
+        database.ref(`Users/${user.uid}`).set({
+          email: user.email,
+          name: user.displayName,
+          picture: '',
+          dateJoined: date,
+          badges: '',
+          phone: ''
+        })
+        const newUser = {
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          picture: '',
+          dateJoined: date,
+          badges: '',
+          phone: ''
+        }
+        dispatch({
+          type: LOGGED_IN,
+          user: newUser
+        })
+      } else {
           const newUser = {
             uid: user.uid,
             email: user.email,
             name: snapshot.val().name,
             picture: snapshot.val().picture,
             dateJoined: snapshot.val().dateJoined,
-            badges: snapshot.val().badges
+            badges: snapshot.val().badges,
+            phone: snapshot.val().phone
           }
 
           dispatch({ type: LOGGED_IN, user: newUser })

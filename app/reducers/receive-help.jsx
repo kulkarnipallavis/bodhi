@@ -26,7 +26,8 @@ const findHelper = (offer) => {
     .once('value').then(function(snapshot){
       offer.offUser = {
         name: snapshot.val().name,
-        picture: snapshot.val().picture
+        picture: snapshot.val().picture,
+        phone: snapshot.val().phone
       }
       return offer
     })

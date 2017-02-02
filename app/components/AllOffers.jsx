@@ -4,7 +4,9 @@ import { Table, TableBody,
          TableHeader, TableHeaderColumn,
          TableRow, TableRowColumn } from 'material-ui/Table'
 import RaisedButton from 'material-ui/RaisedButton'
+
 import { respondToOffer } from '../reducers/offers'
+import smsLink from 'sms-link'
 
 class AllOffers extends Component {
 
