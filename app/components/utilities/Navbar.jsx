@@ -62,15 +62,18 @@ return (
           iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-          <Link to="/map"><MenuItem primaryText="Who's in Need?"/></Link>
-          <Link to="/request"><MenuItem primaryText="I Need Help!"/></Link>
           {
           !user ?
           <div>
             <Link to="/loginenter"><MenuItem primaryText="Log in"/></Link>
             <Link to="/signup"><MenuItem primaryText="Sign up"/></Link>
           </div>
-          : <Link onClick={this.logout}><MenuItem primaryText="Log out" /></Link>
+          :
+          <div>
+            <Link to="/map"><MenuItem primaryText="Who's in Need?"/></Link>
+            <Link to="/request"><MenuItem primaryText="I Need Help!"/></Link>
+            <Link onClick={this.logout}><MenuItem primaryText="Log out" /></Link>
+          </div>
           }
         </IconMenu>
       }/>
