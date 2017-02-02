@@ -10,16 +10,6 @@ class AllOffers extends Component {
   constructor(props){
     super(props)
 
-    this.state = {
-      stripedRows: false,
-      showRowHover: false,
-      selectable: true,
-      multiSelectable: false,
-      enableSelectAll: false,
-      deselectOnClickaway: true,
-      showCheckboxes: true,
-      height: '300px',
-    };
   }
 
   render(){
@@ -32,7 +22,7 @@ class AllOffers extends Component {
     offers ?
 
     offers = offers.map((offer, index) => {
-      
+
       return (
         <TableRow key={index}>
           <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
