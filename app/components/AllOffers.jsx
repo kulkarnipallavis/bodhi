@@ -13,16 +13,6 @@ class AllOffers extends Component {
   constructor(props){
     super(props)
 
-    this.state = {
-      stripedRows: false,
-      showRowHover: false,
-      selectable: true,
-      multiSelectable: false,
-      enableSelectAll: false,
-      deselectOnClickaway: true,
-      showCheckboxes: true,
-      height: '300px',
-    };
   }
 
 
@@ -36,10 +26,6 @@ class AllOffers extends Component {
     offers ?
 
     offers = offers.map((offer, index) => {
-      console.log('offer[0].offUser ', offers[0].offUser)
-        console.log('OFFER in MAP', JSON.stringify(offer))
-        console.log('OFFER object keys in MAP ', Object.keys(offer))
-        console.log('OFFER.offUser in MAP', offer['offUser'])
 
       return (
         <TableRow key={index}>

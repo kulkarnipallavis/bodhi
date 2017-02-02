@@ -30,7 +30,7 @@ class MapContainer extends Component {
     if (map) map.getZoom()
   }
 
-    handleMarkerClick(targetMarker) {
+  handleMarkerClick(targetMarker) {
     this.setState({
          markers: this.props.markers.map(marker => {
           if (marker === targetMarker) marker.showDesc = true
