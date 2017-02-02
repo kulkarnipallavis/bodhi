@@ -16,14 +16,14 @@ const reducer = (state = null, action) => {
 
 export default reducer
 
+export const loggedIn = (user) => {
+  return dispatch => {
+    return database
+      .ref('Users').child(user.uid)
+      // .equalTo(user.uid)
+      .once('value', function(snapshot){
 
-export const loggedIn = (user) => dispatch => {
-  return database
-    .ref('Users').child(user.uid)
-    // .orderByChild('authUid')
-    // .equalTo(user.uid)
-	  .once('value', function(snapshot){
-      if (!snapshot.val()) {
+      if(!snapshot.val()){
         const date = new Date
         const theDate = date.toString()
 
@@ -48,7 +48,7 @@ export const loggedIn = (user) => dispatch => {
           type: LOGGED_IN,
           user: newUser
         })
-  		} else {
+      } else {
           const newUser = {
             uid: user.uid,
             email: user.email,
@@ -72,6 +72,17 @@ export const updateUser = updatedUser => dispatch => {
 
   database.ref('Users').child(updatedUser.uid)
     .update(updatedUser)
+
 }
 
-export const loggedOut = () => ({ type: LOGGED_OUT })
+
+
+// export const loggedIn = (user) =>
+
+export const loggedOut = () => ({
+  type: LOGGED_OUT
+})
+
+
+
+

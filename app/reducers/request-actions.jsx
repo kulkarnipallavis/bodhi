@@ -8,7 +8,7 @@ import firebase from 'firebase'
 // const requestReducer = (requests = [], action) => {
 //   switch (action.type) {
 //     case RECEIVE_USER_REQUESTS:
-//     	return action.requests
+//      return action.requests
 
 //     default: return requests
 //   }
@@ -32,9 +32,7 @@ export const addRequest = (request) =>  {
     // database.ref(`Users/${request.uid}/requests/${newRequestKey}`).set({ date: theDate })
 
     let updates = {};
-
-    updates['/Users/' + request.uid + '/requests/requestId'] = newRequestKey;
-    updates['/Requests/' + newRequestKey] = request;
+    updates['/Requests/' + newRequestKey] = request
 
     return database.ref().update(updates);
   }

@@ -16,35 +16,35 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-	display: block;
+  display: block;
 }
 body {
-	line-height: 1;
+  line-height: 1;
 }
 ol, ul {
-	list-style: none;
+  list-style: none;
 }
 blockquote, q {
-	quotes: none;
+  quotes: none;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
+  content: '';
+  content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 /*____________________________________________________________*/
@@ -71,90 +71,29 @@ a {
   width: 100px;
 }
 
-.flex-container {
-  padding-top: 50px;
-}
-
-.flex-row {
+.container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-}
-
-
-.flex-col {
-  flex-basis: auto;
-  flex-direction: column;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
+  height: 85vh;
+  width: 100%
 }
 
 h1 {
   font-size: 3em;
   color: #607D8B;
-  margin: 0px;
+  margin: 50px 0px 25px 0px;
   text-align: center;
 }
 
 form {
-  margin-left: 0px !important;
+  margin-left: 15px !important;
 }
 
 .form-button {
-  margin-top: 25px !important;
+  margin: 35px 0px 0px 60px !important;
 }
-
-/* PROFILE VIEW */
-
-/*#heading {
-  height: inherit;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
-}
-
-<<<<<<< HEAD
-#bio {
-  height: 100%;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
-}
-
-#badges {
-  height: 100%;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
-}
-
-#skills {
-  height: 100%;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
-}*/
 
 .badge-icon {
   padding: 0px 0px;
   background-color: pink
 }
-

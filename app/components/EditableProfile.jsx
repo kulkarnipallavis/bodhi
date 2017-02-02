@@ -6,7 +6,8 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/FlatButton'
 import { Link } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
-import { updateUser } from '../reducers/auth'
+import { updateUser } from '../reducers/user'
+import { browserHistory } from 'react-router'
 
 class EditableProfile extends Component {
 
@@ -15,6 +16,7 @@ class EditableProfile extends Component {
     this.state = Object.assign({}, this.props.currentUsern)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount() {
@@ -35,7 +37,12 @@ class EditableProfile extends Component {
   handleSubmit(event, id){
     event.preventDefault()
     const user = this.props.currentUser;
-    this.props.updateUser(user.authUid, this.state)
+    console.log(this.props.currentUser)
+    this.props.updateUser(user.uid, this.state)
+  }
+
+  handleClick(e) {
+    browserHistory.push('/profile')
   }
 
   render () {
@@ -47,7 +54,7 @@ class EditableProfile extends Component {
         user ?
         <div>
         <form onSubmit={this.handleSubmit}>
-          <RaisedButton label="Submit Changes" primary={true} type="submit"/>
+          <RaisedButton label="Submit Changes" primary={true} type="submit" onClick={this.handleClick}/>
           <div className="flex-row">
             <div className="flex-col">
               <Avatar src={user.picture}/>
