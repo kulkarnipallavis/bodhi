@@ -23,15 +23,11 @@ import Home from './components/Home'
 import AllOffers from './components/AllOffers'
 import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-<<<<<<< HEAD
 
-auth().onAuthStateChanged(user => {
-=======
 import { findOffers } from './reducers/receive-help'
 
 
 auth().onAuthStateChanged(function(user) {
->>>>>>> 6909625b9cfcd4e7e7566ff645ed7d2fba6e5727
   if (user) {
     store.dispatch(loggedIn(user))
     store.dispatch(findOffers(user.uid))

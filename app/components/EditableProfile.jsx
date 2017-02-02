@@ -33,7 +33,8 @@ class EditableProfile extends Component {
   handleSubmit(event, id){
     event.preventDefault()
     const user = this.props.currentUser;
-    this.props.updateUser(user.authUid, this.state)
+    console.log(this.props.currentUser)
+    this.props.updateUser(user.uid, this.state)
   }
 
   handleClick(e) {
