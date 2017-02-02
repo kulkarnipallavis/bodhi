@@ -32,19 +32,15 @@ class AllOffers extends Component {
     offers ?
 
     offers = offers.map((offer, index) => {
-      console.log('offer[0].offUser ', offers[0].offUser)
-        console.log('OFFER in MAP', JSON.stringify(offer))
-        console.log('OFFER object keys in MAP ', Object.keys(offer))
-        console.log('OFFER.offUser in MAP', offer['offUser'])
-        console.log("*********offer.offUser.phone", offer.offUser.phone)
-        console.log("offer.message", offer.message)
+      
       return (
         <TableRow key={index}>
           <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
           <TableRowColumn>{offer.offUser.name}</TableRowColumn>
           <TableRowColumn>{offer.message}</TableRowColumn>
           <TableRowColumn>
-              <RaisedButton label="Yes, Please" primary={true} style={{margin:12}} onClick={()=>window.location=smsLink({phone:`${offer.offUser.phone}`, body:`${offer.message}`})}/>
+              <RaisedButton label="Yes, Please" primary={true} style={{margin:12}} 
+              onClick={()=>window.location=smsLink({phone:`${offer.offUser.phone}`, body:'Thank you. I accept your help.'})}/>
               <RaisedButton label="No, Thanks" secondary={true} style={{margin:12}} />
           </TableRowColumn>
         </TableRow>
