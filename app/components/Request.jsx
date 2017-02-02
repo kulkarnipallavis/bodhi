@@ -64,7 +64,7 @@ class Request extends Component {
 
     event.preventDefault()
     const newRequest = {
-      uid: this.props.uid,
+      uid: this.props.currentUser.uid,
       title: this.state.title,
       description: this.state.description,
       tag: this.state.tag,
@@ -88,7 +88,7 @@ class Request extends Component {
       floatingLabelFocusStyle: { color: tealA700 },
       underlineFocusStyle: { borderColor: tealA700 }
     }
-    
+
     return (
       <div>
         <h1>Request Help</h1>
@@ -140,7 +140,7 @@ Request.propTypes = {
 }
 
 const mapState = (state) => ({
-  uid: state.currentUser.uid
+  currentUser: state.currentUser
 })
 
 const mapDispatch = (dispatch) => ({

@@ -51,6 +51,9 @@ return(
   <br/>
   <p><Link onClick={this.handleClickGmail}>Log in with Gmail</Link></p>
 
+  <br/>
+  <br/>
+  <p><Link to='/signup'>Sign Up for an Account</Link></p>
 </div>
 )}
 

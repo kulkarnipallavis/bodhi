@@ -30,6 +30,7 @@ auth().onAuthStateChanged(function(user) {
     store.dispatch(findOffers(user.uid))
   } else {
     store.dispatch(loggedOut())
+    browserHistory.push('/loginenter')
   }
 })
 
