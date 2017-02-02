@@ -54,7 +54,7 @@ class AllOffers extends Component {
                 adjustForCheckbox={false}>
               <TableRow>
                 <TableHeaderColumn colSpan="4" style={{textAlign: 'center'}}>
-                    Responses
+                  Responses
                 </TableHeaderColumn>
               </TableRow>
             </TableHeader>
@@ -86,7 +86,7 @@ class AllOffers extends Component {
                               body:'I have already accepted another neighbor\'s help, but thank you for offering!'
                             })
 
-                            respond('declined', offer.offKey)}
+                            respond('declined', offer.offKey)}/>
                         label={<i className="material-icons">thumb_down</i>}/>
                     </TableRowColumn>
                   </TableRow>
