@@ -71,6 +71,8 @@ export const updateUser = updatedUser => dispatch => {
 
   dispatch({type: UPDATE_USER, updatedUser})
 
+  console.log("updatedUser", updatedUser)
+
   database.ref('Users').child(updatedUser.uid)
     .update(updatedUser)
 

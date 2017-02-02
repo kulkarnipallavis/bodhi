@@ -32,13 +32,17 @@ class EditableProfile extends Component {
     this.setState({
       [field]: value
     })
+
+    console.log("HANDLGCHANGE", this.state)
   }
 
   handleSubmit(event, id){
     event.preventDefault()
-    const user = this.props.currentUser;
-    console.log(this.props.currentUser)
-    this.props.updateUser(user.uid, this.state)
+    //const user = this.props.currentUser;
+    //console.log(this.props.currentUser)
+    //console.log("handleSubmit USER", user)
+    this.props.updateUser(this.state)
+    browserHistory.push('/profile')
   }
 
   handleClick(e) {
@@ -54,7 +58,7 @@ class EditableProfile extends Component {
         user ?
         <div>
         <form onSubmit={this.handleSubmit}>
-          <RaisedButton label="Submit Changes" primary={true} type="submit" onClick={this.handleClick}/>
+          <RaisedButton label="Submit Changes" primary={true} type="submit" onClick={this.handleSubmit}/>
           <div className="flex-row">
             <div className="flex-col">
               <Avatar src={user.picture}/>
