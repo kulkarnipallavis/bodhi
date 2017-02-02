@@ -56,11 +56,6 @@ class Request extends Component {
     })
   }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> cfd9ebe3fc5c471f601c37439bb1a3cf389aefdd
   clearForm() {
     this.setState({
       title: '',
