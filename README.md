@@ -1,5 +1,5 @@
 
-    Most Valuable Product(MVP)
+    Minimum Viable Product(MVP)
 
 
     Goals for MVP:
