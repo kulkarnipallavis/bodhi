@@ -55,9 +55,6 @@ class MapContainer extends Component {
 
   render() {
 
-    console.log('PROPS ' , this.props)
-    console.log('STATE ' , this.state)
-
     return (
       <MapComponent
         containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }

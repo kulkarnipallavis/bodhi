@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Router, Route, browserHistory } from 'react-router'
-
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -16,11 +15,15 @@ import Request from './components/Request'
 import Signup from './components/Signup'
 import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
-import Account from './components/Account'
+
+import Profile from './components/Profile'
+import EditableProfile from './components/EditableProfile'
+
 import Home from './components/Home'
 import AllOffers from './components/AllOffers'
 import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
+
 import { findOffers } from './reducers/receive-help'
 
 
@@ -54,7 +57,8 @@ render(
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/loginenter" component={LoginEnter} />
-          <Route path="/account" component={Account} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/editableprofile" component={EditableProfile} />
           <Route path="/home" component={Home} onEnter={onHomeEnter} />
           <Route path="/offers" component={AllOffers} />
       </Route>

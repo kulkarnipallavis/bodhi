@@ -101,7 +101,7 @@ export const getMarkers = () =>
           })
         }
       })
-       console.log('MARKERS in getMarkers', markers)
+       //console.log('MARKERS in getMarkers', markers)
 
       const addingRequesterInfo = markers.map(findRequester)
 
