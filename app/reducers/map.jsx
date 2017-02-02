@@ -1,4 +1,4 @@
-import firebase from '../firebase.jsx';
+import {database} from '../firebase';
 
 let initialState = {
   markers: [],
@@ -52,25 +52,47 @@ export const setSelectedMarker = (selectedMarker) => ({
 //action-creators
 export const getUserLocation = () =>
   dispatch =>
-    firebase.database().ref('Users')
+    database.ref('Users')
     .on('value', snapshot => {
       //testing out dispatcher
       let userLocation = {lat: 40.705175, lng: -74.009252}
       dispatch(setLocation(userLocation))
     })
 
+
+const findRequester = (request) => {
+  //if (request.uid) {
+    return database
+      .ref('Users')
+      .child(request.uid)
+      .once('value').then( (snapshot) => {
+        let requester = {
+          name: snapshot.val().name,
+          picture: snapshot.val().picture,
+          phone: snapshot.val().phone
+        }
+        let newReqObj = Object.assign({}, request)
+        newReqObj.requester = requester
+        return  newReqObj
+      })
+
+}
+
 export const getMarkers = () =>
   dispatch =>
-    firebase.database().ref('Requests')
+    database.ref('Requests')
     .on('value', snapshot => {
       let requestObjects = snapshot.val()
       let markers = [];
-      console.log(requestObjects)
+
       Object.keys(requestObjects).forEach(key => {
+        console.log('KEY ', key)
         if (requestObjects[key].location.latitude) {
-          markers.push({position: {
-            lat: requestObjects[key].location.latitude,
-            lng: requestObjects[key].location.longitude},
+          markers.push({
+            position: {
+              lat: requestObjects[key].location.latitude,
+              lng: requestObjects[key].location.longitude
+            },
             description: requestObjects[key].description,
             tag: requestObjects[key].tag,
             title: requestObjects[key].title,
@@ -79,8 +101,17 @@ export const getMarkers = () =>
           })
         }
       })
-      console.log("MARKERS", markers);
-      dispatch(getAllMarkers(markers))
+       console.log('MARKERS in getMarkers', markers)
+
+      const addingRequesterInfo = markers.map(findRequester)
+
+//dispatch(getAllMarkers(markers))
+
+      return Promise.all(addingRequesterInfo)
+      .then(markerArr => {
+        console.log('MARKER ARR ', markerArr)
+        dispatch(getAllMarkers(markerArr))
+      })
     })
 
 export default reducer
