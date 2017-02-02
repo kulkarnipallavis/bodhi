@@ -23,15 +23,16 @@ import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
 import { findOffers } from './reducers/receive-help'
 
-
-auth().onAuthStateChanged(function(user) {
-  if (user) {
-    store.dispatch(loggedIn(user))
-    store.dispatch(findOffers(user.uid))
-  } else {
-    store.dispatch(loggedOut())
-  }
-})
+const onEnterApp = () => {
+  auth().onAuthStateChanged(function(user) {
+    if (user) {
+      store.dispatch(loggedIn(user))
+      store.dispatch(findOffers(user.uid))
+    } else {
+      store.dispatch(loggedOut())
+    }
+  })
+}
 
 const onHomeEnter = () => {
   store.dispatch(getOpenRequests())
