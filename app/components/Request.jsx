@@ -4,6 +4,8 @@ import TextField from 'material-ui/TextField'
 import { addRequest } from '../reducers/requests'
 import RaisedButton from 'material-ui/RaisedButton'
 
+let geoWatchId
+
 class Request extends Component {
 
   constructor(props) {
@@ -15,7 +17,7 @@ class Request extends Component {
       description: '',
       tag: '',
       location: {},
-      disabled: true,
+      disabled: false,
       titleIsValid: true,
       tagIsValid: true,
       descriptionIsValid: true,
@@ -27,6 +29,15 @@ class Request extends Component {
     this.grabUserLocation = this.grabUserLocation.bind(this)
   }
 
+  componentDidMount() {
+    this.grabUserLocation()
+  }
+
+  isInvalid() {
+    const { title, tag, description, titleIsValid, tagIsValid, descriptionIsValid } = this.state
+    return !(title && tag && description && titleIsValid && tagIsValid && descriptionIsValid)
+  }
+
   handleChange = type => event => {
     const {value} = event.target
     this.setState({
@@ -35,12 +46,8 @@ class Request extends Component {
     })
   }
 
-  componentDidMount() {
-    this.grabUserLocation()
-  }
-
   grabUserLocation() {
-    navigator.geolocation.watchPosition(Position => {
+    geoWatchId = navigator.geolocation.getCurrentPosition(Position => {
       this.setState({
         location: {
           latitude: Position.coords.latitude,
@@ -69,13 +76,9 @@ class Request extends Component {
     }
 
     this.clearForm()
-    this.props.handleSubmitRequest(newRequest)
-  }
-
-  isInvalid() {
-    if (!this.state) return false
-    const {titleIsValid, tagIsValid, descriptionIsValid} = this.state
-    return !(titleIsValid && tagIsValid && descriptionIsValid)
+    this.props.handleSubmitRequest({
+      uid: this.props.uid,
+      title, description, tag, location })
   }
 
   render() {
@@ -88,40 +91,40 @@ class Request extends Component {
     }
 
     return (
-      <div id="request" className="gradient-body flex-container-gradient">
-        <div className="flex-item">
+      <div id="request-form" className="gradient-body flex-container">
+        <div className="flex-row">
           <h1>Request Help</h1>
         </div>
-        <div className="flex-item">
-          <form style={{margin: '25px 0px 0px 0px'}}>
+        <div className="flex-row">
+          <form>
             <TextField
               id="title"
-              inputStyle={styles.inputText}
               floatingLabelText="Title"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              inputStyle={styles.inputText}
               value={this.state.title}
               onChange={this.handleChange('title')}
               underlineFocusStyle={styles.underlineFocusStyle}
               errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}
               errorStyle={styles.errorStyle}/>
             <br/>
-              <TextField
-                id="tag"
-                inputStyle={styles.inputText}
-                floatingLabelText="Tag"
-                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                value={this.state.tag}
-                onChange={this.handleChange('tag')}
-                underlineFocusStyle={styles.underlineFocusStyle}
-                errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}
-                errorStyle={styles.errorStyle}/>
+            <TextField
+              id="tag"
+              floatingLabelText="Tag"
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              inputStyle={styles.inputText}
+              value={this.state.tag}
+              onChange={this.handleChange('tag')}
+              underlineFocusStyle={styles.underlineFocusStyle}
+              errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}
+              errorStyle={styles.errorStyle}/>
             <br/>
             <TextField
               id="description"
-              textareaStyle={styles.inputText}
               floatingLabelText="Description"
-              hintText="Description"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              inputStyle={styles.inputText}
+              hintText="Description"
               value={this.state.description}
               multiLine={true}
               onChange={this.handleChange('description')}
@@ -131,7 +134,7 @@ class Request extends Component {
             <br />
           </form>
         </div>
-        <div className="flex-item">
+        <div className="flex-row">
           <RaisedButton
             className="form-button"
             labelColor="#533BD7"
@@ -146,6 +149,7 @@ class Request extends Component {
 }
 
 Request.propTypes = {
+  currentUser: PropTypes.object,
   handleSubmitRequest: PropTypes.func.isRequired
 }
 

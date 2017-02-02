@@ -1,67 +1,69 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router'
-import Paper from 'material-ui/Paper'
-import { blueGrey500 } from 'material-ui/styles/colors'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 
-// const mapStateToProps = (state) => {
-// 	return {
-// 		openRequests: state.home.openRequests,
-// 		closedRequests: state.home.closedRequests,
-// 		currentUser: state.currentUser
-// 	}
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-// 	return {
-// 		getOpenRequestsDispatch: () => {
-// 			dispatch(getOpenRequests())
-// 		},
-// 		getClosedRequestsDispatch: () => {
-// 			dispatch(getClosedRequests())
-// 		}
-// 	}
-// }
+import KarmaStory from './KarmaStory'
 
-// {
-//   openReqKeys && openReqKeys.map((reqKey, index) => (
-//     <div key={index}>{openReq[reqKey].title} {openReq[reqKey].tag} {openReq[reqKey].description}</div>
-//   ))
-// }
-//
-//   {
-//     closedReqKeys && closedReqKeys.map((reqKey, index) => (
-//       <div key={index}>{closedReq[reqKey].title} {closedReq[reqKey].tag} {closedReq[reqKey].description}</div>
-//      ))
-//   }
+class HomeFeed extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {}
+    this.generateFeed = this.generateFeed.bind(this)
+  }
 
-	// const openReq = this.props.openRequests
-	// const openReqKeys = openReq ? Object.keys(openReq) : []
-  //
-	// const closedReq = this.props.closedRequests
-	// const closedReqKeys = closedReq ? Object.keys(closedReq) : []
+  componentDidMount() {
+    const usersObj = this.props.users
+    const offersArr = this.props.offers
+    const requestsObj = this.props.requests
 
-// export default connect(mapStateToProps, mapDispatchToProps)(
+    this.generateFeed(usersObj, offersArr, requestsObj)
+  }
 
-class Home extends Component {
+  generateFeed(users, offers, requests) {
+    // add requesters info to requests
+    for (var request in requests) {
+      if (requests[request].uid){
+        requests[request].reqUser = users[requests[request].uid]
+      }
+    }
+
+    if (offers.length) {
+      // add requests to offers
+      var stories = offers.map(offer => {
+        offer.req = requests[offer.reqKey]
+        offer.offUser = users[offer.offUid]
+      })
+    }
+
+    console.log(offers) // only calls after initial load when it feels like it...so, errors >:o[
+    this.setState({ feed: stories })
+  }
+
 	render() {
+    const styles = {
+      avatarStyle: { margin: '15px' }
+    }
 
 		return (
-			<div className="gradient-body flex-container-gradient">
-        <div className="flex-row">
-          <h1>Karma Feed</h1>
-        </div>
-        <div className="feed container-white">
-          <div className="flex-row">
-            <div className="flex-col">
-              FEED GOES HERE!
-            </div>
-          </div>
+			<div className="flex-row-white">
+        <div className="feed flex-col-white">
+        { this.state.feed && this.state.feed.map((story, index) => (
+            <KarmaStory key={index} styles={styles} story={story}/>
+          )) }
         </div>
 			</div>
 		)
 	}
 }
 
-export default Home
+HomeFeed.propTypes = {
+  offers: PropTypes.array,
+  users: PropTypes.object,
+  requests: PropTypes.object
+}
+
+const mapStateToProps = state => ({
+  offers: state.offers, users: state.users, requests: state.requests,
+})
+
+export default connect(mapStateToProps)(HomeFeed)

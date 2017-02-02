@@ -99,7 +99,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       }
 
       return (
-        <div className="gradient-body flex-container-gradient">
+        <div className="gradient-body flex-container">
           <div className="flex-row">
             <h1>Offer Help</h1>
           </div>
@@ -110,7 +110,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                 inputStyle={styles.inputText}
                 floatingLabelFocusStyle={styles.floatingLabelTextFocusStyle}
                 floatingLabelText="Select a date"
-                value={this.state.date || ''}
+                value={this.state.date || {}}
                 onChange={(event, date) => this.handleChange(event, date, 'date')}
                 locale="en-US"
                 errorText={this.state.validationStateDate ? '' : 'Please select a date.'}
@@ -129,14 +129,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                 errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}
                 errorStyle={styles.errorStyle}/>
               <br/>
-              <RaisedButton
-                className="form-button"
-                type="submit"
-                label="Offer Help"
-                backgroundColor="white"
-                labelColor="#533BD7"
-                disabled={this.state.disabled}/>
             </form>
+          </div>
+          <div className="flex-row">
+            <RaisedButton
+              className="form-button"
+              type="submit"
+              label="Offer Help"
+              backgroundColor="white"
+              labelColor="#533BD7"
+              disabled={this.state.disabled}/>
           </div>
         </div>
       )

@@ -8,20 +8,29 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import Badge from 'material-ui/Badge'
+import FlatButton from 'material-ui/FlatButton'
+
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
-import {auth} from '../../firebase.jsx'
+import { auth } from '../../firebase.jsx'
 
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
-  offersReceived: state.offersReceived
+  offers: state.offers
 })
 
 export default connect(mapStateToProps)(class Navbar extends React.Component {
 
   constructor() {
     super()
+    this.state = {}
     this.logout = this.logout.bind(this)
+  }
+
+  componentDidMount() {
+    const user = this.props.currentUser
+    const offers = this.props.offers.filter(offer => offer.reqUid === user.uid)
+    this.setState({ user, offers })
   }
 
   logout(event) {
@@ -31,25 +40,31 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
   }
 
   render() {
-
-    const user = this.props.currentUser
-    const offers = this.props.offersReceived
-
+    const styles = {
+      badgeStyle: { padding: '0', top: '1px', left: '11px' },
+      notificationIcon: { color: '#F0B259' }
+    }
     return (
       <div>
         <AppBar
           id="navbar"
           className="gradient-nav"
-          style={{ zIndex: 0.1 }}
-          showMenuIconButton={offers ? true : false}
-          title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
-          iconElementLeft={ offers ?
+          zDepth={0}
+          showMenuIconButton={!!this.stateoffers}
+          title={
+          <Link to="/">
+            <FlatButton>
+              <h2>Bodhi</h2>
+            </FlatButton>
+          </Link> }
+          iconElementLeft={ this.state.offers ?
             <Link to="/offers">
               <Badge
-                style={{ padding: '2px' }}
-                badgeContent={Object.keys(offers).length}>
-                  <IconButton tooltip="Notifications">
-                    <NotificationsIcon />
+                id="notifications"
+                style={styles.badgeStyle}
+                badgeContent={this.state.offers.length}>
+                  <IconButton tooltip="Help Offers" iconStyle={styles.notificationIcon}>
+                    <NotificationsIcon/>
                   </IconButton>
               </Badge>
             </Link>
@@ -59,7 +74,7 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
               iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-              { !user ?
+              { !this.state.user ?
                 <div>
                   <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
                   <Divider/>

@@ -37,51 +37,49 @@ class AllOffers extends Component {
     }
 
     return (
-      <div id="offers" className="gradient-body flex-container-gradient">
+      <div id="offers" className="gradient-body flex-row-white">
         { this.state.toggleOffer ?
           <OfferDetail
             open={this.state.toggleOffer}
             offer={this.state.currentOffer}
-            respondToOffer={this.respondToOffer}
+            respondToOffer={this.props.respond}
             toggleDialog={this.toggleDialog}/>
           : null }
-        <div className="flex-row">
-          <div className="flex-col">
-            <Table style={{textAlign: 'center'}}>
-              <TableHeader
-                  displaySelectAll={false}
-                  adjustForCheckbox={false}>
-                <TableRow>
-                  <TableHeaderColumn colSpan="4" tooltip="Responses" style={{textAlign: 'center'}}>
-                      Responses
-                  </TableHeaderColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody
-                displayRowCheckbox={false}
-                showRowHover={true}
-                stripedRows={true}>
-                { this.props.offers && this.props.offers.map((offer, index) => (
-                    <TableRow key={index}>
-                      <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
-                      <TableRowColumn>{offer.offUser.name}</TableRowColumn>
-                      <TableRowColumn>{offer.message}</TableRowColumn>
-                      <TableRowColumn>
-                        <RaisedButton
-                          className="form-button"
-                          onClick={respond('accepted', offer.offKey)}
-                          label={<i className="material-icons">thumb_up</i>}/>
-                        <RaisedButton
-                          className="form-button"
-                          onClick={respond('declined', offer.offKey)}
-                          label={<i className="material-icons">thumb_down</i>}/>
-                      </TableRowColumn>
-                    </TableRow>
-                  ))
-                }
-              </TableBody>
-            </Table>
-          </div>
+        <div className="flex-col-white">
+          <Table style={{textAlign: 'center'}}>
+            <TableHeader
+                displaySelectAll={false}
+                adjustForCheckbox={false}>
+              <TableRow>
+                <TableHeaderColumn colSpan="4" style={{textAlign: 'center'}}>
+                    Responses
+                </TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody
+              displayRowCheckbox={false}
+              showRowHover={true}
+              stripedRows={true}>
+              { this.props.offers && this.props.offers.map((offer, index) => (
+                  <TableRow key={index}>
+                    <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
+                    <TableRowColumn>{offer.offUser.name}</TableRowColumn>
+                    <TableRowColumn>{offer.message}</TableRowColumn>
+                    <TableRowColumn>
+                      <RaisedButton
+                        className="form-button"
+                        onClick={respond('accepted', offer.offKey)}
+                        label={<i className="material-icons">thumb_up</i>}/>
+                      <RaisedButton
+                        className="form-button"
+                        onClick={respond('declined', offer.offKey)}
+                        label={<i className="material-icons">thumb_down</i>}/>
+                    </TableRowColumn>
+                  </TableRow>
+                ))
+              }
+            </TableBody>
+          </Table>
         </div>
       </div>
     )
@@ -91,13 +89,14 @@ class AllOffers extends Component {
 AllOffers.propTypes = {
   offers: PropTypes.array,
   users: PropTypes.object,
-  respondToOffer: PropTypes.func
+  respond: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-  offers: state.offers
-          .filter(offer => offer.offUid === state.currentUser.uid),
+  offers: state.offers.filter(offer => offer.offUid === state.currentUser.uid),
   users: state.users
 })
+
+const mapDispatchToProps = dispatch => ({ respond: () => dispatch(respondToOffer())})
 
 export default connect(mapStateToProps)(AllOffers)

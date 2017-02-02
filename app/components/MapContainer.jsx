@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
+
 import { getMarkers, getUserLocation, setSelectedMarker } from '../reducers/map'
 import {browserHistory} from 'react-router'
-import store from '../store'
-
 
 class MapContainer extends Component {
 
@@ -30,52 +29,53 @@ class MapContainer extends Component {
     if (map) map.getZoom()
   }
 
-    handleMarkerClick(targetMarker) {
+  handleMarkerClick(targetMarker) {
     this.setState({
-         markers: this.props.markers.map(marker => {
-          if (marker === targetMarker) marker.showDesc = true
-          else marker.showDesc = false
+      markers: this.props.markers.map(marker => {
+        if (marker === targetMarker) marker.showDesc = true
+        else marker.showDesc = false
       })
     })
-    store.dispatch(setSelectedMarker(targetMarker))
+    this.props.setSelectedMarker(targetMarker)
   }
 
   handleMarkerClose(targetMarker) {
-   this.setState({
+    this.setState({
      markers: this.props.markers.map(marker => {
        if (marker === targetMarker) marker.showDesc = false
        return marker;
      })
-   })
+    })
   }
 
   handleButtonClick() {
-    browserHistory.push('/offerhelp');
+    browserHistory.push('/offerhelp')
   }
 
   render() {
 
-    console.log('PROPS ' , this.props)
-    console.log('STATE ' , this.state)
-
     return (
-      <MapComponent
-        containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }
-        mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
-        onMapLoad={this.handleMapLoad}
-        markers={this.props.markers}
-        center={this.props.center}
-        onMarkerClick={this.handleMarkerClick}
-        onMarkerClose={this.handleMarkerClose}
-        handleButtonClick={this.handleButtonClick}
-      />
+      <div className="flex-row">
+        <MapComponent
+          containerElement={  <div style={{ height: '100vh', width: '100%' }} />  }
+          mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
+          onMapLoad={this.handleMapLoad}
+          markers={this.props.markers}
+          center={this.props.center}
+          onMarkerClick={this.handleMarkerClick}
+          onMarkerClose={this.handleMarkerClose}
+          handleButtonClick={this.handleButtonClick} />
+      </div>
     )
   }
 }
 
 MapContainer.propTypes = {
+  center: PropTypes.object,
   markers: PropTypes.array,
-  getMarkers: PropTypes.func
+  getMarkers: PropTypes.func,
+  setSelectedMarker: PropTypes.func,
+  getUserLocation: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
@@ -83,6 +83,10 @@ const mapStateToProps = (state) => ({
   center: state.map.center
 })
 
-const mapDispatchToProps = { getMarkers, getUserLocation, setSelectedMarker }
+const mapDispatchToProps = dispatch => ({
+  getMarkers: () => dispatch(getMarkers()),
+  getUserLocation: () => dispatch(getUserLocation()),
+  setSelectedMarker: (marker) => dispatch(setSelectedMarker(marker))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

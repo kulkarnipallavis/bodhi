@@ -16,12 +16,10 @@ const writeUserData = (userKey, name, location) => {
   });
 }
 
-
-
 const updateUserData = (name, location) => {
   // A request entry.
   const newUserKey = database.ref().child('Users').push().key;
- 
+
   const userData = {
     userKey : newUserKey,
     username: name,

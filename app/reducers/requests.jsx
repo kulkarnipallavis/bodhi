@@ -9,7 +9,7 @@ export const RECEIVE_REQUESTS = 'RECEIVE_REQUESTS'
 
 // _______________ REDUCER _______________ //
 
-const requestReducer = (requests = [], action) => {
+const requestReducer = (requests = {}, action) => {
   switch (action.type) {
     case RECEIVE_REQUESTS: return action.requests
     default: return requests
@@ -24,24 +24,17 @@ export const receiveRequests = (requests) => ({ type: RECEIVE_REQUESTS, requests
 
 // _______________ THUNKS _______________ //
 
-export const getAllRequests = () => {
-  return dispatch => {
-    firebase.database().ref('Requests')
-    .on('value', snapshot => {
-      let requestObj = snapshot.val()
-      let requests = []
+export const getAllRequests = () => dispatch => firebase.database()
+  .ref('Requests')
+  .orderByChild('date')
+  .on('value', snapshot => {
+    let requests = snapshot.val()
+    dispatch(receiveRequests(requests))
+})
 
-      for (var key in requestObj) {
-        requests.push(requestObj[key])
-      }
-
-      dispatch(receiveRequests(requests))
-    })
-  }
-}
 
 export const addRequest = request => dispatch => {
-  const newRequestKey = database.ref().child('Requests').push().key;
+  const newRequestKey = database.ref().child('Requests').push().key
   let date = new Date
   request.date = date.toDateString()
 

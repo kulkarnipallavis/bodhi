@@ -50,36 +50,34 @@ export const setSelectedMarker = (selectedMarker) => ({
 })
 
 //action-creators
-export const getUserLocation = () =>
-  dispatch =>
-    firebase.database().ref('Users')
-    .on('value', snapshot => {
-      //testing out dispatcher
-      let userLocation = {lat: 40.705175, lng: -74.009252}
-      dispatch(setLocation(userLocation))
+export const getUserLocation = () => dispatch =>
+  firebase.database().ref('Users')
+  .on('value', snapshot => {
+    let userLocation = {lat: 40.705175, lng: -74.009252}
+    dispatch(setLocation(userLocation))
+  })
+
+export const getMarkers = () => dispatch =>
+  firebase.database().ref('Requests')
+  .on('value', snapshot => {
+    let requestObjects = snapshot.val()
+    let markers = []
+
+    Object.keys(requestObjects).forEach(key => {
+      if (requestObjects[key].location.latitude) {
+        markers.push({position: {
+          lat: requestObjects[key].location.latitude,
+          lng: requestObjects[key].location.longitude},
+          description: requestObjects[key].description,
+          tag: requestObjects[key].tag,
+          title: requestObjects[key].title,
+          uid: requestObjects[key].uid,
+          key: key
+        })
+      }
     })
 
-export const getMarkers = () =>
-  dispatch =>
-    firebase.database().ref('Requests')
-    .on('value', snapshot => {
-      let requestObjects = snapshot.val()
-      let markers = []
-
-      Object.keys(requestObjects).forEach(key => {
-        if (requestObjects[key].location.latitude) {
-          markers.push({position: {
-            lat: requestObjects[key].location.latitude,
-            lng: requestObjects[key].location.longitude},
-            description: requestObjects[key].description,
-            tag: requestObjects[key].tag,
-            title: requestObjects[key].title,
-            uid: requestObjects[key].uid,
-            key: key
-          })
-        }
-      })
-      dispatch(getAllMarkers(markers))
-    })
+    dispatch(getAllMarkers(markers))
+  })
 
 export default reducer
