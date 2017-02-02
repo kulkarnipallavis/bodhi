@@ -64,6 +64,7 @@ export const loggedIn = (user) => {
         })
   		}
   	})
+  }
 }
 
 export const updateUser = updatedUser => dispatch => {

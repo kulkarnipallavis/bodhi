@@ -6,14 +6,14 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/FlatButton'
 import { Link } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
-import { updateUser } from '../reducers/user'
+import { updateUser } from '../reducers/auth'
 import { browserHistory } from 'react-router'
 
 class EditableProfile extends Component {
 
   constructor(props){
     super(props);
-    this.state = Object.assign({}, this.props.currentUsern)
+    this.state = Object.assign({}, this.props.currentUser)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClick = this.handleClick.bind(this)
