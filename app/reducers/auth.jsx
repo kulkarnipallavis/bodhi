@@ -64,8 +64,8 @@ export const updateUser = updatedUser => dispatch => {
 
   dispatch({type: UPDATE_USER, updatedUser})
 
-  database.ref(`Users/${updatedUser.authUid}`)
-    .update(newUser)
+  database.ref('Users').child(updatedUser.authUid)
+    .update(updatedUser)
 }
 
 export const loggedOut = () => ({ type: LOGGED_OUT })
