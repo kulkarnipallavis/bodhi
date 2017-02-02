@@ -30,7 +30,8 @@ export const loggedIn = (user) => {
           name: user.displayName,
           picture: '',
           dateJoined: theDate,
-          badges: ''
+          badges: '',
+          phone: ''
         })
         const newUser = {
           uid: user.uid,
