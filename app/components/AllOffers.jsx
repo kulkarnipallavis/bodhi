@@ -1,93 +1,103 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router'
-import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
-  from 'material-ui/Table'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Table, TableBody,
+         TableHeader, TableHeaderColumn,
+         TableRow, TableRowColumn } from 'material-ui/Table'
 import RaisedButton from 'material-ui/RaisedButton'
-
-
-
-
+import { respondToOffer } from '../reducers/offers'
 
 class AllOffers extends Component {
-  constructor(props){
+
+  constructor(props) {
     super(props)
 
     this.state = {
-      stripedRows: false,
-      showRowHover: false,
-      selectable: true,
-      multiSelectable: false,
-      enableSelectAll: false,
-      deselectOnClickaway: true,
-      showCheckboxes: true,
-      height: '300px',
-    };
+      toggleOffer: false,
+      currentOffer: {}
+    }
   }
 
+  respond = (newOfferStatus, offerKey) => (event) => {
+    event.preventDefault()
+    respondToOffer(newOfferStatus, offerKey)
+  }
 
-  render(){
-    console.log(this.props)
-
-    let offers = this.props.offersReceived
-
-
-
-    offers ?
-
-    offers = offers.map((offer, index) => {
-      console.log('offer[0].offUser ', offers[0].offUser)
-        console.log('OFFER in MAP', JSON.stringify(offer))
-        console.log('OFFER object keys in MAP ', Object.keys(offer))
-        console.log('OFFER.offUser in MAP', offer['offUser'])
-
-      return (
-        <TableRow key={index}>
-          <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
-          <TableRowColumn>{offer.offUser.name}</TableRowColumn>
-          <TableRowColumn>{offer.message}</TableRowColumn>
-          <TableRowColumn>
-              <RaisedButton label="Yes, Please" primary={true} style={{margin:12}} />
-              <RaisedButton label="No, Thanks" secondary={true} style={{margin:12}} />
-          </TableRowColumn>
-        </TableRow>
-        )
+  toggleDialog = offer => {
+    this.setState({
+      toggleOffer: true,
+      currentOffer: offer
     })
-    : null
+  }
 
-    return(
-      <Table style={{textAlign: 'center'}}>
-        <TableHeader
-            displaySelectAll={false}
-            adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn colSpan="4" tooltip="Responses" style={{textAlign: 'center'}}>
-                Responses
-            </TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody
-          displayRowCheckbox={false}
-          showRowHover={true}
-          stripedRows={true}>
-        {offers}
-        </TableBody>
-      </Table>
-      )
+  render() {
+    if (this.props.offers) {
+      this.props.offers.map(offer => {
+        if (this.props.users[offer.offUid]) offer.offUser = this.props.users[offer.offUid]
+      })
+    }
+
+    return (
+      <div id="offers" className="gradient-body flex-container-gradient">
+        { this.state.toggleOffer ?
+          <OfferDetail
+            open={this.state.toggleOffer}
+            offer={this.state.currentOffer}
+            respondToOffer={this.respondToOffer}
+            toggleDialog={this.toggleDialog}/>
+          : null }
+        <div className="flex-row">
+          <div className="flex-col">
+            <Table style={{textAlign: 'center'}}>
+              <TableHeader
+                  displaySelectAll={false}
+                  adjustForCheckbox={false}>
+                <TableRow>
+                  <TableHeaderColumn colSpan="4" tooltip="Responses" style={{textAlign: 'center'}}>
+                      Responses
+                  </TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody
+                displayRowCheckbox={false}
+                showRowHover={true}
+                stripedRows={true}>
+                { this.props.offers && this.props.offers.map((offer, index) => (
+                    <TableRow key={index}>
+                      <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
+                      <TableRowColumn>{offer.offUser.name}</TableRowColumn>
+                      <TableRowColumn>{offer.message}</TableRowColumn>
+                      <TableRowColumn>
+                        <RaisedButton
+                          className="form-button"
+                          onClick={respond('accepted', offer.offKey)}
+                          label={<i className="material-icons">thumb_up</i>}/>
+                        <RaisedButton
+                          className="form-button"
+                          onClick={respond('declined', offer.offKey)}
+                          label={<i className="material-icons">thumb_down</i>}/>
+                      </TableRowColumn>
+                    </TableRow>
+                  ))
+                }
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-
-  }
+AllOffers.propTypes = {
+  offers: PropTypes.array,
+  users: PropTypes.object,
+  respondToOffer: PropTypes.func
 }
 
-const mapStateToProps = (state) => {
-  return {
-    offersReceived: state.offersReceived,
-  }
-}
+const mapStateToProps = (state) => ({
+  offers: state.offers
+          .filter(offer => offer.offUid === state.currentUser.uid),
+  users: state.users
+})
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllOffers)
+export default connect(mapStateToProps)(AllOffers)

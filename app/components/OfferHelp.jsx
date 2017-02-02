@@ -4,8 +4,8 @@ import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
-import { submitOffer } from '../reducers/offer-help'
-import { updateRequestStatus } from '../reducers/request-actions'
+import { submitOffer } from '../reducers/offers'
+import { updateRequestStatus } from '../reducers/requests'
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -99,40 +99,45 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       }
 
       return (
-        <div>
-          <h1>Offer Help</h1>
-          <form onSubmit={this.handleSubmit}>
-            <DatePicker
-              name="date"
-              inputStyle={styles.inputText}
-              floatingLabelText="Select a date"
-              value={this.state.date}
-              onChange={(event, date) => this.handleChange(event, date, 'date')}
-              locale="en-US"
-              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}
-              errorStyle={styles.errorStyle}/>
-            <br/>
-            <TextField
-              name="msg"
-              textareaStyle={styles.inputText}
-              value={this.state.message}
-              onChange={(event) => this.handleChange(event, null, 'message')}
-              multiLine={true}
-              hintText="Message To Requester"
-              floatingLabelText="Message To Requester"
-              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              underlineFocusStyle={styles.underlineFocusStyle}
-              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}
-              errorStyle={styles.errorStyle}/>
-            <br/>
-            <RaisedButton
-              className="form-button"
-              type="submit"
-              label="Offer Help"
-              backgroundColor="white"
-              labelColor="#533BD7"
-              disabled={this.state.disabled}/>
-          </form>
+        <div className="gradient-body flex-container-gradient">
+          <div className="flex-row">
+            <h1>Offer Help</h1>
+          </div>
+          <div className="flex-row">
+            <form onSubmit={this.handleSubmit}>
+              <DatePicker
+                name="date"
+                inputStyle={styles.inputText}
+                floatingLabelFocusStyle={styles.floatingLabelTextFocusStyle}
+                floatingLabelText="Select a date"
+                value={this.state.date || ''}
+                onChange={(event, date) => this.handleChange(event, date, 'date')}
+                locale="en-US"
+                errorText={this.state.validationStateDate ? '' : 'Please select a date.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+              <TextField
+                name="msg"
+                textareaStyle={styles.inputText}
+                value={this.state.message}
+                onChange={(event) => this.handleChange(event, null, 'message')}
+                multiLine={true}
+                hintText="Message To Requester"
+                floatingLabelText="Message To Requester"
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+              <RaisedButton
+                className="form-button"
+                type="submit"
+                label="Offer Help"
+                backgroundColor="white"
+                labelColor="#533BD7"
+                disabled={this.state.disabled}/>
+            </form>
+          </div>
         </div>
       )
     }

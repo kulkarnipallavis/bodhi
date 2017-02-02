@@ -40,9 +40,10 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
         <AppBar
           id="navbar"
           className="gradient-nav"
+          style={{ zIndex: 0.1 }}
           showMenuIconButton={offers ? true : false}
           title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
-          iconElementLeft={offers ?
+          iconElementLeft={ offers ?
             <Link to="/offers">
               <Badge
                 style={{ padding: '2px' }}
@@ -53,20 +54,24 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
               </Badge>
             </Link>
               : null}
-          iconElementRight={<IconMenu
+          iconElementRight={
+            <IconMenu
               iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-              <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
-              <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
-              <Divider/>
-              {
-              !user ?
-              <div>
-                <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
-                <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
-              </div>
-              : <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
+              { !user ?
+                <div>
+                  <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
+                  <Divider/>
+                  <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
+                  <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
+                </div>
+                : <div>
+                    <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
+                    <Link to="/requesthelp"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
+                    <Divider/>
+                    <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
+                  </div>
               }
             </IconMenu>
           }/>

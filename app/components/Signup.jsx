@@ -84,19 +84,9 @@ render () {
     }
 
   return (
-    <div id="div_signup">
+    <div id="signup" className="gradient-body flex-container-gradient">
       <h1>Sign Up</h1>
       <form onSubmit={this.handleSubmit}>
-      {
-        // <TextField
-        //   id="name"
-        //   type="text"
-        //   floatingLabelText="Name"
-        //   value={this.state.name}
-        //   onChange={this.handleChangeName}
-        //   />
-        //   <br />
-      }
         <TextField
           id="email"
           type="email"

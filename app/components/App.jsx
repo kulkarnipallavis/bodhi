@@ -28,9 +28,7 @@ class App extends Component {
       <MuiThemeProvider muitheme={getMuiTheme(theme)}>
         <div>
           <Navbar />
-          <div className="container gradient-body">
-            { this.props.children && React.cloneElement(this.props.children, this.props) }
-          </div>
+          { this.props.children && React.cloneElement(this.props.children, this.props) }
         </div>
       </MuiThemeProvider>
     )

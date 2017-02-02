@@ -64,8 +64,8 @@ export const getMarkers = () =>
     firebase.database().ref('Requests')
     .on('value', snapshot => {
       let requestObjects = snapshot.val()
-      let markers = [];
-      console.log(requestObjects)
+      let markers = []
+
       Object.keys(requestObjects).forEach(key => {
         if (requestObjects[key].location.latitude) {
           markers.push({position: {
@@ -79,7 +79,6 @@ export const getMarkers = () =>
           })
         }
       })
-      console.log("MARKERS", markers);
       dispatch(getAllMarkers(markers))
     })
 
