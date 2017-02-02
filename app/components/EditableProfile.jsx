@@ -12,7 +12,7 @@ class EditableProfile extends Component {
 
   constructor(props){
     super(props);
-    this.state = {}
+    this.state = this.props.currentUser
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -23,6 +23,7 @@ class EditableProfile extends Component {
 
   handleChange(event, field) {
     const value = event.target.value
+    console.log(this.state)
     this.setState({
       [field]: value
     })
@@ -31,6 +32,7 @@ class EditableProfile extends Component {
   handleSubmit(event, id){
     event.preventDefault()
     const user = this.props.currentUser;
+       console.log(this.state)
     this.props.updateUser(user.authUid, this.state)
   }
 

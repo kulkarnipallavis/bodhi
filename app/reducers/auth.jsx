@@ -2,10 +2,14 @@ import { database } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
 const LOGGED_OUT = 'LOGGED_OUT'
+const UPDATE_USER = 'UPDATE_USER'
+const GET_USER = 'GET_USER'
 
 const reducer = (state = null, action) => {
   switch (action.type) {
     case LOGGED_IN: return action.user
+    case UPDATE_USER: return action.updatedUser
+    case GET_USER: return action.currentUser
     case LOGGED_OUT: return null
     default: return state
   }
@@ -56,6 +60,24 @@ export const loggedIn = (user) => dispatch => {
         dispatch({ type: LOGGED_IN, user: newUser })
       }
     })
+}
+
+export const sendUser = (currentUser) => {
+  dispatch({type: GET_USER, currentUser})
+}
+
+export const updateUser = (updatedUser) => {
+  dispatch({type: UPDATE_USER, updatedUser})
+}
+
+export const updateUserInDatabase = (userId, state) => {
+  const valueKeys = Object.keys(state)
+
+  valueKeys.forEach(value => {
+    database.ref('Users/' + userId).update({
+      [value] : state[value]
+    })
+  })
 }
 
 export const loggedOut = () => ({ type: LOGGED_OUT })
