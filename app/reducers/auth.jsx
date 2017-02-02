@@ -39,7 +39,8 @@ export const loggedIn = (user) => {
           name: user.displayName,
           picture: '',
           dateJoined: theDate,
-          badges: ''
+          badges: '',
+          phone: ''
         }
         dispatch({
           type: LOGGED_IN,
@@ -52,7 +53,8 @@ export const loggedIn = (user) => {
             name: snapshot.val().name,
             picture: snapshot.val().picture,
             dateJoined: snapshot.val().dateJoined,
-            badges: snapshot.val().badges
+            badges: snapshot.val().badges,
+            phone: snapshot.val().phone
           }
         dispatch({
           type: LOGGED_IN,
