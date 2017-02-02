@@ -110,44 +110,8 @@ form {
   margin-top: 25px !important;
 }
 
-/* PROFILE VIEW */
-
-/*#heading {
-  height: inherit;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
+.badge-icon {
+  padding: 0px 0px;
+  background-color: pink
 }
 
-#bio {
-  height: 100%;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
-}
-
-#badges {
-  height: 100%;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
-}
-
-#skills {
-  height: 100%;
-  background: rgb(0, 191, 165);
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  color: white;
-}*/
