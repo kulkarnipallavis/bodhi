@@ -16,7 +16,6 @@ class EditableProfile extends Component {
     this.state = Object.assign({}, this.props.currentUser)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount() {
@@ -38,16 +37,10 @@ class EditableProfile extends Component {
 
   handleSubmit(event, id){
     event.preventDefault()
-    //const user = this.props.currentUser;
-    //console.log(this.props.currentUser)
-    //console.log("handleSubmit USER", user)
     this.props.updateUser(this.state)
     browserHistory.push('/profile')
   }
 
-  handleClick(e) {
-    browserHistory.push('/profile')
-  }
 
   render () {
   const user = this.props.currentUser;

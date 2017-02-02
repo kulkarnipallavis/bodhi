@@ -20,7 +20,6 @@ export const loggedIn = (user) => {
   return dispatch => {
     return database
       .ref('Users').child(user.uid)
-      // .equalTo(user.uid)
       .once('value', function(snapshot){
 
       if(!snapshot.val()){
@@ -73,14 +72,20 @@ export const updateUser = updatedUser => dispatch => {
 
   console.log("updatedUser", updatedUser)
 
+  const updates = {
+    badges: updatedUser.badges,
+    dateJoined: updatedUser.dateJoined,
+    email: updatedUser.email,
+    name: updatedUser.name,
+    phone: updatedUser.phone,
+    picture: updatedUser.picture       
+  }
+
   database.ref('Users').child(updatedUser.uid)
-    .update(updatedUser)
+    .update(updates)
 
 }
 
-
-
-// export const loggedIn = (user) =>
 
 export const loggedOut = () => ({
   type: LOGGED_OUT
