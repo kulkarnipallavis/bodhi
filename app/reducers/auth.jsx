@@ -13,6 +13,7 @@ const reducer = (state = null, action) => {
   }
 }
 
+
 export default reducer
 
 
@@ -31,40 +32,45 @@ export const loggedIn = (user) => dispatch => {
           name: user.displayName,
           picture: '',
           dateJoined: theDate,
-          badges: ''
+          badges: '',
+          phone: ''
         })
         const newUser = {
-          authUid: user.uid,
+          uid: user.uid,
           email: user.email,
           name: user.displayName,
           picture: '',
           dateJoined: theDate,
-          badges: ''
+          badges: '',
+          phone: ''
         }
         dispatch({
           type: LOGGED_IN,
           user: newUser
         })
-      } else {
-        const newUser = {
-          authUid: user.uid,
-          email: user.email,
-          name: snapshot.val().name,
-          picture: snapshot.val().picture,
-          dateJoined: snapshot.val().dateJoined,
-          badges: snapshot.val().badges
-        }
-
-        dispatch({ type: LOGGED_IN, user: newUser })
-      }
-    })
+  		} else {
+          const newUser = {
+            uid: user.uid,
+            email: user.email,
+            name: snapshot.val().name,
+            picture: snapshot.val().picture,
+            dateJoined: snapshot.val().dateJoined,
+            badges: snapshot.val().badges,
+            phone: snapshot.val().phone
+          }
+        dispatch({
+          type: LOGGED_IN,
+          user: newUser
+        })
+  		}
+  	})
 }
 
 export const updateUser = updatedUser => dispatch => {
 
   dispatch({type: UPDATE_USER, updatedUser})
 
-  database.ref('Users').child(updatedUser.authUid)
+  database.ref('Users').child(updatedUser.uid)
     .update(updatedUser)
 }
 

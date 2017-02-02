@@ -1,17 +1,24 @@
-import firebase from '../firebase.jsx'
+import firebase, { database } from '../firebase.jsx'
+
+
+//LOAD OFFERS RECEIVED and put them on state??
+
 
 export const submitOffer = (newOffer) => {
-	return dispatch => {
-		var newOfferKey = firebase.database().ref().child('Offers').push().key;
-		// var offerData = {
-		// 	date: newOffer.date,
-		// 	messageToRequester: newOffer.message,
-		// 	offerId: newOfferKey
-		// }
+  return dispatch => {
+    var newOfferKey = firebase.database().ref().child('Offers').push().key;
+    // var offerData = {
+    //  date: newOffer.date,
+    //  messageToRequester: newOffer.message,
+    //  offerId: newOfferKey
+    // }
 
 
     var updates = {['/Offers/' + newOfferKey]: offerData}
 
     return firebase.database().ref().update(updates)
-	}
+  }
 }
+
+
+

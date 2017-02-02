@@ -20,20 +20,26 @@ import Profile from './components/Profile'
 import EditableProfile from './components/EditableProfile'
 
 import Home from './components/Home'
+import AllOffers from './components/AllOffers'
 import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
 
-auth().onAuthStateChanged(user => {
+import { findOffers } from './reducers/receive-help'
+
+
+auth().onAuthStateChanged(function(user) {
   if (user) {
     store.dispatch(loggedIn(user))
+    store.dispatch(findOffers(user.uid))
   } else {
     store.dispatch(loggedOut())
+    browserHistory.push('/loginenter')
   }
 })
 
 const onEnterApp = () => {
   injectTapEventPlugin()
-  //get currently signed-in user
+
 }
 
 const onHomeEnter = () => {
@@ -54,6 +60,7 @@ render(
           <Route path="/profile" component={Profile} />
           <Route path="/editableprofile" component={EditableProfile} />
           <Route path="/home" component={Home} onEnter={onHomeEnter} />
+          <Route path="/offers" component={AllOffers} />
       </Route>
     </Router>
   </Provider>,

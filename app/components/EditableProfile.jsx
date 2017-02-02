@@ -12,7 +12,7 @@ class EditableProfile extends Component {
 
   constructor(props){
     super(props);
-    this.state = Object.assign({}, this.props.currentUser)
+    this.state = Object.assign({}, this.props.currentUsern)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
