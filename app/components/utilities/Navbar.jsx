@@ -15,7 +15,7 @@ import { auth } from '../../firebase.jsx'
 
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser,
+  user: state.currentUser,
   offers: state.offers
 })
 
@@ -25,12 +25,6 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
     super()
     this.state = {}
     this.logout = this.logout.bind(this)
-  }
-
-  componentDidMount() {
-    const user = this.props.currentUser
-    const offers = this.props.offers.filter(offer => offer.reqUid === user.uid)
-    this.setState({ user, offers })
   }
 
   logout(event) {
@@ -44,25 +38,28 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
       badgeStyle: { padding: '0', top: '1px', left: '11px' },
       notificationIcon: { color: '#F0B259' }
     }
+    const user = this.props.user
+    const offers = this.props.offers.filter(offer => offer.reqUid === user.uid)
+
     return (
       <div>
         <AppBar
           id="navbar"
           className="gradient-nav"
           zDepth={0}
-          showMenuIconButton={!!this.state.offers}
+          showMenuIconButton={!!offers}
           title={
           <Link to="/">
             <FlatButton>
               <h2>Bodhi</h2>
             </FlatButton>
           </Link> }
-          iconElementLeft={ this.state.offers ?
+          iconElementLeft={ offers ?
             <Link to="/offers">
               <Badge
                 id="notifications"
                 style={styles.badgeStyle}
-                badgeContent={this.state.offers.length}>
+                badgeContent={offers.length}>
                   <IconButton tooltip="Help Offers" iconStyle={styles.notificationIcon}>
                     <NotificationsIcon/>
                   </IconButton>
@@ -74,7 +71,7 @@ export default connect(mapStateToProps)(class Navbar extends React.Component {
               iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-              { !this.state.user ?
+              { !user ?
                 <div>
                   <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
                   <Divider/>

@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton'
 import { auth } from '../firebase.jsx'
 
-export default class LoginEnter extends React.Component {
+export default class LoginEnter extends Component {
 
   constructor() {
     super()
@@ -11,6 +11,7 @@ export default class LoginEnter extends React.Component {
   }
 
   handleClickGmail() {
+    event.preventDefault()
     var provider = new auth.GoogleAuthProvider()
     auth().signInWithRedirect(provider)
   }
@@ -31,7 +32,6 @@ export default class LoginEnter extends React.Component {
         </div>
         <div className="flex-row">
           <RaisedButton
-            href="#"
             className="form-button"
             labelColor="#4285F4"
             labelStyle={styles.label}
