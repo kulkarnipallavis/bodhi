@@ -87,7 +87,6 @@ a {
 .flex-col {
   flex-basis: auto;
   flex-direction: column;
-  background: rgb(0, 191, 165);
   border-radius: 10px;
   margin: 25px;
   padding: 15px;
@@ -108,4 +107,9 @@ form {
 
 .form-button {
   margin-top: 25px !important;
+}
+
+.badge-icon {
+  padding: 0px 0px;
+  background-color: pink
 }

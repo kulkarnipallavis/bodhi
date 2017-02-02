@@ -11,21 +11,23 @@ const reducer = (state = null, action) => {
   }
 }
 
+export default reducer
+
 export const loggedOut = () => ({ type: LOGGED_OUT })
 
-export const loggedIn = (user) => dispatch => {
+export const loggedIn = user => dispatch => {
     return database
       .ref('Users').child(user.uid)
 		  .once('value', snapshot => {
         if (!snapshot.val()) {
-          const date = new Date
-          const theDate = date.toString()
+          let date = new Date
+          date = date.toDateString()
 
           database.ref(`Users/${user.uid}`).set({
             email: user.email,
             name: user.displayName,
             picture: '',
-            dateJoined: theDate,
+            dateJoined: date,
             badges: ''
           })
           const newUser = {
@@ -33,7 +35,7 @@ export const loggedIn = (user) => dispatch => {
             email: user.email,
             name: user.displayName,
             picture: '',
-            dateJoined: theDate,
+            dateJoined: date,
             badges: ''
           }
           dispatch({
@@ -42,7 +44,7 @@ export const loggedIn = (user) => dispatch => {
           })
         } else {
           const newUser = {
-            authUid: user.uid,
+            uid: user.uid,
             email: user.email,
             name: snapshot.val().name,
             picture: snapshot.val().picture,
@@ -54,5 +56,3 @@ export const loggedIn = (user) => dispatch => {
         }
     })
 }
-
-export default reducer

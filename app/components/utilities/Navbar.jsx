@@ -6,9 +6,15 @@ import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import Badge from 'material-ui/Badge'
+import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 
-const mapStateToProps = (state) => ({ currentUser: state.currentUser })
+
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+  offersReceived: state.offersReceived
+})
 
 
 export default connect(mapStateToProps)(class Navbar extends React.Component {
@@ -33,15 +39,26 @@ logout(e) {
 render() {
 
 const user = this.props.currentUser
+const offers = this.props.offersReceived
 
 return (
   <div>
     <AppBar
       id="navbar"
-      showMenuIconButton={false}
+      showMenuIconButton={offers ? true : false}
       title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
-      iconElementRight={
-        <IconMenu
+      iconElementLeft={offers ?
+        <Link to="/offers">
+          <Badge
+            style={{ padding: '2px'}}
+            badgeContent={Object.keys(offers).length}>
+              <IconButton tooltip="Notifications">
+                <NotificationsIcon />
+              </IconButton>
+          </Badge>
+        </Link>
+          : null}
+      iconElementRight={<IconMenu
           iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}>

@@ -4,14 +4,23 @@
 import { database } from '../firebase.jsx'
 import firebase from 'firebase'
 
-export const addRequest = (request) => dispatch => {
-  const newRequestKey = database.ref().child('Requests').push().key;
-  const time = firebase.database.ServerValue.TIMESTAMP
+export const addRequest = (request) =>  dispatch => {
+  const newRequestKey = database.ref().child('Requests').push().key
 
-  request.date = time
+  let date = new Date
+  request.date = date.toDateString()
 
   let updates = {};
-  updates['/Requests/' + newRequestKey] = request
+  updates[`/Requests/${newRequestKey}`] = request
 
   return database.ref().update(updates)
+}
+
+export const updateRequestStatus = (status, markerKey) => {
+  return dispatch => {
+    let statusUpdate = {}
+    statusUpdate[`Requests/${markerKey}/status`] = 'pending'
+
+    return database.ref().update(statusUpdate)
+  }
 }

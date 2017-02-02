@@ -86,7 +86,7 @@ class Request extends Component {
           <h1>Request Help</h1>
         </div>
         <div className="flex-row">
-          <form style={{margin: '25px 0px 0px 0px'}}>
+          <form>
             <TextField
               id="title"
               floatingLabelText="Title"
