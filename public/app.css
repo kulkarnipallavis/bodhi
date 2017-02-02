@@ -98,39 +98,50 @@ form {
   color: rgb(83, 59, 215) !important;
 }
 .gradient-body {
-    background-color: #cf716c;
-    /* IE9, iOS 3.2+ */
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIHN0b3AtY29sb3I9IiNmYzRkNTYiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2YwYTUyYyIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmM3MTU2IiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMC41MDEiLz48c3RvcCBzdG9wLWNvbG9yPSIjNTMzYmQ3IiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCN2c2dnKSIgLz48L3N2Zz4=);
-    background-image: -webkit-gradient(linear, 0% 0%, 100% 100%,color-stop(0, rgb(252, 77, 86)),color-stop(0, rgb(240, 165, 44)),color-stop(0.501, rgb(252, 113, 86)),color-stop(1, rgb(83, 59, 215)));
-    /* Android 2.3 */
-    background-image: -webkit-repeating-linear-gradient(top left,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
-    /* IE10+ */
-    background-image: repeating-linear-gradient(to bottom right,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
-    background-image: -ms-repeating-linear-gradient(top left,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
+  .gradient {
+  background-color: #6862a9;
+  /* IE9, iOS 3.2+ */
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI1LjMlIiB5MT0iLTYuNyUiIHgyPSI5NC43JSIgeTI9IjEwNi43JSI+PHN0b3Agc3RvcC1jb2xvcj0iI2ZjNGQ1NiIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMjc2Y2JhIiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMC41MTIiLz48c3RvcCBzdG9wLWNvbG9yPSIjNTM2NWRjIiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCN2c2dnKSIgLz48L3N2Zz4=);
+  background-image: -webkit-gradient(linear, 5.3% -6.7%, 94.7% 106.7%,color-stop(0, rgb(252, 77, 86)),color-stop(0.512, rgb(39, 108, 186)),color-stop(1, rgb(83, 101, 220)));
+  /* Android 2.3 */
+  background-image: -webkit-linear-gradient(302deg,rgb(252, 77, 86) 0%,rgb(39, 108, 186) 51.2%,rgb(83, 101, 220) 100%);
+  /* IE10+ */
+  background-image: linear-gradient(148deg,rgb(252, 77, 86) 0%,rgb(39, 108, 186) 51.2%,rgb(83, 101, 220) 100%);
+  background-image: -ms-linear-gradient(302deg,rgb(252, 77, 86) 0%,rgb(39, 108, 186) 51.2%,rgb(83, 101, 220) 100%);
 }
 
 /* IE8- CSS hack */
 @media \0screen\,screen\9 {
-    .gradient-body {
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fffc4d56",endColorstr="#ff533bd7",GradientType=0);
-    }
+  .gradient {
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fffc4d56",endColorstr="#ff5365dc",GradientType=0);
+  }
+}
+
 }
 
 .gradient-nav {
-    background-color: #cf716c;
-    /* IE9, iOS 3.2+ */
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIxMDAlIiB5MT0iMTAwJSIgeDI9IjAlIiB5Mj0iMCUiPjxzdG9wIHN0b3AtY29sb3I9IiNmYzRkNTYiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2YwYTUyYyIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmM3MTU2IiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMC41MDEiLz48c3RvcCBzdG9wLWNvbG9yPSIjNTMzYmQ3IiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCN2c2dnKSIgLz48L3N2Zz4=);
-    background-image: -webkit-gradient(linear, 100% 100%, 0% 0%,color-stop(0, rgb(252, 77, 86)),color-stop(0, rgb(240, 165, 44)),color-stop(0.501, rgb(252, 113, 86)),color-stop(1, rgb(83, 59, 215)));
-    /* Android 2.3 */
-    background-image: -webkit-repeating-linear-gradient(bottom right,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
-    /* IE10+ */
-    background-image: repeating-linear-gradient(to top left,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
-    background-image: -ms-repeating-linear-gradient(bottom right,rgb(252, 77, 86) 0%,rgb(240, 165, 44) 0%,rgb(252, 113, 86) 50.1%,rgb(83, 59, 215) 100%);
+  .gradient {
+  background-color: #6862a9;
+  /* IE9, iOS 3.2+ */
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI1LjMlIiB5MT0iLTYuNyUiIHgyPSI5NC43JSIgeTI9IjEwNi43JSI+PHN0b3Agc3RvcC1jb2xvcj0iI2ZjNGQ1NiIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMjc2Y2JhIiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMC41MTIiLz48c3RvcCBzdG9wLWNvbG9yPSIjNTM2NWRjIiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCN2c2dnKSIgLz48L3N2Zz4=);
+  background-image: -webkit-gradient(linear, 5.3% -6.7%, 94.7% 106.7%,color-stop(0, rgb(252, 77, 86)),color-stop(0.512, rgb(39, 108, 186)),color-stop(1, rgb(83, 101, 220)));
+  /* Android 2.3 */
+  background-image: -webkit-linear-gradient(302deg,rgb(252, 77, 86) 0%,rgb(39, 108, 186) 51.2%,rgb(83, 101, 220) 100%);
+  /* IE10+ */
+  background-image: linear-gradient(148deg,rgb(252, 77, 86) 0%,rgb(39, 108, 186) 51.2%,rgb(83, 101, 220) 100%);
+  background-image: -ms-linear-gradient(302deg,rgb(252, 77, 86) 0%,rgb(39, 108, 186) 51.2%,rgb(83, 101, 220) 100%);
 }
 
 /* IE8- CSS hack */
 @media \0screen\,screen\9 {
-    .gradient-nav {
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff533bd7",endColorstr="#fffc4d56",GradientType=0);
-    }
+  .gradient {
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fffc4d56",endColorstr="#ff5365dc",GradientType=0);
+  }
+}
+
+}
+
+.badge-icon {
+  padding: 0px 0px;
+  background-color: pink
 }

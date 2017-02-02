@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
-import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
+import { updateRequestStatus } from '../reducers/request-actions'
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg))
-	}
+  return {
+		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg)),
+    updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey))
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -77,11 +79,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         message: this.state.message,
         reqUid: this.props.selectedRequest.uid,
         reqKey: this.props.selectedRequest.key,
-        offUid: this.props.currentUser.uid
+        offUid: this.props.currentUser.uid,
+        status: 'pending'
       }
 
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
+      this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
+      browserHistory.push('/')
     }
 
     render() {
@@ -104,7 +109,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               value={this.state.date}
               onChange={(event, date) => this.handleChange(event, date, 'date')}
               locale="en-US"
-              style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }}
               errorText={this.state.validationStateDate ? '' : 'Please select a date.'}
               errorStyle={styles.errorStyle}/>
             <br/>

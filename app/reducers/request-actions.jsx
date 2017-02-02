@@ -7,7 +7,7 @@ import firebase from 'firebase'
 
 // const requestReducer = (requests = [], action) => {
 //   switch (action.type) {
-//     case RECEIVE_REQUESTS:
+//     case RECEIVE_USER_REQUESTS:
 //     	return action.requests
 
 //     default: return requests
@@ -24,8 +24,6 @@ import firebase from 'firebase'
 export const addRequest = (request) =>  {
   return dispatch => {
     const newRequestKey = database.ref().child('Requests').push().key;
-    const date = new Date
-    const theDate = date.toString()
 
     const time = firebase.database.ServerValue.TIMESTAMP
 
@@ -39,6 +37,16 @@ export const addRequest = (request) =>  {
     return database.ref().update(updates);
   }
 }
+
+export const updateRequestStatus = (status, markerKey) => {
+  return dispatch => {
+    let statusUpdate = {}
+    statusUpdate[`Requests/${markerKey}/status`] = 'pending'
+
+    return database.ref().update(statusUpdate)
+  }
+}
+
 //export default requestReducer
 
 
