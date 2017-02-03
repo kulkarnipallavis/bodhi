@@ -84,10 +84,8 @@ export const getMarkers = () =>
     .on('value', snapshot => {
       let requestObjects = snapshot.val()
       let markers = [];
-
-      Object.keys(requestObjects).forEach(key => {
-        console.log('KEY ', key)
-        if (requestObjects[key].location.latitude) {
+      requestObjects && Object.keys(requestObjects).forEach(key => {
+        if (requestObjects[key].location) {
           markers.push({
             position: {
               lat: requestObjects[key].location.latitude,
@@ -109,7 +107,6 @@ export const getMarkers = () =>
 
       return Promise.all(addingRequesterInfo)
       .then(markerArr => {
-        console.log('MARKER ARR ', markerArr)
         dispatch(getAllMarkers(markerArr))
       })
     })
