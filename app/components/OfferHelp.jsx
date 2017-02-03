@@ -1,12 +1,13 @@
-// @marianat
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory, Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import Avatar from 'material-ui/Avatar'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
 import { updateRequestStatus } from '../reducers/request-actions'
 
@@ -24,6 +25,7 @@ const mapStateToProps = (state) => {
   }
 }
 
+
 export default connect(mapStateToProps, mapDispatchToProps)(
 
   class OfferHelp extends Component {
@@ -37,17 +39,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         disabled: true,
         dateIsValid: true,
         messageIsValid: true,
-        phoneIsValid: true
+        phoneIsValid: true,
+        popup: false
       }
       this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
+
 
     componentDidMount(){
       this.props.currentUser.phone && this.setState({phone: this.props.currentUser.phone})
     }
 
     handleChange = (type) => (event, date) => {
+
+      console.log("HANDLECHANGE STATE", this.state)
+
       let value;
       if (!date) value = event.target.value
       else value = date
@@ -75,6 +82,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     handleSubmit(event) {
+      console.log("HANDLESUBMIT STATE 1", this.state)
       event.preventDefault()
       const newOffer = {
         date: this.state.date,
@@ -89,6 +97,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
       this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
+      this.setState({popup: !this.state.popup})
+
+      console.log("HANDLESUBMIT STATE 2", this.state)
+    }
+
+    redirect() {
+      console.log("redirect")
       browserHistory.push('/')
     }
 
@@ -121,7 +136,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             </div>
           </div>
           <div className="flex-row">
-            <form onSubmit={this.handleSubmit}>
+            <form>
               <DatePicker
                 name="date"
                 inputStyle={styles.inputStyle}
@@ -168,9 +183,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               label="Offer Help"
               backgroundColor="white"
               labelColor="#533BD7"
+              onClick={this.handleSubmit}
               disabled={this.isInvalid()}/>
           </div>
+          <div>
+            <Dialog
+              title="Your Help Offer has been submitted!"
+              actions={[<FlatButton
+                  label="OK"
+                  onTouchTap={this.redirect} />]}
+              modal={true}
+              open={this.state.popup}
+            >
+            </Dialog>
         </div>
+        </div>
+
+
       )
     }
   }

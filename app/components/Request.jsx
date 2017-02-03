@@ -90,8 +90,10 @@ class Request extends Component {
 
   render() {
     const styles = {
-      floatingLabelFocusStyle: { color: tealA700 },
-      underlineFocusStyle: { borderColor: tealA700 }
+      floatingLabelFocusStyle: { color: 'white' },
+      underlineFocusStyle: { borderColor: 'white' },
+      inputText: {color: 'white'},
+      errorStyle: { color: '#f44256' }
     }
 
     return (
@@ -102,38 +104,50 @@ class Request extends Component {
             id="title"
             floatingLabelText="Title"
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+            inputStyle={styles.inputText}
+            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+            underlineFocusStyle={styles.underlineFocusStyle}
             value={this.state.title}
             onChange={this.handleChange('title')}
             underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}/>
+            errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}
+            errorStyle={styles.errorStyle} />
           <br/>
             <TextField
               id="tag"
               floatingLabelText="Tag"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              inputStyle={styles.inputText}
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.tag}
               onChange={this.handleChange('tag')}
               underlineFocusStyle={styles.underlineFocusStyle}
-              errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}/>
+              errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}
+              errorStyle={styles.errorStyle} />
           <br/>
           <TextField
             id="description"
             floatingLabelText="Description"
             hintText="Description"
             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+            textareaStyle={styles.inputText}
+            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+            underlineFocusStyle={styles.underlineFocusStyle}
             value={this.state.description}
             multiLine={true}
             onChange={this.handleChange('description')}
             underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}/>
+            errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}
+            errorStyle={styles.errorStyle} />
           <br />
-          <RaisedButton
-            className="form-button"
-            labelColor="white"
-            backgroundColor={ blueGrey500 }
-            label="Submit Request"
-            onClick={this.handleSubmit}
-            disabled={this.isInvalid()}/>
+        <RaisedButton
+          className="form-button"
+          labelColor="#533BD7"
+          backgroundColor="white"
+          label="Submit Request"
+          onClick={this.handleSubmit}
+          disabled={this.isInvalid()}/>
 
         </form>
 

@@ -25,31 +25,40 @@ export class Profile extends Component {
 
     render() {
     const user = this.props.currentUser
+
+    const styles = {
+      inputText: {color: 'white'},
+      buttonText: {color: '#533BD7'}
+    }
+
     return (
-      <div className="profile">
+      <div className="profile" style={styles}>
         {
           user ?
           <div>
           <FlatButton
+            style={{color:"#533BD7"}}
             label="Edit Profile"
-            labelPosition="before"
+            labelPosition="before"            
             icon={<ContentCreate/>}
             onClick={this.handleClick}
           />
             <div className="flex-row">
-              <div className="flex-col">
+              <div className="flex-col" style={styles.inputText}>
                 <Avatar src={user.picture}/>
-                <p>{"Name:" + (user.name ? user.name : " What's your name?")}</p>
-                <p>{`Email: ${user.email}`}</p>
-                <p>{"Phone:" + (user.phone ? user.phone : " What's your number?")}</p>
-                <p>{`Member since: ${user.dateJoined}`}</p>
+                <p style={styles.buttonText}>Name:</p><p style={styles.inputText}>{(user.name ? user.name : " What's your name?")}</p><br/>
+                <p style={styles.buttonText}>Email:</p><p>{`${user.email}`}</p><br/>
+                <p style={styles.buttonText}>Phone:</p><p style={styles.inputText}>{(user.phone ? user.phone : " What's your number?")}</p><br/>
+                <p style={styles.buttonText}>Member since:</p><p>{`${user.dateJoined}`}</p><br/>
               </div>
             </div>
+            <p style={styles.buttonText}></p>
             <div className="flex-row" id="bio-badges">
               <div className="flex-col" id="bio">
                 {user.bio}
-              </div>
-              <div className="flex-col" id="badges">
+              </div><br/>
+              <p style={styles.buttonText}>Badges</p>
+              <div className="flex-col" id="badges" style={styles.inputText}>
                 <ul>
                  { user.badges ? 
                      <ul>
@@ -59,9 +68,10 @@ export class Profile extends Component {
                    <div>No badges yet!</div>
                  }
                 </ul>
-              </div>
+              </div><br/>
             </div>
-            <div className="flex-row" id="skills">
+            <p style={styles.buttonText}>Skills</p>
+            <div className="flex-row" id="skills" style={styles.inputText}>
               <div className="flex-col">
                 <ul>
                   { user.skills ?
@@ -74,7 +84,7 @@ export class Profile extends Component {
                     <div>No skills inputed yet!</div>
                   }
                 </ul>
-              </div>
+              </div><br/>
             </div>
             <div className="flex-row">
               <div className="flex-col">
@@ -87,7 +97,7 @@ export class Profile extends Component {
             </div>
           </div>
           :
-          <div>
+          <div style={styles.inputText}>
           No user signed in.
           </div>
         }
