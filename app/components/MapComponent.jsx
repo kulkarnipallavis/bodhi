@@ -1,17 +1,21 @@
 import React from 'react'
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 
-const MapComponent = withGoogleMap(props =>
+const MapComponent = withGoogleMap(props => {
+
+return (
  props.center.lat ?
   (<GoogleMap
     ref={ props.onMapLoad }
     defaultZoom={14}
     defaultCenter={props.center}>
     { props.markers && props.markers.map((marker, index) =>
+
       <Marker
        key={index}
        position={marker.position}
        onClick={() => props.onMarkerClick(marker)}
+       icon={(marker.status === 'pending') ? 'purple.png' : null}
        >
          {marker.showDesc && (
            <InfoWindow onCloseClick={() => props.onMarkerClose(marker)}>
@@ -28,10 +32,11 @@ const MapComponent = withGoogleMap(props =>
            </InfoWindow>
          )}
        </Marker>
+
       )}
   </GoogleMap>)
      : (<div></div>)
-
-)
+  )
+})
 
 export default MapComponent
