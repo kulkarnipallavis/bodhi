@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
 import { browserHistory } from 'react-router'
 import ContentCreate from 'material-ui/svg-icons/content/create'
+import FlatButton from 'material-ui/FlatButton'
 
 export class Profile extends Component {
 
@@ -29,7 +30,12 @@ export class Profile extends Component {
         {
           user ?
           <div>
-            <ContentCreate onClick={this.handleClick}/>
+          <FlatButton
+            label="Edit Profile"
+            labelPosition="before"
+            icon={<ContentCreate/>}
+            onClick={this.handleClick}
+          />
             <div className="flex-row">
               <div className="flex-col">
                 <Avatar src={user.picture}/>
