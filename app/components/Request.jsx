@@ -11,7 +11,7 @@ class Request extends Component {
     super(props)
 
     this.state = {
-      //uid: this.props.uid,
+      uid: '',
       title: '',
       description: '',
       tag: '',
@@ -85,51 +85,65 @@ class Request extends Component {
   render() {
 
     const styles = {
-      floatingLabelFocusStyle: { color: tealA700 },
-      underlineFocusStyle: { borderColor: tealA700 }
+      floatingLabelFocusStyle: { color: '#FFFFFF' },
+      underlineFocusStyle: { borderColor: '#FFFFFF' },
+      inputStyle: { color: '#FFFFFF' },
+      errorStyle: { color: '#F0B259' }
     }
 
     return (
-      <div>
-        <h1>Request Help</h1>
-        <form style={{margin: '25px 0px 0px 0px'}}>
-          <TextField
-            id="title"
-            floatingLabelText="Title"
-            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-            value={this.state.title}
-            onChange={this.handleChange('title')}
-            underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}/>
-          <br/>
+      <div id="request-form" className="gradient flex-container">
+        <div className="flex-row">
+          <h1>Request Help</h1>
+        </div>
+        <div className="flex-row">
+          <form>
+            <TextField
+              id="title"
+              floatingLabelText="Title"
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              inputStyle={styles.inputStyle}
+              value={this.state.title}
+              onChange={this.handleChange('title')}
+              underlineFocusStyle={styles.underlineFocusStyle}
+              errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}
+              errorStyle={styles.errorStyle}/>
+            <br/>
             <TextField
               id="tag"
               floatingLabelText="Tag"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              inputStyle={styles.inputStyle}
               value={this.state.tag}
               onChange={this.handleChange('tag')}
               underlineFocusStyle={styles.underlineFocusStyle}
-              errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}/>
-          <br/>
-          <TextField
-            id="description"
-            floatingLabelText="Description"
-            hintText="Description"
-            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-            value={this.state.description}
-            multiLine={true}
-            onChange={this.handleChange('description')}
-            underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}/>
-          <br />
-        </form>
-        <RaisedButton
-          className="form-button"
-          labelColor="white"
-          backgroundColor={ blueGrey500 }
-          label="Submit Request"
-          onClick={this.handleSubmit}
-          disabled={this.isInvalid()}/>
+              errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}
+              errorStyle={styles.errorStyle}/>
+            <br/>
+            <TextField
+              id="description"
+              floatingLabelText="Description"
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              textareaStyle={styles.inputStyle}
+              hintText="Description"
+              value={this.state.description}
+              multiLine={true}
+              onChange={this.handleChange('description')}
+              underlineFocusStyle={styles.underlineFocusStyle}
+              errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}
+              errorStyle={styles.errorStyle}/>
+            <br />
+          </form>
+        </div>
+        <div className="flex-row">
+          <RaisedButton
+            className="form-button"
+            labelColor="#533BD7"
+            backgroundColor="white"
+            label="Submit Request"
+            onClick={this.handleSubmit}
+            disabled={this.isInvalid()}/>
+        </div>
       </div>
     )
   }
@@ -148,4 +162,3 @@ const mapDispatch = (dispatch) => ({
 })
 
 export default connect(mapState, mapDispatch)(Request)
-
