@@ -23,9 +23,9 @@ class AllOffers extends Component {
 
       return (
          <Table className="gradient">
-         <TableBody>
+         <TableBody displayRowCheckbox={false}>
         { allOffers && allOffers.map((offer, index) => (
-        <TableRow key={index} style={styles}>
+        <TableRow key={index} style={styles} selectable={false}>
           <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
           <TableRowColumn>{offer.offUser.name}</TableRowColumn>
           <TableRowColumn>{offer.message}</TableRowColumn>
