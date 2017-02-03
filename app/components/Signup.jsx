@@ -69,6 +69,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
   }
 
   render () {
+    
+    const styles = {
+      floatingLabelFocusStyle: { color: 'white' },
+      underlineFocusStyle: { borderColor: 'white' },
+      inputText: {color: 'white'},
+      errorStyle: { color: '#f44256' }
+    }
+
     return (
       <div id="signup" className="flex-container">
         <div className="flex-row">
@@ -80,17 +88,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
               id="email"
               type="email"
               floatingLabelText="Email"
+              inputStyle={styles.inputText}
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.email}
               onChange={this.handleChange('email')}
-              errorText={this.state.errmsgEmail} />
+              errorText={this.state.errmsgEmail} 
+              errorStyle={styles.errorStyle} />
               <br />
             <TextField
               id="password"
               type="password"
               floatingLabelText="Password"
+              inputStyle={styles.inputText}
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.password}
               onChange={this.handleChange('password')}
-              errorText={this.state.errmsgPassword} />
+              errorText={this.state.errmsgPassword} 
+              errorStyle={styles.errorStyle} />
               <br />
           </form>
         </div>
@@ -99,8 +115,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
            onClick={this.handleSubmit}
            className="form-button"
            type="submit"
-           labelColor="white"
-           backgroundColor="#607D8B"
+           labelColor="#533BD7"
+           backgroundColor="white"
            label="Submit"
            disabled={this.isInvalid()} />
         </div>

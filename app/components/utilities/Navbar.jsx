@@ -53,6 +53,8 @@ return (
   <div>
     <AppBar
       id="navbar"
+      className="gradient"
+      zDepth={0}
       showMenuIconButton={offers ? true : false}
       title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
       iconElementLeft={offers ?
