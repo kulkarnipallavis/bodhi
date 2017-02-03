@@ -41,6 +41,7 @@ export class Profile extends Component {
                 <Avatar src={user.picture}/>
                 <p>{"Name:" + (user.name ? user.name : " What's your name?")}</p>
                 <p>{`Email: ${user.email}`}</p>
+                <p>{"Phone:" + (user.phone ? user.phone : " What's your number?")}</p>
                 <p>{`Member since: ${user.dateJoined}`}</p>
               </div>
             </div>

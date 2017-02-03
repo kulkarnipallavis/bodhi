@@ -31,8 +31,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.state = {
         date: null,
         message: '',
+        phone: '',
         disabled: true,
         validationStateDate: true,
+        validationStatePhone: true,
         validationStateMessage: true
       }
 
@@ -52,6 +54,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(
           // submit enabled only if both inputs are valid
           if (this.state.date) this.setState({ disabled: false })
         }
+      } else if (type==='phone'){
+        const phone = event.target.value
+        if (!phone) this.setState({ phone, validationStatePhone: false, disabled: true })
+        else {
+          this.setState({ phone, validationStatePhone: true })
+          // submit enabled only if both inputs are valid
+          if (this.state.date) this.setState({ disabled: false })
+        }
       } else {
         if (!date) this.setState({ date, validationStateDate: false })
         else {
@@ -61,7 +71,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     validateSubmit() {
-      if (this.state.date && this.state.message) {
+      if (this.state.date && this.state.message && this.state.phone) {
         this.setState({ disabled: false })
       }
     }
@@ -91,7 +101,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     render() {
-
+      console.log("THESE ARE OUR PROPS", this.props)
       return (
         <div>
           <h1>Offer Help</h1>
@@ -115,6 +125,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               floatingLabelFocusStyle={{ color: tealA700 }}
               underlineFocusStyle={{ borderColor: tealA700 }}
               errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
+            <TextField
+              name="phone"
+              value={this.props.currentUser ? this.props.currentUser.phone : ''}
+              onChange={(event) => this.handleChange(event, null, 'phone')}
+              multiLine={true}
+              hintText="Phone Number"
+              floatingLabelText="Phone Number"
+              floatingLabelFocusStyle={{ color: tealA700 }}
+              underlineFocusStyle={{ borderColor: tealA700 }}
+              errorText={this.state.validationStateMessage ? '' : 'Please enter your phone number.'}/>
             <br/>
             <RaisedButton
               className="form-button"
