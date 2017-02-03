@@ -1,9 +1,11 @@
  import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
+import { browserHistory, Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
 import { updateRequestStatus } from '../reducers/request-actions'
@@ -35,7 +37,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         disabled: true,
         validationStateDate: true,
         validationStatePhone: true,
-        validationStateMessage: true
+        validationStateMessage: true,
+        popup: false
       }
 
       this.handleChange = this.handleChange.bind(this)
@@ -97,14 +100,38 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
       this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
-      browserHistory.push('/map')
+      this.setState({popup: !this.state.popup})
+    }
+
+    redirect() {
+      browserHistory.push('/')
     }
 
     render() {
-      console.log("THESE ARE OUR PROPS", this.props)
+      const request = this.props.selectedRequest
+
       return (
         <div>
           <h1>Offer Help</h1>
+
+            {
+            request.requester ?
+            <div id="div_request">
+              <h5>Request you are responding to:</h5>
+                <p>user: {//<br/>request.requester.picture
+                }
+                {request.requester.name}</p>
+                <p>message:</p>
+                <h3>{request.title}</h3>
+                <p>{request.description}</p>
+            </div>
+            :
+            <div id="div_request">
+              <p>Please select a request<Link to="/map"> from the map</Link> </p>
+            </div>
+            }
+
+
           <form onSubmit={this.handleSubmit}>
             <DatePicker
               name="date"
@@ -142,8 +169,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               label="Offer Help"
               backgroundColor={ blueGrey500 }
               labelStyle={{color: 'white'}}
-              disabled={this.state.disabled}/>
+              disabled={ request.requester ? this.state.disabled: true } />
           </form>
+
+          <div>
+            <Dialog
+              title="Your Help Offer has been submitted!"
+              actions={[<FlatButton
+                  label="OK"
+                  onTouchTap={this.redirect} />]}
+              modal={true}
+              open={this.state.popup}
+            >
+            </Dialog>
+          </div>
+
         </div>
       )
     }
