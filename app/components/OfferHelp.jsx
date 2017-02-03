@@ -100,6 +100,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     render() {
       const request = this.props.selectedRequest
 
+      const styles = {
+        floatingLabelFocusStyle: { color: 'white' },
+        underlineFocusStyle: { borderColor: 'white' },
+        inputText: {color: 'white'},
+        errorStyle: { color: '#f44256' }
+      }
+
       return (
         <div>
           <h1>Offer Help</h1>
@@ -125,12 +132,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(
           <form onSubmit={this.handleSubmit}>
             <DatePicker
               name="date"
+              inputStyle={styles.inputText}
               floatingLabelText="Select a date"
               value={this.state.date}
               onChange={(event, date) => this.handleChange(event, date, 'date')}
               locale="en-US"
               style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }}
-              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}/>
+              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}
+              errorStyle={styles.errorStyle} />
             <br/>
             <TextField
               name="msg"
@@ -139,16 +148,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               multiLine={true}
               hintText="Message To Requester"
               floatingLabelText="Message To Requester"
-              floatingLabelFocusStyle={{ color: tealA700 }}
-              underlineFocusStyle={{ borderColor: tealA700 }}
-              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
+              textareaStyle={styles.inputText}
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              underlineFocusStyle={styles.underlineFocusStyle}
+              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}
+              errorStyle={styles.errorStyle} />
             <br/>
             <RaisedButton
               className="form-button"
               type="submit"
-              label="Offer Help"
-              backgroundColor={ blueGrey500 }
-              labelStyle={{color: 'white'}}
+              labelColor="#533BD7"
+              backgroundColor="white"
+              label="Offer Help"             
               disabled={ request.requester ? this.state.disabled: true } />
           </form>
 

@@ -13,50 +13,44 @@ class AllOffers extends Component {
   }
 
   render(){
-    console.log(this.props)
-
     let offers = this.props.offersReceived
 
+    const styles = {
+      color: "white"
+    }
 
-
-    offers ?
-
-    offers = offers.map((offer, index) => {
+    const allOffers= offers ? offers : []
 
       return (
-        <TableRow key={index}>
+         <Table className="gradient">
+         <TableBody displayRowCheckbox={false}>
+        { allOffers && allOffers.map((offer, index) => (
+        <TableRow key={index} style={styles} selectable={false}>
           <TableRowColumn>{offer.offUser.picture}</TableRowColumn>
           <TableRowColumn>{offer.offUser.name}</TableRowColumn>
           <TableRowColumn>{offer.message}</TableRowColumn>
           <TableRowColumn>
-              <RaisedButton label="Yes, Please" primary={true} style={{margin:12}} 
+              <RaisedButton 
+              label="Yes, Please" 
+              primary={false} 
+              style={{margin:12}}
+              labelColor="#533BD7"
+              backgroundColor="white" 
               onClick={()=>window.location=smsLink({phone:`${offer.offUser.phone}`, body:'Thank you. I accept your help.'})}/>
-              <RaisedButton label="No, Thanks" secondary={true} style={{margin:12}} />
+              <RaisedButton 
+              label="No, Thanks" 
+              secondary={false} 
+              style={{margin:12}} 
+              labelColor="#533BD7"
+              backgroundColor="white" />
           </TableRowColumn>
-        </TableRow>
-        )
-    })
-    : null
-
-    return(
-      <Table style={{textAlign: 'center'}}>
-        <TableHeader
-            displaySelectAll={false}
-            adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn colSpan="4" tooltip="Responses" style={{textAlign: 'center'}}>
-                Responses
-            </TableHeaderColumn>
           </TableRow>
-        </TableHeader>
-        <TableBody
-          displayRowCheckbox={false}
-          showRowHover={true}
-          stripedRows={true}>
-        {offers}
+           ))}
         </TableBody>
-      </Table>
-      )
+        </Table>
+         
+        )
+   
   }
 }
 
