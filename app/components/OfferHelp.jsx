@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
+import { browserHistory, Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
+import Avatar from 'material-ui/Avatar'
 import RaisedButton from 'material-ui/RaisedButton'
-import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
 import { updateRequestStatus } from '../reducers/request-actions'
 
@@ -29,47 +29,38 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     constructor(props) {
       super(props);
       this.state = {
-        date: null,
+        date: {},
         message: '',
         disabled: true,
-        validationStateDate: true,
-        validationStateMessage: true
+        dateIsValid: true,
+        messageIsValid: true
       }
-
-      this.handleChange = this.handleChange.bind(this)
-      this.validateSubmit = this.validateSubmit.bind(this)
       this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange(event, date, type) {
-      // form validation
-      if (type === 'message') {
-        const message = event.target.value
-        if (!message) this.setState({ message, validationStateMessage: false, disabled: true })
-        else {
-          this.setState({ message, validationStateMessage: true })
-          // submit enabled only if both inputs are valid
-          if (this.state.date) this.setState({ disabled: false })
-        }
-      } else {
-        if (!date) this.setState({ date, validationStateDate: false })
-        else {
-          this.setState({ date, validationStateDate: true })
-        }
-      }
+    handleChange = (type) => (event, date) => {
+      let value;
+      if (!date) value = event.target.value
+      else value = date
+      this.setState({
+        [type]: value,
+        [`${type}IsValid`]: !!value,
+      })
     }
 
-    validateSubmit() {
-      if (this.state.date && this.state.message) {
-        this.setState({ disabled: false })
-      }
+    isInvalid() {
+      const { date, message, dateIsValid, messageIsValid } = this.state
+      return !(dateIsValid && date &&  message && messageIsValid && this.props.selectedRequest.requester)
     }
 
     clearForm() {
       this.setState({
-        date: null,
-        message: ''
+        date: {},
+        message: '',
+        disabled: true,
+        dateIsValid: true,
+        messageIsValid: true
       })
     }
 
@@ -91,39 +82,75 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     render() {
+      const request = this.props.selectedRequest
+      const styles = {
+        floatingLabelFocusStyle: { color: '#FFFFFF' },
+        underlineFocusStyle: { borderColor: '#FFFFFF' },
+        inputStyle: { color: '#FFFFFF' },
+        errorStyle: { color: '#F0B259' }
+      }
 
       return (
-        <div>
-          <h1>Offer Help</h1>
-          <form onSubmit={this.handleSubmit}>
-            <DatePicker
-              name="date"
-              floatingLabelText="Select a date"
-              value={this.state.date}
-              onChange={(event, date) => this.handleChange(event, date, 'date')}
-              locale="en-US"
-              style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }}
-              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}/>
-            <br/>
-            <TextField
-              name="msg"
-              value={this.state.message}
-              onChange={(event) => this.handleChange(event, null, 'message')}
-              multiLine={true}
-              hintText="Message To Requester"
-              floatingLabelText="Message To Requester"
-              floatingLabelFocusStyle={{ color: tealA700 }}
-              underlineFocusStyle={{ borderColor: tealA700 }}
-              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
-            <br/>
+        <div className="gradient flex-container">
+          <div className="flex-row">
+            <h1>Offer Help</h1>
+          </div>
+          <div id="request-details" className="flex-row">
+            <div className="flex-col-white">
+              { request.requester ?
+                 <div>
+                   <div id="requester-avatar" className="flex-row">
+                     <Avatar
+                       size={100}
+                       src={request.requester.picture}/>
+                   </div>
+                   <h3>{`${request.requester.name} needs help with ${request.title}.`}</h3>
+                   <p>{`Description: ${request.description}`}</p>
+                 </div>
+                 :
+                 <div id="offer-fail-safe" className="flex-row">
+                   <p>Please select a request <Link to="/map"><u>from the map.</u></Link></p>
+                 </div>}
+            </div>
+          </div>
+          <div className="flex-row">
+            <form onSubmit={this.handleSubmit}>
+              <DatePicker
+                name="date"
+                inputStyle={styles.inputStyle}
+                floatingLabelFocusStyle={styles.floatingLabelTextFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                floatingLabelText="Select a date"
+                value={this.state.date}
+                onChange={this.handleChange('date')}
+                locale="en-US"
+                errorText={this.state.dateIsValid ? '' : 'Please select a date.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+              <TextField
+                name="msg"
+                textareaStyle={styles.inputStyle}
+                value={this.state.message}
+                onChange={this.handleChange('message')}
+                multiLine={true}
+                hintText="Message To Requester"
+                floatingLabelText="Message To Requester"
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                errorText={this.state.messageIsValid ? '' : 'Please enter a message.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+            </form>
+          </div>
+          <div className="flex-row">
             <RaisedButton
               className="form-button"
               type="submit"
               label="Offer Help"
-              backgroundColor={ blueGrey500 }
-              labelStyle={{color: 'white'}}
-              disabled={this.state.disabled}/>
-          </form>
+              backgroundColor="white"
+              labelColor="#533BD7"
+              disabled={this.isInvalid()}/>
+          </div>
         </div>
       )
     }

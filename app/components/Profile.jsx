@@ -18,7 +18,7 @@ export class Profile extends Component {
     render() {
     const user = this.props.currentUser
     return (
-      <div className="profile">
+      <div className="profile flex-container">
         {
           user ?
           <div>
@@ -36,7 +36,7 @@ export class Profile extends Component {
               </div>
               <div className="flex-col" id="badges">
                 <ul>
-                 { user.badges ? 
+                 { user.badges ?
                      <ul>
                        {user.badges.map( (badge, index) => <Avatar key={index} src={badge}/> )}
                      </ul>

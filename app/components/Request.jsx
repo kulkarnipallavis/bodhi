@@ -29,7 +29,7 @@ class Request extends Component {
   }
 
   handleChange = type => event => {
-    const {value} = event.target
+    const { value } = event.target
     this.setState({
       [type]: value,
       [`${type}IsValid`]: !!value,

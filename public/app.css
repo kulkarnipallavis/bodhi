@@ -115,9 +115,15 @@ h1 {
 }
 
 h2 {
-  width: 100px;
   margin-right: 0px;
   color: white;
+}
+
+h3 {
+  margin: 10px;
+  color: #533BD7;
+  line-height: 1.25em;
+  font-size: 1.5em;
 }
 
 .feed {
@@ -127,6 +133,16 @@ h2 {
 
 p {
   color: #533BD7;
+  margin: 10px;
+}
+
+u {
+  text-decoration: underline;
+  color: #533BD7;
+}
+
+u:hover {
+  color: #F0B259;
 }
 
 form {
