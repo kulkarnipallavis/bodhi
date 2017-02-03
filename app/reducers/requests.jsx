@@ -39,7 +39,7 @@ export const addRequest = request => dispatch => {
   request.date = date.toDateString()
 
   let updates = {}
-  updates['/Requests/' + newRequestKey] = request
+  updates[`/Requests/${newRequestKey}`] = request
 
   return database.ref().update(updates)
 }

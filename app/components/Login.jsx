@@ -67,7 +67,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
     const styles = {
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
-      inputText: {color: 'white'},
+      inputStyle: {color: 'white'},
       errorStyle: { color: '#F0B259' }
     }
     return (
@@ -80,7 +80,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
             <TextField
               id="email"
               type="email"
-              inputStyle={styles.inputText}
+              inputStyle={styles.inputStyle}
               floatingLabelText="Email"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               value={this.state.email}
@@ -91,7 +91,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
             <TextField
               id="password"
               type="password"
-              inputStyle={styles.inputText}
+              inputStyle={styles.inputStyle}
               floatingLabelText="Password"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               value={this.state.password}

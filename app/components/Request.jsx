@@ -21,7 +21,8 @@ class Request extends Component {
       titleIsValid: true,
       tagIsValid: true,
       descriptionIsValid: true,
-      status: 'open'
+      status: 'open',
+      geoWatchId: ''
     }
 
     this.clearForm = this.clearForm.bind(this)
@@ -31,6 +32,10 @@ class Request extends Component {
 
   componentDidMount() {
     this.grabUserLocation()
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.state.geoWatchId)
   }
 
   isInvalid() {
@@ -47,11 +52,12 @@ class Request extends Component {
   }
 
   grabUserLocation() {
-    geoWatchId = navigator.geolocation.getCurrentPosition(Position => {
+    var geoWatchId = navigator.geolocation.getCurrentPosition(Position => {
       this.setState({
         location: {
           latitude: Position.coords.latitude,
-          longitude: Position.coords.longitude }
+          longitude: Position.coords.longitude },
+        geoWatchId
       })
     })
   }
@@ -86,7 +92,7 @@ class Request extends Component {
     const styles = {
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
-      inputText: { color: 'white' },
+      inputStyle: { color: 'white' },
       errorStyle: { color: '#F0B259' }
     }
 
@@ -101,7 +107,7 @@ class Request extends Component {
               id="title"
               floatingLabelText="Title"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              inputStyle={styles.inputText}
+              inputStyle={{ color: 'white' }}
               value={this.state.title}
               onChange={this.handleChange('title')}
               underlineFocusStyle={styles.underlineFocusStyle}
@@ -112,7 +118,7 @@ class Request extends Component {
               id="tag"
               floatingLabelText="Tag"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              inputStyle={styles.inputText}
+              inputStyle={{ color: 'white' }}
               value={this.state.tag}
               onChange={this.handleChange('tag')}
               underlineFocusStyle={styles.underlineFocusStyle}
@@ -123,7 +129,7 @@ class Request extends Component {
               id="description"
               floatingLabelText="Description"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              inputStyle={styles.inputText}
+              inputStyle={{ color: 'white' }}
               hintText="Description"
               value={this.state.description}
               multiLine={true}
