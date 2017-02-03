@@ -24,6 +24,7 @@ constructor() {
   super()
 
   this.logout = this.logout.bind(this)
+  this.handleClick = this.handleClick.bind(this)
 }
 
 logout(e) {
@@ -38,9 +39,6 @@ logout(e) {
 }
 
 handleClick(e) {
-  this.setState({
-    editable: true
-  })
   browserHistory.push('/EditableProfile');
 }
 
