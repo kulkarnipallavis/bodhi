@@ -66,7 +66,12 @@ class EditableProfile extends Component {
                   defaultValue = {`${user.email}`}
                   onChange={(event)=> this.handleChange(event, "email")}
               />
-              <p>{`Member since: ${user.date}`}</p>
+              <p>Phone Number:</p>
+              <TextField 
+                  defaultValue = { user.phone ? user.phone : "Write your phone number here!"}
+                  onChange={(event)=> this.handleChange(event, "phone")}
+              />
+              <p>{`Member since: ${user.dateJoined}`}</p>
             </div>
           </div>
           <div className="flex-row" id="bio-badges">
