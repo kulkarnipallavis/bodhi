@@ -4,11 +4,19 @@ import Avatar from 'material-ui/Avatar'
 import TextField from 'material-ui/TextField';
 import { Link } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
+import { browserHistory } from 'react-router'
+import ContentCreate from 'material-ui/svg-icons/content/create'
+import FlatButton from 'material-ui/FlatButton'
 
 export class Profile extends Component {
 
     constructor(props) {
       super(props)
+      this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick(e) {
+      browserHistory.push('/EditableProfile');
     }
 
     componentDidMount() {
@@ -22,12 +30,18 @@ export class Profile extends Component {
         {
           user ?
           <div>
+          <FlatButton
+            label="Edit Profile"
+            labelPosition="before"
+            icon={<ContentCreate/>}
+            onClick={this.handleClick}
+          />
             <div className="flex-row">
               <div className="flex-col">
                 <Avatar src={user.picture}/>
-                <p>{`Name: ${user.name}`}</p>
+                <p>{"Name:" + (user.name ? user.name : " What's your name?")}</p>
                 <p>{`Email: ${user.email}`}</p>
-                <p>{`Member since: ${user.date}`}</p>
+                <p>{`Member since: ${user.dateJoined}`}</p>
               </div>
             </div>
             <div className="flex-row" id="bio-badges">

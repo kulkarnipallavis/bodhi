@@ -9,8 +9,6 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import Badge from 'material-ui/Badge'
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
-import ContentCreate from 'material-ui/svg-icons/content/create'
-
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
@@ -35,13 +33,6 @@ logout(e) {
   }, (err) => {
     console.log(err)
   })
-}
-
-handleClick(e) {
-  this.setState({
-    editable: true
-  })
-  browserHistory.push('/EditableProfile');
 }
 
 render() {
@@ -69,8 +60,6 @@ return (
         </Link>
           : null}
       iconElementRight={
-        <div>
-        {user ? <ContentCreate color={'#fff'} onClick={this.handleClick}/> : null}
           <IconMenu
             iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -85,11 +74,11 @@ return (
             <div>
               <Link to="/map"><MenuItem primaryText="Who's in Need?"/></Link>
               <Link to="/request"><MenuItem primaryText="I Need Help!"/></Link>
+              <Link to="/profile"><MenuItem primaryText="Profile"/></Link>
               <Link onClick={this.logout}><MenuItem primaryText="Log out" /></Link>
             </div>
             }
           </IconMenu>
-        </div>
       }/>
   </div>
 )}
