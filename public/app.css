@@ -48,7 +48,7 @@ table {
 }
 
 /*____________________________________________________________*/
-/* DO NOT EDIT ABOVE ^THIS LINE, CSS RESET!!! */
+/*        DO NOT EDIT ABOVE ^THIS LINE, CSS RESET!!!          */
 
 /* APP */
 
@@ -134,7 +134,7 @@ form {
 }
 
 .form-button {
-  margin: 35px 0px 0px 60px !important;
+  margin: 35px 0px 0px 0px !important;
 }
 
 .badge-icon {

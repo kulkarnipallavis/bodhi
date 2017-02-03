@@ -24,11 +24,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  // ComponentWillMount() {
-  //   var provider = new firebase.auth.GoogleAuthProvider()
-  //   firebase.auth().signInWithRedirect(provider)
-  // }
-
   isInvalid() {
     const { email, password, emailIsValid, passwordIsValid } = this.state
     return !(email && password && emailIsValid && passwordIsValid)
@@ -48,8 +43,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
       password: '',
       errmsgEmail: '',
       errmsgPassword: '',
-      emailIsValid: true,
-      passwordIsValid: true
+      emailIsValid: false,
+      passwordIsValid: false
     })
   }
 
@@ -69,8 +64,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
   }
 
   render () {
+    const styles = {
+      floatingLabelFocusStyle: { color: 'white' },
+      underlineFocusStyle: { borderColor: 'white' },
+      inputStyle: { color: 'white' }
+    }
+
     return (
-      <div id="signup" className="flex-container">
+      <div id="signup" className="gradient flex-container">
         <div className="flex-row">
           <h1>Sign Up</h1>
         </div>
@@ -79,18 +80,24 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
             <TextField
               id="email"
               type="email"
+              inputStyle={styles.inputStyle}
               floatingLabelText="Email"
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               value={this.state.email}
+              underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('email')}
-              errorText={this.state.errmsgEmail} />
+              errorText={this.state.errmsgEmail}/>
               <br />
             <TextField
               id="password"
               type="password"
+              inputStyle={styles.inputStyle}
               floatingLabelText="Password"
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               value={this.state.password}
+              underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('password')}
-              errorText={this.state.errmsgPassword} />
+              errorText={this.state.errmsgPassword}/>
               <br />
           </form>
         </div>
@@ -99,8 +106,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
            onClick={this.handleSubmit}
            className="form-button"
            type="submit"
-           labelColor="white"
-           backgroundColor="#607D8B"
+           labelColor="#533BD7"
+           backgroundColor="white"
            label="Submit"
            disabled={this.isInvalid()} />
         </div>
