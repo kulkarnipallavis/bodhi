@@ -81,6 +81,7 @@ return (
             <div>
               <Link to="/map"><MenuItem primaryText="Who's in Need?"/></Link>
               <Link to="/request"><MenuItem primaryText="I Need Help!"/></Link>
+              <Link to="/profile"><MenuItem primaryText="Profile"/></Link>
               <Link onClick={this.logout}><MenuItem primaryText="Log out" /></Link>
             </div>
             }
