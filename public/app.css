@@ -85,6 +85,14 @@ h1 {
   text-align: center;
 }
 
+h3{
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: .8em;
+}
+
 form {
   margin-left: 15px !important;
 }
@@ -98,6 +106,7 @@ form {
   padding: 0px 0px;
   background-color: pink
 }
+
 .gradient {
     background-color: #eda99c;
     /* IE9, iOS 3.2+ */
@@ -116,3 +125,12 @@ form {
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffc1b9f1",endColorstr="#fffd6e76",GradientType=1);
     }
 }
+
+/* describes request you are responding to on offer page*/
+#div_request {
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  padding: 1em;
+  width: 240px;
+}
+

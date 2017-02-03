@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField'
 import { addRequest } from '../reducers/request-actions.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
+import { browserHistory } from 'react-router'
 
 class Request extends Component {
 
@@ -158,7 +159,10 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-  handleSubmitRequest: (request) => dispatch(addRequest(request))
+  handleSubmitRequest: (request) => {
+    dispatch(addRequest(request))
+    browserHistory.push('/map')
+  }
 })
 
 export default connect(mapState, mapDispatch)(Request)

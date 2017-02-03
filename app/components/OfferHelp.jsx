@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
+import { browserHistory, Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -91,6 +91,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     render() {
+      const request = this.props.selectedRequest
 
       const styles = {
         floatingLabelFocusStyle: { color: 'white' },
@@ -102,6 +103,26 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       return (
         <div>
           <h1>Offer Help</h1>
+
+            {
+            request.requester ?
+            <div id="div_request">
+              <h5>Request you are responding to:</h5>
+                <p>user: {//<br/>request.requester.picture
+                }
+                {request.requester.name}</p>
+                <p>message:</p>
+                <h3>{request.title}</h3>
+                <p>{request.description}</p>
+            </div>
+            :
+            <div id="div_request">
+              <p>Please select a request<Link to="/map"> from the map</Link> </p>
+            </div>
+            }
+
+
+
           <form onSubmit={this.handleSubmit}>
             <DatePicker
               name="date"
@@ -133,8 +154,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               labelColor="#533BD7"
               backgroundColor="white"
               label="Offer Help"             
-              disabled={this.state.disabled}/>
+              disabled={ request.requester ? this.state.disabled: true } />
           </form>
+
         </div>
       )
     }
