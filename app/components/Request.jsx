@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 import { addRequest } from '../reducers/request-actions.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
@@ -10,7 +12,6 @@ class Request extends Component {
 
   constructor(props) {
     super(props)
-
     this.state = {
       //uid: this.props.uid,
       title: '',
@@ -21,7 +22,8 @@ class Request extends Component {
       titleIsValid: true,
       tagIsValid: true,
       descriptionIsValid: true,
-      status: 'open'
+      status: 'open',
+      popup: false
     }
 
     this.clearForm = this.clearForm.bind(this)
@@ -51,8 +53,6 @@ class Request extends Component {
     })
   }
 
-
-
   clearForm() {
     this.setState({
       title: '',
@@ -62,7 +62,6 @@ class Request extends Component {
   }
 
   handleSubmit(event){
-
     event.preventDefault()
     const newRequest = {
       uid: this.props.currentUser.uid,
@@ -70,11 +69,12 @@ class Request extends Component {
       description: this.state.description,
       tag: this.state.tag,
       location: this.state.location,
-      status: this.state.status
+      status: this.state.status,
     }
 
     this.clearForm()
     this.props.handleSubmitRequest(newRequest)
+    this.setState({popup: !this.state.popup})
   }
 
   isInvalid() {
@@ -83,8 +83,12 @@ class Request extends Component {
     return !(titleIsValid && tagIsValid && descriptionIsValid)
   }
 
-  render() {
+  redirect() {
+    browserHistory.push('/map')
+  }
 
+
+  render() {
     const styles = {
       floatingLabelFocusStyle: { color: tealA700 },
       underlineFocusStyle: { borderColor: tealA700 }
@@ -123,14 +127,29 @@ class Request extends Component {
             underlineFocusStyle={styles.underlineFocusStyle}
             errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}/>
           <br />
+          <RaisedButton
+            className="form-button"
+            labelColor="white"
+            backgroundColor={ blueGrey500 }
+            label="Submit Request"
+            onClick={this.handleSubmit}
+            disabled={this.isInvalid()}/>
+
         </form>
-        <RaisedButton
-          className="form-button"
-          labelColor="white"
-          backgroundColor={ blueGrey500 }
-          label="Submit Request"
-          onClick={this.handleSubmit}
-          disabled={this.isInvalid()}/>
+
+        <div>
+          <Dialog
+            title="Your Help Request has been submitted!"
+            actions={[<FlatButton
+                label="OK"
+                onTouchTap={this.redirect} />]}
+            modal={true}
+            open={this.state.popup}
+          >
+          </Dialog>
+        </div>
+
+
       </div>
     )
   }
@@ -147,7 +166,6 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   handleSubmitRequest: (request) => {
     dispatch(addRequest(request))
-    browserHistory.push('/map')
   }
 })
 
