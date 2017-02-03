@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
@@ -97,7 +97,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
       this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
-      browserHistory.push('/')
+      browserHistory.push('/map')
     }
 
     render() {
