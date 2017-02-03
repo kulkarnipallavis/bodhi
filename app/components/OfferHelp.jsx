@@ -47,6 +47,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    componentWillReceiveProps(newProps, oldProps) {
+      newProps.currentUser && this.setState({phone: newProps.currentUser.phone})
+    }
+
     handleChange(event, date, type) {
       // form validation
       if (type === 'message') {
@@ -131,7 +135,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             </div>
             }
 
-
           <form onSubmit={this.handleSubmit}>
             <DatePicker
               name="date"
@@ -161,7 +164,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               floatingLabelText="Phone Number"
               floatingLabelFocusStyle={{ color: tealA700 }}
               underlineFocusStyle={{ borderColor: tealA700 }}
-              errorText={this.state.validationStateMessage ? '' : 'Please enter your phone number.'}/>
+              errorText={this.state.validationStatePhone ? '' : 'Please enter your phone number.'}/>
             <br/>
             <RaisedButton
               className="form-button"
