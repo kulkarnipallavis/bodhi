@@ -9,6 +9,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import Badge from 'material-ui/Badge'
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
+import Divider from 'material-ui/Divider'
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
@@ -67,15 +68,16 @@ return (
             {
             !user ?
             <div>
-              <Link to="/loginenter"><MenuItem primaryText="Log in"/></Link>
-              <Link to="/signup"><MenuItem primaryText="Sign up"/></Link>
+              <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
+              <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
             </div>
             :
             <div>
-              <Link to="/map"><MenuItem primaryText="Who's in Need?"/></Link>
-              <Link to="/request"><MenuItem primaryText="I Need Help!"/></Link>
-              <Link to="/profile"><MenuItem primaryText="Profile"/></Link>
-              <Link onClick={this.logout}><MenuItem primaryText="Log out" /></Link>
+              <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
+              <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
+              <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
+              <Divider/>
+              <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
             </div>
             }
           </IconMenu>

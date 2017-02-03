@@ -67,6 +67,10 @@ a {
   width: 100px;
 }
 
+.nav-item {
+  color: #533BD7 !important;
+}
+
 .container {
   display: flex;
   justify-content: center;
