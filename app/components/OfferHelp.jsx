@@ -1,12 +1,12 @@
- import React, { Component } from 'react'
+// @marianat
+
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory, Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
+import Avatar from 'material-ui/Avatar'
 import RaisedButton from 'material-ui/RaisedButton'
-import Dialog from 'material-ui/Dialog'
-import FlatButton from 'material-ui/FlatButton'
-import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
 import { updateRequestStatus } from '../reducers/request-actions'
 
@@ -31,62 +31,46 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     constructor(props) {
       super(props);
       this.state = {
-        date: null,
+        date: {},
         message: '',
         phone: '',
         disabled: true,
-        validationStateDate: true,
-        validationStatePhone: true,
-        validationStateMessage: true,
-        popup: false
+        dateIsValid: true,
+        messageIsValid: true,
+        phoneIsValid: true
       }
-
-      this.handleChange = this.handleChange.bind(this)
-      this.validateSubmit = this.validateSubmit.bind(this)
       this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    componentWillReceiveProps(newProps, oldProps) {
-      newProps.currentUser && this.setState({phone: newProps.currentUser.phone})
+    componentDidMount(){
+      this.props.currentUser.phone && this.setState({phone: this.props.currentUser.phone})
     }
 
-    handleChange(event, date, type) {
-      // form validation
-      if (type === 'message') {
-        const message = event.target.value
-        if (!message) this.setState({ message, validationStateMessage: false, disabled: true })
-        else {
-          this.setState({ message, validationStateMessage: true })
-          // submit enabled only if both inputs are valid
-          if (this.state.date) this.setState({ disabled: false })
-        }
-      } else if (type==='phone'){
-        const phone = event.target.value
-        if (!phone) this.setState({ phone, validationStatePhone: false, disabled: true })
-        else {
-          this.setState({ phone, validationStatePhone: true })
-          // submit enabled only if both inputs are valid
-          if (this.state.date) this.setState({ disabled: false })
-        }
-      } else {
-        if (!date) this.setState({ date, validationStateDate: false })
-        else {
-          this.setState({ date, validationStateDate: true })
-        }
-      }
+    handleChange = (type) => (event, date) => {
+      let value;
+      if (!date) value = event.target.value
+      else value = date
+      this.setState({
+        [type]: value,
+        [`${type}IsValid`]: !!value,
+      })
     }
 
-    validateSubmit() {
-      if (this.state.date && this.state.message && this.state.phone) {
-        this.setState({ disabled: false })
-      }
+    isInvalid() {
+      const { date, message, phone, dateIsValid, messageIsValid, phoneIsValid } = this.state
+      return !(dateIsValid && date &&  message && messageIsValid && phone && phoneIsValid && this.props.selectedRequest.requester)
     }
 
     clearForm() {
       this.setState({
-        date: null,
-        message: ''
+        date: {},
+        message: '',
+        phone: '',
+        disabled: true,
+        dateIsValid: true,
+        phoneIsValid: true,
+        messageIsValid: true
       })
     }
 
@@ -95,6 +79,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       const newOffer = {
         date: this.state.date,
         message: this.state.message,
+        phone: this.state.phone,
         reqUid: this.props.selectedRequest.uid,
         reqKey: this.props.selectedRequest.key,
         offUid: this.props.currentUser.uid,
@@ -104,91 +89,90 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
       this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
-      this.setState({popup: !this.state.popup})
-    }
-
-    redirect() {
       browserHistory.push('/')
     }
 
     render() {
       const request = this.props.selectedRequest
+      const styles = {
+        floatingLabelFocusStyle: { color: '#FFFFFF' },
+        underlineFocusStyle: { borderColor: '#FFFFFF' },
+        inputStyle: { color: '#000000' },
+        errorStyle: { color: '#F0B259' }
+      }
 
       return (
-        <div>
-          <h1>Offer Help</h1>
-
-            {
-            request.requester ?
-            <div id="div_request">
-              <h5>Request you are responding to:</h5>
-                <p>user: {//<br/>request.requester.picture
-                }
-                {request.requester.name}</p>
-                <p>message:</p>
-                <h3>{request.title}</h3>
-                <p>{request.description}</p>
+        <div className="gradient flex-container">
+          <div className="flex-row">
+            <h1>Offer Help</h1>
+          </div>
+          <div id="request-details" className="flex-row">
+            <div className="flex-col-white">
+              { request.requester ?
+                 <div>
+                   <Avatar src={request.requester.picture}/>
+                   <h3>{`${request.requester.name} needs help with ${request.title}.`}</h3>
+                   <p>{`Description: ${request.description}`}</p>
+                 </div>
+                 :
+                 <div id="offer-fail-safe" className="flex-row">
+                   <p>Please select a request <Link to="/map"><u>from the map.</u></Link></p>
+                 </div>}
             </div>
-            :
-            <div id="div_request">
-              <p>Please select a request<Link to="/map"> from the map</Link> </p>
-            </div>
-            }
-
-          <form onSubmit={this.handleSubmit}>
-            <DatePicker
-              name="date"
-              floatingLabelText="Select a date"
-              value={this.state.date}
-              onChange={(event, date) => this.handleChange(event, date, 'date')}
-              locale="en-US"
-              style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }}
-              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}/>
-            <br/>
-            <TextField
-              name="msg"
-              value={this.state.message}
-              onChange={(event) => this.handleChange(event, null, 'message')}
-              multiLine={true}
-              hintText="Message To Requester"
-              floatingLabelText="Message To Requester"
-              floatingLabelFocusStyle={{ color: tealA700 }}
-              underlineFocusStyle={{ borderColor: tealA700 }}
-              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}/>
-            <TextField
-              name="phone"
-              value={this.props.currentUser ? this.props.currentUser.phone : ''}
-              onChange={(event) => this.handleChange(event, null, 'phone')}
-              multiLine={true}
-              hintText="Phone Number"
-              floatingLabelText="Phone Number"
-              floatingLabelFocusStyle={{ color: tealA700 }}
-              underlineFocusStyle={{ borderColor: tealA700 }}
-              errorText={this.state.validationStatePhone ? '' : 'Please enter your phone number.'}/>
-            <br/>
+          </div>
+          <div className="flex-row">
+            <form onSubmit={this.handleSubmit}>
+              <DatePicker
+                name="date"
+                inputStyle={styles.inputStyle}
+                floatingLabelFocusStyle={styles.floatingLabelTextFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                floatingLabelText="Select a date"
+                value={this.state.date}
+                onChange={this.handleChange('date')}
+                locale="en-US"
+                errorText={this.state.dateIsValid ? '' : 'Please select a date.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+              <TextField
+                name="msg"
+                textareaStyle={styles.inputStyle}
+                value={this.state.message}
+                onChange={this.handleChange('message')}
+                multiLine={true}
+                hintText="Message To Requester"
+                floatingLabelText="Message To Requester"
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                errorText={this.state.messageIsValid ? '' : 'Please enter a message.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+              <TextField
+                name="phone"
+                textareaStyle={styles.inputStyle}
+                value={this.state.phone}
+                onChange={this.handleChange('phone')}
+                hintText="Please Enter Your Phone"
+                floatingLabelText="Phone Number"
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                errorText={this.state.phoneIsValid ? '' : 'Please enter your phone number.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+            </form>
+          </div>
+          <div className="flex-row">
             <RaisedButton
               className="form-button"
               type="submit"
               label="Offer Help"
-              backgroundColor={ blueGrey500 }
-              labelStyle={{color: 'white'}}
-              disabled={ request.requester ? this.state.disabled: true } />
-          </form>
-
-          <div>
-            <Dialog
-              title="Your Help Offer has been submitted!"
-              actions={[<FlatButton
-                  label="OK"
-                  onTouchTap={this.redirect} />]}
-              modal={true}
-              open={this.state.popup}
-            >
-            </Dialog>
+              backgroundColor="white"
+              labelColor="#533BD7"
+              disabled={this.isInvalid()}/>
           </div>
-
         </div>
       )
     }
   }
 )
+
