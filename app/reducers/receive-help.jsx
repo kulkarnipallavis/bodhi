@@ -1,11 +1,13 @@
 import { database } from '../firebase'
+import LOGGED_OUT from './auth'
 
 
 const GET_OFFERS_RECEIVED = 'GET_OFFERS_RECEIVED'
 
-const reducer = (state = null, action) => {
+const reducer = (state = [], action) => {
   switch (action.type) {
     case GET_OFFERS_RECEIVED: return action.offers
+    case LOGGED_OUT: return []
     default: return state
   }
 }
@@ -35,12 +37,14 @@ const findHelper = (offer) => {
 
 
 export const findOffers = (uid) => {
-  return (dispatch) =>
-  database
+  return (dispatch) => {
+  const ref = database
     .ref('Offers')
     .orderByChild('reqUid')
     .equalTo(uid)
-    .once('value', function(snapshot) {
+
+  const listener = ref
+    .on('value', function(snapshot) {
 
       let offers = [];
       if (snapshot.val()) {   //if there is an offer
@@ -58,6 +62,8 @@ export const findOffers = (uid) => {
 
       }
     })
+    return () => ref.off('value', listener)
+  }
 }
 
 

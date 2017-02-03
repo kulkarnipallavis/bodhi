@@ -47,9 +47,9 @@ return (
       id="navbar"
       className="gradient"
       zDepth={0}
-      showMenuIconButton={offers ? true : false}
+      showMenuIconButton={offers.length ? true : false}
       title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
-      iconElementLeft={offers ?
+      iconElementLeft={offers.length ?
         <Link to="/offers">
           <Badge
             style={{ padding: '2px'}}

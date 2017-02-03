@@ -1,7 +1,7 @@
 import { database } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
-const LOGGED_OUT = 'LOGGED_OUT'
+export const LOGGED_OUT = 'LOGGED_OUT'
 const UPDATE_USER = 'GET_USER'
 
 const reducer = (state = null, action) => {
@@ -78,7 +78,7 @@ export const updateUser = updatedUser => dispatch => {
     email: updatedUser.email,
     name: updatedUser.name,
     phone: updatedUser.phone,
-    picture: updatedUser.picture       
+    picture: updatedUser.picture
   }
 
   database.ref('Users').child(updatedUser.uid)

@@ -26,16 +26,30 @@ import { loggedIn, loggedOut } from './reducers/auth'
 
 import { findOffers } from './reducers/receive-help'
 
+let offersListener = null
 
 auth().onAuthStateChanged(function(user) {
   if (user) {
     store.dispatch(loggedIn(user))
-    store.dispatch(findOffers(user.uid))
+    offersListener = store.dispatch(findOffers(user.uid))
   } else {
     store.dispatch(loggedOut())
+    offersListener && offersListener()
     browserHistory.push('/loginenter')
   }
 })
+
+
+  // grabUserLocation() {
+  //   navigator.geolocation.watchPosition(Position => {
+  //   store.dispatch({
+  //       location: {
+  //         latitude: Position.coords.latitude,
+  //         longitude: Position.coords.longitude }
+  //     })
+  //   })
+  // }
+
 
 const onEnterApp = () => {
   injectTapEventPlugin()
