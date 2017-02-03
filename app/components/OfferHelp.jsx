@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { browserHistory, Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
-import RaisedButton from 'material-ui/RaisedButton'
+import Avatar from 'material-ui/Avatar'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
 import { updateRequestStatus } from '../reducers/request-actions'
@@ -24,6 +25,7 @@ const mapStateToProps = (state) => {
   }
 }
 
+
 export default connect(mapStateToProps, mapDispatchToProps)(
 
   class OfferHelp extends Component {
@@ -31,56 +33,61 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     constructor(props) {
       super(props);
       this.state = {
-        date: null,
+        date: {},
         message: '',
+        phone: '',
         disabled: true,
-        validationStateDate: true,
-        validationStateMessage: true,
+        dateIsValid: true,
+        messageIsValid: true,
+        phoneIsValid: true,
         popup: false
       }
-
-      this.handleChange = this.handleChange.bind(this)
-      this.validateSubmit = this.validateSubmit.bind(this)
       this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange(event, date, type) {
-      // form validation
-      if (type === 'message') {
-        const message = event.target.value
-        if (!message) this.setState({ message, validationStateMessage: false, disabled: true })
-        else {
-          this.setState({ message, validationStateMessage: true })
-          // submit enabled only if both inputs are valid
-          if (this.state.date) this.setState({ disabled: false })
-        }
-      } else {
-        if (!date) this.setState({ date, validationStateDate: false })
-        else {
-          this.setState({ date, validationStateDate: true })
-        }
-      }
+
+    componentDidMount(){
+      this.props.currentUser.phone && this.setState({phone: this.props.currentUser.phone})
     }
 
-    validateSubmit() {
-      if (this.state.date && this.state.message) {
-        this.setState({ disabled: false })
-      }
+    handleChange = (type) => (event, date) => {
+
+      console.log("HANDLECHANGE STATE", this.state)
+
+      let value;
+      if (!date) value = event.target.value
+      else value = date
+      this.setState({
+        [type]: value,
+        [`${type}IsValid`]: !!value,
+      })
+    }
+
+    isInvalid() {
+      const { date, message, phone, dateIsValid, messageIsValid, phoneIsValid } = this.state
+      return !(dateIsValid && date &&  message && messageIsValid && phone && phoneIsValid && this.props.selectedRequest.requester)
     }
 
     clearForm() {
       this.setState({
-        date: null,
-        message: ''
+        date: {},
+        message: '',
+        phone: '',
+        disabled: true,
+        dateIsValid: true,
+        phoneIsValid: true,
+        messageIsValid: true
       })
     }
 
     handleSubmit(event) {
+      console.log("HANDLESUBMIT STATE 1", this.state)
       event.preventDefault()
       const newOffer = {
         date: this.state.date,
         message: this.state.message,
+        phone: this.state.phone,
         reqUid: this.props.selectedRequest.uid,
         reqKey: this.props.selectedRequest.key,
         offUid: this.props.currentUser.uid,
@@ -91,78 +98,94 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.props.submitOfferDispatch(newOffer)
       this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
       this.setState({popup: !this.state.popup})
+
+      console.log("HANDLESUBMIT STATE 2", this.state)
     }
 
     redirect() {
+      console.log("redirect")
       browserHistory.push('/')
     }
 
     render() {
       const request = this.props.selectedRequest
-
       const styles = {
-        floatingLabelFocusStyle: { color: 'white' },
-        underlineFocusStyle: { borderColor: 'white' },
-        inputText: {color: 'white'},
-        errorStyle: { color: '#f44256' }
+        floatingLabelFocusStyle: { color: '#FFFFFF' },
+        underlineFocusStyle: { borderColor: '#FFFFFF' },
+        inputStyle: { color: '#000000' },
+        errorStyle: { color: '#F0B259' }
       }
 
       return (
-        <div>
-          <h1>Offer Help</h1>
-
-            {
-            request.requester ?
-            <div id="div_request">
-              <h5>Request you are responding to:</h5>
-                <p>user: {//<br/>request.requester.picture
-                }
-                {request.requester.name}</p>
-                <p>message:</p>
-                <h3>{request.title}</h3>
-                <p>{request.description}</p>
+        <div className="gradient flex-container">
+          <div className="flex-row">
+            <h1>Offer Help</h1>
+          </div>
+          <div id="request-details" className="flex-row">
+            <div className="flex-col-white">
+              { request.requester ?
+                 <div>
+                   <Avatar src={request.requester.picture}/>
+                   <h3>{`${request.requester.name} needs help with ${request.title}.`}</h3>
+                   <p>{`Description: ${request.description}`}</p>
+                 </div>
+                 :
+                 <div id="offer-fail-safe" className="flex-row">
+                   <p>Please select a request <Link to="/map"><u>from the map.</u></Link></p>
+                 </div>}
             </div>
-            :
-            <div id="div_request">
-              <p>Please select a request<Link to="/map"> from the map</Link> </p>
-            </div>
-            }
-
-
-          <form onSubmit={this.handleSubmit}>
-            <DatePicker
-              name="date"
-              inputStyle={styles.inputText}
-              floatingLabelText="Select a date"
-              value={this.state.date}
-              onChange={(event, date) => this.handleChange(event, date, 'date')}
-              locale="en-US"
-              style={{ primary1Color: tealA700, pickerHeaderColor: tealA700 }}
-              errorText={this.state.validationStateDate ? '' : 'Please select a date.'}
-              errorStyle={styles.errorStyle} />
-            <br/>
-            <TextField
-              name="msg"
-              value={this.state.message}
-              onChange={(event) => this.handleChange(event, null, 'message')}
-              multiLine={true}
-              hintText="Message To Requester"
-              floatingLabelText="Message To Requester"
-              textareaStyle={styles.inputText}
-              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              underlineFocusStyle={styles.underlineFocusStyle}
-              errorText={this.state.validationStateMessage ? '' : 'Please enter a message.'}
-              errorStyle={styles.errorStyle} />
-            <br/>
+          </div>
+          <div className="flex-row">
+            <form>
+              <DatePicker
+                name="date"
+                inputStyle={styles.inputStyle}
+                floatingLabelFocusStyle={styles.floatingLabelTextFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                floatingLabelText="Select a date"
+                value={this.state.date}
+                onChange={this.handleChange('date')}
+                locale="en-US"
+                errorText={this.state.dateIsValid ? '' : 'Please select a date.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+              <TextField
+                name="msg"
+                textareaStyle={styles.inputStyle}
+                value={this.state.message}
+                onChange={this.handleChange('message')}
+                multiLine={true}
+                hintText="Message To Requester"
+                floatingLabelText="Message To Requester"
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                errorText={this.state.messageIsValid ? '' : 'Please enter a message.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+              <TextField
+                name="phone"
+                textareaStyle={styles.inputStyle}
+                value={this.state.phone}
+                onChange={this.handleChange('phone')}
+                hintText="Please Enter Your Phone"
+                floatingLabelText="Phone Number"
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                errorText={this.state.phoneIsValid ? '' : 'Please enter your phone number.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
+            </form>
+          </div>
+          <div className="flex-row">
             <RaisedButton
               className="form-button"
               type="submit"
-              labelColor="#533BD7"
+              label="Offer Help"
               backgroundColor="white"
-              label="Offer Help"             
-              disabled={ request.requester ? this.state.disabled: true } />
-          </form>
-
+              labelColor="#533BD7"
+              onClick={this.handleSubmit}
+              disabled={this.isInvalid()}/>
+          </div>
           <div>
             <Dialog
               title="Your Help Offer has been submitted!"
@@ -173,10 +196,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               open={this.state.popup}
             >
             </Dialog>
-          </div>
-
         </div>
+        </div>
+
+
       )
     }
   }
 )
+

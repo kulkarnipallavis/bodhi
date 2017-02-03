@@ -86,7 +86,6 @@ export const getMarkers = () =>
       let markers = [];
 
       requestObjects && Object.keys(requestObjects).forEach(key => {
-        console.log('KEY ', key)
         if (requestObjects[key].location) {
           markers.push({
             status: requestObjects[key].status,
@@ -110,7 +109,6 @@ export const getMarkers = () =>
 
       return Promise.all(addingRequesterInfo)
       .then(markerArr => {
-        console.log('MARKER ARR ', markerArr)
         dispatch(getAllMarkers(markerArr))
       })
     })

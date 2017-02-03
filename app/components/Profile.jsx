@@ -48,6 +48,7 @@ export class Profile extends Component {
                 <Avatar src={user.picture}/>
                 <p style={styles.buttonText}>Name:</p><p style={styles.inputText}>{(user.name ? user.name : " What's your name?")}</p><br/>
                 <p style={styles.buttonText}>Email:</p><p>{`${user.email}`}</p><br/>
+                <p style={styles.buttonText}>Phone:</p><p style={styles.inputText}>{(user.phone ? user.phone : " What's your number?")}</p><br/>
                 <p style={styles.buttonText}>Member since:</p><p>{`${user.dateJoined}`}</p><br/>
               </div>
             </div>
