@@ -54,6 +54,7 @@ class MapContainer extends Component {
   }
 
   render() {
+  //console.log("CENTER ", typeof this.props.center.lat )
 
     return (
       <MapComponent
