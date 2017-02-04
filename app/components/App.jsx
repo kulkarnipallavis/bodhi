@@ -38,18 +38,9 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  children: PropTypes.node
-}
+App.propTypes = { children: PropTypes.node }
+App.childContextTypes = { muiTheme: PropTypes.object }
 
-App.childContextTypes = {
-  muiTheme: PropTypes.object
-}
-
-const mapState = (state, ownProps) => {
-  return {
-    children: ownProps.children
-  }
-}
+const mapState = (state, ownProps) => ({ children: ownProps.children })
 
 export default connect(mapState)(App)

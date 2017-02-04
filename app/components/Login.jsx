@@ -1,14 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { auth } from '../firebase.jsx'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
-const mapStateToProps = (state) => ({})
-const mapDispatchToProps = (dispatch) => ({})
-
-export default connect(mapStateToProps, mapDispatchToProps)(class Login extends React.Component {
+export default connect(state => ({}), dispatch => ({}))(class Login extends Component {
 
   constructor(props) {
     super(props)
@@ -63,16 +60,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
   }
 
   render () {
-
     const styles = {
-      floatingLabelFocusStyle: { color: 'white' },
-      underlineFocusStyle: { borderColor: 'white' },
-      inputText: {color: 'white'},
-      errorStyle: { color: '#f44256' }
-    }
+          floatingLabelFocusStyle: { color: 'white' },
+          underlineFocusStyle: { borderColor: 'white' },
+          inputText: {color: 'white'},
+          errorStyle: { color: '#F0B259' }
+        }
 
     return (
-      <div id="login" className="flex-container">
+      <div id="login" className="gradient flex-container">
         <div className="flex-row">
           <h1>Login</h1>
         </div>
@@ -81,11 +77,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
             <TextField
               id="email"
               type="email"
-              floatingLabelText="Email"
               inputStyle={styles.inputText}
+              floatingLabelText="Email"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.email}
+              underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('email')}
               errorText={this.state.errmsgEmail}
               errorStyle={styles.errorStyle} />
@@ -93,17 +89,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Login extends 
             <TextField
               id="password"
               type="password"
-              floatingLabelText="Password"
               inputStyle={styles.inputText}
+              floatingLabelText="Password"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.password}
+              underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('password')}
-              errorText={this.state.errmsgPassword} 
-              errorStyle={styles.errorStyle} />
-              <br />
-            <div id="div_btn">
-            </div>
+              errorText={this.state.errmsgPassword}/>
+            <br/>
           </form>
         </div>
         <div className="flex-row">

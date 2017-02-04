@@ -85,7 +85,8 @@ export const getMarkers = () =>
       let requestObjects = snapshot.val()
       let markers = [];
 
-      requestObjects && Object.keys(requestObjects).forEach(key => {
+      if (Object.keys(requestObjects)) {
+        Object.keys(requestObjects).forEach(key => {
         if (requestObjects[key].location) {
           markers.push({
             status: requestObjects[key].status,
@@ -101,16 +102,14 @@ export const getMarkers = () =>
           })
         }
       })
-       //console.log('MARKERS in getMarkers', markers)
+    }
 
-      const addingRequesterInfo = markers.map(findRequester)
+    const addingRequesterInfo = markers.map(findRequester)
 
-//dispatch(getAllMarkers(markers))
-
-      return Promise.all(addingRequesterInfo)
-      .then(markerArr => {
-        dispatch(getAllMarkers(markerArr))
-      })
+    return Promise.all(addingRequesterInfo)
+    .then(markerArr => {
+      dispatch(getAllMarkers(markerArr))
     })
+  })
 
 export default reducer

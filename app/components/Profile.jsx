@@ -32,14 +32,14 @@ export class Profile extends Component {
     }
 
     return (
-      <div className="profile" style={styles}>
+      <div className="profile flex-container">
         {
           user ?
           <div>
           <FlatButton
             style={{color:"#533BD7"}}
             label="Edit Profile"
-            labelPosition="before"            
+            labelPosition="before"
             icon={<ContentCreate/>}
             onClick={this.handleClick}
           />
@@ -60,7 +60,7 @@ export class Profile extends Component {
               <p style={styles.buttonText}>Badges</p>
               <div className="flex-col" id="badges" style={styles.inputText}>
                 <ul>
-                 { user.badges ? 
+                 { user.badges ?
                      <ul>
                        {user.badges.map( (badge, index) => <Avatar key={index} src={badge}/> )}
                      </ul>
