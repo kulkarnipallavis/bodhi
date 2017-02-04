@@ -24,6 +24,8 @@ import AllOffers from './components/AllOffers'
 import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
 
+import { grabUserLocation } from './reducers/map'
+
 import { findOffers } from './reducers/receive-help'
 
 let offersListener = null
@@ -39,24 +41,13 @@ auth().onAuthStateChanged(function(user) {
   }
 })
 
-
-  // grabUserLocation() {
-  //   navigator.geolocation.watchPosition(Position => {
-  //   store.dispatch({
-  //       location: {
-  //         latitude: Position.coords.latitude,
-  //         longitude: Position.coords.longitude }
-  //     })
-  //   })
-  // }
-
-
 const onEnterApp = () => {
   injectTapEventPlugin()
-
+  store.dispatch(grabUserLocation())
 }
 
 const onHomeEnter = () => {
+
   store.dispatch(getOpenRequests())
   store.dispatch(getClosedRequests())
 }

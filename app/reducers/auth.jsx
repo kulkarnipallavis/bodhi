@@ -61,8 +61,8 @@ export const loggedIn = (user) => {
           type: LOGGED_IN,
           user: newUser
         })
-  		}
-  	})
+      }
+    })
   }
 }
 
