@@ -15,7 +15,7 @@ const reducer = (state = [], action) => {
 export default reducer
 
 
-const getOffers = (offers) => ({
+export const getOffers = (offers) => ({
   type: GET_OFFERS_RECEIVED,
   offers
 })

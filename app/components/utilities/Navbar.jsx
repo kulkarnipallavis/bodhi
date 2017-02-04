@@ -10,14 +10,20 @@ import Badge from 'material-ui/Badge'
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 import Divider from 'material-ui/Divider'
+import { getOffers } from '../../reducers/receive-help'
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
   offersReceived: state.offersReceived
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  getOffers: (offers) => {
+    dispatch(getOffers(offers))
+  }
+})
 
-export default connect(mapStateToProps)(class Navbar extends React.Component {
+export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends React.Component {
 
 constructor() {
   super()
@@ -27,6 +33,7 @@ constructor() {
 
 logout(e) {
   e.preventDefault()
+  this.props.getOffers([])
   auth().signOut()
   .then( () => {
     browserHistory.push('/')
