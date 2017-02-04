@@ -170,11 +170,6 @@ form {
   color: rgb(83, 59, 215) !important;
 }
 
-.badge-icon {
-  padding: 0px 0px;
-  background-color: pink
-}
-
 .gradient {
   background-color: #eda99c;
   /* IE9, iOS 3.2+ */
