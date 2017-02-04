@@ -4,6 +4,8 @@ import { browserHistory, Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import Avatar from 'material-ui/Avatar'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import { submitOffer } from '../reducers/offer-help'
 import { updateRequestStatus } from '../reducers/request-actions'
@@ -31,12 +33,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.state = {
         date: {},
         message: '',
+        phone: '',
         disabled: true,
         dateIsValid: true,
-        messageIsValid: true
+        messageIsValid: true,
+        phoneIsValid: true,
+        popup: false
       }
       this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    componentDidMount(){
+      this.props.currentUser.phone && this.setState({phone: this.props.currentUser.phone})
     }
 
     handleChange = (type) => (event, date) => {
@@ -50,16 +59,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     isInvalid() {
-      const { date, message, dateIsValid, messageIsValid } = this.state
-      return !(dateIsValid && date &&  message && messageIsValid && this.props.selectedRequest.requester)
+      const { date, message, phone, dateIsValid, messageIsValid, phoneIsValid } = this.state
+      return !(dateIsValid && date &&  message && messageIsValid && phone && phoneIsValid && this.props.selectedRequest.requester)
     }
 
     clearForm() {
       this.setState({
         date: {},
         message: '',
+        phone: '',
         disabled: true,
         dateIsValid: true,
+        phoneIsValid: true,
         messageIsValid: true
       })
     }
@@ -69,6 +80,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       const newOffer = {
         date: this.state.date,
         message: this.state.message,
+        phone: this.state.phone,
         reqUid: this.props.selectedRequest.uid,
         reqKey: this.props.selectedRequest.key,
         offUid: this.props.currentUser.uid,
@@ -78,6 +90,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.clearForm()
       this.props.submitOfferDispatch(newOffer)
       this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
+      this.setState({popup: !this.state.popup})
+    }
+
+    redirect() {
       browserHistory.push('/')
     }
 
@@ -114,7 +130,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             </div>
           </div>
           <div className="flex-row">
-            <form onSubmit={this.handleSubmit}>
+            <form>
               <DatePicker
                 name="date"
                 inputStyle={styles.inputStyle}
@@ -140,6 +156,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                 errorText={this.state.messageIsValid ? '' : 'Please enter a message.'}
                 errorStyle={styles.errorStyle}/>
               <br/>
+              <TextField
+                name="phone"
+                inputStyle={styles.inputStyle}
+                value={this.state.phone}
+                onChange={this.handleChange('phone')}
+                hintText="Please Enter Your Phone"
+                floatingLabelText="Phone Number"
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
+                errorText={this.state.phoneIsValid ? '' : 'Please enter your phone number.'}
+                errorStyle={styles.errorStyle}/>
+              <br/>
             </form>
           </div>
           <div className="flex-row">
@@ -149,9 +177,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               label="Offer Help"
               backgroundColor="white"
               labelColor="#533BD7"
+              onClick={this.handleSubmit}
               disabled={this.isInvalid()}/>
           </div>
+          <div>
+            <Dialog
+              title="Your Help Offer has been submitted!"
+              actions={[<FlatButton
+              label="OK"
+              onTouchTap={this.redirect} />]}
+              modal={true}
+              open={this.state.popup}/>
         </div>
+      </div>
       )
     }
   }

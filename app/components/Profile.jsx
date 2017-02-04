@@ -4,11 +4,19 @@ import Avatar from 'material-ui/Avatar'
 import TextField from 'material-ui/TextField';
 import { Link } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
+import { browserHistory } from 'react-router'
+import ContentCreate from 'material-ui/svg-icons/content/create'
+import FlatButton from 'material-ui/FlatButton'
 
 export class Profile extends Component {
 
     constructor(props) {
       super(props)
+      this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick(e) {
+      browserHistory.push('/EditableProfile');
     }
 
     componentDidMount() {
@@ -17,24 +25,40 @@ export class Profile extends Component {
 
     render() {
     const user = this.props.currentUser
+
+    const styles = {
+      inputText: {color: 'white'},
+      buttonText: {color: '#533BD7'}
+    }
+
     return (
       <div className="profile flex-container">
         {
           user ?
           <div>
+          <FlatButton
+            style={{color:"#533BD7"}}
+            label="Edit Profile"
+            labelPosition="before"
+            icon={<ContentCreate/>}
+            onClick={this.handleClick}
+          />
             <div className="flex-row">
-              <div className="flex-col">
+              <div className="flex-col" style={styles.inputText}>
                 <Avatar src={user.picture}/>
-                <p>{`Name: ${user.name}`}</p>
-                <p>{`Email: ${user.email}`}</p>
-                <p>{`Member since: ${user.date}`}</p>
+                <p style={styles.buttonText}>Name:</p><p style={styles.inputText}>{(user.name ? user.name : " What's your name?")}</p><br/>
+                <p style={styles.buttonText}>Email:</p><p>{`${user.email}`}</p><br/>
+                <p style={styles.buttonText}>Phone:</p><p style={styles.inputText}>{(user.phone ? user.phone : " What's your number?")}</p><br/>
+                <p style={styles.buttonText}>Member since:</p><p>{`${user.dateJoined}`}</p><br/>
               </div>
             </div>
+            <p style={styles.buttonText}></p>
             <div className="flex-row" id="bio-badges">
               <div className="flex-col" id="bio">
                 {user.bio}
-              </div>
-              <div className="flex-col" id="badges">
+              </div><br/>
+              <p style={styles.buttonText}>Badges</p>
+              <div className="flex-col" id="badges" style={styles.inputText}>
                 <ul>
                  { user.badges ?
                      <ul>
@@ -44,9 +68,10 @@ export class Profile extends Component {
                    <div>No badges yet!</div>
                  }
                 </ul>
-              </div>
+              </div><br/>
             </div>
-            <div className="flex-row" id="skills">
+            <p style={styles.buttonText}>Skills</p>
+            <div className="flex-row" id="skills" style={styles.inputText}>
               <div className="flex-col">
                 <ul>
                   { user.skills ?
@@ -59,7 +84,7 @@ export class Profile extends Component {
                     <div>No skills inputed yet!</div>
                   }
                 </ul>
-              </div>
+              </div><br/>
             </div>
             <div className="flex-row">
               <div className="flex-col">
@@ -72,7 +97,7 @@ export class Profile extends Component {
             </div>
           </div>
           :
-          <div>
+          <div style={styles.inputText}>
           No user signed in.
           </div>
         }

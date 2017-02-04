@@ -85,9 +85,11 @@ export const getMarkers = () =>
       let requestObjects = snapshot.val()
       let markers = [];
 
-      Object.keys(requestObjects).forEach(key => {
-        if (requestObjects[key].location.latitude) {
+      if (Object.keys(requestObjects)) {
+        Object.keys(requestObjects).forEach(key => {
+        if (requestObjects[key].location) {
           markers.push({
+            status: requestObjects[key].status,
             position: {
               lat: requestObjects[key].location.latitude,
               lng: requestObjects[key].location.longitude
@@ -100,16 +102,14 @@ export const getMarkers = () =>
           })
         }
       })
-       //console.log('MARKERS in getMarkers', markers)
+    }
 
-      const addingRequesterInfo = markers.map(findRequester)
+    const addingRequesterInfo = markers.map(findRequester)
 
-//dispatch(getAllMarkers(markers))
-
-      return Promise.all(addingRequesterInfo)
-      .then(markerArr => {
-        dispatch(getAllMarkers(markerArr))
-      })
+    return Promise.all(addingRequesterInfo)
+    .then(markerArr => {
+      dispatch(getAllMarkers(markerArr))
     })
+  })
 
 export default reducer

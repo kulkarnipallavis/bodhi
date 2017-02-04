@@ -1,23 +1,19 @@
 import React, {Component} from 'react'
-// import { auth } from '../firebase.jsx'
 import { connect } from 'react-redux'
-import Avatar from 'material-ui/Avatar'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/FlatButton'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
 import { updateUser } from '../reducers/auth'
-import { browserHistory } from 'react-router'
 
 class EditableProfile extends Component {
 
   constructor(props){
-    super(props);
+    super(props)
 
     this.state = Object.assign({}, this.props.currentUser)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-
   }
 
   componentDidMount() {
@@ -25,7 +21,7 @@ class EditableProfile extends Component {
   }
 
   componentWillReceiveProps(newProps, oldProps){
-    newProps.currentUser && this.setState(newProps.currentUser)
+    if (newProps.currentUser) this.setState(newProps.currentUser)
   }
 
   handleChange(event, field) {
@@ -38,84 +34,79 @@ class EditableProfile extends Component {
   handleSubmit(event, id){
     event.preventDefault()
     const user = this.props.currentUser;
-    console.log(this.props.currentUser)
     this.props.updateUser(this.state)
     browserHistory.push('/profile')
   }
 
   render () {
-  const user = this.props.currentUser;
-  console.log("PROPS", this.props)
-  return (
-    <div className="profile">
-      {
-        user ?
-        <div>
-        <form onSubmit={this.handleSubmit}>
-          <RaisedButton label="Submit Changes" primary={true} type="submit" onClick={this.handleSubmit}/>
+    const user = this.props.currentUser
+
+    const styles = {
+      floatingLabelFocusStyle: { color: 'white' },
+      underlineFocusStyle: { borderColor: 'white' },
+      inputText: {color: 'white'},
+      errorStyle: { color: '#F0B259' }
+    }
+
+    return (
+      <div className="profile gradient flex-container">
+        { user ?
+          <div>
+            <div className="flex-row">
+              <h1>Edit Profile</h1>
+            </div>
+            <div className="flex-row">
+              <form style={{padding: '25px 0px 0px 0px'}}>
+                <br/>
+                <h2>Name:</h2>
+                  <TextField
+                    id="name"
+                    hintText={user.name}
+                    inputStyle={styles.inputText}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    underlineFocusStyle={styles.underlineFocusStyle}
+                    onChange={(event) => this.handleChange(event, "name")}/>
+                  <br/>
+                <h2>Email:</h2>
+                  <TextField
+                    id="email"
+                    hintText = {`${user.email}`}
+                    inputStyle={styles.inputText}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    underlineFocusStyle={styles.underlineFocusStyle}
+                    onChange={(event) => this.handleChange(event, "email")}/>
+                  <br/>
+                <h2>Phone Number:</h2>
+                  <TextField
+                    id="phone"
+                    hintText = { user.phone ? user.phone : 'Please enter cell number'}
+                    inputStyle={styles.inputText}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    underlineFocusStyle={styles.underlineFocusStyle}
+                    onChange={(event) => this.handleChange(event, "phone")}/>
+                  <br/>
+              </form>
+            </div>
+            <div className="flex-row">
+              <RaisedButton
+                className="form-button"
+                label="Submit Changes"
+                backgroundColor="white"
+                type="submit"
+                onClick={this.handleSubmit}/>
+            </div>
+          </div>
+          :
           <div className="flex-row">
-            <div className="flex-col">
-              <Avatar src={user.picture}/>
-              <p> Name:</p>
-              <TextField
-                defaultValue={user.name}
-                onChange={(event) => this.handleChange(event, "name")}
-              />
-              <p>Email:</p>
-              <TextField 
-                  defaultValue = {`${user.email}`}
-                  onChange={(event)=> this.handleChange(event, "email")}
-              />
-              <p>{`Member since: ${user.date}`}</p>
-            </div>
+            <Link to="/loginenter"><u><p>Please sign in</p></u></Link>
           </div>
-          <div className="flex-row" id="bio-badges">
-            <div className="flex-col" id="bio">
-              {user.bio}
-            </div>
-            <div className="flex-col" id="badges">
-            { user.badges ? 
-                <ul>
-                  {user.badges.map( (badge, index) => <Avatar key={index} src={badge}/> )}
-                </ul>
-              :
-              <div>No badges yet!</div>
-            }
-            </div>
-          </div>
-          <div className="flex-row" id="skills">
-            <div className="flex-col" id="skills">
-              { user.skills ?
-                <ul>
-                  {user.skills.map((skill, index) => {
-                    return <li key={index}>{skill}</li>
-                  })}
-                </ul>
-                :
-                <div>No skills inputed yet!</div>
-              }
-            </div>
-          </div>
-          <div className="flex-row">
-            <div className="flex-col">
-              <ul>
-              { this.props.markers && this.props.markers.filter(marker => marker.uid === user.uid).map((marker, index) => (
-                <Link to="/request" key={index}><li>{marker.title}</li></Link>
-              )) }
-              </ul>
-            </div>
-          </div>
-          </form>
-        </div>
-        :
-        <div>
-        No user signed in.
-        </div>
-      }
-    </div>
-  )}
+       }
+      </div>
+    )
+  }
 }
 
-const mapStateToProps = (state) => ({ currentUser: state.currentUser, markers: state.map.markers })
+const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
 const mapDispatchToProps = { getMarkers, getUserLocation, updateUser }
+
 export default connect(mapStateToProps, mapDispatchToProps)(EditableProfile)

@@ -67,7 +67,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
     const styles = {
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
-      inputStyle: { color: 'white' }
+      inputStyle: { color: 'white' },
+      errorStyle: { color: '#F0B259' }
     }
 
     return (
@@ -83,10 +84,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
               inputStyle={styles.inputStyle}
               floatingLabelText="Email"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.email}
               underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('email')}
-              errorText={this.state.errmsgEmail}/>
+              errorText={this.state.errmsgEmail}
+              errorStyle={styles.errorStyle} />
               <br />
             <TextField
               id="password"
@@ -94,10 +97,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
               inputStyle={styles.inputStyle}
               floatingLabelText="Password"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.password}
               underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('password')}
-              errorText={this.state.errmsgPassword}/>
+              errorText={this.state.errmsgPassword}
+              errorStyle={styles.errorStyle} />
               <br />
           </form>
         </div>

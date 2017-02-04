@@ -66,6 +66,7 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
           inputText: {color: 'white'},
           errorStyle: { color: '#F0B259' }
         }
+
     return (
       <div id="login" className="gradient flex-container">
         <div className="flex-row">
@@ -82,8 +83,9 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
               value={this.state.email}
               underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('email')}
-              errorText={this.state.errmsgEmail}/>
-              <br/>
+              errorText={this.state.errmsgEmail}
+              errorStyle={styles.errorStyle} />
+              <br />
             <TextField
               id="password"
               type="password"
