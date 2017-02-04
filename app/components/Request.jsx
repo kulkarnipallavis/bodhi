@@ -45,13 +45,13 @@ class Request extends Component {
   // }
 
   // grabUserLocation() {
-  //    navigator.geolocation.watchPosition(Position => {		
+  //    navigator.geolocation.watchPosition(Position => {
   //      this.setState({
   //        location: {
   //          latitude: Position.coords.latitude,
   //          longitude: Position.coords.longitude }
-  //      })	
-  //    })		
+  //      })
+  //    })
   //  }
 
   clearForm() {
@@ -69,10 +69,13 @@ class Request extends Component {
       title: this.state.title,
       description: this.state.description,
       tag: this.state.tag,
-      location: this.props.location,
+      location: {
+        latitude: this.props.location.lat,
+        longitude: this.props.location.lng
+      },
       status: this.state.status,
     }
-
+  console.log("This is the request obj ", newRequest)
     this.clearForm()
     this.props.handleSubmitRequest(newRequest)
     this.setState({popup: !this.state.popup})

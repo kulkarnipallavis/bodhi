@@ -32,6 +32,7 @@ let offersListener = null
 
 auth().onAuthStateChanged(function(user) {
   if (user) {
+    store.dispatch(loggedIn(user))
     offersListener = store.dispatch(findOffers(user.uid))
   } else {
     store.dispatch(loggedOut())
@@ -46,7 +47,7 @@ const onEnterApp = () => {
 }
 
 const onHomeEnter = () => {
-  store.dispatch(loggedIn(user))
+
   store.dispatch(getOpenRequests())
   store.dispatch(getClosedRequests())
 }
