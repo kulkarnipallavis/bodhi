@@ -63,7 +63,7 @@ a {
 #navbar-brand {
   font-size: 1em;
   color: white;
-  margin: 0;
+  margin: 0px 0px 0px 10px;
   width: 100px;
 }
 
@@ -83,6 +83,8 @@ a {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  padding: 10px;
+  margin: 0px 10px 0px 10px;
 }
 
 .flex-row-white {
