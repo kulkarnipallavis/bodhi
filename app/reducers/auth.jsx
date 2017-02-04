@@ -1,10 +1,10 @@
 import { database } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
-const UPDATE_USER = 'UPDATE_USER'
 export const LOGGED_OUT = 'LOGGED_OUT'
+const UPDATE_USER = 'GET_USER'
 
-const reducer = (state = {}, action) => {
+const reducer = (state = null, action) => {
   switch (action.type) {
     case LOGGED_IN: return action.user
     case UPDATE_USER: return action.updatedUser
@@ -61,14 +61,16 @@ export const loggedIn = (user) => {
           type: LOGGED_IN,
           user: newUser
         })
-  		}
-  	})
+      }
+    })
   }
 }
 
 export const updateUser = updatedUser => dispatch => {
 
   dispatch({type: UPDATE_USER, updatedUser})
+
+  console.log("updatedUser", updatedUser)
 
   const updates = {
     badges: updatedUser.badges,
@@ -84,9 +86,11 @@ export const updateUser = updatedUser => dispatch => {
 
 }
 
+
 export const loggedOut = () => ({
   type: LOGGED_OUT
 })
+
 
 
 
