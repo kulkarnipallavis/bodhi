@@ -44,14 +44,14 @@ class Request extends Component {
   }
 
   grabUserLocation() {
-    navigator.geolocation.watchPosition(Position => {
-      this.setState({
-        location: {
-          latitude: Position.coords.latitude,
-          longitude: Position.coords.longitude }
-      })
-    })
-  }
+     navigator.geolocation.watchPosition(Position => {		
+       this.setState({
+         location: {
+           latitude: Position.coords.latitude,
+           longitude: Position.coords.longitude }
+       })	
+     })		
+   }
 
   clearForm() {
     this.setState({

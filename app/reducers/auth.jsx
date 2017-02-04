@@ -1,7 +1,7 @@
 import { database } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
-const LOGGED_OUT = 'LOGGED_OUT'
+export const LOGGED_OUT = 'LOGGED_OUT'
 const UPDATE_USER = 'GET_USER'
 
 const reducer = (state = null, action) => {
