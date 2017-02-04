@@ -22,7 +22,7 @@ export const loggedIn = (user) => {
       .ref('Users').child(user.uid)
       .once('value', function(snapshot){
 
-      if(!snapshot.val()){
+      if (!snapshot.val()){
         const date = new Date
         const theDate = date.toString()
 
@@ -90,8 +90,3 @@ export const updateUser = updatedUser => dispatch => {
 export const loggedOut = () => ({
   type: LOGGED_OUT
 })
-
-
-
-
-

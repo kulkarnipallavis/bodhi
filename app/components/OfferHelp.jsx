@@ -7,7 +7,6 @@ import Avatar from 'material-ui/Avatar'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
-import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { submitOffer } from '../reducers/offer-help'
 import { updateRequestStatus } from '../reducers/request-actions'
 
@@ -24,7 +23,6 @@ const mapStateToProps = (state) => {
     currentUser: state.currentUser
   }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(
 
@@ -46,15 +44,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-
     componentDidMount(){
       this.props.currentUser.phone && this.setState({phone: this.props.currentUser.phone})
     }
 
     handleChange = (type) => (event, date) => {
-
-      console.log("HANDLECHANGE STATE", this.state)
-
       let value;
       if (!date) value = event.target.value
       else value = date
@@ -82,7 +76,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     handleSubmit(event) {
-      console.log("HANDLESUBMIT STATE 1", this.state)
       event.preventDefault()
       const newOffer = {
         date: this.state.date,
@@ -98,12 +91,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.props.submitOfferDispatch(newOffer)
       this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
       this.setState({popup: !this.state.popup})
-
-      console.log("HANDLESUBMIT STATE 2", this.state)
     }
 
     redirect() {
-      console.log("redirect")
       browserHistory.push('/')
     }
 
@@ -112,7 +102,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       const styles = {
         floatingLabelFocusStyle: { color: '#FFFFFF' },
         underlineFocusStyle: { borderColor: '#FFFFFF' },
-        inputStyle: { color: '#000000' },
+        inputStyle: { color: '#FFFFFF' },
         errorStyle: { color: '#F0B259' }
       }
 
@@ -125,7 +115,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             <div className="flex-col-white">
               { request.requester ?
                  <div>
-                   <Avatar src={request.requester.picture}/>
+                   <div id="requester-avatar" className="flex-row">
+                     <Avatar
+                       size={100}
+                       src={request.requester.picture}/>
+                   </div>
                    <h3>{`${request.requester.name} needs help with ${request.title}.`}</h3>
                    <p>{`Description: ${request.description}`}</p>
                  </div>
@@ -164,7 +158,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               <br/>
               <TextField
                 name="phone"
-                textareaStyle={styles.inputStyle}
+                inputStyle={styles.inputStyle}
                 value={this.state.phone}
                 onChange={this.handleChange('phone')}
                 hintText="Please Enter Your Phone"
@@ -190,18 +184,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             <Dialog
               title="Your Help Offer has been submitted!"
               actions={[<FlatButton
-                  label="OK"
-                  onTouchTap={this.redirect} />]}
+              label="OK"
+              onTouchTap={this.redirect} />]}
               modal={true}
-              open={this.state.popup}
-            >
-            </Dialog>
+              open={this.state.popup}/>
         </div>
-        </div>
-
-
+      </div>
       )
     }
   }
 )
-

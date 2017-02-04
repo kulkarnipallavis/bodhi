@@ -13,7 +13,7 @@ class Request extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      //uid: this.props.uid,
+      uid: '',
       title: '',
       description: '',
       tag: '',
@@ -31,7 +31,7 @@ class Request extends Component {
   }
 
   handleChange = type => event => {
-    const {value} = event.target
+    const { value } = event.target
     this.setState({
       [type]: value,
       [`${type}IsValid`]: !!value,
@@ -78,13 +78,13 @@ class Request extends Component {
   console.log("This is the request obj ", newRequest)
     this.clearForm()
     this.props.handleSubmitRequest(newRequest)
-    this.setState({popup: !this.state.popup})
+    this.setState({ popup: !this.state.popup })
   }
 
   isInvalid() {
     if (!this.state) return false
-    const {titleIsValid, tagIsValid, descriptionIsValid} = this.state
-    return !(titleIsValid && tagIsValid && descriptionIsValid)
+    const { title, titleIsValid, tag, tagIsValid, description, descriptionIsValid } = this.state
+    return !(title && titleIsValid && tag && tagIsValid && description && descriptionIsValid)
   }
 
   redirect() {
@@ -94,80 +94,74 @@ class Request extends Component {
 
   render() {
     const styles = {
-      floatingLabelFocusStyle: { color: 'white' },
-      underlineFocusStyle: { borderColor: 'white' },
-      inputText: {color: 'white'},
-      errorStyle: { color: '#f44256' }
+      floatingLabelFocusStyle: { color: '#FFFFFF' },
+      underlineFocusStyle: { borderColor: '#FFFFFF' },
+      inputStyle: { color: '#FFFFFF' },
+      errorStyle: { color: '#F0B259' }
     }
 
     return (
-      <div>
-        <h1>Request Help</h1>
-        <form style={{margin: '25px 0px 0px 0px'}}>
-          <TextField
-            id="title"
-            floatingLabelText="Title"
-            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-            inputStyle={styles.inputText}
-            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-            underlineFocusStyle={styles.underlineFocusStyle}
-            value={this.state.title}
-            onChange={this.handleChange('title')}
-            underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}
-            errorStyle={styles.errorStyle} />
-          <br/>
+      <div id="request-form" className="gradient flex-container">
+        <div className="flex-row">
+          <h1>Request Help</h1>
+        </div>
+        <div className="flex-row">
+          <form>
+            <TextField
+              id="title"
+              floatingLabelText="Title"
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              inputStyle={styles.inputStyle}
+              value={this.state.title}
+              onChange={this.handleChange('title')}
+              underlineFocusStyle={styles.underlineFocusStyle}
+              errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}
+              errorStyle={styles.errorStyle}/>
+            <br/>
             <TextField
               id="tag"
               floatingLabelText="Tag"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              inputStyle={styles.inputText}
-              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              underlineFocusStyle={styles.underlineFocusStyle}
+              inputStyle={styles.inputStyle}
               value={this.state.tag}
               onChange={this.handleChange('tag')}
               underlineFocusStyle={styles.underlineFocusStyle}
               errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}
-              errorStyle={styles.errorStyle} />
-          <br/>
-          <TextField
-            id="description"
-            floatingLabelText="Description"
-            hintText="Description"
-            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-            textareaStyle={styles.inputText}
-            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-            underlineFocusStyle={styles.underlineFocusStyle}
-            value={this.state.description}
-            multiLine={true}
-            onChange={this.handleChange('description')}
-            underlineFocusStyle={styles.underlineFocusStyle}
-            errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}
-            errorStyle={styles.errorStyle} />
-          <br />
-        <RaisedButton
-          className="form-button"
-          labelColor="#533BD7"
-          backgroundColor="white"
-          label="Submit Request"
-          onClick={this.handleSubmit}
-          disabled={this.isInvalid()}/>
-
-        </form>
-
+              errorStyle={styles.errorStyle}/>
+            <br/>
+            <TextField
+              id="description"
+              floatingLabelText="Description"
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+              textareaStyle={styles.inputStyle}
+              hintText="Description"
+              value={this.state.description}
+              multiLine={true}
+              onChange={this.handleChange('description')}
+              underlineFocusStyle={styles.underlineFocusStyle}
+              errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}
+              errorStyle={styles.errorStyle}/>
+            <br />
+          </form>
+        </div>
+        <div className="flex-row">
+          <RaisedButton
+            className="form-button"
+            labelColor="#533BD7"
+            backgroundColor="white"
+            label="Submit Request"
+            onClick={this.handleSubmit}
+            disabled={this.isInvalid()}/>
+        </div>
         <div>
           <Dialog
             title="Your Help Request has been submitted!"
             actions={[<FlatButton
-                label="OK"
-                onTouchTap={this.redirect} />]}
+            label="OK"
+            onTouchTap={this.redirect} />]}
             modal={true}
-            open={this.state.popup}
-          >
-          </Dialog>
+            open={this.state.popup}/>
         </div>
-
-
       </div>
     )
   }
@@ -189,4 +183,3 @@ const mapDispatch = (dispatch) => ({
 })
 
 export default connect(mapState, mapDispatch)(Request)
-
