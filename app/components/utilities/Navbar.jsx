@@ -10,12 +10,18 @@ import Badge from 'material-ui/Badge'
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 import Divider from 'material-ui/Divider'
+import { loggedOut } from '../reducers/auth'
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
   offersReceived: state.offersReceived
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  return (
+    logout: dispatch(loggedOut())
+  )
+})
 
 export default connect(mapStateToProps)(class Navbar extends React.Component {
 
@@ -28,6 +34,7 @@ constructor() {
 logout(e) {
   e.preventDefault()
   auth().signOut()
+  this.props.logout()
   .then( () => {
     browserHistory.push('/')
     console.log('sign-out successful')
