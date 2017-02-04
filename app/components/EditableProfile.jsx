@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import { Link, browserHistory } from 'react-router'
 import { getMarkers, getUserLocation } from '../reducers/map'
 import { updateUser } from '../reducers/auth'
@@ -12,7 +12,6 @@ class EditableProfile extends Component {
     super(props)
 
     this.state = Object.assign({}, this.props.currentUser)
-    this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -24,16 +23,15 @@ class EditableProfile extends Component {
     if (newProps.currentUser) this.setState(newProps.currentUser)
   }
 
-  handleChange(event, field) {
+  handleChange = field => event => {
     const value = event.target.value
     this.setState({
       [field]: value
     })
   }
 
-  handleSubmit(event, id){
+  handleSubmit(event){
     event.preventDefault()
-    const user = this.props.currentUser;
     this.props.updateUser(this.state)
     browserHistory.push('/profile')
   }
@@ -44,7 +42,7 @@ class EditableProfile extends Component {
     const styles = {
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
-      inputText: {color: 'white'},
+      inputStyle: { color: 'white' },
       errorStyle: { color: '#F0B259' }
     }
 
@@ -60,30 +58,42 @@ class EditableProfile extends Component {
                 <br/>
                 <h2>Name:</h2>
                   <TextField
-                    id="name"
-                    hintText={user.name}
-                    inputStyle={styles.inputText}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    underlineFocusStyle={styles.underlineFocusStyle}
-                    onChange={(event) => this.handleChange(event, "name")}/>
+                  id="name"
+                  hintText={user.name}
+                  inputStyle={styles.inputStyle}
+                  floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                  underlineFocusStyle={styles.underlineFocusStyle}
+                  onChange={this.handleChange('name')}/>
                   <br/>
                 <h2>Email:</h2>
                   <TextField
                     id="email"
                     hintText = {`${user.email}`}
-                    inputStyle={styles.inputText}
+                    inputStyle={styles.inputStyle}
                     floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                     underlineFocusStyle={styles.underlineFocusStyle}
-                    onChange={(event) => this.handleChange(event, "email")}/>
+                    onChange={(event) => this.handleChange(event, 'email')}/>
                   <br/>
                 <h2>Phone Number:</h2>
                   <TextField
                     id="phone"
                     hintText = { user.phone ? user.phone : 'Please enter cell number'}
-                    inputStyle={styles.inputText}
+                    inputStyle={styles.inputStyle}
                     floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                     underlineFocusStyle={styles.underlineFocusStyle}
-                    onChange={(event) => this.handleChange(event, "phone")}/>
+                    onChange={(event) => this.handleChange(event, 'phone')}/>
+                  <br/>
+                <h2>Bio:</h2>
+                  <TextField
+                    id="bio"
+                    multiLine={true}
+                    hintText = { user.bio ? user.bio : 'Tell us about yourself'}
+                    textareaStyle={styles.inputStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    underlineFocusStyle={styles.underlineFocusStyle}
+                    onChange={(event) => this.handleChange(event, 'bio')}
+                    errorText={this.state.phone.length < 9 ? 'Please enter a 9 digit number' : ''}
+                    errorStyle={styles.errorStyle}/>
                   <br/>
               </form>
             </div>

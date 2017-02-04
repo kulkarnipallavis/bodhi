@@ -166,8 +166,22 @@ form {
 }
 
 .form-button {
-  margin: 35px 0px 0px 0px !important;
   color: rgb(83, 59, 215) !important;
+  margin: 35px 0px 0px 0px !important;
+}
+
+.edit-button {
+  color: rgb(83, 59, 215) !important;
+  margin: 0;
+}
+
+.save-edit-button {
+  margin-left: 25px !important;
+  color: rgb(83, 59, 215) !important;
+}
+
+.editable-profile-field {
+  margin-left: 15px;
 }
 
 .gradient {

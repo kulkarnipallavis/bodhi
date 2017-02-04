@@ -58,7 +58,7 @@ render(
           <Route path="/login" component={Login} />
           <Route path="/loginenter" component={LoginEnter} />
           <Route path="/profile" component={Profile} />
-          <Route path="/editableprofile" component={EditableProfile} />
+          <Route path="/editprofile" component={EditableProfile} />
           <Route path="/home" component={Home} onEnter={onHomeEnter} />
           <Route path="/offers" component={AllOffers} />
       </Route>

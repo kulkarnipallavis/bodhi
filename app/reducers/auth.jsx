@@ -31,8 +31,10 @@ export const loggedIn = (user) => {
           name: user.displayName,
           picture: '',
           dateJoined: theDate,
-          badges: '',
-          phone: ''
+          badges: '', // badges === karma
+          skills: '',
+          phone: '',
+          bio: ''
         })
         const newUser = {
           uid: user.uid,
@@ -41,7 +43,9 @@ export const loggedIn = (user) => {
           picture: '',
           dateJoined: theDate,
           badges: '',
-          phone: ''
+          skills: '',
+          phone: '',
+          bio: ''
         }
         dispatch({
           type: LOGGED_IN,
@@ -55,25 +59,27 @@ export const loggedIn = (user) => {
             picture: snapshot.val().picture,
             dateJoined: snapshot.val().dateJoined,
             badges: snapshot.val().badges,
-            phone: snapshot.val().phone
+            skills: snapshot.val().tags || '',
+            phone: snapshot.val().phone,
+            bio: snapshot.val().bio || ''
           }
         dispatch({
           type: LOGGED_IN,
           user: newUser
         })
-  		}
-  	})
+      }
+    })
   }
 }
 
 export const updateUser = updatedUser => dispatch => {
 
-  dispatch({type: UPDATE_USER, updatedUser})
-
-  console.log("updatedUser", updatedUser)
+  dispatch({ type: UPDATE_USER, updatedUser })
 
   const updates = {
     badges: updatedUser.badges,
+    skills: updatedUser.skills,
+    bio: updatedUser.bio,
     dateJoined: updatedUser.dateJoined,
     email: updatedUser.email,
     name: updatedUser.name,
@@ -81,11 +87,11 @@ export const updateUser = updatedUser => dispatch => {
     picture: updatedUser.picture
   }
 
-  database.ref('Users').child(updatedUser.uid)
-    .update(updates)
+  database.ref('Users')
+  .child(updatedUser.uid)
+  .update(updates)
 
 }
-
 
 export const loggedOut = () => ({
   type: LOGGED_OUT
