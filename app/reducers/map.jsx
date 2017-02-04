@@ -50,14 +50,15 @@ export const setSelectedMarker = (selectedMarker) => ({
 })
 
 //action-creators
-export const getUserLocation = () =>
-  dispatch =>
-    database.ref('Users')
-    .on('value', snapshot => {
-      //testing out dispatcher
-      let userLocation = {lat: 40.705175, lng: -74.009252}
-      dispatch(setLocation(userLocation))
-    })
+export const grabUserLocation = () => dispatch => {
+  navigator.geolocation.watchPosition(Position => {    
+       let center = {
+         lat: Position.coords.latitude,
+         lng: Position.coords.longitude 
+       }
+       dispatch({type: SET_LOCATION, center})
+   })   
+}
 
 
 const findRequester = (request) => {
@@ -75,7 +76,6 @@ const findRequester = (request) => {
         newReqObj.requester = requester
         return  newReqObj
       })
-
 }
 
 export const getMarkers = () =>

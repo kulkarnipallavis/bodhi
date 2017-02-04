@@ -61,8 +61,8 @@ export const loggedIn = (user) => {
           type: LOGGED_IN,
           user: newUser
         })
-  		}
-  	})
+      }
+    })
   }
 }
 
@@ -90,6 +90,7 @@ export const updateUser = updatedUser => dispatch => {
 export const loggedOut = () => ({
   type: LOGGED_OUT
 })
+
 
 
 
