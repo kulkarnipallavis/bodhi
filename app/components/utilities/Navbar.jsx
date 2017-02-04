@@ -7,6 +7,7 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import Badge from 'material-ui/Badge'
+import FlatButton from 'material-ui/FlatButton'
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 import Divider from 'material-ui/Divider'
@@ -19,69 +20,84 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps)(class Navbar extends React.Component {
 
-constructor() {
-  super()
+  constructor() {
+    super()
 
-  this.logout = this.logout.bind(this)
-}
+    this.logout = this.logout.bind(this)
+  }
 
-logout(e) {
-  e.preventDefault()
-  auth().signOut()
-  .then( () => {
-    browserHistory.push('/')
-    console.log('sign-out successful')
-  }, (err) => {
-    console.log(err)
-  })
-}
+  logout(e) {
+    e.preventDefault()
+    auth().signOut()
+    .then( () => {
+      browserHistory.push('/')
+    }, (err) => {
+      console.error(err)
+    })
+  }
 
-render() {
+  handleClick(event) {
+    this.setState({
+      editable: true
+    })
+    browserHistory.push('/EditableProfile');
+  }
 
-const user = this.props.currentUser
-const offers = this.props.offersReceived
+  render() {
 
-return (
-  <div>
-    <AppBar
-      id="navbar"
-      className="gradient"
-      zDepth={0}
-      showMenuIconButton={offers ? true : false}
-      title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
-      iconElementLeft={offers ?
-        <Link to="/offers">
-          <Badge
-            style={{ padding: '2px'}}
-            badgeContent={Object.keys(offers).length}>
-              <IconButton tooltip="Notifications">
-                <NotificationsIcon />
-              </IconButton>
-          </Badge>
-        </Link>
-          : null}
-      iconElementRight={
-          <IconMenu
-            iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-            {
-            !user ?
-            <div>
-              <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
-              <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
-            </div>
-            :
-            <div>
-              <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
-              <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
-              <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
-              <Divider/>
-              <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
-            </div>
-            }
-          </IconMenu>
-      }/>
-  </div>
-)}
+    const user = this.props.currentUser
+    const offers = this.props.offersReceived
+    const styles = {
+      badgeStyle: { padding: '0', top: '1px', left: '11px' },
+      notificationIcon: { color: '#F0B259' }
+    }
+    return (
+      <div>
+        <AppBar
+          id="navbar"
+          zDepth={0}
+          className="gradient"
+          showMenuIconButton={!!offers}
+          title={
+            <Link to="/">
+              <FlatButton>
+                <h2>Bodhi</h2>
+              </FlatButton>
+            </Link> }
+            iconElementLeft={ offers ?
+              <Link to="/offers">
+                <Badge
+                  id="notifications"
+                  style={styles.badgeStyle}
+                  badgeContent={Object.keys(offers).length}>
+                    <IconButton tooltip="Unread Help Offers" iconStyle={styles.notificationIcon}>
+                      <NotificationsIcon/>
+                    </IconButton>
+                </Badge>
+              </Link> : null }
+            iconElementRight={
+             <IconMenu
+               iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
+               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+               targetOrigin={{horizontal: 'right', vertical: 'top'}}>
+               {
+               !user ?
+               <div>
+                 <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
+                 <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
+               </div>
+               :
+               <div>
+                 <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
+                 <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
+                 <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
+                 <Divider/>
+                 <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
+               </div>
+               }
+             </IconMenu>
+             }/>
+      </div>
+    )
+  }
 })

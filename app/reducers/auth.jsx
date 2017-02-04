@@ -22,7 +22,7 @@ export const loggedIn = (user) => {
       .ref('Users').child(user.uid)
       .once('value', function(snapshot){
 
-      if(!snapshot.val()){
+      if (!snapshot.val()){
         const date = new Date
         const theDate = date.toString()
 
@@ -78,7 +78,7 @@ export const updateUser = updatedUser => dispatch => {
     email: updatedUser.email,
     name: updatedUser.name,
     phone: updatedUser.phone,
-    picture: updatedUser.picture       
+    picture: updatedUser.picture
   }
 
   database.ref('Users').child(updatedUser.uid)
@@ -90,7 +90,3 @@ export const updateUser = updatedUser => dispatch => {
 export const loggedOut = () => ({
   type: LOGGED_OUT
 })
-
-
-
-
