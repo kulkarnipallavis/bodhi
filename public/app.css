@@ -83,8 +83,7 @@ a {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  margin: 0px 10px 0px 10px;
+  padding: 15px;
 }
 
 .flex-row-white {
@@ -136,11 +135,6 @@ h3 {
   font-size: 1.5em;
 }
 
-.feed {
-  width: 75vw;
-  height: 75vh;
-}
-
 p {
   color: #533BD7;
   margin: 10px;
@@ -184,6 +178,16 @@ form {
 
 .editable-profile-field {
   margin-left: 15px;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 15px !important;
 }
 
 .gradient {
