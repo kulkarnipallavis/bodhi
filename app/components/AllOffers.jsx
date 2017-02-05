@@ -8,6 +8,10 @@ import { respondToOffer } from '../reducers/offer-help'
 
 class AllOffers extends Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   respond = (newOfferStatus, offer) => (event) => {
     event.preventDefault()
     const textBody = newOfferStatus === 'declined' ?
@@ -20,7 +24,7 @@ class AllOffers extends Component {
       body: textBody
     })
 
-    respondToOffer(newOfferStatus, offer.offKey)
+    this.props.respond(newOfferStatus, offer.offKey)
   }
 
   render() {
@@ -71,5 +75,6 @@ class AllOffers extends Component {
 }
 
 const mapStateToProps = state => ({ offersReceived: state.offersReceived })
+const mapDispatchToProps = dispatch => ({ respond: (status, offerKey) => dispatch(respondToOffer()) })
 
 export default connect(mapStateToProps)(AllOffers)

@@ -88,7 +88,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
           iconElementRight={
               <IconMenu
                 open={this.state.showMenu || false}
-                onTouchTap={open => this.setState({showMenu: open})}
+                onClick={open => this.setState({showMenu: open})}
                 onRequestChange={open => this.setState({showMenu: open})}
                 iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}

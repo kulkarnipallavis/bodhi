@@ -42,7 +42,6 @@ auth().onAuthStateChanged(function(user) {
 })
 
 const onEnterApp = () => {
-  injectTapEventPlugin()
   store.dispatch(grabUserLocation())
 }
 
@@ -50,6 +49,8 @@ const onHomeEnter = () => {
   store.dispatch(getOpenRequests())
   store.dispatch(getClosedRequests())
 }
+
+injectTapEventPlugin()
 
 render(
   <Provider store={store}>

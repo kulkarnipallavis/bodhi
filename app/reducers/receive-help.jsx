@@ -49,10 +49,12 @@ export const findOffers = (uid) => {
       let offers = [];
       if (snapshot.val()) {   //if there is an offer
 
-         for(let offer in snapshot.val()){
-          const offerObj = snapshot.val()[offer];
-          offerObj.offKey = offer;
-          offers.push(offerObj)
+         for (let offer in snapshot.val()) {
+           if (offer.status !== 'declined') {
+             const offerObj = snapshot.val()[offer];
+             offerObj.offKey = offer;
+             offers.push(offerObj)
+           }
          }
 
          const addingUsers = offers.map(findHelper)
@@ -71,15 +73,3 @@ const getHelpers = (users) => ({
   type: GET_HELPERS,
   helpers: users
 })
-
-
-
-
-
-
-
-
-
-
-
-
