@@ -12,7 +12,7 @@ class AllOffers extends Component {
     super(props)
   }
 
-  respond = (newOfferStatus, offer) => (event) => {
+  handleRespond = (newOfferStatus, offer) => (event) => {
     event.preventDefault()
     const textBody = newOfferStatus === 'declined' ?
     'I have already accepted another neighbor\'s help, but thank you for offering!'
@@ -53,7 +53,7 @@ class AllOffers extends Component {
                    style={{ margin: 12 }}
                    labelColor="#533BD7"
                    backgroundColor="white"
-                   onClick={this.respond('accepted', offer)}/>
+                   onClick={this.handleRespond('accepted', offer)}/>
                  </td>
                  <td>
                    <RaisedButton
@@ -62,7 +62,7 @@ class AllOffers extends Component {
                    style={{ margin: 12 }}
                    labelColor="#533BD7"
                    backgroundColor="white"
-                   onClick={this.respond('declined', offer)}/>
+                   onClick={this.handleRespond('declined', offer)}/>
                   </td>
                 </tr>
               ))  }
@@ -75,6 +75,6 @@ class AllOffers extends Component {
 }
 
 const mapStateToProps = state => ({ offersReceived: state.offersReceived })
-const mapDispatchToProps = dispatch => ({ respond: (status, offerKey) => dispatch(respondToOffer()) })
+const mapDispatchToProps = dispatch => ({ respond: (status, offerKey) => dispatch(respondToOffer(status, offerKey)) })
 
-export default connect(mapStateToProps)(AllOffers)
+export default connect(mapStateToProps, mapDispatchToProps)(AllOffers)

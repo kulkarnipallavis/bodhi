@@ -2,7 +2,7 @@ import firebase, { database } from '../firebase.jsx'
 
 export const submitOffer = (newOffer) => dispatch => {
   var newOfferKey = firebase.database().ref().child('Offers').push().key
-  var updates = {['/Offers/' + newOfferKey]: newOffer}
+  var updates = {[`/Offers/${newOfferKey}`]: newOffer}
 
   return firebase.database().ref().update(updates)
 }

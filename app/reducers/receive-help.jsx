@@ -20,21 +20,20 @@ export const getOffers = (offers) => ({
   offers
 })
 
-
 const findHelper = (offer) => {
   return database
-    .ref('Users')
-    .child(offer.offUid)
-    .once('value').then(function(snapshot){
-      offer.offUser = {
-        name: snapshot.val().name,
-        picture: snapshot.val().picture,
-        phone: snapshot.val().phone
-      }
-      return offer
-    })
+  .ref('Users')
+  .child(offer.offUid)
+  .once('value')
+  .then(snapshot => {
+    offer.offUser = {
+      name: snapshot.val().name,
+      picture: snapshot.val().picture,
+      phone: snapshot.val().phone
+    }
+    return offer
+  })
 }
-
 
 export const findOffers = (uid) => {
   return (dispatch) => {
@@ -47,15 +46,15 @@ export const findOffers = (uid) => {
     .on('value', function(snapshot) {
 
       let offers = [];
-      if (snapshot.val()) {   //if there is an offer
+      if (snapshot.val()) {   //if there is are any offers
 
-         for (let offer in snapshot.val()) {
-           if (offer.status !== 'declined') {
-             const offerObj = snapshot.val()[offer];
-             offerObj.offKey = offer;
-             offers.push(offerObj)
-           }
+         for (let offerKey in snapshot.val()) {
+           const offerObj = snapshot.val()[offerKey];
+           offerObj.offKey = offerKey
+           offers.push(offerObj)
          }
+
+         offers = offers.filter(offer => offer.status !== 'declined')
 
          const addingUsers = offers.map(findHelper)
 
@@ -67,9 +66,3 @@ export const findOffers = (uid) => {
     return () => ref.off('value', listener)
   }
 }
-
-
-const getHelpers = (users) => ({
-  type: GET_HELPERS,
-  helpers: users
-})
