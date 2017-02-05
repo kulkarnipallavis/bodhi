@@ -32,7 +32,7 @@
       -What is the overall styling of our app going to be
       -What will be our approach to testing?
 
-
+LINK TO CURRENT DEPLOYED ITERATION: https://bodhi-7ad02.firebaseapp.com
 
 INSTRUCTIONS FOR BUILDING:
   From Terminal:
