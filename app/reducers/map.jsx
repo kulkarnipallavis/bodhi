@@ -57,7 +57,7 @@ export const grabUserLocation = () => dispatch => {
          lng: Position.coords.longitude
        }
        //console.log("Center from map dispatch ", center)
-       //console.log("WHAT ARE YOU ", typeof center.lat)
+       console.log("WHAT ARE YOU ",  Position.coords)
        dispatch(setLocation(center))
    })
 }
