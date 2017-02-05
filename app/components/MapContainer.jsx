@@ -79,8 +79,8 @@ MapContainer.propTypes = {
 const mapStateToProps = (state) => ({
   markers: state.map.markers,
   center: {
-    lat: parseFloat(state.map.center.lat),
-    lng: parseFloat(state.map.center.lng)
+    lat: parseFloat(state.map.center.latitude),
+    lng: parseFloat(state.map.center.longitude)
   }
 })
 

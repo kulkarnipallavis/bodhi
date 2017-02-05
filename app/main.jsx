@@ -47,7 +47,6 @@ const onEnterApp = () => {
 }
 
 const onHomeEnter = () => {
-
   store.dispatch(getOpenRequests())
   store.dispatch(getClosedRequests())
 }
