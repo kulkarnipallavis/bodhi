@@ -54,7 +54,7 @@ export const findOffers = (uid) => {
            offers.push(offerObj)
          }
 
-         offers = offers.filter(offer => offer.status !== 'declined')
+         offers = offers.filter(offer => offer.status === 'pending')
 
          const addingUsers = offers.map(findHelper)
 

@@ -189,10 +189,43 @@ th {
 }
 
 td {
+  width: 250px;
   text-align: center !important;
   vertical-align: middle !important;
   padding: 15px !important;
 }
+
+.flex-row-legend {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: left;
+}
+
+#map-legend {
+  position: absolute;
+  bottom: 28px;
+  right: 60px;
+  z-index: 1;
+  background: white !important;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  color: #666666 !important;
+  font-size: 12px;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+}
+
+#legend-icon-top {
+  margin: 5px 0px 10px 0px;
+}
+
+#legend-icon-bottom {
+  margin: 5px 0px 0px 0px;
+}
+
 
 .gradient {
   background-color: #eda99c;
