@@ -54,7 +54,6 @@ class MapContainer extends Component {
   }
 
   render() {
-  console.log("MARKERS ",  this.props.markers )
 
     return (
       <MapComponent

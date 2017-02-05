@@ -36,8 +36,6 @@ class Request extends Component {
       [type]: value,
       [`${type}IsValid`]: !!value,
     })
-    console.log(this.props.location)
-        console.log(this.props.currentUser)
   }
 
   // componentDidMount() {
@@ -72,7 +70,7 @@ class Request extends Component {
       location: this.props.location,
       status: this.state.status,
     }
-  console.log("This is the request obj ", newRequest)
+
     this.clearForm()
     this.props.handleSubmitRequest(newRequest)
     this.setState({ popup: !this.state.popup })
