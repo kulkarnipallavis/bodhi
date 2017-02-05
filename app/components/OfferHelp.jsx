@@ -131,18 +131,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(
           </div>
           <div className="flex-row">
             <form>
-              <DatePicker
-                name="date"
-                inputStyle={styles.inputStyle}
-                floatingLabelFocusStyle={styles.floatingLabelTextFocusStyle}
-                underlineFocusStyle={styles.underlineFocusStyle}
-                floatingLabelText="Select a date"
-                value={this.state.date}
-                onChange={this.handleChange('date')}
-                locale="en-US"
-                errorText={this.state.dateIsValid ? '' : 'Please select a date.'}
-                errorStyle={styles.errorStyle}/>
-              <br/>
+            {
+              // <DatePicker
+              //   name="date"
+              //   inputStyle={styles.inputStyle}
+              //   floatingLabelFocusStyle={styles.floatingLabelTextFocusStyle}
+              //   underlineFocusStyle={styles.underlineFocusStyle}
+              //   floatingLabelText="Select a date"
+              //   value={this.state.date}
+              //   onChange={this.handleChange('date')}
+              //   locale="en-US"
+              //   errorText={this.state.dateIsValid ? '' : 'Please select a date.'}
+              //   errorStyle={styles.errorStyle}/>
+              // <br/>
+            }
               <TextField
                 name="msg"
                 textareaStyle={styles.inputStyle}
