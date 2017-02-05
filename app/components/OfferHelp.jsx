@@ -188,7 +188,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               onTouchTap={this.redirect} />]}
               modal={true}
               open={this.state.popup}/>
-        </div>
+          </div>
       </div>
       )
     }

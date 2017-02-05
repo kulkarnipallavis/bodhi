@@ -63,7 +63,7 @@ a {
 #navbar-brand {
   font-size: 1em;
   color: white;
-  margin: 0;
+  margin: 0px 0px 0px 10px;
   width: 100px;
 }
 
@@ -134,11 +134,6 @@ h3 {
   font-size: 1.5em;
 }
 
-.feed {
-  width: 75vw;
-  height: 75vh;
-}
-
 p {
   color: #533BD7;
   margin: 10px;
@@ -166,8 +161,32 @@ form {
 }
 
 .form-button {
-  margin: 35px 0px 0px 0px !important;
   color: rgb(83, 59, 215) !important;
+  margin: 35px 0px 0px 0px !important;
+}
+
+.edit-button {
+  color: rgb(83, 59, 215) !important;
+  margin: 0;
+}
+
+.save-edit-button {
+  margin-left: 25px !important;
+  color: rgb(83, 59, 215) !important;
+}
+
+.editable-profile-field {
+  margin-left: 15px;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 15px !important;
 }
 
 .gradient {

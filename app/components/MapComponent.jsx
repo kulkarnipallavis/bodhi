@@ -15,7 +15,7 @@ return (
        key={index}
        position={marker.position}
        onClick={() => props.onMarkerClick(marker)}
-       icon={(marker.status === 'pending') ? 'purple.png' : null}
+       icon={(marker.status === 'pending') ? '/img/purple.png' : null}
        >
          {marker.showDesc && (
            <InfoWindow onCloseClick={() => props.onMarkerClose(marker)}>

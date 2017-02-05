@@ -78,12 +78,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
                 style={styles.badgeStyle}
                 badgeContent={Object.keys(offers).length}>
                   <IconButton
-                    tooltip="Unread Help Offers" iconStyle={styles.notificationIcon}>
-                    <NotificationsIcon />
+                    iconStyle={styles.notificationIcon}
+                    tooltip="Unread Offers">
+                    <NotificationsIcon/>
                   </IconButton>
               </Badge>
             </Link>
-              : null}
+              : null }
           iconElementRight={
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}

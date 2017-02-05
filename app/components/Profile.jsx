@@ -1,104 +1,223 @@
-import React, {Component} from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Avatar from 'material-ui/Avatar'
-import TextField from 'material-ui/TextField';
-import { Link } from 'react-router'
-import { getMarkers, getUserLocation } from '../reducers/map'
 import { browserHistory } from 'react-router'
+import Avatar from 'material-ui/Avatar'
+import { getMarkers } from '../reducers/map'
 import ContentCreate from 'material-ui/svg-icons/content/create'
-import FlatButton from 'material-ui/FlatButton'
+import IconButton from 'material-ui/IconButton'
+import RaisedButton from 'material-ui/RaisedButton'
+import TextFieldToggle from './TextFieldToggle'
+import { updateUser } from '../reducers/auth'
 
 export class Profile extends Component {
 
-    constructor(props) {
-      super(props)
-      this.handleClick = this.handleClick.bind(this)
+  constructor(props) {
+    super(props)
+    this.state = {
+      editingName: false,
+      editingEmail: false,
+      editingPhone: false,
+      editingBio: false
+    }
+    this.handleSave = this.handleSave.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.getMarkers()
+  }
+
+  componentWillReceiveProps(newProps, oldProps){
+    if (newProps.currentUser) {
+      const state = Object.assign({}, newProps.currentUser, {
+        editingName: false,
+        editingEmail: false,
+        editingPhone: false,
+        editingBio: false
+      })
+      this.setState(state)
+    }
+  }
+
+  handleClickEdit = field => event => this.setState({ [`editing${field}`]: true })
+  handleClickCancelEdit = field => event => this.setState({ [`editing${field}`]: false })
+
+  handleClickLoginSignup = event => browserHistory.push('/loginenter')
+
+  handleChange = field => event => {
+    const value = event.target.value
+    this.setState({ [field]: value })
+  }
+
+  handleSave = field => event => {
+    event.preventDefault()
+    const user = {
+      badges: this.state.badges,
+      bio: this.state.bio,
+      dateJoined: this.state.dateJoined,
+      email: this.state.email,
+      name: this.state.name,
+      phone: this.state.phone,
+      picture: this.state.picture,
+      skills: this.state.skills,
+      uid: this.state.uid
     }
 
-    handleClick(e) {
-      browserHistory.push('/EditableProfile');
-    }
+    this.props.updateUser(user)
+    this.setState({ [`editing${field}`]: false })
+  }
 
-    componentDidMount() {
-      this.props.getMarkers()
-    }
+  humanReadableDate(string) {
+    const memberSince = new Date(string).toDateString().slice(11)
+    return memberSince
+  }
 
-    render() {
+  render() {
     const user = this.props.currentUser
-
     const styles = {
-      inputText: {color: 'white'},
-      buttonText: {color: '#533BD7'}
+      text: { color: 'white' },
+      underlineFocusStyle: { borderColor: 'white' },
+      inputText: { color: 'white' },
+      errorStyle: { color: '#F0B259' }
     }
 
     return (
-      <div className="profile flex-container">
-        {
-          user ?
+      <div className="profile gradient flex-container">
+        { user ?
           <div>
-          <FlatButton
-            style={{color:"#533BD7"}}
-            label="Edit Profile"
-            labelPosition="before"
-            icon={<ContentCreate/>}
-            onClick={this.handleClick}
-          />
-            <div className="flex-row">
-              <div className="flex-col" style={styles.inputText}>
-                <Avatar src={user.picture}/>
-                <p style={styles.buttonText}>Name:</p><p style={styles.inputText}>{(user.name ? user.name : " What's your name?")}</p><br/>
-                <p style={styles.buttonText}>Email:</p><p>{`${user.email}`}</p><br/>
-                <p style={styles.buttonText}>Phone:</p><p style={styles.inputText}>{(user.phone ? user.phone : " What's your number?")}</p><br/>
-                <p style={styles.buttonText}>Member since:</p><p>{`${user.dateJoined}`}</p><br/>
-              </div>
+            <div className="flex-row" id="avatar">
+              <Avatar size={80} src={user.picture}/>
             </div>
-            <p style={styles.buttonText}></p>
-            <div className="flex-row" id="bio-badges">
-              <div className="flex-col" id="bio">
-                {user.bio}
-              </div><br/>
-              <p style={styles.buttonText}>Badges</p>
-              <div className="flex-col" id="badges" style={styles.inputText}>
+            <div className="flex-row" id="member-since">
+              <h2>Member since:</h2>
+                <p>{ user.dateJoined ? this.humanReadableDate(user.dateJoined) : ''}</p>
+            </div>
+            <div id="editable-profile-info">
+              { this.state.editingName ?
+
+                <TextFieldToggle
+                  styles={styles}
+                  field="Name"
+                  value={this.state.name || ""}
+                  user={ user ? user : {} }
+                  handleChange={this.handleChange}
+                  handleSave={this.handleSave}
+                  handleCancel={this.handleClickCancelEdit}/>
+                :
+                <div className="flex-row">
+                  <IconButton
+                    type="button"
+                    className="edit-button"
+                    onClick={this.handleClickEdit('Name')}>
+                    <ContentCreate color="#533BD7"/>
+                  </IconButton>
+                  <h2>Name:</h2>
+                    <p>{ user.name ? user.name : " What's your name?" }</p>
+                </div> }
+
+              { this.state.editingEmail ?
+
+                <TextFieldToggle
+                  styles={styles}
+                  field="Email"
+                  value={this.state.email || ""}
+                  user={ user ? user : {} }
+                  handleChange={this.handleChange}
+                  handleSave={this.handleSave}
+                  handleCancel={this.handleClickCancelEdit}/>
+                :
+                <div className="flex-row">
+                  <IconButton
+                    className="edit-button"
+                    onClick={this.handleClickEdit('Email')}>
+                    <ContentCreate color="#533BD7"/>
+                  </IconButton>
+                  <h2>Email:</h2>
+                    <p>{user.email}</p>
+                </div> }
+
+              { this.state.editingPhone ?
+
+                <TextFieldToggle
+                  styles={styles}
+                  field="Phone"
+                  value={this.state.phone || ""}
+                  user={ user ? user : {} }
+                  handleChange={this.handleChange}
+                  handleSave={this.handleSave}
+                  handleCancel={this.handleClickCancelEdit}/>
+                :
+                <div className="flex-row">
+                  <IconButton
+                    className="edit-button"
+                    onClick={this.handleClickEdit('Phone')}>
+                    <ContentCreate color="#533BD7"/>
+                  </IconButton>
+                  <h2>Phone:</h2>
+                    <p>{ user.phone ? user.phone : " What's your number?" }</p>
+                </div> }
+
+              { this.state.editingBio ?
+
+                <TextFieldToggle
+                  styles={styles}
+                  field="Bio"
+                  value={this.state.bio || ""}
+                  user={ user ? user : {} }
+                  handleChange={this.handleChange}
+                  handleSave={this.handleSave}
+                  handleCancel={this.handleClickCancelEdit}/>
+                :
+                <div className="flex-row">
+                  <IconButton
+                    className="edit-button"
+                    onClick={this.handleClickEdit('Bio')}>
+                    <ContentCreate color="#533BD7"/>
+                  </IconButton>
+                  <h2>Bio:</h2>
+                    <p>{user.bio ? user.bio : "What's your story?"}</p>
+                </div> }
+
+            </div> {/* end #editable-profile-info */}
+
+            <div className="flex-row" id="badges" style={styles.inputText}>
+              <h2>Badges:</h2>
                 <ul>
                  { user.badges ?
-                     <ul>
-                       {user.badges.map( (badge, index) => <Avatar key={index} src={badge}/> )}
-                     </ul>
+                   <ul>
+                     {user.badges.map( (badge, index) => <Avatar key={index} src={badge}/> )}
+                   </ul>
                    :
-                   <div>No badges yet!</div>
-                 }
+                   <p>No badges yet!</p> }
                 </ul>
-              </div><br/>
             </div>
-            <p style={styles.buttonText}>Skills</p>
-            <div className="flex-row" id="skills" style={styles.inputText}>
-              <div className="flex-col">
+            <div className="flex-row" id="skills">
+              <h2>Skills:</h2>
                 <ul>
-                  { user.skills ?
+                  { user.tags ?
                     <ul>
-                      {user.skills.map((skill, index) => {
-                        return <li key={index}>{skill}</li>
-                      })}
+                      { user.tags.map((skill, index) => <li key={index}>{skill}</li>) }
                     </ul>
                     :
-                    <div>No skills inputed yet!</div>
-                  }
+                    <p>No skills yet!</p> }
                 </ul>
-              </div><br/>
             </div>
-            <div className="flex-row">
-              <div className="flex-col">
-                <ul>
-                { this.props.markers && this.props.markers.filter(marker => marker.uid === user.uid).map((marker, index) => (
-                  <Link to="/request" key={index}><li>{marker.title}</li></Link>
-                )) }
-                </ul>
-              </div>
+            <div className="flex-row" id="request-history">
+              <h2>Request History:</h2>
+              <ul>
+              { this.props.markers &&
+                this.props.markers
+                .filter(marker => marker.uid === user.uid)
+                .map((marker, index) => <li key={index}><p>{marker.title}</p></li>) }
+              </ul>
             </div>
           </div>
           :
-          <div style={styles.inputText}>
-          No user signed in.
+          <div className="flex-row">
+            <RaisedButton
+              className="form-button"
+              label="Please log in or sign up"
+              backgroundColor="white"
+              onClick={this.handleClickLoginSignup}/>
           </div>
         }
       </div>
@@ -106,6 +225,13 @@ export class Profile extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, getUserLocation }
+Profile.propTypes = {
+  currentUser: PropTypes.object,
+  markers: PropTypes.array,
+  grabMarkers: PropTypes.func
+}
+
+const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
+const mapDispatchToProps = { getMarkers, updateUser }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
