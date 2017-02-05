@@ -180,6 +180,10 @@ form {
   margin-left: 15px;
 }
 
+.table-responsive {
+  margin: 25px;
+}
+
 th {
   text-align: center;
 }
@@ -216,5 +220,3 @@ td {
   padding: 1em;
   width: 240px;
 }
-
-

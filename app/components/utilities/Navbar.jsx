@@ -87,25 +87,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
               : null }
           iconElementRight={
               <IconMenu
-                open={this.state.showMenu || false}
-                onTouchTap={this.handleSelect}
-                onRequestChange={open => this.setState({showMenu: open})}
                 iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}>
                 {
                 !user ?
                 <div>
-                  <Link to="/loginenter"><MenuItem onClick={this.handleSelect} className="nav-item" primaryText="Log in"/></Link>
-                  <Link to="/signup"><MenuItem onClick={this.handleSelect} className="nav-item" primaryText="Sign up"/></Link>
+                  <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
+                  <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
                 </div>
                 :
                 <div>
-                  <Link to="/map"><MenuItem onClick={this.handleSelect} className="nav-item" primaryText="Who's in Need?"/></Link>
-                  <Link to="/request"><MenuItem onClick={this.handleSelect} className="nav-item" primaryText="I Need Help!"/></Link>
-                  <Link to="/profile"><MenuItem onClick={this.handleSelect} className="nav-item" primaryText="Profile"/></Link>
+                  <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
+                  <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
+                  <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
                   <Divider/>
-                  <Link onClick={this.logout}><MenuItem onClick={this.handleSelect} className="nav-item" primaryText="Log out" /></Link>
+                  <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
                 </div>
                 }
               </IconMenu>
