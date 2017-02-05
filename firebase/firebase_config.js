@@ -1,9 +1,7 @@
 // TODO: Get rid of this, or get rid of
 // firebase.jsx
-var firebase = require("firebase");
-require("firebase/auth");
-
-// console.log(firebase);
+var firebase = require("firebase")
+require("firebase/auth")
 
  var config = {
     apiKey: "AIzaSyBv8n5SQNo2WTWYpoZOXv7YEMPuQu9kpPQ",
