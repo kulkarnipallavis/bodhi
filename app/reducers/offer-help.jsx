@@ -1,9 +1,5 @@
 import firebase, { database } from '../firebase.jsx'
 
-
-//LOAD OFFERS RECEIVED and put them on state??
-
-
 export const submitOffer = (newOffer) => {
   return dispatch => {
     var newOfferKey = firebase.database().ref().child('Offers').push().key;
@@ -14,5 +10,8 @@ export const submitOffer = (newOffer) => {
   }
 }
 
+export const respondToOffer = (status, offKey) => dispatch => {
+  var statusUpdate = {[`Offers/${offKey}/status`]: status}
 
-
+  return database.ref().update(statusUpdate)
+}

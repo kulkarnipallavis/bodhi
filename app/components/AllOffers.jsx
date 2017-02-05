@@ -4,8 +4,24 @@ import { Table } from 'react-bootstrap'
 import RaisedButton from 'material-ui/RaisedButton'
 import Avatar from 'material-ui/Avatar'
 import smsLink from 'sms-link'
+import { respondToOffer } from '../reducers/offer-help'
 
 class AllOffers extends Component {
+
+  respond = (newOfferStatus, offer) => (event) => {
+    event.preventDefault()
+    const textBody = newOfferStatus === 'declined' ?
+    'I have already accepted another neighbor\'s help, but thank you for offering!'
+    :
+    'Thank you, I accept your help.'
+
+    window.location = smsLink({
+      phone:`${offer.offUser.phone}`,
+      body: textBody
+    })
+
+    respondToOffer(newOfferStatus, offer.offKey)
+  }
 
   render() {
     let offers = this.props.offersReceived
@@ -33,10 +49,7 @@ class AllOffers extends Component {
                    style={{ margin: 12 }}
                    labelColor="#533BD7"
                    backgroundColor="white"
-                   onClick={() => window.location = smsLink({
-                     phone: `${offer.offUser.phone}`,
-                     body: 'Thank you. I accept your help.'}
-                   )}/>
+                   onClick={this.respond('accepted', offer)}/>
                  </td>
                  <td>
                    <RaisedButton
@@ -44,7 +57,8 @@ class AllOffers extends Component {
                    secondary={false}
                    style={{ margin: 12 }}
                    labelColor="#533BD7"
-                   backgroundColor="white" />
+                   backgroundColor="white"
+                   onClick={this.respond('declined', offer)}/>
                   </td>
                 </tr>
               ))  }
