@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0.3" dy="0.2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.304347826 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.902909873">
+        <g id="16" stroke="#533BD7" stroke-width="1.5">
+            <g id="Group" filter="url(#filter-1)" transform="translate(1.000000, 1.000000)">
+                <circle id="Oval-2" cx="7" cy="7" r="7"></circle>
+                <path d="M3.85897436,3.85897436 L10.1410256,10.1410256" id="Line" stroke-linecap="square"></path>
+                <path d="M3.85897436,3.85897436 L10.1410256,10.1410256" id="Line" stroke-linecap="square" transform="translate(7.000000, 7.000000) scale(-1, 1) translate(-7.000000, -7.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
