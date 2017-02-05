@@ -67,7 +67,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
           zDepth={0}
           showMenuIconButton={!!offers}
           title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
-          iconElementLeft={offers.length ?
+          iconElementLeft={ offers.length ?
             <Link to="/offers">
               <Badge
                 style={styles.badgeStyle}
@@ -79,7 +79,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
                   </IconButton>
               </Badge>
             </Link>
-              : null}
+              : null }
           iconElementRight={
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
