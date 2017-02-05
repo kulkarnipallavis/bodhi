@@ -69,10 +69,7 @@ class Request extends Component {
       title: this.state.title,
       description: this.state.description,
       tag: this.state.tag,
-      location: {
-        latitude: this.props.location.lat,
-        longitude: this.props.location.lng
-      },
+      location: this.props.location,
       status: this.state.status,
     }
   console.log("This is the request obj ", newRequest)

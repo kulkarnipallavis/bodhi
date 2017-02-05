@@ -53,11 +53,11 @@ export const setSelectedMarker = (selectedMarker) => ({
 export const grabUserLocation = () => dispatch => {
   navigator.geolocation.watchPosition(Position => {
        let center = {
-         lat: Position.coords.latitude,
-         lng: Position.coords.longitude
+         lat: parseFloat(Position.coords.latitude),
+         lng: parseFloat(Position.coords.longitude)
        }
        //console.log("Center from map dispatch ", center)
-       console.log("WHAT ARE YOU ",  Position.coords)
+       console.log("WHAT ARE YOU ",  center)
        dispatch(setLocation(center))
    })
 }
