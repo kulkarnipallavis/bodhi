@@ -17,7 +17,6 @@ class Request extends Component {
       title: '',
       description: '',
       tag: '',
-      location: {},
       disabled: true,
       titleIsValid: true,
       tagIsValid: true,
@@ -28,7 +27,7 @@ class Request extends Component {
 
     this.clearForm = this.clearForm.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.grabUserLocation = this.grabUserLocation.bind(this)
+    // this.grabUserLocation = this.grabUserLocation.bind(this)
   }
 
   handleChange = type => event => {
@@ -37,21 +36,23 @@ class Request extends Component {
       [type]: value,
       [`${type}IsValid`]: !!value,
     })
+    console.log(this.props.location)
+        console.log(this.props.currentUser)
   }
 
-  componentDidMount() {
-    this.grabUserLocation()
-  }
+  // componentDidMount() {
+  //   this.grabUserLocation()
+  // }
 
-  grabUserLocation() {
-     navigator.geolocation.watchPosition(Position => {		
-       this.setState({
-         location: {
-           latitude: Position.coords.latitude,
-           longitude: Position.coords.longitude }
-       })	
-     })		
-   }
+  // grabUserLocation() {
+  //    navigator.geolocation.watchPosition(Position => {
+  //      this.setState({
+  //        location: {
+  //          latitude: Position.coords.latitude,
+  //          longitude: Position.coords.longitude }
+  //      })
+  //    })
+  //  }
 
   clearForm() {
     this.setState({
@@ -68,10 +69,13 @@ class Request extends Component {
       title: this.state.title,
       description: this.state.description,
       tag: this.state.tag,
-      location: this.state.location,
+      location: {
+        latitude: this.props.location.lat,
+        longitude: this.props.location.lng
+      },
       status: this.state.status,
     }
-
+  console.log("This is the request obj ", newRequest)
     this.clearForm()
     this.props.handleSubmitRequest(newRequest)
     this.setState({ popup: !this.state.popup })
@@ -168,7 +172,8 @@ Request.propTypes = {
 }
 
 const mapState = (state) => ({
-  currentUser: state.currentUser
+  currentUser: state.currentUser,
+  location: state.map.center
 })
 
 const mapDispatch = (dispatch) => ({

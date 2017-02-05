@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
-import { getMarkers, getUserLocation, setSelectedMarker } from '../reducers/map'
+import { getMarkers, setSelectedMarker } from '../reducers/map'
+import { grabUserLocation } from '../reducers/auth'
 import {browserHistory} from 'react-router'
 import store from '../store'
 
@@ -11,7 +12,7 @@ class MapContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      markers: props.markers
+      markers: this.props.markers
     }
 
     this.handleMarkerClick = this.handleMarkerClick.bind(this)
@@ -22,7 +23,6 @@ class MapContainer extends Component {
 
   componentDidMount() {
     this.props.getMarkers()
-    this.props.getUserLocation()
   }
 
   handleMapLoad(map) {
@@ -54,6 +54,7 @@ class MapContainer extends Component {
   }
 
   render() {
+  //console.log("CENTER ", typeof this.props.center.lat )
 
     return (
       <MapComponent
@@ -80,6 +81,6 @@ const mapStateToProps = (state) => ({
   center: state.map.center
 })
 
-const mapDispatchToProps = { getMarkers, getUserLocation, setSelectedMarker }
+const mapDispatchToProps = { getMarkers, setSelectedMarker }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

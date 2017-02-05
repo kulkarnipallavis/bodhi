@@ -3,11 +3,11 @@ import { Link, browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
+import FlatButton from 'material-ui/FlatButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import Badge from 'material-ui/Badge'
-import FlatButton from 'material-ui/FlatButton'
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 import Divider from 'material-ui/Divider'
@@ -65,9 +65,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
           id="navbar"
           className="gradient"
           zDepth={0}
-          showMenuIconButton={!!offers}
-          title={<Link to="/"><span><h2 id="navbar-brand">Bodhi</h2></span></Link>}
-          iconElementLeft={ offers.length ?
+          showMenuIconButton={offers.length ? true : false}
+          title={
+           <Link to="/">
+             <FlatButton>
+               <h2>Bodhi</h2>
+             </FlatButton>
+           </Link> }
+          iconElementLeft={offers.length ?
             <Link to="/offers">
               <Badge
                 style={styles.badgeStyle}
