@@ -218,6 +218,27 @@ td {
   box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
 }
 
+#map-legend-min {
+  position: absolute;
+  bottom: 28px;
+  right: 60px;
+  z-index: 1;
+  background: white !important;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  color: #666666 !important;
+  font-size: 12px;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+}
+
+#descender-fix {
+  padding-top: 3px;
+}
+#legend-fix {
+  padding-right: 20px;
+}
+
 #legend-icon-top {
   margin: 5px 0px 10px 0px;
 }
@@ -226,6 +247,12 @@ td {
   margin: 5px 0px 0px 0px;
 }
 
+#close-x-span {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  padding: 3px;
+}
 
 .gradient {
   background-color: #eda99c;
