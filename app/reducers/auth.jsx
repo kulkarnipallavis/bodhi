@@ -40,7 +40,7 @@ export const loggedIn = (user) => {
           uid: user.uid,
           email: user.email,
           name: user.displayName,
-          picture: '',
+          picture: `http://api.adorable.io/avatar/${user.uid}`,
           dateJoined: theDate,
           badges: '',
           skills: '',
