@@ -37,7 +37,7 @@ auth().onAuthStateChanged(function(user) {
   } else {
     store.dispatch(loggedOut())
     offersListener && offersListener()
-    browserHistory.push('/loginenter')
+    browserHistory.push('/')
   }
 })
 
