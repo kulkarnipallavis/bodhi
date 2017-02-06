@@ -1,4 +1,5 @@
 import firebase, { database } from '../firebase.jsx'
+import firebase1 from 'firebase'
 
 export const submitOffer = (newOffer) => dispatch => {
   var newOfferKey = firebase.database().ref().child('Offers').push().key
@@ -8,7 +9,16 @@ export const submitOffer = (newOffer) => dispatch => {
 }
 
 export const respondToOffer = (status, offKey) => dispatch => {
-  var statusUpdate = {[`Offers/${offKey}/status`]: status}
+
+  let time
+  if (status === 'accepted') {
+    time = firebase1.database.ServerValue.TIMESTAMP
+  }
+
+  var statusUpdate = {
+    [`Offers/${offKey}/status`]: status,
+    [`Offers/${offKey}/dateAccepted`]: time
+  }
 
   return database.ref().update(statusUpdate)
 }
