@@ -56,7 +56,7 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
-        <IndexRedirect to="/map"/>
+        <IndexRedirect to="/home"/>
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />

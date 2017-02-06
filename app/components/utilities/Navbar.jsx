@@ -59,6 +59,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
       notificationIcon: { color: '#F0B259' }
     }
 
+    const bodhiButton =   (<FlatButton><h2>Bodhi</h2></FlatButton>)
+
     return (
       <div>
         <AppBar
@@ -66,12 +68,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
           className="gradient"
           zDepth={0}
           showMenuIconButton={offers.length ? true : false}
-          title={
+          title={ user ?
            <Link to="/">
-             <FlatButton>
-               <h2>Bodhi</h2>
-             </FlatButton>
-           </Link> }
+            {bodhiButton}
+           </Link> :  bodhiButton }
           iconElementLeft={offers.length ?
             <Link to="/offers">
               <Badge
