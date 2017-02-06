@@ -88,7 +88,7 @@ export const getMarkers = () =>
 
       if (Object.keys(requestObjects)) {
         Object.keys(requestObjects).forEach(key => {
-        if (requestObjects[key].location) {
+        if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
           markers.push({
             status: requestObjects[key].status,
             position: {
