@@ -98,9 +98,9 @@ class Home extends Component {
 								<td><Avatar size={40} src={offer.offUser.picture}/></td>
 								<td>{`${offer.offUser.name} helped ${offer.reqUser.name}`}</td>
 								<td><Avatar size={40} src={offer.reqUser.picture}/></td>
+								<td></td>
 							</tr>
 						))}
-
 					</tbody>
      				</Table>
      				</div>

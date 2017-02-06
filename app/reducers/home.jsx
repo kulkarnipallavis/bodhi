@@ -62,6 +62,8 @@ const getOfferWithUsers = (offer) => {
 				])
 				.then((users) => {
 					// console.log("offer", users[0])
+					const date = Math.round((new Date()).getTime()-users[0].dateAccepted)/(24*60*60*1000)
+					console.log("date", date)
 					newOffer.offUser = {
 						name : users[0].name,
 						picture: users[0].picture,
