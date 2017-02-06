@@ -1,5 +1,7 @@
 import React from 'react'
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
+import Avatar from 'material-ui/Avatar'
+import FlatButton from 'material-ui/FlatButton'
 
 const MapComponent = withGoogleMap(props => {
 
@@ -18,15 +20,26 @@ const MapComponent = withGoogleMap(props => {
        {marker.showDesc && (
          <InfoWindow onCloseClick={() => props.onMarkerClose(marker)}>
            { <div>
-               <h2>{marker.title}</h2>
-                   {
-                   //{marker.requester.picture}
-                  }
-                   <h3>from: {marker.requester.name}</h3>
-               <h3 id="description">{marker.description}</h3>
-               <button type="button" onClick={props.handleButtonClick}>Offer Help</button>
-             </div>
-           }
+               <div className="flex-row">
+                 <Avatar className="avatar-iw" size={48} src={marker.requester.picture}/>
+               </div>
+               <div className="flex-row flex-row-iw">
+                 <h3>{marker.requester.name}</h3>
+               </div>
+               <div className="flex-row flex-row-iw">
+                 <h3>{marker.title}</h3>
+               </div>
+               <h4 id="description">{`Details: ${marker.description}`}</h4>
+               <div className="flex-row">
+                 <FlatButton
+                   type="button"
+                   onClick={props.handleButtonClick}
+                   className="info-window-button"
+                   backgroundColor="#533BD7">
+                   Offer Help
+                 </FlatButton>
+               </div>
+             </div> }
          </InfoWindow>
          )}
        </Marker>
