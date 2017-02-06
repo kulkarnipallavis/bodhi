@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Avatar from 'material-ui/Avatar'
 import smsLink from 'sms-link'
 import { respondToOffer } from '../reducers/offer-help'
+import { updateRequestStatus } from '../reducers/request-actions'
+
 
 class AllOffers extends Component {
 
@@ -14,6 +16,7 @@ class AllOffers extends Component {
 
   handleRespond = (newOfferStatus, offer) => (event) => {
     event.preventDefault()
+    console.log("newOfferStatus, offer ", newOfferStatus, offer)
     const textBody = newOfferStatus === 'declined' ?
     'I have already accepted another neighbor\'s help, but thank you for offering!'
     :
@@ -25,6 +28,11 @@ class AllOffers extends Component {
     })
 
     this.props.respond(newOfferStatus, offer.offKey)
+
+    if (newOfferStatus === 'accepted') {
+      console.log('offer.reqKey ', offer.reqKey)
+      this.props.updateRequestStatus('closed', offer.reqKey)
+    }
   }
 
   render() {
@@ -75,6 +83,9 @@ class AllOffers extends Component {
 }
 
 const mapStateToProps = state => ({ offersReceived: state.offersReceived })
-const mapDispatchToProps = dispatch => ({ respond: (status, offerKey) => dispatch(respondToOffer(status, offerKey)) })
+const mapDispatchToProps = dispatch => ({
+  respond: (status, offerKey) => dispatch(respondToOffer(status, offerKey)),
+  updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllOffers)

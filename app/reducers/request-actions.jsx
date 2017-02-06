@@ -41,7 +41,7 @@ export const addRequest = (request) =>  {
 export const updateRequestStatus = (status, markerKey) => {
   return dispatch => {
     let statusUpdate = {}
-    statusUpdate[`Requests/${markerKey}/status`] = 'pending'
+    statusUpdate[`Requests/${markerKey}/status`] = status
 
     return database.ref().update(statusUpdate)
   }
