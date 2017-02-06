@@ -28,7 +28,7 @@ export const loggedIn = (user) => {
 
         database.ref(`Users/${user.uid}`).set({
           email: user.email,
-          name: user.displayName,
+          name: user.displayName || '',
           picture: '',
           dateJoined: theDate,
           badges: '', // badges === karma
