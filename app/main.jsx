@@ -24,6 +24,7 @@ import Home from './components/Home'
 import AllOffers from './components/AllOffers'
 import {getOpenRequests, getAcceptedOffers} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
+import { getMarkers } from './reducers/map'
 
 import { grabUserLocation } from './reducers/map'
 
@@ -49,6 +50,7 @@ const onEnterApp = () => {
 const onHomeEnter = () => {
   store.dispatch(getOpenRequests())
   store.dispatch(getAcceptedOffers())
+  store.dispatch(getMarkers())
 }
 
 injectTapEventPlugin()
