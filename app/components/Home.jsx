@@ -82,7 +82,6 @@ class Home extends Component {
 				//this.props.setSelectedMarkerDispatch(marker)
 			}
 		})
-		//setSelectedMarker(targetMarker)
 	}
 
 	render() {

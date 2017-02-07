@@ -14,7 +14,6 @@ class MapContainer extends Component {
     this.state = {
       markers: this.props.markers,
       legendClick: false
-      //selectedMarker: this.props.selectedMarker
     }
 
     this.handleMarkerClick = this.handleMarkerClick.bind(this)
