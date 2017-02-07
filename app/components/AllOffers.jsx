@@ -6,7 +6,7 @@ import Avatar from 'material-ui/Avatar'
 import smsLink from 'sms-link'
 import { respondToOffer } from '../reducers/offer-help'
 import { findRequestByKey, updateRequestStatus } from '../reducers/request-actions'
-import { findOffers } from '../reducers/receive-help'
+
 
 
 class AllOffers extends Component {
@@ -43,11 +43,8 @@ class AllOffers extends Component {
     //check if request is closed
     let reqStatus = this.props.findRequestByKey(offer.reqKey).status
     if (reqStatus !== 'closed') {
-      //update findOffers array on state
-      // let reqOfferQueue =  this.props.findOffersAgain(offer.reqUid)
 
       let offersReceived = this.props.offersReceived
-
       let count = 0
       for (let x= 0; x < offersReceived.length; x++) {
         if (offersReceived[x].reqKey === offer.reqKey && offersReceived[x].offKey !== offer.offKey) {
@@ -116,8 +113,7 @@ const mapStateToProps = state => ({ offersReceived: state.offersReceived })
 const mapDispatchToProps = dispatch => ({
   respond: (status, offerKey) => dispatch(respondToOffer(status, offerKey)),
   updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey)),
-  findRequestByKey: (reqKey) => dispatch(findRequestByKey(reqKey)),
-  findOffersAgain: (reqUid) => dispatch(findOffers(reqUid))
+  findRequestByKey: (reqKey) => dispatch(findRequestByKey(reqKey))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllOffers)
