@@ -19,6 +19,7 @@ import LoginEnter from './components/LoginEnter'
 import Profile from './components/Profile'
 import EditableProfile from './components/EditableProfile'
 import InvitePage from './components/Invite'
+import OfferHelpMessage from './components/OfferHelpMessage'
 
 import Home from './components/Home'
 import AllOffers from './components/AllOffers'
@@ -80,6 +81,7 @@ render(
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />
+        <Route path="/offerhelpmessage" component={OfferHelpMessage} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/loginenter" component={LoginEnter} onEnter={onLoginEnter}/>
