@@ -9,6 +9,7 @@ let initialState = {
 const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
 const SET_LOCATION = 'SET_LOCATION'
 const SET_SELECTED_MARKER = 'SET_SELECTED_MARKER'
+const UPDATE_MARKERS = 'UPDATE_MARKERS'
 
 const reducer = (state = initialState, action) => {
 
