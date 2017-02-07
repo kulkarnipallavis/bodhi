@@ -77,7 +77,6 @@ class Home extends Component {
 
 		this.props.markers.map(marker => {
 			if ((marker.uid === targetRequest.uid) && (marker.title === targetRequest.title)) {
-				console.log("MARKER", marker)
 				marker.showDesc = true
 				//this.props.setSelectedMarkerDispatch(marker)
 			}
