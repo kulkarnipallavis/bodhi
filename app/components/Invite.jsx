@@ -78,4 +78,3 @@ const mapStateToProps = state => ({ currentUser: state.currentUser, markers: sta
 
 export default connect(mapStateToProps)(InvitePage)
 
-
