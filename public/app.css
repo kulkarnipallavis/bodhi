@@ -134,13 +134,14 @@ h1 {
 h2 {
   margin-right: 0px;
   color: white;
+  font-size: 1.5em;
 }
 
 h3 {
   margin: 10px;
   color: #533BD7;
   line-height: 1.25em;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 h4 {
@@ -156,6 +157,11 @@ h5 {
 
 p {
   color: #533BD7;
+  font-size: 1.25em;
+  margin: 10px;
+}
+
+li {
   font-size: 1.25em;
   margin: 10px;
 }
