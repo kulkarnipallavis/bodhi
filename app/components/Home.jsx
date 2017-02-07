@@ -61,14 +61,35 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
+
 export default connect(mapStateToProps, mapDispatchToProps)(
 
 class Home extends Component {
+
+	constructor(props){
+		super(props)
+		this.getOffersAndRequests = this.getOffersAndRequests.bind(this)
+	}
+
+	getOffersAndRequests(){
+		const requests = this.props.openRequests
+		const offers = this.props.acceptedOffers
+
+		const mergedReqAndOffers = [...requests, ...offers]
+		//requets have date, offers have dateAccepted
+
+		mergedReqAndOffers.sort(function compare(req, offer){
+			return req.date - offer.dateAccepted
+		})
+
+		return mergedReqAndOffers;
+	}
+
 	render() {
 
-	const openReq = this.props.openRequests
-	const openReqKeys = openReq ? Object.keys(openReq) : []
-
+	console.log("getOffersAndRequests",this.getOffersAndRequests())
+	const mergedReqAndOffers = this.getOffersAndRequests()
+	
 	const acceptedOffers = this.props.acceptedOffers
 
 	console.log("acceptedOffers",acceptedOffers)
@@ -89,32 +110,36 @@ class Home extends Component {
 					<Link to="/offerhelp">Offer Help</Link>
 				</div>
 				
-					
-				{
-					openReqKeys && openReqKeys.map((reqKey, index) => (
-						<div></div>
-					))
-				}
-				
-				<div style={style.header} >Closed Requests</div>
-				
+				<div style={style.header} >Recent Activity</div>
 					<div className="flex-row"  className="gradient">
 					<Table responsive={true} bordered={false}>
             		<tbody>
-						{acceptedOffers && acceptedOffers.map((offer, index) =>(
-							<tr key={index}>
-								<td><Avatar size={40} src={offer.offUser.picture}/></td>
-								<td>{`${offer.offUser.name} helped ${offer.reqUser.name}`}</td>
-								<td><Avatar size={40} src={offer.reqUser.picture}/></td>
-								<td>{`${offer.offUser.date}`}</td>
-							</tr>
-						))}
+						{
+							mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
+									
+								reqOrOffer.date ? 
+								(<tr key={index}>
+									<td><Avatar size={40} src={reqOrOffer.user.picture}/></td>
+									<td>{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`} </td>
+									<td></td>
+									<td>{`${reqOrOffer.user.date}`}</td>
+								</tr>)
+
+								:
+
+								(<tr key={index}>
+									<td><Avatar size={40} src={reqOrOffer.offUser.picture}/></td>
+									<td>{`${reqOrOffer.offUser.name} helped ${reqOrOffer.reqUser.name}`}</td>
+									<td><Avatar size={40} src={reqOrOffer.reqUser.picture}/></td>
+									<td>{`${reqOrOffer.offUser.date}`}</td>
+								</tr>)
+								
+							))
+						}
 					</tbody>
      				</Table>
      				</div>
-				
-				
-			</div>
+     			</div>
 		)
 	}
 })

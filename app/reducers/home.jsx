@@ -132,8 +132,8 @@ const getRequestWithUser = (request) => {
 			}
 
 			newRequest.user = {
-				name: user.name
-				picture: user.picture
+				name: user.name,
+				picture: user.picture,
 				date: date
 			}
 			return newRequest
