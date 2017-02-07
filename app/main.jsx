@@ -22,7 +22,7 @@ import InvitePage from './components/Invite'
 
 import Home from './components/Home'
 import AllOffers from './components/AllOffers'
-import {getOpenRequests, getClosedRequests} from './reducers/home'
+import {getOpenRequests, getAcceptedOffers} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
 
 import { grabUserLocation } from './reducers/map'
@@ -48,7 +48,7 @@ const onEnterApp = () => {
 
 const onHomeEnter = () => {
   store.dispatch(getOpenRequests())
-  store.dispatch(getClosedRequests())
+  store.dispatch(getAcceptedOffers())
 }
 
 const onLoginEnter = () => {
