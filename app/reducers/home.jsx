@@ -62,12 +62,25 @@ const getOfferWithUsers = (offer) => {
 				])
 				.then((users) => {
 					// console.log("offer", users[0])
-					const date = Math.round((new Date()).getTime()-users[0].dateAccepted)/(24*60*60*1000)
-					console.log("date", date)
+					const dateDiff = Math.round(((new Date()).getTime() - offer.dateAccepted)/(24*60*60*1000))
+					// console.log("dateDiff", dateDiff)
+					let date = ''
+					if(dateDiff === 0){
+						date ='Today'
+					} 
+					else if (isNaN(dateDiff)) {
+						date = ''
+					}
+					else {
+						date = dateDiff.toString().concat('d')
+					}
+					// console.log("date", date)
+					// console.log(offer.dateAccepted)
+
 					newOffer.offUser = {
 						name : users[0].name,
 						picture: users[0].picture,
-						date:  users[0].dateAccepted
+						date:  date
 					}
 					// console.log("offer", users[1])
 					newOffer.reqUser = {

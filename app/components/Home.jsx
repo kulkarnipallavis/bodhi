@@ -30,7 +30,15 @@ const style = {
 		textAlign: 'center',
 		fontSize: 20,
 		color: '#533BD7'
+	},
+
+	header: {
+		fontSize: 30,
+		color: 'white',
+		textAlign: 'center'
 	}
+
+
 
 }
 
@@ -81,14 +89,14 @@ class Home extends Component {
 					<Link to="/offerhelp">Offer Help</Link>
 				</div>
 				
-					<h1>Open Requests</h1>
+					
 				{
 					openReqKeys && openReqKeys.map((reqKey, index) => (
 						<div></div>
 					))
 				}
 				
-				<h1>Closed Requests</h1>
+				<div style={style.header} >Closed Requests</div>
 				
 					<div className="flex-row"  className="gradient">
 					<Table responsive={true} bordered={false}>
@@ -98,7 +106,7 @@ class Home extends Component {
 								<td><Avatar size={40} src={offer.offUser.picture}/></td>
 								<td>{`${offer.offUser.name} helped ${offer.reqUser.name}`}</td>
 								<td><Avatar size={40} src={offer.reqUser.picture}/></td>
-								<td></td>
+								<td>{`${offer.offUser.date}`}</td>
 							</tr>
 						))}
 					</tbody>
