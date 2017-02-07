@@ -91,11 +91,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       if(this.state.phone !== this.props.currentUser.phone){
         const updatedUser = Object.assign({}, this.props.currentUser)
         updatedUser.phone = this.state.phone
-        console.log("UPDATED USER", updatedUser)
         this.props.updateUser(updatedUser)
       }
-
-      console.log("HANDLESUBMIT", this.state)
 
       //this.clearForm()
       this.props.submitOfferDispatch(newOffer)
@@ -104,7 +101,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     redirect() {
-      browserHistory.push('/')
+      browserHistory.push('/offerhelpmessage')
     }
 
     render() {
@@ -197,7 +194,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               title="Your Help Offer has been submitted!"
               actions={[<FlatButton
               label="OK"
-              onTouchTap={this.redirect} />]}
+              onTouchTap={this.redirect} />]} //here put survey and text
               modal={true}
               open={this.state.popup}/>
           </div>
