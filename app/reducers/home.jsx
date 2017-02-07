@@ -28,17 +28,6 @@ const setOpenRequests = (openRequests) => ({
 	openRequests
 })
 
-// export const getOpenRequests = () =>
-// 	dispatch => {
-// 		const ref = firebase.database().ref('Requests')
-// 		ref.orderByChild('status').equalTo('open')
-// 			.on('value', snapshot => {
-// 				const openRequests = snapshot.val()
-// 				dispatch(setOpenRequests(openRequests))
-// 			})
-
-// };
-
 const setAcceptedOffers = (acceptedOffers) => ({
 	type: ACCEPTED_OFFERS,
 	acceptedOffers
@@ -47,11 +36,11 @@ const setAcceptedOffers = (acceptedOffers) => ({
 // getUser(userId : userId) ~> User
 const getUser = (userId) => {
 	return firebase.database().ref('Users')
-					.child(userId)
-					.once('value')
-					.then(snapshot => {
-						return snapshot.val()
-					})					
+			.child(userId)
+			.once('value')
+			.then(snapshot => {
+				return snapshot.val()
+			})				
 }
 
 // getOfferWithUsers(offer: Offer) ~> [withOfferrer: OfferWithUser, withRequester: OfferWithUser]
@@ -59,36 +48,30 @@ const getOfferWithUsers = (offer) => {
 	let newOffer = Object.assign({}, offer)
 	return Promise.all([getUser(offer.offUid),
 					getUser(offer.reqUid)
-				])
-				.then((users) => {
-					// console.log("offer", users[0])
-					const dateDiff = Math.round(((new Date()).getTime() - offer.dateAccepted)/(24*60*60*1000))
-					// console.log("dateDiff", dateDiff)
-					let date = ''
-					if(dateDiff === 0){
-						date ='Today'
-					} 
-					else if (isNaN(dateDiff)) {
-						date = ''
-					}
-					else {
-						date = dateDiff.toString().concat('d')
-					}
-					// console.log("date", date)
-					// console.log(offer.dateAccepted)
-
-					newOffer.offUser = {
-						name : users[0].name,
-						picture: users[0].picture,
-						date:  date
-					}
-					// console.log("offer", users[1])
-					newOffer.reqUser = {
-						name : users[1].name,
-						picture: users[1].picture
-					}
-					return newOffer
-				})
+			])
+			.then((users) => {
+				const dateDiff = Math.round(((new Date()).getTime() - offer.dateAccepted)/(24*60*60*1000))
+				let date = ''
+				if(dateDiff === 0){
+					date ='Today'
+				} 
+				else if (isNaN(dateDiff)) {
+					date = ''
+				}
+				else {
+					date = dateDiff.toString().concat('d')
+				}
+				newOffer.offUser = {
+					name : users[0].name,
+					picture: users[0].picture,
+					date:  date
+				}
+				newOffer.reqUser = {
+					name : users[1].name,
+					picture: users[1].picture
+				}
+				return newOffer
+			})
 }
 
 export const getAcceptedOffers = () =>
@@ -103,11 +86,8 @@ export const getAcceptedOffers = () =>
 				
 				// mappedOffers: [...[OfferWithUser, OfferWithUser]]
 				const offersWithUsers = offers.map(getOfferWithUsers)
-				// const mappedOffers = offers.map(getAll)
-				// console.log("offersWithUsers....", offersWithUsers)
 				Promise.all(offersWithUsers)
 						.then((offUsers)=>{
-							console.log("offUsers.....",offUsers)
 						    dispatch(setAcceptedOffers(offUsers))
 						})
 			})
@@ -119,7 +99,6 @@ const getRequestWithUser = (request) => {
 	return getUser(request.uid)
 		.then(user => {
 			const dateDiff = Math.round(((new Date()).getTime() - request.date)/(24*60*60*1000))
-			// console.log("dateDiff", dateDiff)
 			let date = ''
 			if(dateDiff === 0){
 				date ='Today'
@@ -154,7 +133,6 @@ export const getOpenRequests = () =>
 
 				Promise.all(requestsWithUser)
 					.then(reqUsers => {
-						console.log("reqUsers", reqUsers)
 						dispatch(setOpenRequests(reqUsers))
 					})
 			})
