@@ -45,12 +45,12 @@ auth().onAuthStateChanged(function(user) {
 
 const onEnterApp = () => {
   store.dispatch(grabUserLocation())
+  store.dispatch(getMarkers())
 }
 
 const onHomeEnter = () => {
   store.dispatch(getOpenRequests())
   store.dispatch(getAcceptedOffers())
-  store.dispatch(getMarkers())
 }
 
 injectTapEventPlugin()

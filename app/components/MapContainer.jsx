@@ -14,6 +14,7 @@ class MapContainer extends Component {
     this.state = {
       markers: this.props.markers,
       legendClick: false
+      //selectedMarker: this.props.selectedMarker
     }
 
     this.handleMarkerClick = this.handleMarkerClick.bind(this)
@@ -23,9 +24,11 @@ class MapContainer extends Component {
     this.legendToggle = this.legendToggle.bind(this)
   }
 
-  componentDidMount() {
-    this.props.getMarkers()
-  }
+  // componentDidMount() {
+  //   //this.setState({markers: this.props.markers})
+  //   //if(this.props.selectedMarker){}
+
+  // }
 
   handleMapLoad(map) {
     this._mapComponent = map
@@ -117,6 +120,7 @@ MapContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
+  selectedMarker: state.map.selectedMarker,
   markers: state.map.markers,
   center: {
     lat: parseFloat(state.map.center.latitude),
