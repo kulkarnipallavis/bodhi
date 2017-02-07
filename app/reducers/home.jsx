@@ -28,16 +28,16 @@ const setOpenRequests = (openRequests) => ({
 	openRequests
 })
 
-export const getOpenRequests = () =>
-	dispatch => {
-		const ref = firebase.database().ref('Requests')
-		ref.orderByChild('status').equalTo('open')
-			.on('value', snapshot => {
-				const openRequests = snapshot.val()
-				dispatch(setOpenRequests(openRequests))
-			})
+// export const getOpenRequests = () =>
+// 	dispatch => {
+// 		const ref = firebase.database().ref('Requests')
+// 		ref.orderByChild('status').equalTo('open')
+// 			.on('value', snapshot => {
+// 				const openRequests = snapshot.val()
+// 				dispatch(setOpenRequests(openRequests))
+// 			})
 
-};
+// };
 
 const setAcceptedOffers = (acceptedOffers) => ({
 	type: ACCEPTED_OFFERS,
@@ -113,5 +113,22 @@ export const getAcceptedOffers = () =>
 			})
 	}
 
+const getRequestWithUser = () => {
+	
+}
+
+export const getOpenRequests = () => 
+	dispatch => {
+		const ref = firebase.database().ref(Requests)
+		ref.orderByChild('status').equalTo('open')
+			.on('value', (snapshot) => {
+				let requests = []
+				for(let key in snapshot.val()){
+					requests.push(snapshot.val()[key])
+				}
+
+				const requestsWithUser = requests.map(getRequestWithUser)
+			})
+	}
 
 export default reducer;

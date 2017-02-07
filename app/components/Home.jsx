@@ -19,8 +19,8 @@ const style = {
 	link: {
 		margin: 20,
 		padding : 10,
-		display: 'inline-block',
 		textAlign: 'center',
+		display: 'inline-block',	
 		fontSize : 25
 	},
 
