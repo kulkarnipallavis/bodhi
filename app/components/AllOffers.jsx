@@ -36,32 +36,41 @@ class AllOffers extends Component {
       this.props.updateRequestStatus('closed', offer.reqKey)
     } else {  //if declined
         this.declineAndCheck(offer)
-        .then( this.props.updateRequestStatus('open', thisReqKey) )
-      }
+
+       //this.props.updateRequestStatus('open', thisReqKey) )
+
     }
   }
 
   declineAndCheck(offer) {
-    console.log("in declineAndCheck!")
-    let reqOfferQueue
-    //check if request is closed
-    let reqStaus = this.props.findRequestByKey(offer.reqKey).status
-    //update findOffers array on state
-    this.props.findOffersAgain(offer.reqUid)
-      .then((reqStatus)=> {
-        return this.props.offersReceived.filter((pendingOffer) => {
-          return pendingOffer.reqKey === offer.reqKey
-        })
-        .then((reqOfferQueue) => {
-          console.log("reqOfferQueue ", reqOfferQueue)
-          return (reqStatus !== 'closed' && reqOfferQueue.length === 0)
 
-          console.log("req status is not closed and there are no more offers")
-        })
-      })
+    //check if request is closed
+    let reqStatus = this.props.findRequestByKey(offer.reqKey).status
+
+    if (reqStatus !== 'closed') {
+    //update findOffers array on state
+     // let reqOfferQueue =  this.props.findOffersAgain(offer.reqUid)
+     console.log('offersReceived', this.props.offersReceived)
+
+    let offersReceived = this.props.offersReceived
+
+    let count = 0
+    for (let x= 0; x < offersReceived.length; x++) {
+
+      if (offersReceived[x].reqKey === offer.reqKey && offersReceived[x].offKey !== offer.offKey) {
+        //if there are other offers for the same request that are not the offer just deleted,
+        //status stays pending
+        count++
+      }
+    }
+
+    if (!count) this.props.updateRequestStatus('open', offer.reqKey)
+
+      // if (offersReceived[x].reqKey === offer.reqKey && offersReceived[x].offKey !== offer.offKey) {
+      //     console.log("yes") // status of req stays pending
 
     }
-    //
+}
 
 
 

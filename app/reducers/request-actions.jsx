@@ -63,3 +63,14 @@ export const findRequestByKey = (reqKey) => {
 }
 
 
+// export const findOffersforReq = (reqKey, reqStatus) => {
+//   return dispatch => {
+//     if (findRequestByKey(reqKey).status === reqStatus) {
+//       offersReceived.filter
+//     }
+//       .then(() => {
+
+//       })
+//     }
+//   }
+// }
