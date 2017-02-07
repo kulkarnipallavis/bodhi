@@ -75,12 +75,22 @@ class Home extends Component {
 		const requests = this.props.openRequests
 		const offers = this.props.acceptedOffers
 
-		const mergedReqAndOffers = [...requests, ...offers]
-		//requets have date, offers have dateAccepted
 
-		mergedReqAndOffers.sort(function compare(req, offer){
-			return req.date - offer.dateAccepted
-		})
+		const mergedReqAndOffers = [...offers, ...requests]
+
+		mergedReqAndOffers.sort(function (a, b) {
+			if(a.dateAccepted && b.dateAccepted){
+				return b.dateAccepted - a.dateAccepted
+			} else if (a.date && b.date){
+				return b.date - a.date
+			} else if (a.dateAccepted && b.date){
+				return b.date - a.dateAccepted
+			} else if (a.date && b.dateAccepted){
+				return b.dateAccepted - a.date
+			}
+		
+		});
+
 
 		return mergedReqAndOffers;
 	}
@@ -90,16 +100,7 @@ class Home extends Component {
 	console.log("getOffersAndRequests",this.getOffersAndRequests())
 	const mergedReqAndOffers = this.getOffersAndRequests()
 	
-	const acceptedOffers = this.props.acceptedOffers
 
-	console.log("acceptedOffers",acceptedOffers)
-
-	acceptedOffers.forEach(offer => {
-		console.log("offer.keys",Object.keys(offer))
-		console.log("offer.offUser.name", offer.offUser.name)
-		console.log("offer.reqUser.name", offer.reqUser.name)
-	})
-	// const closedReqKeys = closedReq ? Object.keys(closedReq) : []
 		return (
 			<div className="gradient flex-container">
 				<h1>Welcome Bodhi buddy!</h1>
