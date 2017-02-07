@@ -18,6 +18,7 @@ import LoginEnter from './components/LoginEnter'
 
 import Profile from './components/Profile'
 import EditableProfile from './components/EditableProfile'
+import InvitePage from './components/Invite'
 
 import Home from './components/Home'
 import AllOffers from './components/AllOffers'
@@ -37,7 +38,7 @@ auth().onAuthStateChanged(function(user) {
   } else {
     store.dispatch(loggedOut())
     offersListener && offersListener()
-    browserHistory.push('/loginenter')
+    browserHistory.push('/')
   }
 })
 
@@ -56,7 +57,7 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
-        <IndexRedirect to="/map"/>
+        <IndexRedirect to="/home"/>
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />
@@ -65,6 +66,7 @@ render(
         <Route path="/loginenter" component={LoginEnter} />
         <Route path="/profile" component={Profile} />
         <Route path="/editprofile" component={EditableProfile} />
+        <Route path="/invitefriends" component={InvitePage} />
         <Route path="/home" component={Home} onEnter={onHomeEnter} />
         <Route path="/offers" component={AllOffers} />
       </Route>

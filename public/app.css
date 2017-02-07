@@ -60,6 +60,14 @@ a {
   text-decoration: none !important;
 }
 
+#navbar-logo {
+  font-family: 'Lobster', cursive;
+  font-size: 1.8em;
+  color: white;
+  padding: 10px 10px 0px 10px;
+  vertical-align: bottom;
+}
+
 #navbar-brand {
   font-size: 1em;
   color: white;
@@ -135,9 +143,25 @@ h3 {
   font-size: 1.5em;
 }
 
+h4 {
+  margin: 10px;
+  color: #533BD7;
+  line-height: 1.25em;
+  font-size: 1.25em;
+}
+
+h5 {
+  font-size: .8em;
+}
+
 p {
   color: #533BD7;
+  font-size: 1.25em;
   margin: 10px;
+}
+
+.p-color-white {
+  color: white !important;
 }
 
 u {
@@ -149,31 +173,41 @@ u:hover {
   color: #F0B259;
 }
 
-h3{
-  font-size: 1.5em;
-}
-
-h5 {
-  font-size: .8em;
-}
-
 form {
   margin-left: 15px !important;
 }
 
 .form-button {
-  color: rgb(83, 59, 215) !important;
+  color:  #533BD7 !important;
   margin: 35px 0px 0px 0px !important;
 }
 
+.info-window-button {
+  color: white !important;
+  background-color: #533BD7 !important;
+  margin-left: 20px !important;
+}
+
+.flex-row-iw {
+  margin-left: 20px !important;
+}
+
+.avatar-iw {
+  margin: 5px 0px 0px 20px !important;
+}
+
+.gm-style .gm-style.iw {
+  padding: 0;
+}
+
 .edit-button {
-  color: rgb(83, 59, 215) !important;
+  color:  #533BD7 !important;
   margin: 0;
 }
 
 .save-edit-button {
   margin-left: 25px !important;
-  color: rgb(83, 59, 215) !important;
+  color:  #533BD7 !important;
 }
 
 .editable-profile-field {
@@ -193,6 +227,10 @@ td {
   text-align: center !important;
   vertical-align: middle !important;
   padding: 15px !important;
+}
+
+.profile {
+  color: white!important;
 }
 
 .flex-row-legend {
@@ -219,7 +257,7 @@ td {
 }
 
 #map-legend-min {
-  position: absolute;
+  position: fixed;;
   bottom: 28px;
   right: 60px;
   z-index: 1;

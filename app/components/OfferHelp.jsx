@@ -9,11 +9,13 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import { submitOffer } from '../reducers/offer-help'
 import { updateRequestStatus } from '../reducers/request-actions'
+import { updateUser } from '../reducers/auth'
 
 const mapDispatchToProps = (dispatch) => {
   return {
 		submitOfferDispatch: (date, msg) => dispatch(submitOffer(date, msg)),
-    updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey))
+    updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey)),
+    updateUser: (updatedUser) => dispatch(updateUser(updatedUser))
   }
 }
 
@@ -40,12 +42,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         phoneIsValid: true,
         popup: false
       }
-      this.clearForm = this.clearForm.bind(this)
+      //this.clearForm = this.clearForm.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount(){
-      this.props.currentUser.phone && this.setState({phone: this.props.currentUser.phone})
+      this.props.currentUser && this.setState({phone: this.props.currentUser.phone})
     }
 
     handleChange = (type) => (event, date) => {
@@ -63,31 +65,39 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       return !(dateIsValid && date &&  message && messageIsValid && phone && phoneIsValid && this.props.selectedRequest.requester)
     }
 
-    clearForm() {
-      this.setState({
-        date: {},
-        message: '',
-        phone: '',
-        disabled: true,
-        dateIsValid: true,
-        phoneIsValid: true,
-        messageIsValid: true
-      })
-    }
+    // clearForm() {
+    //   this.setState({
+    //     date: {},
+    //     message: '',
+    //     phone: '',
+    //     disabled: true,
+    //     dateIsValid: true,
+    //     phoneIsValid: true,
+    //     messageIsValid: true
+    //   })
+    // }
 
     handleSubmit(event) {
       event.preventDefault()
       const newOffer = {
         date: this.state.date,
         message: this.state.message,
-        phone: this.state.phone,
         reqUid: this.props.selectedRequest.uid,
         reqKey: this.props.selectedRequest.key,
         offUid: this.props.currentUser.uid,
         status: 'pending'
       }
 
-      this.clearForm()
+      if(this.state.phone !== this.props.currentUser.phone){
+        const updatedUser = Object.assign({}, this.props.currentUser)
+        updatedUser.phone = this.state.phone
+        console.log("UPDATED USER", updatedUser)
+        this.props.updateUser(updatedUser)
+      }
+
+      console.log("HANDLESUBMIT", this.state)
+
+      //this.clearForm()
       this.props.submitOfferDispatch(newOffer)
       this.props.updateRequestStatus('pending', this.props.selectedRequest.key)
       this.setState({popup: !this.state.popup})
@@ -105,7 +115,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         inputStyle: { color: '#FFFFFF' },
         errorStyle: { color: '#F0B259' }
       }
-
+  
       return (
         <div className="gradient flex-container">
           <div className="flex-row">
