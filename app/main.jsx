@@ -19,11 +19,13 @@ import LoginEnter from './components/LoginEnter'
 import Profile from './components/Profile'
 import EditableProfile from './components/EditableProfile'
 import InvitePage from './components/Invite'
+import OfferHelpMessage from './components/OfferHelpMessage'
 
 import Home from './components/Home'
 import AllOffers from './components/AllOffers'
-import {getOpenRequests, getClosedRequests} from './reducers/home'
+import {getOpenRequests, getAcceptedOffers} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
+import { getMarkers } from './reducers/map'
 
 import { grabUserLocation } from './reducers/map'
 
@@ -44,11 +46,29 @@ auth().onAuthStateChanged(function(user) {
 
 const onEnterApp = () => {
   store.dispatch(grabUserLocation())
+  store.dispatch(getMarkers())
 }
 
 const onHomeEnter = () => {
   store.dispatch(getOpenRequests())
-  store.dispatch(getClosedRequests())
+  store.dispatch(getAcceptedOffers())
+}
+
+const onLoginEnter = () => {
+
+  auth().getRedirectResult().then(function(result) {
+  if (result.credential) {
+    browserHistory.push('/')
+  }
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+});
 }
 
 injectTapEventPlugin()
@@ -61,9 +81,10 @@ render(
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />
+        <Route path="/offerhelpmessage" component={OfferHelpMessage} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <Route path="/loginenter" component={LoginEnter} />
+        <Route path="/loginenter" component={LoginEnter} onEnter={onLoginEnter}/>
         <Route path="/profile" component={Profile} />
         <Route path="/editprofile" component={EditableProfile} />
         <Route path="/invitefriends" component={InvitePage} />

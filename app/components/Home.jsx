@@ -1,85 +1,126 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
-import Paper from 'material-ui/Paper'
-import {getOpenRequests, getClosedRequests} from '../reducers/home'
-import { blueGrey500 } from 'material-ui/styles/colors'
+import {getOpenRequests, getAcceptedOffers} from '../reducers/home'
+import {setSelectedMarker} from '../reducers/map'
+import Avatar from 'material-ui/Avatar'
+import { Table } from 'react-bootstrap'
 
 const style = {
-	container : {
-	  height: 200,
-	  width: 500,
-	  margin: 20,
-	  textAlign: 'center',
-	  display: 'block',
-	  color: blueGrey500
-	},
-
-	link : {
-		margin: 20,
-		padding : 10,
-		display: 'inline-block',
+	link: {
+		margin: 'auto',
+		padding: 10,
 		textAlign: 'center',
-		fontSize : 25
+		display: 'inline-block',
+		fontSize: 25
+	},
+	header: {
+		fontSize: 30,
+		color: '#533BD7',
+		textAlign: 'center'
 	}
-
 }
 
 const mapStateToProps = (state) => {
 	return {
 		openRequests: state.home.openRequests,
-		closedRequests: state.home.closedRequests,
-		currentUser: state.currentUser
+		acceptedOffers: state.home.acceptedOffers,
+		currentUser: state.currentUser,
+		markers: state.map.markers
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getOpenRequestsDispatch: () => {
-			dispatch(getOpenRequests())
-		},
-		getClosedRequestsDispatch: () => {
-			dispatch(getClosedRequests())
+		setSelectedMarkerDispatch: (marker) => {
+			dispatch(setSelectedMarker(marker))
 		}
 	}
 }
 
+
 export default connect(mapStateToProps, mapDispatchToProps)(
 
 class Home extends Component {
+
+	constructor(props){
+		super(props)
+		this.getOffersAndRequests = this.getOffersAndRequests.bind(this)
+		this.handleRequestClick = this.handleRequestClick.bind(this)
+	}
+
+	getOffersAndRequests(){
+		const requests = this.props.openRequests
+		const offers = this.props.acceptedOffers
+
+
+		const mergedReqAndOffers = [...offers, ...requests]
+
+		mergedReqAndOffers.sort(function (a, b) {
+			if(a.dateAccepted && b.dateAccepted){
+				return b.dateAccepted - a.dateAccepted
+			} else if (a.date && b.date){
+				return b.date - a.date
+			} else if (a.dateAccepted && b.date){
+				return b.date - a.dateAccepted
+			} else if (a.date && b.dateAccepted){
+				return b.dateAccepted - a.date
+			}
+		
+		});
+		return mergedReqAndOffers;
+	}
+
+	handleRequestClick(targetRequest){
+
+		console.log("TARGET REQUEST", targetRequest, "MARKERS", this.props.markers)
+
+		this.props.markers.map(marker => {
+			if ((marker.uid === targetRequest.uid) && (marker.title === targetRequest.title)) {
+				console.log("MARKER", marker)
+				marker.showDesc = true
+				//this.props.setSelectedMarkerDispatch(marker)
+			}
+		})
+	}
+
 	render() {
-
-	const openReq = this.props.openRequests
-	const openReqKeys = openReq ? Object.keys(openReq) : []
-
-	const closedReq = this.props.closedRequests
-	const closedReqKeys = closedReq ? Object.keys(closedReq) : []
-		return (
-			<div>
-				<h1>Welcome Bodhi buddy!</h1>
-				<div style={style.link}>
-					<Link to="/request">Need a Help</Link>
-				</div>
-				<div style={style.link}>
-					<Link to="/offerhelp">Offer Help</Link>
-				</div>
-				<Paper style={style.container} zDepth={2} >
-					<h1>Open Requests</h1>
-				{
-					openReqKeys && openReqKeys.map((reqKey, index) => (
-						<div key={index}>{openReq[reqKey].title} {openReq[reqKey].tag} {openReq[reqKey].description}</div>
-					))
-				}
-				</Paper>
-				<Paper style={style.container} zDepth={2} >
-					<h1>Closed Requests</h1>
+	const mergedReqAndOffers = this.getOffersAndRequests()
+	const isUser = (this.props.currentUser) ? true : false;
+	const userName = isUser ? this.props.currentUser.name : ""
+	return (
+		<div className="gradient flex-container">
+			<h1>{userName ? `Welcome ${userName}` : `Welcome Bodhi buddy!`}</h1>
+			<div style={style.header}>Recent Activity</div>
+				<div className="flex-row"  className="gradient">
+				<Table responsive={true} bordered={false}>
+        		<tbody>
 					{
-					closedReqKeys && closedReqKeys.map((reqKey, index) => (
-						<div key={index}>{closedReq[reqKey].title} {closedReq[reqKey].tag} {closedReq[reqKey].description}</div>
-					))
-				}
-				</Paper>
-			</div>
-		)
+						mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
+								
+							reqOrOffer.date ? 
+							(<tr key={index}>
+								<td><Avatar size={40} src={reqOrOffer.user.picture}/></td>
+								<td><Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`} </Link></td>
+								<td></td>
+								<td>{`${reqOrOffer.user.date}`}</td>
+							</tr>)
+
+							:
+
+							(<tr key={index}>
+								<td><Avatar size={40} src={reqOrOffer.offUser.picture}/></td>
+								<td>{`${reqOrOffer.offUser.name} helped ${reqOrOffer.reqUser.name}`}</td>
+								<td><Avatar size={40} src={reqOrOffer.reqUser.picture}/></td>
+								<td>{`${reqOrOffer.offUser.date}`}</td>
+							</tr>)
+							
+						))
+					}
+				</tbody>
+ 				</Table>
+ 				</div>
+ 			</div>
+	)
 	}
 })
