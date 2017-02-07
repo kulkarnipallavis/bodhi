@@ -88,7 +88,7 @@ class Home extends Component {
 							reqOrOffer.date ? 
 							(<tr key={index}>
 								<td><Avatar size={40} src={reqOrOffer.user.picture}/></td>
-								<td>{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`} </td>
+								<td><Link to='/map'>{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`} </Link></td>
 								<td></td>
 								<td>{`${reqOrOffer.user.date}`}</td>
 							</tr>)
