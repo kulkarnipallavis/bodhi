@@ -17,7 +17,7 @@ export const respondToOffer = (status, offKey) => dispatch => {
 
   var statusUpdate = {
     [`Offers/${offKey}/status`]: status,
-    [`Offers/${offKey}/dateAccepted`]: time
+    [`Offers/${offKey}/dateAccepted`]: status === "accepted" ? time : null
   }
 
   return database.ref().update(statusUpdate)
