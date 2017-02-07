@@ -59,7 +59,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
       notificationIcon: { color: '#F0B259' }
     }
 
-    const bodhiButton =   (<span id="navbar-logo">Bodhi</span>)
+    const bodhiButton =   (<span id="navbar-brand">Bodhi</span>)
 
     return (
       <div>
