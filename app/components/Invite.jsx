@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
+
 export class InvitePage extends Component {
 
 	constructor(props) {
@@ -78,4 +79,5 @@ const mapStateToProps = state => ({ currentUser: state.currentUser, markers: sta
 export default connect(mapStateToProps)(InvitePage)
 
 
+>>>>>>> d13acb2a0ce3706db65dc327668f27fee73c4fbd
 

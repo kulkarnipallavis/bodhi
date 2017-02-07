@@ -90,7 +90,6 @@ export const updateUser = updatedUser => dispatch => {
   database.ref('Users')
   .child(updatedUser.uid)
   .update(updates)
-
 }
 
 export const loggedOut = () => ({
