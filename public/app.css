@@ -60,6 +60,14 @@ a {
   text-decoration: none !important;
 }
 
+#navbar-logo {
+  font-family: 'Lobster', cursive;
+  font-size: 1.8em;
+  color: white;
+  padding: 10px 10px 0px 10px;
+  vertical-align: bottom;
+}
+
 #navbar-brand {
   font-size: 1em;
   color: white;
