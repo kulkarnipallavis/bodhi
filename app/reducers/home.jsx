@@ -113,13 +113,36 @@ export const getAcceptedOffers = () =>
 			})
 	}
 
-const getRequestWithUser = () => {
-	
+const getRequestWithUser = (request) => {
+	let newRequest = Object.assign({}, request)
+
+	return getUser(request.uid)
+		.then(user => {
+			const dateDiff = Math.round(((new Date()).getTime() - request.date)/(24*60*60*1000))
+			// console.log("dateDiff", dateDiff)
+			let date = ''
+			if(dateDiff === 0){
+				date ='Today'
+			} 
+			else if (isNaN(dateDiff)) {
+				date = ''
+			}
+			else {
+				date = dateDiff.toString().concat('d')
+			}
+
+			newRequest.user = {
+				name: user.name
+				picture: user.picture
+				date: date
+			}
+			return newRequest
+		})
 }
 
 export const getOpenRequests = () => 
 	dispatch => {
-		const ref = firebase.database().ref(Requests)
+		const ref = firebase.database().ref('Requests')
 		ref.orderByChild('status').equalTo('open')
 			.on('value', (snapshot) => {
 				let requests = []
@@ -128,6 +151,12 @@ export const getOpenRequests = () =>
 				}
 
 				const requestsWithUser = requests.map(getRequestWithUser)
+
+				Promise.all(requestsWithUser)
+					.then(reqUsers => {
+						console.log("reqUsers", reqUsers)
+						dispatch(setOpenRequests(reqUsers))
+					})
 			})
 	}
 
