@@ -77,4 +77,3 @@ export class InvitePage extends Component {
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
 
 export default connect(mapStateToProps)(InvitePage)
-

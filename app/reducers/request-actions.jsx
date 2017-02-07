@@ -49,5 +49,16 @@ export const updateRequestStatus = (status, markerKey) => {
 
 //export default requestReducer
 
-
+export const findRequestByKey = (reqKey) => {
+  return dispatch => {
+    return database
+      .ref('Requests')
+      .child(reqKey)
+      .once('value', function(snapshot) {
+        if (snapshot.val()) return snapshot.val()
+        else console.log("request not found")
+      })
+      .catch(err => console.log(err))
+  }
+}
 
