@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import { Mailto } from 'react-mailto';
 
 export class InvitePage extends Component {
 
@@ -17,9 +16,9 @@ export class InvitePage extends Component {
 	}
 
 	handleChange(event) {
-		const value = event.target.value
+		const emails = event.target.value
 		this.setState({
-			emails : value
+			emails: emails
 		})
 	}
 
