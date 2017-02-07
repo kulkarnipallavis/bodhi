@@ -8,6 +8,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import { auth } from './firebase'
 
 import store from './store'
+
 import App from './components/App'
 import MapContainer from './components/MapContainer'
 import OfferHelp from './components/OfferHelp'
@@ -15,18 +16,16 @@ import Request from './components/Request'
 import Signup from './components/Signup'
 import Login from './components/Login'
 import LoginEnter from './components/LoginEnter'
-
 import Profile from './components/Profile'
 import EditableProfile from './components/EditableProfile'
 import InvitePage from './components/Invite'
-
 import Home from './components/Home'
 import AllOffers from './components/AllOffers'
+import About from './components/About'
+
 import {getOpenRequests, getClosedRequests} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-
 import { grabUserLocation } from './reducers/map'
-
 import { findOffers } from './reducers/receive-help'
 
 let offersListener = null
@@ -58,6 +57,7 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
         <IndexRedirect to="/home"/>
+        <Route path="/about" component={About} />
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />

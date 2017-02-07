@@ -93,11 +93,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
                 {
                 !user ?
                 <div>
+                  <Link to="/about"><MenuItem className="nav-item" primaryText="About"/></Link>
                   <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
                   <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
                 </div>
                 :
                 <div>
+                  <Link to="/about"><MenuItem className="nav-item" primaryText="About"/></Link>
                   <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
                   <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
                   <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>

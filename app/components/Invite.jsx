@@ -34,12 +34,12 @@ export class InvitePage extends Component {
 	render() {
 		const user = this.props.currentUser
 		const styles = {
-	      floatingLabelFocusStyle: { color: '#FFFFFF' },
-	      underlineFocusStyle: { borderColor: '#FFFFFF' },
-	      backgroundColor: "white",
-	      width: "40vw",
-	      errorStyle: { color: '#F0B259' }
-    	}
+      floatingLabelFocusStyle: { color: '#FFFFFF' },
+      underlineFocusStyle: { borderColor: '#FFFFFF' },
+      backgroundColor: "white",
+      width: "40vw",
+      errorStyle: { color: '#F0B259' }
+  	}
 
 		return (
 			<div className="profile gradient flex-container">
@@ -77,7 +77,3 @@ export class InvitePage extends Component {
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
 
 export default connect(mapStateToProps)(InvitePage)
-
-
->>>>>>> d13acb2a0ce3706db65dc327668f27fee73c4fbd
-

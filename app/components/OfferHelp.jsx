@@ -88,14 +88,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         status: 'pending'
       }
 
-      if(this.state.phone !== this.props.currentUser.phone){
+      if (this.state.phone !== this.props.currentUser.phone) {
         const updatedUser = Object.assign({}, this.props.currentUser)
         updatedUser.phone = this.state.phone
-        console.log("UPDATED USER", updatedUser)
         this.props.updateUser(updatedUser)
       }
-
-      console.log("HANDLESUBMIT", this.state)
 
       //this.clearForm()
       this.props.submitOfferDispatch(newOffer)
@@ -115,7 +112,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         inputStyle: { color: '#FFFFFF' },
         errorStyle: { color: '#F0B259' }
       }
-  
+
       return (
         <div className="gradient flex-container">
           <div className="flex-row">
