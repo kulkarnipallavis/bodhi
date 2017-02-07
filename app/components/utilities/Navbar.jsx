@@ -12,6 +12,7 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 import Divider from 'material-ui/Divider'
 import { getOffers } from '../../reducers/receive-help'
+import { showLB } from '../../reducers/lightbox'
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
@@ -21,7 +22,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getOffers: (offers) => {
     dispatch(getOffers(offers))
+  },
+  selectPageLB: (page) => {
+    dispatch(selectPageLB(page))
+  },
+  showLB: (bool) => {
+    dispatch(showLB(bool))
   }
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends React.Component {
@@ -32,6 +40,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
       showMenu: false
     }
     this.logout = this.logout.bind(this)
+    this.showMap = this.showMap.bind(this)
   }
 
   logout(e) {
@@ -48,6 +57,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
   handleSelect = () => {
     const show = !this.state.showMenu
     this.setState({ showMenu: show })
+  }
+
+  showMap(){
+    this.props.showLB(false)
   }
 
   render() {
@@ -93,14 +106,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
                 {
                 !user ?
                 <div>
-                  <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
-                  <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
+                  <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in" value="loginEnter"/></Link>
+                  <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"  value="signup"/></Link>
                 </div>
                 :
                 <div>
-                  <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
-                  <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
-                  <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
+                  <MenuItem onClick={this.showMap} className="nav-item" primaryText="Who's in Need?" />
+                  <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!" /></Link>
+                  <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile" /></Link>
                   <Divider/>
                   <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
                 </div>

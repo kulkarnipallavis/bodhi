@@ -10,6 +10,7 @@ const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
 const SET_LOCATION = 'SET_LOCATION'
 const SET_SELECTED_MARKER = 'SET_SELECTED_MARKER'
 
+
 const reducer = (state = initialState, action) => {
 
   const newState = Object.assign({}, state)
@@ -34,6 +35,7 @@ const reducer = (state = initialState, action) => {
   return newState
 }
 
+
 export const getAllMarkers = (markers) => ({
   type: GET_ALL_MARKERS,
   markers
@@ -48,6 +50,8 @@ export const setSelectedMarker = (selectedMarker) => ({
   type: SET_SELECTED_MARKER,
   selectedMarker
 })
+
+
 
 //action-creators
 export const grabUserLocation = () => dispatch => {

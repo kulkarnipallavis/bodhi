@@ -5,6 +5,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import { theme } from '../theme'
 import Navbar from './utilities/Navbar'
+import MapContainer from './MapContainer'
+import LB from './LB'
 
 class App extends Component {
 
@@ -29,7 +31,21 @@ class App extends Component {
       <MuiThemeProvider muitheme={getMuiTheme(theme)}>
         <div>
           <Navbar />
-            { this.props.children && React.cloneElement(this.props.children, this.props) }
+
+            <MapContainer />
+            {//this.props.showLB &&
+            }
+            {
+                <div id="lightbox" className="modal" >
+                      <div className="modal-box">
+
+                        {
+                          this.props.children && React.cloneElement(this.props.children, this.props)
+                        }
+
+                      </div>
+                </div>
+            }
         </div>
       </MuiThemeProvider>
     )
@@ -39,6 +55,9 @@ class App extends Component {
 App.propTypes = { children: PropTypes.node }
 App.childContextTypes = { muiTheme: PropTypes.object }
 
-const mapState = (state, ownProps) => ({ children: ownProps.children })
+const mapState = (state, ownProps) => ({
+  children: ownProps.children,
+  showLB: state.showLB
+})
 
 export default connect(mapState)(App)

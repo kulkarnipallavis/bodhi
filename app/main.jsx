@@ -10,6 +10,7 @@ import { auth } from './firebase'
 import store from './store'
 import App from './components/App'
 import MapContainer from './components/MapContainer'
+import LB from './components/LB'
 import OfferHelp from './components/OfferHelp'
 import Request from './components/Request'
 import Signup from './components/Signup'
@@ -56,18 +57,18 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
-        <IndexRedirect to="/home"/>
-        <Route path="/map" component={MapContainer} />
-        <Route path="/request" component={Request} />
-        <Route path="/offerhelp" component={OfferHelp} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <Route path="/loginenter" component={LoginEnter} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/editprofile" component={EditableProfile} />
-        <Route path="/home" component={Home} onEnter={onHomeEnter} />
-        <Route path="/offers" component={AllOffers} />
-      </Route>
+          <Route component={MapContainer} />
+          <Route path="/request" component={Request} />
+          <Route path="/offerhelp" component={OfferHelp} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Route path="/loginenter" component={LoginEnter} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/editprofile" component={EditableProfile} />
+          <Route path="/home" component={Home} onEnter={onHomeEnter} />
+          <Route path="/offers" component={AllOffers}/>
+        </Route>
+
     </Router>
   </Provider>,
 
