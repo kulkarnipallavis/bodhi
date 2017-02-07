@@ -2,11 +2,15 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton'
 import { auth } from '../firebase.jsx'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+
 
 export default class LoginEnter extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+
     this.handleClickGmail = this.handleClickGmail.bind(this)
   }
 
