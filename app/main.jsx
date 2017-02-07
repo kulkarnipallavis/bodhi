@@ -25,6 +25,7 @@ import Home from './components/Home'
 import AllOffers from './components/AllOffers'
 import {getOpenRequests, getAcceptedOffers} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
+import { getMarkers } from './reducers/map'
 
 import { grabUserLocation } from './reducers/map'
 
@@ -45,6 +46,7 @@ auth().onAuthStateChanged(function(user) {
 
 const onEnterApp = () => {
   store.dispatch(grabUserLocation())
+  store.dispatch(getMarkers())
 }
 
 const onHomeEnter = () => {

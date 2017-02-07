@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {getOpenRequests, getAcceptedOffers} from '../reducers/home'
+import {setSelectedMarker} from '../reducers/map'
 import Avatar from 'material-ui/Avatar'
 import { Table } from 'react-bootstrap'
 
@@ -24,17 +25,15 @@ const mapStateToProps = (state) => {
 	return {
 		openRequests: state.home.openRequests,
 		acceptedOffers: state.home.acceptedOffers,
-		currentUser: state.currentUser
+		currentUser: state.currentUser,
+		markers: state.map.markers
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getOpenRequestsDispatch: () => {
-			dispatch(getOpenRequests())
-		},
-		getClosedRequestsDispatch: () => {
-			dispatch(getAcceptedOffers())
+		setSelectedMarkerDispatch: (marker) => {
+			dispatch(setSelectedMarker(marker))
 		}
 	}
 }
@@ -47,6 +46,7 @@ class Home extends Component {
 	constructor(props){
 		super(props)
 		this.getOffersAndRequests = this.getOffersAndRequests.bind(this)
+		this.handleRequestClick = this.handleRequestClick.bind(this)
 	}
 
 	getOffersAndRequests(){
@@ -71,6 +71,19 @@ class Home extends Component {
 		return mergedReqAndOffers;
 	}
 
+	handleRequestClick(targetRequest){
+
+		console.log("TARGET REQUEST", targetRequest, "MARKERS", this.props.markers)
+
+		this.props.markers.map(marker => {
+			if ((marker.uid === targetRequest.uid) && (marker.title === targetRequest.title)) {
+				console.log("MARKER", marker)
+				marker.showDesc = true
+				//this.props.setSelectedMarkerDispatch(marker)
+			}
+		})
+	}
+
 	render() {
 	const mergedReqAndOffers = this.getOffersAndRequests()
 	const isUser = (this.props.currentUser) ? true : false;
@@ -88,7 +101,7 @@ class Home extends Component {
 							reqOrOffer.date ? 
 							(<tr key={index}>
 								<td><Avatar size={40} src={reqOrOffer.user.picture}/></td>
-								<td><Link to='/map'>{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`} </Link></td>
+								<td><Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`} </Link></td>
 								<td></td>
 								<td>{`${reqOrOffer.user.date}`}</td>
 							</tr>)
