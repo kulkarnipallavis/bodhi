@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import Mailto from 'react-mailto'
+import { Mailto } from 'react-mailto';
 
 export class InvitePage extends Component {
 
@@ -25,12 +25,10 @@ export class InvitePage extends Component {
 
 	handleSubmit(e) {
 		let emails = this.state.emails
-		console.log(emails)
-		return (
-			<Mailto email={emails}>
-				Join Bodhi!
-			</Mailto>
-			)
+ 		let emailsString = emails.split(", ").join(",")
+		let a = document.createElement('a')
+		a.href = "mailto:" + emailsString + "?subject=Join Bodhi&body=Body goes here!!!";
+		a.click()
 	}
 
 	render() {
@@ -48,9 +46,9 @@ export class InvitePage extends Component {
 			{user ?
 				<div className="flex-col">
 				<h1>Invite Friends to Bodhi!</h1>
-				<form>
+				<form onSubmit={this.handleSubmit}>
 					<TextField
-					onChange = {this.handleChange}
+					onChange={this.handleChange}
 					style={styles}
 					multiLine={true}
 					rows={1}
@@ -60,11 +58,11 @@ export class InvitePage extends Component {
 					/>
 					<div className="flex-row">
 						<RaisedButton
+						  onClick={this.handleSubmit}
 						  className="form-button"
 						  label="Submit"
 						  backgroundColor="white"
-						  onClick={this.handleSubmit}
-						  />
+						 />
 					</div>
 				</form>
 				</div>
