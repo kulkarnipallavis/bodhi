@@ -101,7 +101,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     redirect() {
-      browserHistory.push('/')
+      browserHistory.push('/offerhelpmessage')
     }
 
     render() {
@@ -194,7 +194,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               title="Your Help Offer has been submitted!"
               actions={[<FlatButton
               label="OK"
-              onTouchTap={this.redirect} />]}
+              onTouchTap={this.redirect} />]} //here put survey and text
               modal={true}
               open={this.state.popup}/>
           </div>
