@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router'
-import {getOpenRequests, getAcceptedOffers} from '../reducers/home'
-import {setSelectedMarker, updateMarkers} from '../reducers/map'
+
+import React, { Component} from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import { setSelectedMarker, updateMarkers } from '../reducers/map'
 import Avatar from 'material-ui/Avatar'
 import Divider from 'material-ui/Divider'
 import { Grid, Row, Col } from 'react-bootstrap'
@@ -91,25 +91,31 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 
       return (
         <Grid className="gradient" fluid>
-          <div className="flex-container">
-            <Row className="flex-row">
-              <h2 className="feed-header">{userName ? `Welcome ${userName}!` : `Welcome Bodhi buddy!`}</h2>
-            </Row>
-            <Row className="flex-row">
+          <div className="flex-container-feed">
+            <div className="flex-row">
+              <h2 className="feed-header">{ userName ?
+                  `Welcome ${userName}!` : `Welcome Bodhi buddy!`}
+              </h2>
+            </div>
+            <div className="flex-row">
               <h1 className="feed-header">Recent Activity</h1>
-            </Row>
+            </div>
             <Divider/>
             { mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
 
                 reqOrOffer.date ?
-                ( <div>
-                    <Row className="feed-story" key={index}>
+                ( <div key={index}>
+                    <Row className="feed-story">
                       <Col xs={1} sm={1} md={1} lg={1}>
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.user.picture}/>
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
                         <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
-                          <p className="p-color-white">{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`}</p>
+                          <u className="u-color-white">
+                            <p className="p-color-white">
+                              {`${reqOrOffer.user.name} needs help with    ${reqOrOffer.title}`}
+                            </p>
+                          </u>
                         </Link>
                       </Col>
                       <Col xs={2} xsOffset={1} sm={2} smOffset={1} md={2} mdOffset={1} lg={2} lgOffset={1}>
@@ -121,8 +127,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 
                 :
 
-                ( <div>
-                    <Row className="feed-story" key={index}>
+                ( <div key={index}>
+                    <Row className="feed-story">
                       <Col xs={1} sm={1} md={1} lg={1}>
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.offUser.picture}/>
                       </Col>
@@ -147,4 +153,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
   }
 )
-
