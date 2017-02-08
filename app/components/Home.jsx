@@ -86,39 +86,44 @@ class Home extends Component {
 	const userName = isUser ? this.props.currentUser.name : ""
 	return (
     <div className="flex-container gradient">
-      <div className="flex-row-white">
+      <div className="flex-row">
         <h2>{userName ? `Welcome ${userName}!` : `Welcome Bodhi buddy!`}</h2>
       </div>
 			<div className="flex-row">
         <h1>Recent Activity</h1>
       </div>
-			<div className="flex-row">
 					{
 						mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
 
 							reqOrOffer.date ?
-							(<Row key={index}>
-								<Col xs={2} sm={2} md={2} lg={2}><Avatar size={30} src={reqOrOffer.user.picture}/></Col>
-								<Col xs={6} sm={6} md={6} lg={6}>
-                  <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
-                    {`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`}
-                  </Link>
-                </Col>
-                <Col xs={2} sm={2} md={2} lg={2}/>
-								<Col xs={2} sm={2} md={2} lg={2}>{`${reqOrOffer.user.date}`}</Col>
-							</Row>)
+							( <div className="flex-row">
+                  <div className="flex-col" key={index}>
+                    <div className="feed-story">
+                      <Avatar size={30} src={reqOrOffer.user.picture}/>
+                      <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
+                        <p className="p-color-white">{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`}</p>
+                      </Link>
+      								<p className="p-color-white">{`${reqOrOffer.user.date}`}</p>
+                    </div>
+  							</div>
+              </div>
+              )
 
 							:
 
-							(<Row key={index}>
-								<Col xs={2} sm={2} md={2} lg={2}><Avatar size={30} src={reqOrOffer.offUser.picture}/></Col>
-								<Col xs={6} sm={6} md={6} lg={6}>{`${reqOrOffer.offUser.name} helped ${reqOrOffer.reqUser.name}`}</Col>
-								<Col xs={2} sm={2} md={2} lg={2}><Avatar size={30} src={reqOrOffer.reqUser.picture}/></Col>
-								<Col xs={2} sm={2} md={2} lg={2}>{`${reqOrOffer.offUser.date}`}</Col>
-							</Row>)
+							( <div className="flex-row">
+                  <div className="flex-col" key={index}>
+                    <div className="feed-story">
+      								<Avatar size={30} src={reqOrOffer.offUser.picture}/>
+      							  <p className="p-color-white">{`${reqOrOffer.offUser.name} helped ${reqOrOffer.reqUser.name}`}</p>
+                      <Avatar size={30} src={reqOrOffer.reqUser.picture}/>
+      								<p className="p-color-white">{`${reqOrOffer.offUser.date}`}</p>
+                    </div>
+    							</div>
+              </div>
+              )
 						))
 					}
-      </div>
     </div>
 	  )
 	}

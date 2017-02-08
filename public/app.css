@@ -117,24 +117,37 @@ request details in flex-col-white)  */
   background: white;
 }
 
-.flex-col {
-  flex-basis: auto;
-  flex-direction: column;
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  text-align: center;
-}
-
 .flex-col-white {
+  width: 33.3vw !important;
   flex-basis: auto;
   flex-direction: column;
-  border-radius: 10px;
-  margin: 25px;
   padding: 15px;
   line-height: 1.5em;
   background: white;
+}
+
+/* mobile */
+@media (max-width: 767px) {
+  .flex-col {
+    width: 90vw !important;
+    flex-basis: auto;
+    flex-direction: column;
+    border-radius: 10px;
+    line-height: 1.5em;
+    text-align: center;
+  }
+}
+
+/* desktop/tablet */
+@media (min-width: 767px) {
+  .flex-col {
+    width: 33.3vw !important;
+    flex-basis: auto;
+    flex-direction: column;
+    border-radius: 10px;
+    line-height: 1.5em;
+    text-align: center;
+  }
 }
 
 /* TEXT */
@@ -326,4 +339,10 @@ td {
   text-align: center !important;
   vertical-align: middle !important;
   padding: 15px !important;
+}
+
+/* FEED */
+
+.feed-story {
+  display: inline !important;
 }
