@@ -52,14 +52,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
     event.preventDefault()
     this.clearForm()
     auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-    .then(() =>  browserHistory.push('/profile'))
-    // if new account is created, user is signed in automatically
-    .catch( err => {
-      if (err.code === 'auth/email-already-in-use' || err.code === 'auth/invalid-email') {
-        this.setState({ errmsgEmail: err.message })
-      } else if (err.code === 'auth/weak-password') {
-        this.setState({ errmsgPassword: err.message })
-      }
+    // .then(() => {
+    //   let user = auth().currentUser
+    //   user.sendEmailVerification()
+      .then(() =>  browserHistory.push('/profile'))
+      // if new account is created, user is signed in automatically
+      .catch( err => {
+        if (err.code === 'auth/email-already-in-use' || err.code === 'auth/invalid-email') {
+          this.setState({ errmsgEmail: err.message })
+        } else if (err.code === 'auth/weak-password') {
+          this.setState({ errmsgPassword: err.message })
+        }
     })
   }
 
