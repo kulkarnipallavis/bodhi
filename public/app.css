@@ -80,7 +80,7 @@ body {
 #navbar-brand {
   font-family: 'Lobster', cursive;
   font-size: 1.8em;
-  color: white;
+  color: white !important;
   padding: 10px 10px 0px 10px;
   vertical-align: bottom;
 }
@@ -124,6 +124,7 @@ request details in flex-col-white)  */
   padding: 15px;
   line-height: 1.5em;
   background: white;
+  border-radius: 5px;
 }
 
 /* desktop/tablet */
@@ -195,11 +196,12 @@ p {
 
 u {
   text-decoration: underline;
-  color: #533BD7;
+  color: white;
 }
 
 u:hover {
   color: #F0B259;
+  font-style: italic;
 }
 
 a {

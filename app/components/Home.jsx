@@ -107,7 +107,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
                         <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
-                          <p className="p-color-white">{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`}</p>
+                          <u><p className="p-color-white">{`${reqOrOffer.user.name} needs help with ${reqOrOffer.title}`}</p></u>
                         </Link>
                       </Col>
                       <Col xs={2} xsOffset={1} sm={2} smOffset={1} md={2} mdOffset={1} lg={2} lgOffset={1}>
