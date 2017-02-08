@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { setSelectedMarker } from '../reducers/map'
-=======
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router'
-import {getOpenRequests, getAcceptedOffers} from '../reducers/home'
-import {setSelectedMarker, updateMarkers} from '../reducers/map'
->>>>>>> 92c587884e616cd7b97c6f7d444b2252931ff73c
 import Avatar from 'material-ui/Avatar'
 import Divider from 'material-ui/Divider'
 import { Grid, Row, Col } from 'react-bootstrap'
