@@ -55,9 +55,15 @@ export const findRequestByKey = (reqKey) => {
       .ref('Requests')
       .child(reqKey)
       .once('value', function(snapshot) {
-        if (snapshot.val()) return snapshot.val()
+        if (snapshot.val()) {
+          console.log('snapshot in if ', snapshot.val())
+          return snapshot.val()
+        }
         else console.log("request not found")
       })
+      .then((request) => {
+        const status = request.val().status
+        return status })
       .catch(err => console.log(err))
   }
 }

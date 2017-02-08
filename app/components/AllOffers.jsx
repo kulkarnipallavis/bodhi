@@ -41,8 +41,17 @@ class AllOffers extends Component {
 
   declineAndCheck(offer) {
     //check if request is closed
-    let reqStatus = this.props.findRequestByKey(offer.reqKey).status
+    console.log('props ', this.props)
+    let reqKey = offer.reqKey
+    console.log('reqKey ', reqKey)
+    let reqStatus = this.props.findRequestByKey(reqKey)
+    // .then( (foundReq) => {
+    //   reqStatus = foundReq.status
+    // })
+    console.log('reqStatus ', reqStatus )
+
     if (reqStatus !== 'closed') {
+      console.log('reqstatus in if', reqStatus)
 
       let offersReceived = this.props.offersReceived
       let count = 0
