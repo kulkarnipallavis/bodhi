@@ -18,6 +18,7 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
 
     this.clearForm = this.clearForm.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.resetPassword = this.resetPassword.bind(this)
   }
 
   isInvalid() {
@@ -31,6 +32,20 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
       [type]: value,
       [`${type}IsValid`]: !!value,
     })
+  }
+
+  resetPassword() {
+    !(this.state.email) ?
+    this.setState({ email: "Please enter your email address"})
+    : auth().sendPasswordResetEmail(this.state.email)
+      .then(() =>{
+          this.setState({ email: "reset email has been sent!" })
+      })
+      .catch( err => {
+        if (err.code === 'auth/invalid-email' || err.code === 'auth/user-disabled' || err.code === 'auth/user-not-found') {
+          this.setState({ errmsgEmail: err.message })
+        }
+      })
   }
 
   clearForm() {
@@ -64,7 +79,9 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
           floatingLabelFocusStyle: { color: 'white' },
           underlineFocusStyle: { borderColor: 'white' },
           inputText: {color: 'white'},
-          errorStyle: { color: '#F0B259' }
+          errorStyle: { color: '#F0B259' },
+          resetpw: { fontSize: 'small', color: 'white'},
+          pwspan: { textAlign: 'center', }
         }
 
     return (
@@ -96,6 +113,11 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
               underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('password')}
               errorText={this.state.errmsgPassword}/>
+            <br />
+             <br />
+              <div style={styles.pwspan}>
+                <a href="#" style={styles.resetpw} onClick={this.resetPassword}>Forgot your Password?</a> &nbsp;
+              </div>
             <br/>
           </form>
         </div>
