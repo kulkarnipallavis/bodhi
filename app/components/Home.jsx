@@ -79,7 +79,7 @@ class Home extends Component {
 			if ((marker.uid === targetRequest.uid) && (marker.title === targetRequest.title)) {
 				console.log("MARKER", marker)
 				marker.showDesc = true
-				//this.props.setSelectedMarkerDispatch(marker)
+				this.props.setSelectedMarkerDispatch(marker)
 			}
 		})
 	}
@@ -91,6 +91,7 @@ class Home extends Component {
 	return (
 		<div className="gradient flex-container">
 			<h1>{userName ? `Welcome ${userName}` : `Welcome Bodhi buddy!`}</h1>
+			
 			<div style={style.header}>Recent Activity</div>
 				<div className="flex-row"  className="gradient">
 				<Table responsive={true} bordered={false}>
