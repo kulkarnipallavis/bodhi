@@ -50,23 +50,13 @@ export const updateRequestStatus = (status, markerKey) => {
 //export default requestReducer
 
 export const findRequestByKey = (reqKey) => {
-  return dispatch => {
-    return database
+  return dispatch =>
+    database
       .ref('Requests')
       .child(reqKey)
-      .once('value', function(snapshot) {
-        if (snapshot.val()) {
-          console.log('snapshot in if ', snapshot.val())
-          return snapshot.val().status
-        } else {
-          console.log("request not found")
-        }
-      })
-      .then((request) => {
-        const status = request.val().status
-          console.log("STATUS!!! " , status)
-        return status })
-      .catch(err => console.log(err))
-  }
+      // .orderByChild('status')
+      // .equalTo('closed')
+      .once('value')
+      .then(snap => snap.val())
 }
 
