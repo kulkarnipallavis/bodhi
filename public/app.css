@@ -187,6 +187,7 @@ li {
   line-height: 1.15em;
 }
 
+/* This gives us back the default text-dec of a link (<a>) which we override on line 200 so that our react router Links that live in buttons (and #navbar-brand aren't underlined. We can use <u> when we want to make it clear that text is a link */
 u {
   text-decoration: underline;
   color: #533BD7;
@@ -215,6 +216,44 @@ a {
 .save-edit-button {
   margin-left: 25px !important;
   color:  #533BD7 !important;
+}
+
+/* HOME LOGGED OUT */
+
+/* mobile hero image */
+@media (max-width: 768px){
+  .hero {
+    background: url(/img/hero-small.jpg) no-repeat center center scroll;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-position: absolute;
+    vertical-align: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+  }
+}
+
+/* tablet/desktop hero image */
+@media (min-width: 768px){
+  .hero {
+    background: url(/img/hero-large.jpg) no-repeat center center scroll;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-position: absolute;
+    vertical-align: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+  }
+
+  .hero-tagline {
+    float: right;
+  }
 }
 
 /* PROFILE */

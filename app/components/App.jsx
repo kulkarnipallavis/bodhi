@@ -28,7 +28,8 @@ class App extends Component {
     return (
       <MuiThemeProvider muitheme={getMuiTheme(theme)}>
         <div>
-          <Navbar />
+          { (this.props.currentUser && this.props.children.route === '/home') ?
+            <div></div> : <Navbar /> }
             { this.props.children && React.cloneElement(this.props.children, this.props) }
         </div>
       </MuiThemeProvider>

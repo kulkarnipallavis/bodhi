@@ -20,8 +20,9 @@ import Profile from './components/Profile'
 import EditableProfile from './components/EditableProfile'
 import InvitePage from './components/Invite'
 import OfferHelpMessage from './components/OfferHelpMessage'
-import Home from './components/Home'
+import Feed from './components/HomeLoggedIn'
 import AllOffers from './components/AllOffers'
+import Landing from './components/HomeLoggedOut'
 
 import {getOpenRequests, getAcceptedOffers} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
@@ -51,20 +52,11 @@ const onHomeEnter = () => {
 }
 
 const onLoginEnter = () => {
-
   auth().getRedirectResult().then(function(result) {
-  if (result.credential) {
-    browserHistory.push('/')
-  }
-}).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // The email of the user's account used.
-  var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-});
+    if (result.credential) {
+      browserHistory.push('/')
+    }
+  })
 }
 
 injectTapEventPlugin()
@@ -74,7 +66,8 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
         <IndexRedirect to="/home"/>
-        <Route path="/about" component={About} />
+        <Route path="/home" component={Landing} />
+        <Route path="/feed" component={Feed} onEnter={onHomeEnter} />
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />
@@ -85,7 +78,6 @@ render(
         <Route path="/profile" component={Profile} />
         <Route path="/editprofile" component={EditableProfile} />
         <Route path="/invitefriends" component={InvitePage} />
-        <Route path="/home" component={Home} onEnter={onHomeEnter} />
         <Route path="/offers" component={AllOffers} />
       </Route>
     </Router>
