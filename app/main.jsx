@@ -40,7 +40,7 @@ auth().onAuthStateChanged(function(user) {
   } else {
     store.dispatch(loggedOut())
     offersListener && offersListener()
-    browserHistory.push('/')
+    browserHistory.push('/loginenter')
   }
 })
 
@@ -71,7 +71,7 @@ const onLoginEnter = () => {
 });
 }
 
-injectTapEventPlugin()
+injectTapEventPlugin()  
 
 render(
   <Provider store={store}>

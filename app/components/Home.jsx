@@ -91,6 +91,7 @@ class Home extends Component {
 	return (
 		<div className="gradient flex-container">
 			<h1>{userName ? `Welcome ${userName}` : `Welcome Bodhi buddy!`}</h1>
+			
 			<div style={style.header}>Recent Activity</div>
 				<div className="flex-row"  className="gradient">
 				<Table responsive={true} bordered={false}>
