@@ -23,12 +23,6 @@ class MapContainer extends Component {
     this.legendToggle = this.legendToggle.bind(this)
   }
 
-  // componentDidMount() {
-  //   //this.setState({markers: this.props.markers})
-  //   //if(this.props.selectedMarker){}
-
-  // }
-
   handleMapLoad(map) {
     this._mapComponent = map
     if (map) map.getZoom()
