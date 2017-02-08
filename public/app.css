@@ -56,11 +56,28 @@ body {
   font-family: "Roboto";
 }
 
-a {
-  text-decoration: none !important;
+.gradient {
+  background-color: #eda99c;
+  /* IE9, iOS 3.2+ */
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIxMDAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZjdkMDkyIiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNmN2QwOTIiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2ZkOGU3OCIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAuNTExIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2MxYjlmMSIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+);
+  background-image: -webkit-gradient(linear, 100% 0%, 0% 0%,color-stop(0, rgb(247, 208, 146)),color-stop(0, rgb(247, 208, 146)),color-stop(0.511, rgb(253, 142, 120)),color-stop(1, rgb(193, 185, 241)));
+  /* Android 2.3 */
+  background-image: -webkit-repeating-linear-gradient(right,rgb(253, 110, 118) -1.3%,rgb(247, 208, 146) 0%,rgb(253, 142, 120) 51.1%,rgb(193, 185, 241) 100%);
+  /* IE10+ */
+  background-image: repeating-linear-gradient(to left,rgb(253, 110, 118) -1.3%,rgb(247, 208, 146) 0%,rgb(253, 142, 120) 51.1%,rgb(193, 185, 241) 100%);
+  background-image: -ms-repeating-linear-gradient(right,rgb(253, 110, 118) -1.3%,rgb(247, 208, 146) 0%,rgb(253, 142, 120) 51.1%,rgb(193, 185, 241) 100%);
 }
 
-#navbar-logo {
+/* IE8- CSS hack */
+@media \0screen\,screen\9 {
+  .gradient {
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffc1b9f1",endColorstr="#fffd6e76",GradientType=1);
+  }
+}
+
+/* NAV */
+
+#navbar-brand {
   font-family: 'Lobster', cursive;
   font-size: 1.8em;
   color: white;
@@ -68,16 +85,13 @@ a {
   vertical-align: bottom;
 }
 
-#navbar-brand {
-  font-size: 1em;
-  color: white;
-  margin: 0px 0px 0px 10px;
-  width: 100px;
-}
-
 .nav-item {
   color: #533BD7 !important;
 }
+
+/*  LAYOUT --> Wrap flex-rows in a flex-container on each individual view, only
+use flex-col when you want a bubble within a flex-row (a la the Offer Help form's
+request details in flex-col-white)  */
 
 .flex-container {
   padding: 25px 0px 25px 0px;
@@ -103,25 +117,27 @@ a {
   background: white;
 }
 
-.flex-col {
-  flex-basis: auto;
-  flex-direction: column;
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  text-align: center;
-}
-
 .flex-col-white {
+  width: 33.3vw !important;
   flex-basis: auto;
   flex-direction: column;
-  border-radius: 10px;
-  margin: 25px;
   padding: 15px;
   line-height: 1.5em;
   background: white;
 }
+
+.container-fluid {
+  padding-right: 40px;
+}
+
+/* desktop/tablet */
+@media (min-width: 767px) {
+  .row {
+    width: 50vw !important;
+  }
+}
+
+/* TEXT */
 
 h1 {
   font-size: 3em;
@@ -134,14 +150,13 @@ h1 {
 h2 {
   margin-right: 0px;
   color: white;
-  font-size: 1.5em;
 }
 
 h3 {
   margin: 10px;
   color: #533BD7;
   line-height: 1.25em;
-  font-size: 1.3em;
+  font-size: 1.5em;
 }
 
 h4 {
@@ -161,13 +176,11 @@ p {
   margin: 10px;
 }
 
-li {
-  font-size: 1.25em;
-  margin: 10px;
-}
-
 .p-color-white {
   color: white !important;
+  font-size: 1.25em;
+  margin: 10px 20px;
+  line-height: 1.15em;
 }
 
 u {
@@ -179,14 +192,44 @@ u:hover {
   color: #F0B259;
 }
 
-form {
-  margin-left: 15px !important;
+a {
+  text-decoration: none !important;
 }
+
+/* BUTTONS */
 
 .form-button {
   color:  #533BD7 !important;
   margin: 35px 0px 0px 0px !important;
 }
+
+.edit-button {
+  color:  #533BD7 !important;
+  margin: 0;
+}
+
+.save-edit-button {
+  margin-left: 25px !important;
+  color:  #533BD7 !important;
+}
+
+/* PROFILE */
+
+.profile {
+  color: white!important;
+}
+
+.editable-profile-field {
+  margin-left: 15px;
+}
+
+/* FORMS */
+
+form {
+  margin-left: 15px !important;
+}
+
+/* MAP MARKER INFO WINDOW */
 
 .info-window-button {
   color: white !important;
@@ -206,38 +249,7 @@ form {
   padding: 0;
 }
 
-.edit-button {
-  color:  #533BD7 !important;
-  margin: 0;
-}
-
-.save-edit-button {
-  margin-left: 25px !important;
-  color:  #533BD7 !important;
-}
-
-.editable-profile-field {
-  margin-left: 15px;
-}
-
-.table-responsive {
-  margin: 25px;
-}
-
-th {
-  text-align: center;
-}
-
-td {
-  width: 250px;
-  text-align: center !important;
-  vertical-align: middle !important;
-  padding: 15px !important;
-}
-
-.profile {
-  color: white!important;
-}
+/* MAP LEGEND */
 
 .flex-row-legend {
   display: flex;
@@ -298,29 +310,34 @@ td {
   padding: 3px;
 }
 
-.gradient {
-  background-color: #eda99c;
-  /* IE9, iOS 3.2+ */
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIxMDAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZjdkMDkyIiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNmN2QwOTIiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2ZkOGU3OCIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAuNTExIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2MxYjlmMSIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+);
-  background-image: -webkit-gradient(linear, 100% 0%, 0% 0%,color-stop(0, rgb(247, 208, 146)),color-stop(0, rgb(247, 208, 146)),color-stop(0.511, rgb(253, 142, 120)),color-stop(1, rgb(193, 185, 241)));
-  /* Android 2.3 */
-  background-image: -webkit-repeating-linear-gradient(right,rgb(253, 110, 118) -1.3%,rgb(247, 208, 146) 0%,rgb(253, 142, 120) 51.1%,rgb(193, 185, 241) 100%);
-  /* IE10+ */
-  background-image: repeating-linear-gradient(to left,rgb(253, 110, 118) -1.3%,rgb(247, 208, 146) 0%,rgb(253, 142, 120) 51.1%,rgb(193, 185, 241) 100%);
-  background-image: -ms-repeating-linear-gradient(right,rgb(253, 110, 118) -1.3%,rgb(247, 208, 146) 0%,rgb(253, 142, 120) 51.1%,rgb(193, 185, 241) 100%);
+/* OFFER TABLE */
+
+.table-responsive {
+  margin: 25px;
+  overflow-x: scroll !important;
 }
 
-/* IE8- CSS hack */
-@media \0screen\,screen\9 {
-  .gradient {
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffc1b9f1",endColorstr="#fffd6e76",GradientType=1);
-  }
+th {
+  text-align: center;
 }
 
-/* describes request you are responding to on offer page*/
-#div_request {
-  border: 1px solid lightgrey;
-  border-radius: 4px;
-  padding: 1em;
-  width: 240px;
+td {
+  width: 250px;
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 15px !important;
+}
+
+/* FEED */
+
+.feed-story {
+  display: inline !important;
+}
+
+.feed-avatar {
+  margin-top: 7px;
+}
+
+.feed-header {
+  padding-left: 20px;
 }

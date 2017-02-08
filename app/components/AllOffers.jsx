@@ -6,7 +6,11 @@ import Avatar from 'material-ui/Avatar'
 import smsLink from 'sms-link'
 import { respondToOffer } from '../reducers/offer-help'
 import { findRequestByKey, updateRequestStatus } from '../reducers/request-actions'
-
+import { Grid, Row, Col } from 'react-bootstrap'
+import Divider from 'material-ui/Divider'
+import Done from 'material-ui/svg-icons/action/done';
+import Clear from 'material-ui/svg-icons/content/clear';
+import IconButton from 'material-ui/IconButton';
 
 
 class AllOffers extends Component {
@@ -69,45 +73,41 @@ class AllOffers extends Component {
     const allOffers = offers ? offers : []
 
     return (
-      <div className="gradient flex-container">
-        <div className="flex-row">
-          <h1>Pending Help Offers</h1>
-        </div>
-        <div className="flex-row">
-          <Table responsive={true} bordered={true} style={styles}>
-            <tbody>
+      <Grid className="gradient" fluid>
+        <div className="flex-container">
+          <Row className="flex-row">
+            <h1 className="feed-header">Pending Help Offers</h1>
+          </Row>
+            <Divider/>
              { allOffers && allOffers.map((offer, index) => {
 
                 return (
-                 <tr key={index}>
-                   <td><Avatar size={48} src={offer.offUser.picture}/></td>
-                   <td>{offer.offUser.name}</td>
-                   <td>{offer.message}</td>
-                   <td>
-                     <RaisedButton
-                     label="Accept"
-                     primary={false}
-                     style={{ margin: 12 }}
-                     labelColor="#533BD7"
-                     backgroundColor="white"
-                     onClick={this.handleRespond('accepted', offer)}/>
-                   </td>
-                   <td>
-                     <RaisedButton
-                     label="Decline"
-                     secondary={false}
-                     style={{ margin: 12 }}
-                     labelColor="#533BD7"
-                     backgroundColor="white"
-                     onClick={this.handleRespond('declined', offer)}/>
-                    </td>
-                  </tr>
+                <div key={index}>
+                    <Row className="feed-story">
+                      <Col xs={1} sm={1} md={1} lg={1}>
+                          <Avatar size={30} src={offer.offUser.picture}/>
+                      </Col>
+                      <Col xs={3} sm={3} md={3} lg={3}> <p className="p-color-white">{offer.offUser.name}</p></Col>
+                      <Col xs={4} sm={4} md={4} lg={4}> <p className="p-color-white">{offer.message}</p></Col>
+                      <Col xs={1} sm={1} md={1} lg={1}>
+                        <IconButton tooltip="Accept"
+                          onClick={this.handleRespond('accepted', offer)}>
+                            <Done />
+                        </IconButton>
+                      </Col>
+                      <Col xs={1} sm={1} md={1} lg={1}>
+                        <IconButton tooltip="Decline"
+                          onClick={this.handleRespond('declined', offer)}>
+                          <Clear />
+                        </IconButton>
+                      </Col>
+                      </Row>
+                      <Divider/>
+                  </div>
                 )
               })  }
-           </tbody>
-         </Table>
-        </div>
-      </div>
+           </div>
+        </Grid>
     )
   }
 }
