@@ -15,7 +15,6 @@ const KarmaStory = (props) => (
       src={props.story.req.reqUser.picture}/>
     <p>{props.story.date}</p>
     <p>{props.story.req.title}</p>
-    <FlatButton className="likes" label="Like" labelColor="#533BD7"/>
   </div>
 )
 
