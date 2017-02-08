@@ -356,3 +356,15 @@ td {
 .feed-avatar {
   margin-top: 7px;
 }
+
+.container-fluid {
+  padding-right: 40px;
+}
+
+.feed-header {
+  padding-left: 20px;
+}
+
+hr {
+  align: center !important;
+}

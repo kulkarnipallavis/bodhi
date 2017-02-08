@@ -74,7 +74,7 @@ class AllOffers extends Component {
 
     return (
       <Grid className="gradient" fluid>
-        <div className="flex-container">
+        <div className="flex-container-feed">
           <Row className="flex-row">
             <h1 className="feed-header">Pending Help Offers</h1>
           </Row>
@@ -91,12 +91,14 @@ class AllOffers extends Component {
                       <Col xs={4} sm={4} md={4} lg={4}> <p className="p-color-white">{offer.message}</p></Col>
                       <Col xs={1} sm={1} md={1} lg={1}>
                         <IconButton tooltip="Accept"
+                          iconStyle={{color: "#533BD7", background: 'white'}}
                           onClick={this.handleRespond('accepted', offer)}>
                             <Done />
                         </IconButton>
                       </Col>
                       <Col xs={1} sm={1} md={1} lg={1}>
                         <IconButton tooltip="Decline"
+                          iconStyle={{color: "#533BD7", background: 'white'}}
                           onClick={this.handleRespond('declined', offer)}>
                           <Clear />
                         </IconButton>

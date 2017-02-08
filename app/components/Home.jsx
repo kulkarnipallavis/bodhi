@@ -113,7 +113,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                         <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
                           <u className="u-color-white">
                             <p className="p-color-white">
-                              {`${reqOrOffer.user.name} needs help with    ${reqOrOffer.title}`}
+                              {`${reqOrOffer.user.name} needs help with ${reqOrOffer.title}`}
                             </p>
                           </u>
                         </Link>
