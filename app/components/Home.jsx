@@ -88,12 +88,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       return (
         <Grid className="gradient" fluid>
           <div className="flex-container">
-            <Row className="flex-row">
+            <div className="flex-row">
               <h2 className="feed-header">{userName ? `Welcome ${userName}!` : `Welcome Bodhi buddy!`}</h2>
-            </Row>
-            <Row className="flex-row">
+            </div>
+            <div className="flex-row">
               <h1 className="feed-header">Recent Activity</h1>
-            </Row>
+            </div>
             <Divider/>
             { mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
 
