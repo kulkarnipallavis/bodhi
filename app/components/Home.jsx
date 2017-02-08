@@ -103,14 +103,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             { mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
 
                 reqOrOffer.date ?
-                ( <div>
-                    <Row className="feed-story" key={index}>
+                ( <div key={index}>
+                    <Row className="feed-story">
                       <Col xs={1} sm={1} md={1} lg={1}>
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.user.picture}/>
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
                         <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
-                          <u><p className="p-color-white">{`${reqOrOffer.user.name} needs help with ${reqOrOffer.title}`}</p></u>
+                          <u className="u-color-white">
+                            <p className="p-color-white">
+                              {`${reqOrOffer.user.name} needs help with    ${reqOrOffer.title}`}
+                            </p>
+                          </u>
                         </Link>
                       </Col>
                       <Col xs={2} xsOffset={1} sm={2} smOffset={1} md={2} mdOffset={1} lg={2} lgOffset={1}>
@@ -122,8 +126,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 
                 :
 
-                ( <div>
-                    <Row className="feed-story" key={index}>
+                ( <div key={index}>
+                    <Row className="feed-story">
                       <Col xs={1} sm={1} md={1} lg={1}>
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.offUser.picture}/>
                       </Col>

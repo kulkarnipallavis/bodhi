@@ -119,12 +119,14 @@ request details in flex-col-white)  */
 
 .flex-col-white {
   width: 33.3vw !important;
+  min-width: 300px;
   flex-basis: auto;
   flex-direction: column;
   padding: 15px;
   line-height: 1.5em;
   background: white;
   border-radius: 5px;
+  color: ;
 }
 
 /* desktop/tablet */
@@ -136,6 +138,7 @@ request details in flex-col-white)  */
     position: relative;
     left: -25%;
     float: right;
+    color: #533BD7;
   }
 }
 
@@ -196,12 +199,16 @@ p {
 
 u {
   text-decoration: underline;
-  color: white;
+  color: #533BD7;
 }
 
 u:hover {
   color: #F0B259;
   font-style: italic;
+}
+
+.u-color-white {
+  color: white !important;
 }
 
 a {
