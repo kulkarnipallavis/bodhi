@@ -48,7 +48,7 @@ var firebase = require("firebase")
 
 
 
-function updateRequestData(userKey, title, desc, tag, location) {
+function updateRequestData(userKey, title, description, tag, location) {
   // A request entry.
 
   const time = firebase.database.ServerValue.TIMESTAMP
@@ -56,7 +56,7 @@ function updateRequestData(userKey, title, desc, tag, location) {
   var requestData = {
   	uid : userKey,
     title: title,
-    desc: desc,
+    description: description,
     tag : tag,
     location: location,
     status: 'open',

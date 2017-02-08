@@ -76,17 +76,16 @@ class Home extends Component {
 
 	handleRequestClick(targetRequest){
 
-		console.log("TARGET REQUEST", targetRequest, "MARKERS", this.props.markers)
-
-		let markers = [...this.props.markers]
-
-		markers.map(marker => {
+		let markers = this.props.markers.map(marker => {
+			let newMarker = Object.assign({}, marker)
 			if ((marker.uid === targetRequest.uid) && (marker.title === targetRequest.title)) {
-				console.log("MARKER", marker)
-				marker.showDesc = true
-				this.props.setSelectedMarkerDispatch(marker)
+				newMarker.showDesc = true
+				this.props.setSelectedMarkerDispatch(newMarker)
 			}
+			return newMarker
 		})
+
+		this.props.updateMarkersDispatch(markers)
 	}
 
 	render() {
