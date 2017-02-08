@@ -87,9 +87,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 
       return (
         <Grid className="gradient" fluid>
-          <div className="flex-container">
+          <div className="flex-container-feed">
             <div className="flex-row">
-              <h2 className="feed-header">{userName ? `Welcome ${userName}!` : `Welcome Bodhi buddy!`}</h2>
+              <h2 className="feed-header">{ userName ?
+                  `Welcome ${userName}!` : `Welcome Bodhi buddy!`}
+              </h2>
             </div>
             <div className="flex-row">
               <h1 className="feed-header">Recent Activity</h1>
