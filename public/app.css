@@ -89,7 +89,9 @@ body {
   color: #533BD7 !important;
 }
 
-/*  LAYOUT --> Wrap flex-rows in a flex-container on each individual view, only use flex-col when you want a bubble within a flex-row (a la the Offer Help form's request details in flex-col-white)  */
+/*  LAYOUT --> Wrap flex-rows in a flex-container on each individual view, only
+use flex-col when you want a bubble within a flex-row (a la the Offer Help form's
+request details in flex-col-white)  */
 
 .flex-container {
   padding: 25px 0px 25px 0px;
