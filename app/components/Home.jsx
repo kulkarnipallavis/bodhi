@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {getOpenRequests, getAcceptedOffers} from '../reducers/home'
-import {setSelectedMarker} from '../reducers/map'
+import {setSelectedMarker, updateMarkers} from '../reducers/map'
 import Avatar from 'material-ui/Avatar'
 import { Table } from 'react-bootstrap'
 
@@ -34,6 +34,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setSelectedMarkerDispatch: (marker) => {
 			dispatch(setSelectedMarker(marker))
+		},
+		updateMarkersDispatch: (markers) => {
+			dispatch(updateMarkers(markers))
 		}
 	}
 }
@@ -73,14 +76,16 @@ class Home extends Component {
 
 	handleRequestClick(targetRequest){
 
-		console.log("TARGET REQUEST", targetRequest, "MARKERS", this.props.markers)
-
-		this.props.markers.map(marker => {
+		let markers = this.props.markers.map(marker => {
+			let newMarker = Object.assign({}, marker)
 			if ((marker.uid === targetRequest.uid) && (marker.title === targetRequest.title)) {
-				marker.showDesc = true
-				//this.props.setSelectedMarkerDispatch(marker)
+				newMarker.showDesc = true
+				this.props.setSelectedMarkerDispatch(newMarker)
 			}
+			return newMarker
 		})
+
+		this.props.updateMarkersDispatch(markers)
 	}
 
 	render() {
@@ -90,6 +95,7 @@ class Home extends Component {
 	return (
 		<div className="gradient flex-container">
 			<h1>{userName ? `Welcome ${userName}` : `Welcome Bodhi buddy!`}</h1>
+			
 			<div style={style.header}>Recent Activity</div>
 				<div className="flex-row"  className="gradient">
 				<Table responsive={true} bordered={false}>

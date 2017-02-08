@@ -40,21 +40,24 @@ class AllOffers extends Component {
   }
 
   declineAndCheck(offer) {
+    let reqKey = offer.reqKey
     //check if request is closed
-    let reqStatus = this.props.findRequestByKey(offer.reqKey).status
-    if (reqStatus !== 'closed') {
-
-      let offersReceived = this.props.offersReceived
-      let count = 0
-      for (let x= 0; x < offersReceived.length; x++) {
-        if (offersReceived[x].reqKey === offer.reqKey && offersReceived[x].offKey !== offer.offKey) {
-          //if there are other offers for the same request that are not the offer just deleted, status stays pending
-          count++
+    this.props.findRequestByKey(reqKey)
+    .then( (req) => {
+      if (req.status !== 'closed') {
+        //if not closed (if an offer for this request has not been previously accepted), check offersReceived for other offers for the same request
+        let offersReceived = this.props.offersReceived
+        let count = 0
+        for (let x= 0; x < offersReceived.length; x++) {
+          if (offersReceived[x].reqKey === offer.reqKey && offersReceived[x].offKey !== offer.offKey) {
+            //if there is another offer for the same request (that is not the offer just deleted), status stays pending
+            count++
+          }
         }
+        //if no other pending offer are found for the request, change status of request to open
+        if (!count) this.props.updateRequestStatus('open', offer.reqKey)
       }
-
-      if (!count) this.props.updateRequestStatus('open', offer.reqKey)
-    }
+    })
   }
 
 
