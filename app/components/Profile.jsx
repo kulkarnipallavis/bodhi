@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextFieldToggle from './TextFieldToggle'
 import { updateUser } from '../reducers/auth'
 
+
 export class Profile extends Component {
 
   constructor(props) {
@@ -20,6 +21,7 @@ export class Profile extends Component {
       editingBio: false
     }
     this.handleSave = this.handleSave.bind(this)
+    this.handleClickHome = this.handleClickHome.bind(this)
   }
 
   componentDidMount() {
@@ -42,6 +44,7 @@ export class Profile extends Component {
   handleClickCancelEdit = field => event => this.setState({ [`editing${field}`]: false })
 
   handleClickLoginSignup = event => browserHistory.push('/loginenter')
+  handleClickHome = event => browserHistory.push('/home')
 
   handleChange = field => event => {
     const value = event.target.value
@@ -220,6 +223,13 @@ export class Profile extends Component {
               onClick={this.handleClickLoginSignup}/>
           </div>
         }
+        <div className="flex-row">
+          <RaisedButton
+            className="form-button"
+            label="Home"
+            backgroundColor="white"
+            onClick={this.handleClickHome}/>
+        </div>
       </div>
     )
   }
