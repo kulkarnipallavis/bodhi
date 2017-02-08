@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router'
-import {getOpenRequests, getAcceptedOffers} from '../reducers/home'
-import {setSelectedMarker} from '../reducers/map'
+import React, { Component} from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import { setSelectedMarker } from '../reducers/map'
 import Avatar from 'material-ui/Avatar'
+import Divider from 'material-ui/Divider'
 import { Grid, Row, Col } from 'react-bootstrap'
 
 const style = {
@@ -41,96 +41,105 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(
 
-class Home extends Component {
+  class Home extends Component {
 
-	constructor(props){
-		super(props)
-		this.getOffersAndRequests = this.getOffersAndRequests.bind(this)
-		this.handleRequestClick = this.handleRequestClick.bind(this)
-	}
+    constructor(props){
+      super(props)
+      this.getOffersAndRequests = this.getOffersAndRequests.bind(this)
+      this.handleRequestClick = this.handleRequestClick.bind(this)
+    }
 
-	getOffersAndRequests(){
-		const requests = this.props.openRequests
-		const offers = this.props.acceptedOffers
+    getOffersAndRequests(){
+      const requests = this.props.openRequests
+      const offers = this.props.acceptedOffers
 
 
-		const mergedReqAndOffers = [...offers, ...requests]
+      const mergedReqAndOffers = [...offers, ...requests]
 
-		mergedReqAndOffers.sort(function (a, b) {
-			if(a.dateAccepted && b.dateAccepted){
-				return b.dateAccepted - a.dateAccepted
-			} else if (a.date && b.date){
-				return b.date - a.date
-			} else if (a.dateAccepted && b.date){
-				return b.date - a.dateAccepted
-			} else if (a.date && b.dateAccepted){
-				return b.dateAccepted - a.date
-			}
+      mergedReqAndOffers.sort(function (a, b) {
+        if (a.dateAccepted && b.dateAccepted) {
+          return b.dateAccepted - a.dateAccepted
+        } else if (a.date && b.date){
+          return b.date - a.date
+        } else if (a.dateAccepted && b.date){
+          return b.date - a.dateAccepted
+        } else if (a.date && b.dateAccepted){
+          return b.dateAccepted - a.date
+        }
 
-		});
-		return mergedReqAndOffers;
-	}
+      })
+      return mergedReqAndOffers;
+    }
 
-	handleRequestClick(targetRequest){
-		this.props.markers.map(marker => {
-			if ((marker.uid === targetRequest.uid) && (marker.title === targetRequest.title)) {
-				marker.showDesc = true
-				this.props.setSelectedMarkerDispatch(marker)
-			}
-		})
-	}
+    handleRequestClick(targetRequest){
+      this.props.markers.map(marker => {
+        if ((marker.uid === targetRequest.uid) && (marker.title === targetRequest.title)) {
+          marker.showDesc = true
+          this.props.setSelectedMarkerDispatch(marker)
+        }
+      })
+    }
 
-	render() {
-	const mergedReqAndOffers = this.getOffersAndRequests()
-	const isUser = (this.props.currentUser) ? true : false;
-	const userName = isUser ? this.props.currentUser.name : ""
-	return (
-    <Grid className="gradient">
-      <Row>
-        <h2>{userName ? `Welcome ${userName}!` : `Welcome Bodhi buddy!`}</h2>
-      </Row>
-			<Row className="flex-row">
-        <h1>Recent Activity</h1>
-      </Row>
-					{
-						mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
+    render() {
+      const mergedReqAndOffers = this.getOffersAndRequests()
+      const isUser = (this.props.currentUser) ? true : false;
+      const userName = isUser ? this.props.currentUser.name : ''
 
-							reqOrOffer.date ?
-							( <Row className="feed-story" key={index}>
-                  <Col xs={1} sm={1} md={1} lg={1}>
-                    <Avatar size={30} src={reqOrOffer.user.picture}/>
-                  </Col>
-                  <Col xs={7} sm={7} md={7} lg={7}>
-                    <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
-                      <p className="p-color-white">{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`}</p>
-                    </Link>
-                  </Col>
-                  <Col xs={2} xsOffset={1} sm={2} smOffset={1} md={2} mdOffset={1} lg={2} lgOffset={1}>
-      							<p className="p-color-white">{`${reqOrOffer.user.date}`}</p>
-                  </Col>
-                </Row> )
+      return (
+        <Grid className="gradient" fluid>
+          <div className="flex-container">
+            <Row className="flex-row">
+              <h2 className="feed-header">{userName ? `Welcome ${userName}!` : `Welcome Bodhi buddy!`}</h2>
+            </Row>
+            <Row className="flex-row">
+              <h1 className="feed-header">Recent Activity</h1>
+            </Row>
+            <Divider/>
+            { mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
 
-							:
+                reqOrOffer.date ?
+                ( <div>
+                    <Row className="feed-story" key={index}>
+                      <Col xs={1} sm={1} md={1} lg={1}>
+                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.user.picture}/>
+                      </Col>
+                      <Col xs={7} sm={7} md={7} lg={7}>
+                        <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
+                          <p className="p-color-white">{`${reqOrOffer.user.name} needs help "${reqOrOffer.title}"`}</p>
+                        </Link>
+                      </Col>
+                      <Col xs={2} xsOffset={1} sm={2} smOffset={1} md={2} mdOffset={1} lg={2} lgOffset={1}>
+                        <p className="p-color-white">{`${reqOrOffer.user.date}`}</p>
+                      </Col>
+                    </Row>
+                    <Divider/>
+                  </div> )
 
-							( <Row className="feed-story" key={index}>
-                  <Col xs={1} sm={1} md={1} lg={1}>
-                    <Avatar size={30} src={reqOrOffer.offUser.picture}/>
-                  </Col>
-                  <Col xs={7} sm={7} md={7} lg={7}>
-                    <p className="p-color-white">
-                      {`${reqOrOffer.offUser.name} helped ${reqOrOffer.reqUser.name}`}
-                    </p>
-                  </Col>
-                  <Col xs={1} sm={1} md={1} lg={1}>
-                    <Avatar size={30} src={reqOrOffer.reqUser.picture}/>
-                  </Col>
-      					  <Col xs={2} sm={2} md={2} lg={2}>
-                    <p className="p-color-white">{`${reqOrOffer.offUser.date}`}</p>
-      					  </Col>
-                </Row> )
-						))
-					}
-    </Grid>
-	  )
-	}
-})
+                :
+
+                ( <div>
+                    <Row className="feed-story" key={index}>
+                      <Col xs={1} sm={1} md={1} lg={1}>
+                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.offUser.picture}/>
+                      </Col>
+                      <Col xs={7} sm={7} md={7} lg={7}>
+                        <p className="p-color-white">
+                          {`${reqOrOffer.offUser.name} helped ${reqOrOffer.reqUser.name}`}
+                        </p>
+                      </Col>
+                      <Col xs={1} sm={1} md={1} lg={1}>
+                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.reqUser.picture}/>
+                      </Col>
+                      <Col xs={2} sm={2} md={2} lg={2}>
+                        <p className="p-color-white">{`${reqOrOffer.offUser.date}`}</p>
+                      </Col>
+                    </Row>
+                    <Divider/>
+                  </div> )
+                ))}
+          </div>
+        </Grid>
+      )
+    }
+  }
+)

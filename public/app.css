@@ -126,27 +126,14 @@ request details in flex-col-white)  */
   background: white;
 }
 
-/* mobile */
-@media (max-width: 767px) {
-  .flex-col {
-    width: 90vw !important;
-    flex-basis: auto;
-    flex-direction: column;
-    border-radius: 10px;
-    line-height: 1.5em;
-    text-align: center;
-  }
+.container-fluid {
+  padding-right: 40px;
 }
 
 /* desktop/tablet */
 @media (min-width: 767px) {
-  .flex-col {
-    width: 33.3vw !important;
-    flex-basis: auto;
-    flex-direction: column;
-    border-radius: 10px;
-    line-height: 1.5em;
-    text-align: center;
+  .row {
+    width: 50vw !important;
   }
 }
 
@@ -345,4 +332,12 @@ td {
 
 .feed-story {
   display: inline !important;
+}
+
+.feed-avatar {
+  margin-top: 7px;
+}
+
+.feed-header {
+  padding-left: 20px;
 }
