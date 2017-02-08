@@ -9,6 +9,7 @@ let initialState = {
 const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
 const SET_LOCATION = 'SET_LOCATION'
 const SET_SELECTED_MARKER = 'SET_SELECTED_MARKER'
+const UPDATE_MARKERS = 'UPDATE_MARKERS'
 
 const reducer = (state = initialState, action) => {
 
@@ -22,6 +23,10 @@ const reducer = (state = initialState, action) => {
 
     case SET_SELECTED_MARKER:
       newState.selectedMarker = action.selectedMarker
+      break
+
+    case UPDATE_MARKERS:
+      newState.markers = action.markers
       break
 
     case SET_LOCATION:
@@ -47,6 +52,11 @@ export const setLocation = (center) => ({
 export const setSelectedMarker = (selectedMarker) => ({
   type: SET_SELECTED_MARKER,
   selectedMarker
+})
+
+export const updateMarkers = (markers) => ({
+  type: UPDATE_MARKERS,
+  markers
 })
 
 //action-creators
