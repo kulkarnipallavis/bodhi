@@ -28,7 +28,6 @@ export class InvitePage extends Component {
   	}
 
 	handleChange = (type) => (event) => {
-		console.log(event.target.value)
 	    let value = event.target.value
 		this.setState({
 			[type] : value
