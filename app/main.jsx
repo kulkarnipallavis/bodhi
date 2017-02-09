@@ -26,10 +26,9 @@ import AllOffers from './components/AllOffers'
 import {getOpenRequests, getAcceptedOffers} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
 import { getMarkers } from './reducers/map'
-
 import { grabUserLocation } from './reducers/map'
-
 import { findOffers } from './reducers/receive-help'
+import Network from './components/Network'
 
 let offersListener = null
 let userListener = null
@@ -73,6 +72,11 @@ const onLoginEnter = () => {
 });
 }
 
+const onNetworkEnter = () => {
+
+}
+
+
 injectTapEventPlugin()
 
 render(
@@ -92,6 +96,7 @@ render(
         <Route path="/invitefriends" component={InvitePage} />
         <Route path="/home" component={Home} onEnter={onHomeEnter} />
         <Route path="/offers" component={AllOffers} />
+        <Route path="/network" component={Network} />
       </Route>
     </Router>
   </Provider>,
