@@ -120,6 +120,29 @@ export const addToNetwork = (userEmail, currentUserId) => {
       .then(err => console.log(err))
 }
 
+export const sendNetworkRequest = (userEmail, currentUserId, msg) => {
+  return dispatch =>
+    database
+      .ref('Users')
+      .orderByChild('email')
+      .equalTo(userEmail)
+      .once('value', function(snapshot) {
+        if (!snapshot.val()) {
+          console.log("user email not found")
+        } else {
+          let friendUserId = Object.keys(snapshot.val())[0]
+          let friendEmail = snapshot.val()[friendUserId].email
+          database
+          .ref(`Users/${currentUserId}`)
+          .child('msggit')
+          .update({
+              [friendUserId]: msg
+          })
+        }
+      })
+      .then(err => console.log(err))
+}
+
 
 export const loggedOut = () => ({
   type: LOGGED_OUT
