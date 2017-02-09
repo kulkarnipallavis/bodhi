@@ -99,7 +99,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
                   <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
                   <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
                   <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
-                  <Link to="/feed"><MenuItem className="nav-item" primaryText="Activity Feed"></MenuItem></Link>
+                  <Link to="/feed">
+                    <MenuItem className="nav-item" primaryText="Activity Feed"></MenuItem>
+                  </Link>
+                  <Link to="/network"><MenuItem className="nav-item" primaryText="My Network"/></Link>
                   <Divider/>
                   <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
                 </div>
