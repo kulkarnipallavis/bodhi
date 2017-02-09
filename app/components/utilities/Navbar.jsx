@@ -69,9 +69,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
           zDepth={0}
           showMenuIconButton={offers.length ? true : false}
           title={ user ?
-           <Link to="/">
-            {bodhiButton}
-           </Link> :  bodhiButton }
+           <Link to="/feed">{bodhiButton}</Link> : <Link to="/home">{bodhiButton}</Link> }
           iconElementLeft={offers.length ?
             <Link to="/offers">
               <Badge
@@ -93,16 +91,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
                 {
                 !user ?
                 <div>
-                  <Link to="/about"><MenuItem className="nav-item" primaryText="About"/></Link>
-                  <Link to="/loginenter"><MenuItem className="nav-item" primaryText="Log in"/></Link>
-                  <Link to="/signup"><MenuItem className="nav-item" primaryText="Sign up"/></Link>
+                  <Link to="/home"><MenuItem className="nav-item" primaryText="Home"/></Link>
+                  <Link to="/loginsignup"><MenuItem className="nav-item" primaryText="Login / Signup"/></Link>
                 </div>
                 :
                 <div>
-                  <Link to="/about"><MenuItem className="nav-item" primaryText="About"/></Link>
+                  <Link to="/home"><MenuItem className="nav-item" primaryText="Home"/></Link>
                   <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
                   <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
                   <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
+                  <Link to="/feed"><MenuItem className="nav-item" primaryText="Activity Feed"></MenuItem></Link>
                   <Divider/>
                   <Link onClick={this.logout}><MenuItem className="nav-item" primaryText="Log out" /></Link>
                 </div>

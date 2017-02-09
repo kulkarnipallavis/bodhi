@@ -205,7 +205,7 @@ a {
 
 .form-button {
   color:  #533BD7 !important;
-  margin: 35px 0px 0px 0px !important;
+  margin: 35px 15px 0px 15px !important;
 }
 
 .edit-button {
@@ -223,7 +223,7 @@ a {
 /* mobile hero image */
 @media (max-width: 768px){
   .hero {
-    background: url(/img/hero-small.jpg) no-repeat center center scroll;
+    background: url(/img/hero-small-gradient.png) no-repeat center center scroll;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -239,7 +239,7 @@ a {
 /* tablet/desktop hero image */
 @media (min-width: 768px){
   .hero {
-    background: url(/img/hero-large.jpg) no-repeat center center scroll;
+    background: url(/img/hero-large-gradient.png) no-repeat center center scroll;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -253,6 +253,14 @@ a {
 
   .hero-tagline {
     float: right;
+    width: 33%;
+    margin-right: 30px;
+  }
+
+  .mission-text {
+    width: 50%;
+    position: relative;
+    left: 25%;
   }
 }
 

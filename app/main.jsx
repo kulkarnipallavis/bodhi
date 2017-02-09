@@ -15,7 +15,7 @@ import OfferHelp from './components/OfferHelp'
 import Request from './components/Request'
 import Signup from './components/Signup'
 import Login from './components/Login'
-import LoginEnter from './components/LoginEnter'
+import LoginSignup from './components/LoginSignup'
 import Profile from './components/Profile'
 import EditableProfile from './components/EditableProfile'
 import InvitePage from './components/Invite'
@@ -46,7 +46,7 @@ const onEnterApp = () => {
   store.dispatch(grabUserLocation())
 }
 
-const onHomeEnter = () => {
+const onFeedEnter = () => {
   store.dispatch(getOpenRequests())
   store.dispatch(getAcceptedOffers())
 }
@@ -54,7 +54,7 @@ const onHomeEnter = () => {
 const onLoginEnter = () => {
   auth().getRedirectResult().then(function(result) {
     if (result.credential) {
-      browserHistory.push('/')
+      browserHistory.push('/feed')
     }
   })
 }
@@ -67,14 +67,14 @@ render(
       <Route path="/" component={App} onEnter={onEnterApp}>
         <IndexRedirect to="/home"/>
         <Route path="/home" component={Landing} />
-        <Route path="/feed" component={Feed} onEnter={onHomeEnter} />
+        <Route path="/feed" component={Feed} onEnter={onFeedEnter} />
         <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />
         <Route path="/offerhelpmessage" component={OfferHelpMessage} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <Route path="/loginenter" component={LoginEnter} onEnter={onLoginEnter}/>
+        <Route path="/loginsignup" component={LoginSignup} onEnter={onLoginEnter}/>
         <Route path="/profile" component={Profile} />
         <Route path="/editprofile" component={EditableProfile} />
         <Route path="/invitefriends" component={InvitePage} />
