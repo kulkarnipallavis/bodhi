@@ -27,10 +27,11 @@ export class InvitePage extends Component {
     	})
   	}
 
-	handleChange = field => event => {
-	    const value = event.target.value
+	handleChange = (type) => (event) => {
+		console.log(event.target.value)
+	    let value = event.target.value
 		this.setState({
-			[field] : value
+			[type] : value
 		})	
 	}
 
@@ -65,28 +66,30 @@ export class InvitePage extends Component {
 					<div className="flex-col" style={styles.column}>
 					<h1>Invite Friends to Bodhi!</h1>
 					</div>
-					<div className="flex-col" style={styles.column}>
-						<TextField
-						onChange={(event) => this.handleChange(event, "emails")}
-						style={styles.textField}
-						multiLine={true}
-						rows={1}
-						rowsMax={10}
-						id="email"
-						hintText={'Enter up to 10 emails here'}
-						/>
-					</div>
-					<div className="flex-col" style={styles.column}>
-						<TextField
-						onChange={(event) => this.handleChange(event, "message")}
-						style={styles.textField}
-						multiLine={true}
-						rows={10}
-						rowsMax={10}
-						id="message"
-						defaultValue={this.state.message}
-						/>
-					</div>
+					<form>
+						<div className="flex-col" style={styles.column}>
+							<TextField
+							onChange={this.handleChange("emails")}
+							style={styles.textField}
+							multiLine={true}
+							rows={1}
+							rowsMax={10}
+							id="email"
+							hintText={'Enter up to 10 emails here'}
+							/>
+						</div>
+						<div className="flex-col" style={styles.column}>
+							<TextField
+							onChange={this.handleChange("message")}
+							style={styles.textField}
+							multiLine={true}
+							rows={10}
+							rowsMax={10}
+							id="message"
+							defaultValue={this.state.message}
+							/>
+						</div>
+					</form>
 					<div className="flex-col" style={styles.column}>
 						<RaisedButton
 						  onClick={this.handleSubmit}
