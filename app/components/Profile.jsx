@@ -7,7 +7,7 @@ import ContentCreate from 'material-ui/svg-icons/content/create'
 import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextFieldToggle from './TextFieldToggle'
-import { updateUser } from '../reducers/auth'
+import { updateUser, addToNetwork } from '../reducers/auth'
 
 
 export class Profile extends Component {
@@ -26,6 +26,8 @@ export class Profile extends Component {
 
   componentDidMount() {
     this.props.getMarkers()
+
+
   }
 
   componentWillReceiveProps(newProps, oldProps){
@@ -47,6 +49,7 @@ export class Profile extends Component {
   handleClickHome = event => browserHistory.push('/home')
 
   handleChange = field => event => {
+    console.log(event.target.value)
     const value = event.target.value
     this.setState({ [field]: value })
   }
@@ -82,6 +85,9 @@ export class Profile extends Component {
       inputText: { color: 'white' },
       errorStyle: { color: '#F0B259' }
     }
+
+    this.props.addToNetwork("marvin@cat.com", this.props.currentUser.uid)
+    console.log("IN RENDER")
 
     return (
       <div className="profile gradient flex-container">
@@ -242,6 +248,6 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, updateUser }
+const mapDispatchToProps = { getMarkers, updateUser, addToNetwork }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
