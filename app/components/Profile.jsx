@@ -7,7 +7,7 @@ import ContentCreate from 'material-ui/svg-icons/content/create'
 import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextFieldToggle from './TextFieldToggle'
-import { updateUser, addToNetwork } from '../reducers/auth'
+import { updateUser, sendNetworkRequest } from '../reducers/auth'
 
 
 export class Profile extends Component {
@@ -88,8 +88,7 @@ export class Profile extends Component {
       errorStyle: { color: '#F0B259' }
     }
 
-    this.props.addToNetwork("marvin@cat.com", this.props.currentUser.uid)
-    console.log("IN RENDER")
+
 
     return (
       <div className="profile gradient flex-container">
@@ -252,6 +251,6 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, updateUser, addToNetwork }
+const mapDispatchToProps = { getMarkers, updateUser, sendNetworkRequest }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
