@@ -72,14 +72,12 @@ const onLoginEnter = () => {
 });
 }
 
-
 const onNetworkEnter = () => {
 
 }
 
 
 injectTapEventPlugin()
-
 
 render(
   <Provider store={store}>
