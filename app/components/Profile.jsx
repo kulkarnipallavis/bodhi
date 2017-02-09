@@ -88,8 +88,6 @@ export class Profile extends Component {
       errorStyle: { color: '#F0B259' }
     }
 
-
-
     return (
       <div className="profile gradient flex-container">
         { user ?
