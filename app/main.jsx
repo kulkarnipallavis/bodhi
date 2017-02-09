@@ -63,10 +63,6 @@ const onLoginEnter = () => {
   })
 }
 
-const onNetworkEnter = () => {
-
-}
-
 injectTapEventPlugin()
 
 render(

@@ -5,14 +5,23 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Divider from 'material-ui/Divider'
 import Avatar from 'material-ui/Avatar'
+import { addToNetwork } from '../reducers/auth'
 
 const mapStateToProps = (state) => {
 	return {
-
+		currentUser: state.currentUser
 	}
 }
 
-export default connect(mapStateToProps, null)(
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addToNetworkDispatch : (email, userId) => {
+			dispatch(addToNetwork(email, userId))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
 
 	class Network extends Component{
 
@@ -26,19 +35,20 @@ export default connect(mapStateToProps, null)(
 			this.handleChange = this.handleChange.bind(this)
 			this.handleSubmit = this.handleSubmit.bind(this)
 			this.validateEmail = this.validateEmail.bind(this)
+			this.clearEmail = this.clearEmail.bind(this)
 		}
 
 		handleSubmit(evt){
 			evt.preventDefault()
-			console.log(evt.target.email.value)
-			
+			this.props.addToNetworkDispatch(this.state.email, this.props.currentUser.uid)
+			this.clearEmail()
 		}
 
 		handleChange(evt){
 			const email = evt.target.value
 			console.log("email", email)
 			const validEmail = this.validateEmail(email)
-			if(email){
+			if(email && validEmail){
 				this.setState({
 					disabled: false,
 					email: evt.target.value,
@@ -47,7 +57,7 @@ export default connect(mapStateToProps, null)(
 			}else{
 				this.setState({
 					disabled: true,
-					email: evt.target.value,
+					// email: evt.target.value,
 					isEmailValid: validEmail
 				})
 			}
@@ -57,6 +67,14 @@ export default connect(mapStateToProps, null)(
 		validateEmail(email){
 			const pattern = /\S+@\S+\.\S+/
 			return pattern.test(email)
+		}
+
+		clearEmail(){
+			this.setState({
+				email: '',
+				disabled: true,
+				isEmailValid: true
+			})
 		}
 
 		render(){
@@ -88,6 +106,7 @@ export default connect(mapStateToProps, null)(
 			              	<TextField
 				                id="email"
 				                type="email"
+				                value={this.state.email}
 				              	floatingLabelText="Email"
 				              	floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
 				              	inputStyle={styles.inputStyle}
