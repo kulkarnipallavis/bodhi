@@ -43,10 +43,12 @@ export class Profile extends Component {
   }
 
   handleClickEdit = field => event => this.setState({ [`editing${field}`]: true })
+
   handleClickCancelEdit = field => event => this.setState({ [`editing${field}`]: false })
 
-  handleClickLoginSignup = event => browserHistory.push('/loginenter')
-  handleClickHome = event => browserHistory.push('/home')
+  handleClickLoginSignup = event => browserHistory.push('/loginsignup')
+
+  handleClickHome = event => browserHistory.push('/feed')
 
   handleChange = field => event => {
     console.log(event.target.value)

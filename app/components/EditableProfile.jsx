@@ -108,7 +108,7 @@ class EditableProfile extends Component {
           </div>
           :
           <div className="flex-row">
-            <Link to="/loginenter"><u><p>Please sign in</p></u></Link>
+            <Link to="/loginsignup"><u><p>Please sign in</p></u></Link>
           </div>
        }
       </div>

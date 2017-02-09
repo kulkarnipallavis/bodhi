@@ -60,8 +60,7 @@ export class InvitePage extends Component {
     const styles = {
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
-      inputStyle: { color: 'white' },
-      errorStyle: { color: '#F0B259' }
+      inputStyle: { color: 'white' }
     }
 
 		return (
