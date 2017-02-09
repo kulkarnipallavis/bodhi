@@ -61,7 +61,8 @@ export const loggedIn = (user) => {
             badges: snapshot.val().badges,
             skills: snapshot.val().tags || '',
             phone: snapshot.val().phone,
-            bio: snapshot.val().bio || ''
+            bio: snapshot.val().bio || '',
+            network: snapshot.val().network
           }
         dispatch({
           type: LOGGED_IN,
@@ -91,6 +92,31 @@ export const updateUser = updatedUser => dispatch => {
   .child(updatedUser.uid)
   .update(updates)
 }
+
+
+export const addToNetwork = (userEmail, currentUserId) => {
+  return dispatch => {
+    return database
+      .ref('Users')
+      .orderByChild('email')
+      .equalTo(userEmail)
+      .once('value', function(snapshot) {
+        if (!snapshot.val()) {
+          console.log("user email not found")
+        } else {
+          // database
+          // .ref('Users')
+          // .child(currentUserId)
+          // .update({ network: {
+
+          // }})
+          console.log('snapshot here: ', Object.keys(snapshot.val())[0])
+        }
+      })
+      .then(err => console.log(err))
+    }
+  }
+
 
 export const loggedOut = () => ({
   type: LOGGED_OUT
