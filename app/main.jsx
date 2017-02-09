@@ -26,7 +26,7 @@ import Landing from './components/HomeLoggedOut'
 
 import {getOpenRequests, getAcceptedOffers} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-import { grabUserLocation } from './reducers/map'
+import { getMarkers, grabUserLocation } from './reducers/map'
 import { findOffers } from './reducers/receive-help'
 
 let offersListener = null
