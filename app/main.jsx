@@ -38,12 +38,13 @@ auth().onAuthStateChanged(function(user) {
   } else {
     store.dispatch(loggedOut())
     offersListener && offersListener()
-    browserHistory.push('/')
+    browserHistory.push('/loginenter')
   }
 })
 
 const onEnterApp = () => {
   store.dispatch(grabUserLocation())
+  store.dispatch(getMarkers())
 }
 
 const onFeedEnter = () => {

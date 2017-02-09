@@ -80,7 +80,7 @@ body {
 #navbar-brand {
   font-family: 'Lobster', cursive;
   font-size: 1.8em;
-  color: white;
+  color: white !important;
   padding: 10px 10px 0px 10px;
   vertical-align: bottom;
 }
@@ -89,13 +89,15 @@ body {
   color: #533BD7 !important;
 }
 
-/*  LAYOUT --> Wrap flex-rows in a flex-container on each individual view, only use flex-col when you want a bubble within a flex-row (a la the Offer Help form's request details in flex-col-white)  */
+/*  LAYOUT --> Wrap flex-rows in a flex-container on each individual view, only
+use flex-col when you want a bubble within a flex-row (a la the Offer Help form's
+request details in flex-col-white)  */
 
 .flex-container {
+  width: 100%;
   padding: 25px 0px 25px 0px;
   height: 100%;
   min-height: 100vh;
-  width: 100%;
 }
 
 .flex-row {
@@ -115,24 +117,38 @@ body {
   background: white;
 }
 
-.flex-col {
-  flex-basis: auto;
-  flex-direction: column;
-  border-radius: 10px;
-  margin: 25px;
-  padding: 15px;
-  line-height: 1.5em;
-  text-align: center;
-}
-
 .flex-col-white {
+  width: 33.3vw !important;
+  min-width: 300px;
   flex-basis: auto;
   flex-direction: column;
-  border-radius: 10px;
-  margin: 25px;
   padding: 15px;
   line-height: 1.5em;
   background: white;
+  border-radius: 5px;
+  color: ;
+}
+
+/* desktop/tablet */
+@media (min-width: 767px) {
+  .flex-container-feed {
+    width: 50vw;
+    height: 100%;
+    min-height: 100vh;
+    position: relative;
+    left: -25%;
+    float: right;
+    color: #533BD7;
+  }
+}
+
+@media (max-width: 767px) {
+  .flex-container-feed {
+    width: 100%;
+    padding: 25px 0px 25px 0px;
+    height: 100%;
+    min-height: 100vh;
+  }
 }
 
 /* TEXT */
@@ -148,14 +164,13 @@ h1 {
 h2 {
   margin-right: 0px;
   color: white;
-  font-size: 1.5em;
 }
 
 h3 {
   margin: 10px;
   color: #533BD7;
   line-height: 1.25em;
-  font-size: 1.3em;
+  font-size: 1.5em;
 }
 
 h4 {
@@ -175,11 +190,6 @@ p {
   margin: 10px;
 }
 
-li {
-  font-size: 1.25em;
-  margin: 10px;
-}
-
 .p-color-white {
   color: white !important;
   font-size: 1.25em;
@@ -195,6 +205,11 @@ u {
 
 u:hover {
   color: #F0B259;
+  font-style: italic;
+}
+
+.u-color-white {
+  color: white !important;
 }
 
 a {
@@ -262,6 +277,12 @@ a {
     position: relative;
     left: 25%;
   }
+}
+
+/* PROFILE */
+
+.profile {
+  color: white!important;
 }
 
 /* PROFILE */
@@ -377,4 +398,26 @@ td {
   text-align: center !important;
   vertical-align: middle !important;
   padding: 15px !important;
+}
+
+/* FEED */
+
+.feed-story {
+  display: inline !important;
+}
+
+.feed-avatar {
+  margin-top: 7px;
+}
+
+.container-fluid {
+  padding-right: 20px;
+}
+
+.feed-header {
+  padding-left: 20px;
+}
+
+hr {
+  align: center !important;
 }

@@ -23,10 +23,6 @@ class MapContainer extends Component {
     this.legendToggle = this.legendToggle.bind(this)
   }
 
-  componentDidMount() {
-    this.props.getMarkers()
-  }
-
   handleMapLoad(map) {
     this._mapComponent = map
     if (map) map.getZoom()
@@ -117,6 +113,7 @@ MapContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
+  selectedMarker: state.map.selectedMarker,
   markers: state.map.markers,
   center: {
     lat: parseFloat(state.map.center.latitude),

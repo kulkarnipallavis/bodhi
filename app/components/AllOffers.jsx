@@ -5,18 +5,25 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Avatar from 'material-ui/Avatar'
 import smsLink from 'sms-link'
 import { respondToOffer } from '../reducers/offer-help'
-import { updateRequestStatus } from '../reducers/request-actions'
+import { findRequestByKey, updateRequestStatus } from '../reducers/request-actions'
+import { Grid, Row, Col } from 'react-bootstrap'
+import Divider from 'material-ui/Divider'
+import Done from 'material-ui/svg-icons/action/done';
+import Clear from 'material-ui/svg-icons/content/clear';
+import IconButton from 'material-ui/IconButton';
 
 
 class AllOffers extends Component {
 
   constructor(props) {
     super(props)
+
+    this.declineAndCheck = this.declineAndCheck.bind(this)
   }
 
   handleRespond = (newOfferStatus, offer) => (event) => {
     event.preventDefault()
-    console.log("newOfferStatus, offer ", newOfferStatus, offer)
+
     const textBody = newOfferStatus === 'declined' ?
     'I have already accepted another neighbor\'s help, but thank you for offering!'
     :
@@ -30,10 +37,34 @@ class AllOffers extends Component {
     this.props.respond(newOfferStatus, offer.offKey)
 
     if (newOfferStatus === 'accepted') {
-      console.log('offer.reqKey ', offer.reqKey)
       this.props.updateRequestStatus('closed', offer.reqKey)
+    } else {  //if declined
+        this.declineAndCheck(offer)
     }
   }
+
+  declineAndCheck(offer) {
+    let reqKey = offer.reqKey
+    //check if request is closed
+    this.props.findRequestByKey(reqKey)
+    .then( (req) => {
+      if (req.status !== 'closed') {
+        //if not closed (if an offer for this request has not been previously accepted), check offersReceived for other offers for the same request
+        let offersReceived = this.props.offersReceived
+        let count = 0
+        for (let x= 0; x < offersReceived.length; x++) {
+          if (offersReceived[x].reqKey === offer.reqKey && offersReceived[x].offKey !== offer.offKey) {
+            //if there is another offer for the same request (that is not the offer just deleted), status stays pending
+            count++
+          }
+        }
+        //if no other pending offer are found for the request, change status of request to open
+        if (!count) this.props.updateRequestStatus('open', offer.reqKey)
+      }
+    })
+  }
+
+
 
   render() {
     let offers = this.props.offersReceived
@@ -42,42 +73,45 @@ class AllOffers extends Component {
     const allOffers = offers ? offers : []
 
     return (
-      <div className="gradient flex-container">
-        <div className="flex-row">
-          <h1>Pending Help Offers</h1>
-        </div>
-        <div className="flex-row">
-          <Table responsive={true} bordered={true} style={styles}>
-            <tbody>
-             { allOffers && allOffers.map((offer, index) => (
-               <tr key={index}>
-                 <td><Avatar size={48} src={offer.offUser.picture}/></td>
-                 <td>{offer.offUser.name}</td>
-                 <td>{offer.message}</td>
-                 <td>
-                   <RaisedButton
-                   label="Accept"
-                   primary={false}
-                   style={{ margin: 12 }}
-                   labelColor="#533BD7"
-                   backgroundColor="white"
-                   onClick={this.handleRespond('accepted', offer)}/>
-                 </td>
-                 <td>
-                   <RaisedButton
-                   label="Decline"
-                   secondary={false}
-                   style={{ margin: 12 }}
-                   labelColor="#533BD7"
-                   backgroundColor="white"
-                   onClick={this.handleRespond('declined', offer)}/>
-                  </td>
-                </tr>
-              ))  }
-           </tbody>
-         </Table>
-        </div>
-      </div>
+      <Grid className="gradient" fluid>
+        <div className="flex-container-feed">
+          <Row className="flex-row">
+            <h1 className="feed-header">Pending Help Offers</h1>
+          </Row>
+            <Divider/>
+             { allOffers && allOffers.map((offer, index) => {
+
+                return (
+                <div key={index}>
+                    <Row className="feed-story">
+                      <Col xs={1} sm={1} md={1} lg={1}>
+                          <Avatar size={30} src={offer.offUser.picture}/>
+                      </Col>
+                      <Col xs={3} sm={3} md={3} lg={3}>
+                        <p className="p-color-white">{offer.offUser.name.split(' ')[0]}</p>
+                      </Col>
+                      <Col xs={6} sm={6} md={6} lg={6}>
+                        <p className="p-color-white">{offer.message}</p>
+                      </Col>
+                      <Col xs={2} sm={2} md={2} lg={2}>
+                        <IconButton tooltip="Accept"
+                          iconStyle={{color: "#533BD7", background: 'white'}}
+                          onClick={this.handleRespond('accepted', offer)}>
+                            <Done />
+                        </IconButton>
+                        <IconButton tooltip="Decline"
+                          iconStyle={{color: "#533BD7", background: 'white'}}
+                          onClick={this.handleRespond('declined', offer)}>
+                          <Clear />
+                        </IconButton>
+                      </Col>
+                      </Row>
+                      <Divider/>
+                  </div>
+                )
+              })  }
+           </div>
+        </Grid>
     )
   }
 }
@@ -85,7 +119,8 @@ class AllOffers extends Component {
 const mapStateToProps = state => ({ offersReceived: state.offersReceived })
 const mapDispatchToProps = dispatch => ({
   respond: (status, offerKey) => dispatch(respondToOffer(status, offerKey)),
-  updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey))
+  updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey)),
+  findRequestByKey: (reqKey) => dispatch(findRequestByKey(reqKey))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllOffers)

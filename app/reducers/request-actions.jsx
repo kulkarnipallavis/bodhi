@@ -49,5 +49,14 @@ export const updateRequestStatus = (status, markerKey) => {
 
 //export default requestReducer
 
-
+export const findRequestByKey = (reqKey) => {
+  return dispatch =>
+    database
+      .ref('Requests')
+      .child(reqKey)
+      // .orderByChild('status')
+      // .equalTo('closed')
+      .once('value')
+      .then(snap => snap.val())
+}
 
