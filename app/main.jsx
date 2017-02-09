@@ -32,13 +32,15 @@ import { grabUserLocation } from './reducers/map'
 import { findOffers } from './reducers/receive-help'
 
 let offersListener = null
+let userListener = null
 
 auth().onAuthStateChanged(function(user) {
   if (user) {
-    store.dispatch(loggedIn(user))
+    userListener = store.dispatch(loggedIn(user))
     offersListener = store.dispatch(findOffers(user.uid))
   } else {
     store.dispatch(loggedOut())
+    userListener && userListener()
     offersListener && offersListener()
     browserHistory.push('/loginenter')
   }
@@ -71,7 +73,7 @@ const onLoginEnter = () => {
 });
 }
 
-injectTapEventPlugin()  
+injectTapEventPlugin()
 
 render(
   <Provider store={store}>
