@@ -4,6 +4,7 @@ import { Grid, Row, Col } from 'react-bootstrap'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Divider from 'material-ui/Divider'
+import Avatar from 'material-ui/Avatar'
 
 const mapStateToProps = (state) => {
 	return {
@@ -67,7 +68,16 @@ export default connect(mapStateToProps, null)(
 		        errorStyle: { color: '#F0B259' }
 		    }
 
-			const dummyConnections = []
+			const dummyConnections = [{
+					name: "Sam",
+					picture: "/img/avatar-m.svg"
+				},
+				{
+					name: "Susan",
+					picture: "/img/avatar-w.svg"
+				}
+
+			]
 			return(
 				<Grid className="gradient" fluid>
 	          		<div className="flex-container-feed">
@@ -102,6 +112,25 @@ export default connect(mapStateToProps, null)(
 		              		<h1 className="feed-header">All Connections</h1>
 		            	</div>
 		            	<Divider/>
+		            	{
+		            		dummyConnections && dummyConnections.map((connection, index) =>(
+		            			<div key={index}>
+				                    <Row className="feed-story">
+				                      <Col xs={4} sm={4} md={4} lg={4}>
+				                        <Avatar className="feed-avatar" size={30} src={connection.picture}/>
+				                      </Col>
+				                      <Col xs={8} sm={8} md={8} lg={8}>
+				                      	<u className="u-color-white">
+				                            <p className="p-color-white">
+				                              {connection.name}
+				                            </p>
+				                          </u>
+				                      </Col>
+				                	</Row>
+                    				<Divider/>
+                  				</div>
+		            		))
+		            	}
 		            </div>
 		        </Grid>
 	       )
