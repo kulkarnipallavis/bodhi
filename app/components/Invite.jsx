@@ -9,6 +9,7 @@ export class InvitePage extends Component {
 
 	constructor(props) {
 		super(props)
+
 		this.state = {
 			emails : "",
 			message: ""
@@ -16,6 +17,15 @@ export class InvitePage extends Component {
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
+
+	componentWillReceiveProps(newProps, oldProps){
+    	if (newProps.currentUser) this.setState(newProps.currentUser)
+    	let defaultMessage = newProps.currentUser.name ? `${newProps.currentUser.name} would like you to join Bodhi! Visit bodhi-7ad02.firebaseapp.com to get started.` : "You've been invited to join Bodhi! Visit bodhi-7ad02.firebaseapp.com to get started."
+    	
+    	this.setState({
+    		message: defaultMessage
+    	})
+  	}
 
 	handleChange = field => event => {
 	    const value = event.target.value
@@ -57,7 +67,7 @@ export class InvitePage extends Component {
 					</div>
 					<div className="flex-col" style={styles.column}>
 						<TextField
-						onChange={(event) => this.handleChange(event, 'emails')}
+						onChange={(event) => this.handleChange(event, "emails")}
 						style={styles.textField}
 						multiLine={true}
 						rows={1}
@@ -68,13 +78,13 @@ export class InvitePage extends Component {
 					</div>
 					<div className="flex-col" style={styles.column}>
 						<TextField
-						onChange={(event) => this.handleChange(event, 'message')}
+						onChange={(event) => this.handleChange(event, "message")}
 						style={styles.textField}
 						multiLine={true}
 						rows={10}
 						rowsMax={10}
 						id="message"
-						defaultValue={user.name ? `${user.name} would like you to join Bodhi! Visit bodhi-7ad02.firebaseapp.com to get started.` : "You've been invited to join Bodhi! Visit bodhi-7ad02.firebaseapp.com to get started."}
+						defaultValue={this.state.message}
 						/>
 					</div>
 					<div className="flex-col" style={styles.column}>

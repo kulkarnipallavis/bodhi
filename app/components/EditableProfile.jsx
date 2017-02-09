@@ -24,6 +24,7 @@ class EditableProfile extends Component {
   }
 
   handleChange = field => event => {
+    console.log(event.target.value)
     const value = event.target.value
     this.setState({
       [field]: value
