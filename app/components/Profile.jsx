@@ -226,8 +226,10 @@ export class Profile extends Component {
         }
         <div className="flex-row">
           <RaisedButton
+            type="button"
             className="form-button"
             label="Home"
+            labelColor="#533BD7"
             backgroundColor="white"
             onClick={this.handleClickHome}/>
         </div>
