@@ -49,6 +49,7 @@ export class Profile extends Component {
   handleClickHome = event => browserHistory.push('/home')
 
   handleChange = field => event => {
+    console.log(event.target.value)
     const value = event.target.value
     this.setState({ [field]: value })
   }
