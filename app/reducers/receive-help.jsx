@@ -37,12 +37,12 @@ const findHelper = (offer) => {
 
 export const findOffers = (uid) => {
   return (dispatch) => {
-  const ref = database
+    const ref = database
     .ref('Offers')
     .orderByChild('reqUid')
     .equalTo(uid)
 
-  const listener = ref
+    const listener = ref
     .on('value', function(snapshot) {
 
       let offers = [];

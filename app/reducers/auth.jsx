@@ -3,11 +3,18 @@ import { database } from '../firebase'
 const LOGGED_IN = 'LOGGED_IN'
 export const LOGGED_OUT = 'LOGGED_OUT'
 const UPDATE_USER = 'GET_USER'
+const UPDATE_NETWORK = 'UPDATE_NETWORK'
 
 const reducer = (state = null, action) => {
   switch (action.type) {
     case LOGGED_IN: return action.user
-    case UPDATE_USER: return action.updatedUser
+    case UPDATE_USER:
+      let newUser = Object.assign({}, state, action.updatedUser)
+      return newUser
+    case UPDATE_NETWORK:
+      // let newNetwork = Object.assign({}, state.network, action.newFriend)
+      // let newUser1= Object.assign({}, state, {newNetwork})
+      // return newUser1
     case LOGGED_OUT: return null
     default: return state
   }
@@ -18,9 +25,11 @@ export default reducer
 
 export const loggedIn = (user) => {
   return dispatch => {
-    return database
-      .ref('Users').child(user.uid)
-      .once('value', function(snapshot){
+    const ref = database
+    .ref('Users').child(user.uid)
+
+    const listener = ref
+    .on('value', function(snapshot){
 
       if (!snapshot.val()){
         const date = new Date
@@ -53,16 +62,9 @@ export const loggedIn = (user) => {
         })
       } else {
           const newUser = {
+            ...snapshot.val(),
             uid: user.uid,
-            email: user.email,
-            name: snapshot.val().name,
-            picture: snapshot.val().picture,
-            dateJoined: snapshot.val().dateJoined,
-            badges: snapshot.val().badges,
-            skills: snapshot.val().tags || '',
-            phone: snapshot.val().phone,
-            bio: snapshot.val().bio || '',
-            network: snapshot.val().network
+            email: user.email
           }
         dispatch({
           type: LOGGED_IN,
@@ -70,6 +72,7 @@ export const loggedIn = (user) => {
         })
       }
     })
+    return () => ref.off('value', listener)
   }
 }
 
@@ -105,17 +108,17 @@ export const addToNetwork = (userEmail, currentUserId) => {
           console.log("user email not found")
         } else {
           let friendUserId = Object.keys(snapshot.val())[0]
+          let friendEmail = snapshot.val()[friendUserId].email
           database
           .ref(`Users/${currentUserId}`)
           .child('network')
           .update({
-              [friendUserId]: snapshot.val()[friendUserId].email
+              [friendUserId]: friendEmail
           })
         }
       })
       .then(err => console.log(err))
 }
-
 
 
 export const loggedOut = () => ({

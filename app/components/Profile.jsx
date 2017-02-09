@@ -85,7 +85,7 @@ export class Profile extends Component {
       errorStyle: { color: '#F0B259' }
     }
 
-    this.props.addToNetwork("marmie@mar.com", "MCCZuD4W79cW0DPOiefdVuWpxcG3")
+    this.props.addToNetwork("marvin@cat.com", this.props.currentUser.uid)
     console.log("IN RENDER")
 
     return (
