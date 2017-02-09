@@ -95,8 +95,8 @@ export const updateUser = updatedUser => dispatch => {
 
 
 export const addToNetwork = (userEmail, currentUserId) => {
-  return dispatch => {
-    return database
+  return dispatch =>
+     database
       .ref('Users')
       .orderByChild('email')
       .equalTo(userEmail)
@@ -104,18 +104,18 @@ export const addToNetwork = (userEmail, currentUserId) => {
         if (!snapshot.val()) {
           console.log("user email not found")
         } else {
-          // database
-          // .ref('Users')
-          // .child(currentUserId)
-          // .update({ network: {
-
-          // }})
-          console.log('snapshot here: ', Object.keys(snapshot.val())[0])
+          let friendUserId = Object.keys(snapshot.val())[0]
+          database
+          .ref(`Users/${currentUserId}`)
+          .child('network')
+          .update({
+              [friendUserId]: snapshot.val()[friendUserId].email
+          })
         }
       })
       .then(err => console.log(err))
-    }
-  }
+}
+
 
 
 export const loggedOut = () => ({
