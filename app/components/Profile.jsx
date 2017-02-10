@@ -26,8 +26,7 @@ export class Profile extends Component {
 
   componentDidMount() {
     this.props.getMarkers()
-
-
+    // this.props.sendNetworkRequest("hyphenlowercase@gmail.com", this.props.currentUser, "adddd mmeeeee!")
   }
 
   componentWillReceiveProps(newProps, oldProps){

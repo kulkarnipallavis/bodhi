@@ -1,9 +1,13 @@
-import { database } from '../firebase.jsx'
 import firebase from 'firebase'
+import { database } from '../firebase.jsx'
+
 
 export const submitOffer = (newOffer) => dispatch => {
-  var newOfferKey = database.ref().child('Offers').push().key
-  var updates = {[`/Offers/${newOfferKey}`]: newOffer}
+  let newOfferKey = database.ref().child('Offers').push().key
+  let time = firebase.database.ServerValue.TIMESTAMP
+  let newOfferWithTime = {...newOffer, date: time }
+
+  let updates = {[`/Offers/${newOfferKey}`]: newOfferWithTime }
 
   return database.ref().update(updates)
 }
