@@ -47,6 +47,7 @@ auth().onAuthStateChanged(function(user) {
 
 const onEnterApp = () => {
   store.dispatch(grabUserLocation())
+  store.dispatch(getAllMarkers())
 }
 
 const onFeedEnter = () => {
@@ -63,9 +64,6 @@ const onLoginEnter = () => {
 }
 
 
-const onMapEnter = () => {
-    store.dispatch(getAllMarkers())
-}
 
 injectTapEventPlugin()
 
