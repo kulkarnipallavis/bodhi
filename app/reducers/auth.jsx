@@ -113,13 +113,14 @@ export const addToNetwork = (userEmail, currentUserId) => {
           .ref(`Users/${currentUserId}`)
           .child('network')
           .update({
-              [friendUserId]: friendEmail
+              [friendUserId]: friendEmail,
+              name: snapshot.val()[friendUserId].name,
+              picture: snapshot.val()[friendUserId].picture
           })
         }
       })
       .then(err => console.log(err))
 }
-
 
 export const loggedOut = () => ({
   type: LOGGED_OUT
