@@ -106,12 +106,10 @@ export const addToNetwork = (userEmail, currentUserId) => {
           console.log("user email not found")
         } else {
           let friendUserId = Object.keys(snapshot.val())[0]
-          let friendEmail = snapshot.val()[friendUserId].email
           database
-          .ref(`Users/${currentUserId}`)
-          .child('network')
-          .update({
-              [friendUserId]: friendEmail,
+          .ref(`Users/${currentUserId}/network`)
+          .push({
+              uid: friendUserId,
               name: snapshot.val()[friendUserId].name,
               picture: snapshot.val()[friendUserId].picture
           })
