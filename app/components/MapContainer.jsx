@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import MapComponent from './MapComponent'
 import { connect } from 'react-redux'
-import { getMarkers, setSelectedMarker } from '../reducers/map'
+import { getAllMarkers, getNetworkMarkers, setSelectedMarker } from '../reducers/map'
 import { browserHistory } from 'react-router'
 import Avatar from 'material-ui/Avatar'
+import FlatButton from 'material-ui/FlatButton'
 import store from '../store'
 
 
@@ -19,8 +20,11 @@ class MapContainer extends Component {
     this.handleMarkerClick = this.handleMarkerClick.bind(this)
     this.handleMarkerClose = this.handleMarkerClose.bind(this)
     this.handleMapLoad = this.handleMapLoad.bind(this)
-    this.handleButtonClick = this.handleButtonClick.bind(this)
+    this.handleInfoButtonClick = this.handleInfoButtonClick.bind(this)
     this.legendToggle = this.legendToggle.bind(this)
+    this.publicButtonClick = this.publicButtonClick.bind(this)
+    this.networkButtonClick = this.networkButtonClick.bind(this)
+
   }
 
   handleMapLoad(map) {
@@ -47,15 +51,22 @@ class MapContainer extends Component {
    })
   }
 
-  handleButtonClick() {
+  handleInfoButtonClick() {
     browserHistory.push('/offerhelp');
   }
 
   legendToggle() {
-    console.log('click')
     this.setState({
       legendClick: !this.state.legendClick
     })
+  }
+
+  networkButtonClick() {
+    store.dispatch(getNetworkMarkers(this.props.currentUser.uid))
+  }
+
+  publicButtonClick() {
+    store.dispatch(getAllMarkers())
   }
 
   render() {
@@ -68,39 +79,49 @@ class MapContainer extends Component {
 
     return (
       <div>
-        { (!this.state.legendClick) ?
+        <FlatButton 
+          label="Network"
+          onClick={this.networkButtonClick}
+        />
+        <FlatButton 
+          label="Public"
+          onClick={this.publicButtonClick}
+        />
+        <div>
+          { (!this.state.legendClick) ?
 
-        <div id="map-legend">
-          <div className="flex-row-legend">
-            {redMarker}
-            <p>Submitted</p>
-            <span id="close-x-span" onClick={this.legendToggle}>{closeX}</span>
-          </div>
-          <div className="flex-row-legend">
-            {purpleMarker}
-            <p id="descender-fix">Offers Pending</p>
-          </div>
-        </div>
-
-        : <div id="map-legend-min">
+          <div id="map-legend">
             <div className="flex-row-legend">
-
-              <p id="legend-fix">Map Legend</p>
+              {redMarker}
+              <p>Submitted</p>
               <span id="close-x-span" onClick={this.legendToggle}>{closeX}</span>
             </div>
-
+            <div className="flex-row-legend">
+              {purpleMarker}
+              <p id="descender-fix">Offers Pending</p>
+            </div>
           </div>
-        }
 
-        <MapComponent
-          containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }
-          mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
-          onMapLoad={this.handleMapLoad}
-          markers={this.props.markers}
-          center={this.props.center}
-          onMarkerClick={this.handleMarkerClick}
-          onMarkerClose={this.handleMarkerClose}
-          handleButtonClick={this.handleButtonClick}/>
+          : <div id="map-legend-min">
+              <div className="flex-row-legend">
+
+                <p id="legend-fix">Map Legend</p>
+                <span id="close-x-span" onClick={this.legendToggle}>{closeX}</span>
+              </div>
+
+            </div>
+          }
+
+          <MapComponent
+            containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }
+            mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
+            onMapLoad={this.handleMapLoad}
+            markers={this.props.markers}
+            center={this.props.center}
+            onMarkerClick={this.handleMarkerClick}
+            onMarkerClose={this.handleMarkerClose}
+            handleInfoButtonClick={this.handleInfoButtonClick}/>
+        </div>
       </div>
     )
   }
@@ -118,9 +139,10 @@ const mapStateToProps = (state) => ({
   center: {
     lat: parseFloat(state.map.center.latitude),
     lng: parseFloat(state.map.center.longitude)
-  }
+  },
+  currentUser: state.currentUser
 })
 
-const mapDispatchToProps = { getMarkers, setSelectedMarker }
+const mapDispatchToProps = { getAllMarkers, getNetworkMarkers, setSelectedMarker }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)
