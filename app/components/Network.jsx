@@ -5,14 +5,26 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Divider from 'material-ui/Divider'
 import Avatar from 'material-ui/Avatar'
+import { addToNetwork, sendNetworkRequest } from '../reducers/auth'
 
 const mapStateToProps = (state) => {
 	return {
-
+		currentUser: state.currentUser
 	}
 }
 
-export default connect(mapStateToProps, null)(
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addToNetworkDispatch : (email, userId) => {
+			dispatch(addToNetwork(email, userId))
+		},
+		sendNetworkRequestDispatch : (friendEmail, currentUser, msg) => {
+			dispatch(sendNetworkRequest(friendEmail, currentUser, msg))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
 
 	class Network extends Component{
 
@@ -21,24 +33,28 @@ export default connect(mapStateToProps, null)(
 			this.state = {
 				email: '',
 				disabled: true,
-				isEmailValid: true
+				isEmailValid: true,
+				message: 'Please add me to your network'
 			}
 			this.handleChange = this.handleChange.bind(this)
 			this.handleSubmit = this.handleSubmit.bind(this)
 			this.validateEmail = this.validateEmail.bind(this)
+			this.clearEmail = this.clearEmail.bind(this)
+			this.handleChangeMessage = this.handleChangeMessage.bind(this)
 		}
 
 		handleSubmit(evt){
 			evt.preventDefault()
-			console.log(evt.target.email.value)
-
+			// this.props.addToNetworkDispatch(this.state.email, this.props.currentUser.uid)
+			this.props.sendNetworkRequestDispatch(this.state.email, this.props.currentUser.uid, this.props.message)
+			this.clearEmail()
 		}
 
 		handleChange(evt){
 			const email = evt.target.value
 			console.log("email", email)
 			const validEmail = this.validateEmail(email)
-			if(email){
+			if(email && validEmail){
 				this.setState({
 					disabled: false,
 					email: evt.target.value,
@@ -47,7 +63,6 @@ export default connect(mapStateToProps, null)(
 			}else{
 				this.setState({
 					disabled: true,
-					email: evt.target.value,
 					isEmailValid: validEmail
 				})
 			}
@@ -59,25 +74,38 @@ export default connect(mapStateToProps, null)(
 			return pattern.test(email)
 		}
 
+		clearEmail(){
+			this.setState({
+				email: '',
+				disabled: true,
+				isEmailValid: true
+			})
+		}
+
+		handleChangeMessage(evt){
+			this.setState({
+				message : evt.target.value
+			})
+		}
+
 		render(){
 
 			const styles = {
 			    floatingLabelFocusStyle: { color: '#FFFFFF' },
 			    underlineFocusStyle: { borderColor: '#FFFFFF' },
 			    inputStyle: { color: '#FFFFFF' },
-		      errorStyle: { color: '#FC2A34' },
+		      	errorStyle: { color: '#FC2A34' },
 		    }
 
-			const dummyConnections = [{
-					name: "Sam",
-					picture: "/img/avatar-m.svg"
-				},
-				{
-					name: "Susan",
-					picture: "/img/avatar-w.svg"
-				}
+			const currentUser = this.props.currentUser
+			const connectionsObj = currentUser ? this.props.currentUser.network : {}
 
-			]
+			const consKeys = connectionsObj ? Object.keys(connectionsObj) : []
+			let connections = []
+			for(let key in connectionsObj){
+				connections.push(connectionsObj[key])
+			}
+
 			return(
 				<Grid className="gradient" fluid>
 	          		<div className="flex-container-feed">
@@ -88,6 +116,7 @@ export default connect(mapStateToProps, null)(
 			              	<TextField
 				                id="email"
 				                type="email"
+				                value={this.state.email}
 				              	floatingLabelText="Email"
 				              	floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
 				              	inputStyle={styles.inputStyle}
@@ -95,6 +124,19 @@ export default connect(mapStateToProps, null)(
 				              	underlineFocusStyle={styles.underlineFocusStyle}
 				              	errorText={this.state.isEmailValid ? '' : 'Please enter a valid email(e.g. email@gmail.com).'}
 				              	errorStyle={styles.errorStyle} />
+
+				            <TextField
+				                name="msg"
+				                textareaStyle={styles.inputStyle}
+				                value={this.state.message}
+				                onChange={this.handleChangeMessage}
+				                multiLine={true}
+				                hintText="Message To Friend"
+				                floatingLabelText="Message To Friend"
+				                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+				                underlineFocusStyle={styles.underlineFocusStyle}
+				                errorText={this.state.messageIsValid ? '' : 'Please enter a message.'}
+				                errorStyle={styles.errorStyle}/>
 
 				            <RaisedButton
 					           	onClick={this.handleSubmit}
@@ -109,11 +151,11 @@ export default connect(mapStateToProps, null)(
 
 			            </div>
 		            	<div className="flex-row">
-		              		<h1 className="feed-header">All Connections</h1>
+		              		<h1 className="feed-header">My Connections</h1>
 		            	</div>
 		            	<Divider/>
 		            	{
-		            		dummyConnections && dummyConnections.map((connection, index) =>(
+		            		connections && connections.map((connection, index) =>(
 		            			<div key={index}>
 				                    <Row className="feed-story">
 				                      <Col xs={4} sm={4} md={4} lg={4}>
