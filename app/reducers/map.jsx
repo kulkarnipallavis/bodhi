@@ -159,7 +159,7 @@ export const getAllMarkers = () => dispatch =>
          })
           return filteredMarkers
         } else {
-          return markerArr
+          return null
         }
       })
       .then(filteredMarkerArray => {
