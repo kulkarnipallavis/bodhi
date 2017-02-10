@@ -71,7 +71,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
       inputStyle: { color: 'white' },
-      errorStyle: { color: '#F0B259' }
+      errorStyle: { color: '#FC2A34' }
     }
 
     return (
