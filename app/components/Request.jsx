@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import { addRequest } from '../reducers/request-actions.jsx'
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import { tealA700, blueGrey500 } from 'material-ui/styles/colors'
 import { browserHistory } from 'react-router'
@@ -17,17 +18,14 @@ class Request extends Component {
       title: '',
       description: '',
       tag: '',
+      privacy: '',
       disabled: true,
       titleIsValid: true,
       tagIsValid: true,
       descriptionIsValid: true,
-      status: 'open',
+      privacyIsValid: true,
       popup: false
     }
-
-    this.clearForm = this.clearForm.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    // this.grabUserLocation = this.grabUserLocation.bind(this)
   }
 
   handleChange = type => event => {
@@ -38,37 +36,39 @@ class Request extends Component {
     })
   }
 
-  // componentDidMount() {
-  //   this.grabUserLocation()
-  // }
-
-  // grabUserLocation() {
-  //    navigator.geolocation.watchPosition(Position => {
-  //      this.setState({
-  //        location: {
-  //          latitude: Position.coords.latitude,
-  //          longitude: Position.coords.longitude }
-  //      })
-  //    })
-  //  }
-
-  clearForm() {
+  handleChangeRadio = (event, value) => {
     this.setState({
-      title: '',
-      description: '',
-      tag: ''
+      privacy: value,
+      privacyIsValid: !!value,
     })
   }
 
-  handleSubmit(event){
+  clearForm = () => {
+    this.setState({
+      uid: '',
+      title: '',
+      description: '',
+      tag: '',
+      privacy: '',
+      disabled: true,
+      titleIsValid: true,
+      tagIsValid: true,
+      descriptionIsValid: true,
+      privacyIsValid: true,
+      popup: false
+    })
+  }
+
+  handleSubmit = event => {
     event.preventDefault()
     const newRequest = {
       uid: this.props.currentUser.uid,
       title: this.state.title,
       description: this.state.description,
+      privacy: this.state.privacy,
       tag: this.state.tag,
       location: this.props.location,
-      status: this.state.status,
+      status: 'open',
     }
 
     this.clearForm()
@@ -77,9 +77,15 @@ class Request extends Component {
   }
 
   isInvalid() {
-    if (!this.state) return false
-    const { title, titleIsValid, tag, tagIsValid, description, descriptionIsValid } = this.state
-    return !(title && titleIsValid && tag && tagIsValid && description && descriptionIsValid)
+    const { title, titleIsValid,
+            tag, tagIsValid,
+            description, descriptionIsValid,
+            privacy, privacyIsValid } = this.state
+
+    return !(title && titleIsValid &&
+             tag && tagIsValid &&
+             description && descriptionIsValid &&
+             privacy && privacyIsValid)
   }
 
   redirect() {
@@ -92,7 +98,8 @@ class Request extends Component {
       floatingLabelFocusStyle: { color: '#FFFFFF' },
       underlineFocusStyle: { borderColor: '#FFFFFF' },
       inputStyle: { color: '#FFFFFF' },
-      errorStyle: { color: '#F0B259' }
+      errorStyle: { color: '#FC2A34' },
+      radioStyle: { color: '#FFFFFF', fill: '#FFFFFF' }
     }
 
     return (
@@ -137,6 +144,21 @@ class Request extends Component {
               errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}
               errorStyle={styles.errorStyle}/>
             <br />
+            <p className="p-color-white p-no-marginLR">Who should see this request?</p>
+            <RadioButtonGroup
+              onChange={this.handleChangeRadio}
+              name="privacy">
+              <RadioButton
+                iconStyle={styles.radioStyle}
+                labelStyle={styles.radioStyle}
+                value="public"
+                label="Everyone"/>
+              <RadioButton
+                iconStyle={styles.radioStyle}
+                labelStyle={styles.radioStyle}
+                value="private"
+                label="My Network Only"/>
+            </RadioButtonGroup>
           </form>
         </div>
         <div className="flex-row">
