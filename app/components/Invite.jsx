@@ -14,7 +14,7 @@ export class InvitePage extends Component {
 		this.state = {
 			emails : "",
 			message: "",
-      emailIsValid: true,
+      emailsIsValid: false,
       messageIsValid: true
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -33,8 +33,8 @@ export class InvitePage extends Component {
   	}
 
   isInvalid() {
-    const { email, message, emailIsValid, messageIsValid } = this.state
-    return !(email && message && emailIsValid && messageIsValid)
+    const { email, message, emailsIsValid, messageIsValid } = this.state
+    return !(email && message && emailsIsValid && messageIsValid)
   }
 
 	handleChange = type => event => {
