@@ -73,7 +73,6 @@ class AllOffers extends Component {
   }
 
   handleRespondNetwork = (response, notification) => (event) => {
-    console.log('notification', notification)
     event.preventDefault()
     const currentUser = this.props.currentUser
 
