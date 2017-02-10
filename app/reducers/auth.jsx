@@ -1,3 +1,4 @@
+import firebase from 'firebase'
 import { database } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
@@ -11,10 +12,6 @@ const reducer = (state = null, action) => {
     case UPDATE_USER:
       let newUser = Object.assign({}, state, action.updatedUser)
       return newUser
-    case UPDATE_NETWORK:
-      // let newNetwork = Object.assign({}, state.network, action.newFriend)
-      // let newUser1= Object.assign({}, state, {newNetwork})
-      // return newUser1
     case LOGGED_OUT: return null
     default: return state
   }
@@ -103,6 +100,7 @@ export const addToNetwork = (userEmail, currentUserId) => {
       .ref('Users')
       .orderByChild('email')
       .equalTo(userEmail)
+      .limitToFirst(1)
       .once('value', function(snapshot) {
         if (!snapshot.val()) {
           console.log("user email not found")
@@ -116,6 +114,34 @@ export const addToNetwork = (userEmail, currentUserId) => {
               [friendUserId]: friendEmail,
               name: snapshot.val()[friendUserId].name,
               picture: snapshot.val()[friendUserId].picture
+          })
+        }
+      })
+      .then(err => console.log(err))
+}
+
+export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
+  return dispatch =>
+    database
+      .ref('Users')
+      .orderByChild('email')
+      .equalTo(friendEmail)
+      .limitToFirst(1)
+      .once('child_added', function(friend) {
+        if (!friend.val()) {
+          console.log("friend email not found")
+        } else {
+          let friendUserId = friend.key
+          let date = firebase.database.ServerValue.TIMESTAMP
+          database
+          .ref(`Users/${friendUserId}/msg`)
+          .push({
+            date,
+            senderId: currentUser.uid,
+            senderPic: currentUser.picture,
+            senderEmail: currentUser.email,
+            senderName: currentUser.name ? currentUser.name : '',
+            msg: msg? msg : ''
           })
         }
       })

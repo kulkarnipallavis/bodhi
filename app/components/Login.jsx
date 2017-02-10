@@ -64,7 +64,7 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
     const { email, password } = this.state
     this.clearForm()
     auth().signInWithEmailAndPassword(email, password)
-    .then(() =>  browserHistory.push('/'))
+    .then(() =>  browserHistory.push('/feed'))
     .catch( err => {
       if (err.code === 'auth/invalid-email' || err.code === 'auth/user-disabled' || err.code === 'auth/user-not-found') {
         this.setState({ errmsgEmail: err.message })
@@ -79,7 +79,7 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
           floatingLabelFocusStyle: { color: 'white' },
           underlineFocusStyle: { borderColor: 'white' },
           inputText: {color: 'white'},
-          errorStyle: { color: '#F0B259' },
+          errorStyle: { color: '#FC2A34' },
           resetpw: { fontSize: 'small', color: 'white'},
           pwspan: { textAlign: 'center', }
         }

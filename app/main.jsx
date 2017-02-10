@@ -41,7 +41,7 @@ auth().onAuthStateChanged(function(user) {
     store.dispatch(loggedOut())
     userListener && userListener()
     offersListener && offersListener()
-    browserHistory.push('/loginenter')
+    browserHistory.push('/loginsignup')
   }
 })
 
@@ -69,7 +69,7 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onEnterApp}>
-        <IndexRedirect to="/home"/>
+        <IndexRedirect to="/home" />
         <Route path="/home" component={Landing} />
         <Route path="/feed" component={Feed} onEnter={onFeedEnter} />
         <Route path="/map" component={MapContainer} />
@@ -78,7 +78,7 @@ render(
         <Route path="/offerhelpmessage" component={OfferHelpMessage} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <Route path="/loginsignup" component={LoginSignup} onEnter={onLoginEnter}/>
+        <Route path="/loginsignup" component={LoginSignup} onEnter={onLoginEnter} />
         <Route path="/profile" component={Profile} />
         <Route path="/editprofile" component={EditableProfile} />
         <Route path="/invitefriends" component={InvitePage} />

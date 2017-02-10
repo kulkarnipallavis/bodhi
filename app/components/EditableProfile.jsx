@@ -43,7 +43,7 @@ class EditableProfile extends Component {
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
       inputStyle: { color: 'white' },
-      errorStyle: { color: '#F0B259' }
+      errorStyle: { color: '#FC2A34' },
     }
 
     return (
