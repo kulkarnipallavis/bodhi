@@ -53,7 +53,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
   render() {
 
     const user = this.props.currentUser
-    const userMsg = user ? this.props.currentUser.msg : null
+    const userMsg = user ? this.props.currentUser.message : null
     const offers = this.props.offersReceived
     const notifications = (userMsg && offers) ? [...offers, ...Object.values(userMsg)] : []
 

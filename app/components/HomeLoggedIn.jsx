@@ -86,7 +86,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             </div>
             <Divider/>
             { mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
-                reqOrOffer.date ?
+                reqOrOffer.title ?
                 ( <div key={index}>
                     <Row className="feed-story">
                       <Col xs={1} sm={1} md={1} lg={1}>

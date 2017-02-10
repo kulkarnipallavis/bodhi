@@ -5,14 +5,26 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Divider from 'material-ui/Divider'
 import Avatar from 'material-ui/Avatar'
+import { addToNetwork, sendNetworkRequest } from '../reducers/auth'
 
 const mapStateToProps = (state) => {
 	return {
-
+		currentUser: state.currentUser
 	}
 }
 
-export default connect(mapStateToProps, null)(
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addToNetworkDispatch : (email, userId) => {
+			dispatch(addToNetwork(email, userId))
+		},
+		sendNetworkRequestDispatch : (friendEmail, currentUser, msg, network) => {
+			dispatch(sendNetworkRequest(friendEmail, currentUser, msg, network))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
 
 	class Network extends Component{
 
@@ -21,35 +33,52 @@ export default connect(mapStateToProps, null)(
 			this.state = {
 				email: '',
 				disabled: true,
-				isEmailValid: true
+				emailIsValid: true,
+				message: 'Please add me to your network.',
+				messageIsValid: true
 			}
 			this.handleChange = this.handleChange.bind(this)
 			this.handleSubmit = this.handleSubmit.bind(this)
 			this.validateEmail = this.validateEmail.bind(this)
+			this.clearEmail = this.clearEmail.bind(this)
+			this.handleDisable = this.handleDisable.bind(this)
 		}
 
 		handleSubmit(evt){
 			evt.preventDefault()
+			this.props.sendNetworkRequestDispatch(this.state.email, this.props.currentUser, this.state.message, true)
+			this.clearEmail()
 		}
 
-		handleChange(evt){
-			const email = evt.target.value
 
-			const validEmail = this.validateEmail(email)
-			if(email){
+		handleChange = (type) => (evt) => {
+			const {value} = evt.target
+			if(type === 'email'){
+				const validEmail = this.validateEmail(value)
 				this.setState({
-					disabled: false,
-					email: evt.target.value,
-					isEmailValid: validEmail
+					[type]: value,
+					[`${type}IsValid`]: validEmail
 				})
 			}else{
 				this.setState({
-					disabled: true,
-					email: evt.target.value,
-					isEmailValid: validEmail
+					[type]: value,
+					[`${type}IsValid`]: !!value
 				})
 			}
+			this.handleDisable()
+		}
 
+		handleDisable(){
+			if(this.state.email && this.state.message){
+				this.setState({
+					disabled: false
+				})
+			}
+			else{
+				this.setState({
+					disabled: true
+				})
+			}
 		}
 
 		validateEmail(email){
@@ -57,42 +86,68 @@ export default connect(mapStateToProps, null)(
 			return pattern.test(email)
 		}
 
+		clearEmail(){
+			this.setState({
+				email: '',
+				disabled: true,
+				emailIsValid: true,
+				messageIsValid: true
+			})
+		}
+
+
 		render(){
 
 			const styles = {
 			    floatingLabelFocusStyle: { color: '#FFFFFF' },
 			    underlineFocusStyle: { borderColor: '#FFFFFF' },
 			    inputStyle: { color: '#FFFFFF' },
-		      errorStyle: { color: '#FC2A34' },
+		      	errorStyle: { color: '#FC2A34' },
 		    }
 
-			const dummyConnections = [{
-					name: "Sam",
-					picture: "/img/avatar-m.svg"
-				},
-				{
-					name: "Susan",
-					picture: "/img/avatar-w.svg"
-				}
+			const currentUser = this.props.currentUser
+			const connectionsObj = currentUser ? this.props.currentUser.network : {}
 
-			]
+			const consKeys = connectionsObj ? Object.keys(connectionsObj) : []
+			let connections = []
+			for(let key in connectionsObj){
+				connections.push(connectionsObj[key])
+			}
+
 			return(
 				<Grid className="gradient" fluid>
 	          		<div className="flex-container-feed">
 	            		<div className="flex-row">
-			              <h2 className="feed-header">Add a connection</h2>
-			              </div>
-			              <div className="flex-row">
+			              	<h2 className="feed-header">Add a Connection</h2>
+			            </div>
+			            <div className="flex-row">
 			              	<TextField
 				                id="email"
 				                type="email"
+				                value={this.state.email}
 				              	floatingLabelText="Email"
 				              	floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
 				              	inputStyle={styles.inputStyle}
-				              	onChange={this.handleChange}
+				              	onChange={this.handleChange('email')}
 				              	underlineFocusStyle={styles.underlineFocusStyle}
-				              	errorText={this.state.isEmailValid ? '' : 'Please enter a valid email(e.g. email@gmail.com).'}
+				              	errorText={this.state.emailIsValid ? '' : 'Please enter a valid email(e.g. email@gmail.com).'}
 				              	errorStyle={styles.errorStyle} />
+				        </div>
+				        <br />
+				        <div className="flex-row">
+				            <TextField
+				                id="message"
+				                type="message"
+				                textareaStyle={styles.inputStyle}
+				                value={this.state.message}
+				                onChange={this.handleChange('message')}
+				                multiLine={true}
+				                hintText="Message To Friend"
+				                floatingLabelText="Message To Friend"
+				                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+				                underlineFocusStyle={styles.underlineFocusStyle}
+				                errorText={this.state.messageIsValid ? '' : 'Please enter a message.'}
+				                errorStyle={styles.errorStyle}/>
 
 				            <RaisedButton
 					           	onClick={this.handleSubmit}
@@ -103,15 +158,15 @@ export default connect(mapStateToProps, null)(
 					           	label="Connect"
 					           	disabled={this.state.disabled} />
 
-				              <br/>
-
+				             <br/>
 			            </div>
+
 		            	<div className="flex-row">
-		              		<h1 className="feed-header">All Connections</h1>
+		              		<h1 className="feed-header">My Connections</h1>
 		            	</div>
 		            	<Divider/>
 		            	{
-		            		dummyConnections && dummyConnections.map((connection, index) =>(
+		            		connections && connections.map((connection, index) =>(
 		            			<div key={index}>
 				                    <Row className="feed-story">
 				                      <Col xs={4} sm={4} md={4} lg={4}>

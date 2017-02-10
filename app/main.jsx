@@ -62,9 +62,6 @@ const onLoginEnter = () => {
   })
 }
 
-const onNetworkEnter = () => {
-
-}
 
 const onMapEnter = () => {
     store.dispatch(getAllMarkers())
