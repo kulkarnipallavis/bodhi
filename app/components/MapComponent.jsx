@@ -4,7 +4,7 @@ import Avatar from 'material-ui/Avatar'
 import FlatButton from 'material-ui/FlatButton'
 
 const MapComponent = withGoogleMap(props => {
-
+  console.log("PROPS", props)
   return (
    props.center.lat ?
     (<GoogleMap

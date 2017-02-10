@@ -120,44 +120,48 @@ export const getAllMarkers = () => dispatch =>
   })
 })
 
-export const getNetworkMarkers = (currentUserId) => dispatch =>
+  export const getNetworkMarkers = (currentUserId) => dispatch =>
   database.ref('Requests')
   .on('value', snapshot => {
-      let requestObjects = snapshot.val()
-      let markers = []
-      if (Object.keys(requestObjects)) {
-        Object.keys(requestObjects).forEach(key => {
-          if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
-            markers.push({
-              status: requestObjects[key].status,
-              position: {
-                lat: requestObjects[key].location.latitude,
-                lng: requestObjects[key].location.longitude
-              },
-              description: requestObjects[key].description,
-              tag: requestObjects[key].tag,
-              title: requestObjects[key].title,
-              uid: requestObjects[key].uid,
-              key: key
-            })
-          }
+    let requestObjects = snapshot.val()
+    let markers = []
+    if (Object.keys(requestObjects)) {
+      Object.keys(requestObjects).forEach(key => {
+        if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
+          markers.push({
+            status: requestObjects[key].status,
+            position: {
+              lat: requestObjects[key].location.latitude,
+              lng: requestObjects[key].location.longitude
+            },
+            description: requestObjects[key].description,
+            tag: requestObjects[key].tag,
+            title: requestObjects[key].title,
+            uid: requestObjects[key].uid,
+            key: key
+          })
+        }
       })
     }
     const addingRequesterInfo = markers.map(findRequester)
-    return Promise.all(addingRequesterInfo) 
-  })  
-  .then(markerArr => {
-    database.ref('Users').child(currentUser.uid)
-    .on('value', snapshot => {
-      let userNetwork = snapshot.child("network").val()
+    return Promise.all(addingRequesterInfo)
+    .then(markerArr => {
+      //console.log("MARKERARR", markerArr)
+      database.ref('Users').child("MCCZuD4W79cW0DPOiefdVuWpxcG3")
+      .once('value')
+      .then(snapshot => {
+        let userNetwork = Object.keys(snapshot.child("network").val())
       //should be an array of user ids
+      console.log("USERNETWORK", userNetwork)
       let filteredMarkers = markerArr.map(marker => {
-        if (userNetwork.indexOf(marker.uid) > -1) return marker
+        if (userNetwork && userNetwork.indexOf(marker.uid) > -1) return marker
+      })
+      return filteredMarkers
+    })
+      .then(filteredMarkerArray => {
+        dispatch(getMarkers(filteredMarkerArray))
       })
     })
   })
-  .then(filteredMarkerArray => {
-    dispatch(getMarkers(filteredMarkerArray))
-})
 
 export default reducer
