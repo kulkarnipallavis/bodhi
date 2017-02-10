@@ -26,7 +26,6 @@ export class Profile extends Component {
 
   componentDidMount() {
     this.props.getMarkers()
-    this.props.sendNetworkRequest('bear@bear.com', this.props.currentUser, 'network request, pls thx')
   }
 
   componentWillReceiveProps(newProps, oldProps){

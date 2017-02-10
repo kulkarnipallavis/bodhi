@@ -6,7 +6,7 @@ import Avatar from 'material-ui/Avatar'
 import smsLink from 'sms-link'
 import { respondToOffer } from '../reducers/offer-help'
 import { findRequestByKey, updateRequestStatus } from '../reducers/request-actions'
-import { addToNetwork, sendNetworkRequest } from '../reducers/auth'
+import { addToNetwork, sendNetworkRequest, removeMsg } from '../reducers/auth'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Divider from 'material-ui/Divider'
 import Done from 'material-ui/svg-icons/action/done';
@@ -81,13 +81,20 @@ class AllOffers extends Component {
       const self = currentUser.name ? currentUser.name : currentUser.email
       const msgBody = `You have been added to ${self}'s network!`
 
+      Promise.all([
       this.props.sendResponseMessage(
-        notification.senderEmail, currentUser, msgBody)
-      this.props.addToNetwork(notification.senderEmail, currentUser)
-      this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})
-      this.setState({ popup: true })
-    }
+        notification.senderEmail, currentUser, msgBody),
+      this.props.addToNetwork(notification.senderEmail, currentUser),
+      this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})])
+      .then(() => {
+        this.props.removeMsg(notification.msgKey, currentUser.uid)
+      })
 
+
+      //this.setState({ popup: true })
+    } else {
+     this.props.removeMsg(notification.msgKey, currentUser.uid)
+    }
   }
 
   popupClose(event) {
@@ -100,6 +107,16 @@ class AllOffers extends Component {
     const offers = this.props.offersReceived
     const allOffers = offers ? offers : []
     const msgs = this.props.currentUser ? this.props.currentUser.message : null
+
+this.props.currentUser ?
+    Object.keys(msgs).map( key => {
+      msgs[key].msgKey = key
+    })
+: null
+
+console.log('msgs ', msgs)
+
+console.log('msgsWithKeys' , msgs)
 
     const notifications = this.props.currentUser ?
       [...allOffers, ...Object.values(msgs)].sort((a, b) => {
@@ -202,7 +219,8 @@ const mapDispatchToProps = dispatch => ({
   updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey)),
   findRequestByKey: (reqKey) => dispatch(findRequestByKey(reqKey)),
   addToNetwork: (userEmail, currentUserId) => dispatch(addToNetwork(userEmail, currentUserId)),
-  sendResponseMessage: (friendEmail, currentUser, msg) => dispatch(sendNetworkRequest(friendEmail, currentUser, msg))
+  sendResponseMessage: (friendEmail, currentUser, msg) => dispatch(sendNetworkRequest(friendEmail, currentUser, msg)),
+  removeMsg: (msgKey, userId) => dispatch(removeMsg(msgKey, userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllOffers)

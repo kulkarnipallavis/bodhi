@@ -146,7 +146,17 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
       .then(err => console.log(err))
 }
 
-
+export const removeMsg = (msgKey, userId) => {
+  return dispatch => {
+  const msgToDelete = database.ref(`Users/${userId}/message/${msgKey}`)
+  msgToDelete.remove(() => {
+    console.log("msg deleted")
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+}
 
 export const loggedOut = () => ({
   type: LOGGED_OUT
