@@ -74,7 +74,7 @@ render(
         <IndexRedirect to="/home" />
         <Route path="/home" component={Landing} />
         <Route path="/feed" component={Feed} onEnter={onFeedEnter} />
-        <Route path="/map" component={MapContainer} onEnter={onMapEnter} />
+        <Route path="/map" component={MapContainer} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />
         <Route path="/offerhelpmessage" component={OfferHelpMessage} />
