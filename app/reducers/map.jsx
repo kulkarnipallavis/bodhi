@@ -147,7 +147,7 @@ export const getNetworkMarkers = (currentUserId) => dispatch =>
     return Promise.all(addingRequesterInfo) 
   })  
   .then(markerArr => {
-    database.ref(`Users/${currentUserId}`)
+    database.ref('Users').child(currentUser.uid)
     .on('value', snapshot => {
       let userNetwork = snapshot.child("network").val()
       //should be an array of user ids
