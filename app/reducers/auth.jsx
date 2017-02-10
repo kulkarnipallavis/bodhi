@@ -1,3 +1,4 @@
+import firebase from 'firebase'
 import { database } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
@@ -103,6 +104,7 @@ export const addToNetwork = (userEmail, currentUserId) => {
       .ref('Users')
       .orderByChild('email')
       .equalTo(userEmail)
+      .limitToFirst(1)
       .once('value', function(snapshot) {
         if (!snapshot.val()) {
           console.log("user email not found")
@@ -120,23 +122,28 @@ export const addToNetwork = (userEmail, currentUserId) => {
       .then(err => console.log(err))
 }
 
-export const sendNetworkRequest = (userEmail, currentUserId, msg) => {
+export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
   return dispatch =>
     database
       .ref('Users')
       .orderByChild('email')
-      .equalTo(userEmail)
-      .once('value', function(snapshot) {
-        if (!snapshot.val()) {
-          console.log("user email not found")
+      .equalTo(friendEmail)
+      .limitToFirst(1)
+      .once('child_added', function(friend) {
+        if (!friend.val()) {
+          console.log("friend email not found")
         } else {
-          let friendUserId = Object.keys(snapshot.val())[0]
-          let friendEmail = snapshot.val()[friendUserId].email
+          let friendUserId = friend.key
+          let date = firebase.database.ServerValue.TIMESTAMP
           database
-          .ref(`Users/${currentUserId}`)
-          .child('msg')
-          .update({
-              [friendUserId]: msg
+          .ref(`Users/${friendUserId}/message`)
+          .push({
+            date,
+            senderId: currentUser.uid,
+            senderPic: currentUser.picture,
+            senderEmail: currentUser.email,
+            senderName: currentUser.name ? currentUser.name : '',
+            msg: msg? msg : ''
           })
         }
       })

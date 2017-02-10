@@ -41,7 +41,7 @@ auth().onAuthStateChanged(function(user) {
     store.dispatch(loggedOut())
     userListener && userListener()
     offersListener && offersListener()
-    browserHistory.push('/loginenter')
+    browserHistory.push('/loginsignup')
   }
 })
 
