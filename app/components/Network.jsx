@@ -30,13 +30,11 @@ export default connect(mapStateToProps, null)(
 
 		handleSubmit(evt){
 			evt.preventDefault()
-			console.log(evt.target.email.value)
-
 		}
 
 		handleChange(evt){
 			const email = evt.target.value
-			console.log("email", email)
+
 			const validEmail = this.validateEmail(email)
 			if(email){
 				this.setState({
