@@ -67,44 +67,82 @@ class AllOffers extends Component {
 
 
   render() {
-    let offers = this.props.offersReceived
+    const offers = this.props.offersReceived
+    const allOffers = offers ? offers : []
+    const msgs = this.props.currentUser ? this.props.currentUser.msg : null
+
+    const notifications = this.props.currentUser ?
+      [...allOffers, ...Object.values(msgs)].sort((a, b) => {
+        return b.date - a.date
+      })
+      : null
+    console.log('notifications ', notifications)
 
     const styles = { color: "white" }
-    const allOffers = offers ? offers : []
 
     return (
       <Grid className="gradient" fluid>
         <div className="flex-container-feed">
           <Row className="flex-row">
-            <h1 className="feed-header">Pending Help Offers</h1>
+            <h1 className="feed-header">Notifications</h1>
           </Row>
             <Divider/>
-             { allOffers && allOffers.map((offer, index) => {
+             { notifications && notifications.map((notification, index) => {
 
                 return (
                 <div key={index}>
                     <Row className="feed-story">
-                      <Col xs={1} sm={1} md={1} lg={1}>
-                          <Avatar size={30} src={offer.offUser.picture}/>
-                      </Col>
-                      <Col xs={3} sm={3} md={3} lg={3}>
-                        <p className="p-color-white">{offer.offUser.name.split(' ')[0]}</p>
-                      </Col>
-                      <Col xs={6} sm={6} md={6} lg={6}>
-                        <p className="p-color-white">{offer.message}</p>
-                      </Col>
-                      <Col xs={2} sm={2} md={2} lg={2}>
-                        <IconButton tooltip="Accept"
-                          iconStyle={{color: "#533BD7", background: 'white'}}
-                          onClick={this.handleRespond('accepted', offer)}>
-                            <Done />
-                        </IconButton>
-                        <IconButton tooltip="Decline"
-                          iconStyle={{color: "#533BD7", background: 'white'}}
-                          onClick={this.handleRespond('declined', offer)}>
-                          <Clear />
-                        </IconButton>
-                      </Col>
+                      {
+                      notification.offUser ?
+                      <div>
+                        <Col xs={1} sm={1} md={1} lg={1}>
+                            <Avatar size={30} src={notification.offUser.picture}/>
+                        </Col>
+                        <Col xs={3} sm={3} md={3} lg={3}>
+                          <p className="p-color-white">{notification.offUser.name.split(' ')[0]}</p>
+                        </Col>
+                        <Col xs={6} sm={6} md={6} lg={6}>
+                          <p className="p-color-white">{notification.message}</p>
+                        </Col>
+                        <Col xs={2} sm={2} md={2} lg={2}>
+                          <IconButton tooltip="Accept"
+                            iconStyle={{color: "#533BD7", background: 'white'}}
+                            onClick={this.handleRespond('accepted', notification)}>
+                              <Done />
+                          </IconButton>
+                          <IconButton tooltip="Decline"
+                            iconStyle={{color: "#533BD7", background: 'white'}}
+                            onClick={this.handleRespond('declined', notification)}>
+                            <Clear />
+                          </IconButton>
+                        </Col>
+                      </div>
+
+                    : <div>
+                        <Col xs={1} sm={1} md={1} lg={1}>
+                            <Avatar size={30} src={notification.senderPic}/>
+                        </Col>
+                        <Col xs={3} sm={3} md={3} lg={3}>
+                          <p className="p-color-white">{notification.senderName.split(' ')[0]}</p>
+                        </Col>
+                        <Col xs={6} sm={6} md={6} lg={6}>
+                          <p className="p-color-white">{notification.msg}</p>
+                        </Col>
+                        <Col xs={2} sm={2} md={2} lg={2}>
+                          <IconButton tooltip="Accept"
+                            iconStyle={{color: "#533BD7", background: 'white'}}
+                            >
+                              <Done />
+                          </IconButton>
+                          <IconButton tooltip="Decline"
+                            iconStyle={{color: "#533BD7", background: 'white'}}
+                            >
+                            <Clear />
+                          </IconButton>
+                        </Col>
+                      </div>
+                      }
+
                       </Row>
                       <Divider/>
                   </div>
@@ -116,7 +154,10 @@ class AllOffers extends Component {
   }
 }
 
-const mapStateToProps = state => ({ offersReceived: state.offersReceived })
+const mapStateToProps = state => ({
+  offersReceived: state.offersReceived,
+  currentUser: state.currentUser
+})
 const mapDispatchToProps = dispatch => ({
   respond: (status, offerKey) => dispatch(respondToOffer(status, offerKey)),
   updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey)),
