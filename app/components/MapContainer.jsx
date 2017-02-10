@@ -80,7 +80,7 @@ class MapContainer extends Component {
     return (
       <div>
         <FlatButton 
-          label="Network"
+          label="My Network"
           onClick={this.networkButtonClick}
         />
         <FlatButton 
