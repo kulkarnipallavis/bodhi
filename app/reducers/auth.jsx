@@ -136,7 +136,7 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
           let friendUserId = friend.key
           let date = firebase.database.ServerValue.TIMESTAMP
           database
-          .ref(`Users/${friendUserId}/msg`)
+          .ref(`Users/${friendUserId}/message`)
           .push({
             date,
             senderId: currentUser.uid,
