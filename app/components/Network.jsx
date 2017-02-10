@@ -34,7 +34,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 				email: '',
 				disabled: true,
 				isEmailValid: true,
-				message: 'Please add me to your network'
+				message: 'Please add me to your network.',
+				messageIsValid: true
 			}
 			this.handleChange = this.handleChange.bind(this)
 			this.handleSubmit = this.handleSubmit.bind(this)
@@ -45,24 +46,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 
 		handleSubmit(evt){
 			evt.preventDefault()
-			// this.props.addToNetworkDispatch(this.state.email, this.props.currentUser.uid)
-			this.props.sendNetworkRequestDispatch(this.state.email, this.props.currentUser.uid, this.props.message)
+			this.props.sendNetworkRequestDispatch(this.state.email, this.props.currentUser, this.state.message)
 			this.clearEmail()
 		}
 
 		handleChange(evt){
 			const email = evt.target.value
-			console.log("email", email)
 			const validEmail = this.validateEmail(email)
-			if(email && validEmail){
+			if(email && validEmail && this.state.message){
 				this.setState({
 					disabled: false,
-					email: evt.target.value,
+					email,
 					isEmailValid: validEmail
 				})
 			}else{
 				this.setState({
 					disabled: true,
+					email,
 					isEmailValid: validEmail
 				})
 			}
@@ -83,9 +83,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 		}
 
 		handleChangeMessage(evt){
-			this.setState({
-				message : evt.target.value
-			})
+			const message = evt.target.value
+			const validEmail = this.validateEmail(this.state.email)
+			if(email && validEmail && message){
+				this.setState({
+					message,
+					messageIsValid: true
+				})
+			}else{
+				this.setState({
+					message,
+					messageIsValid: false
+				})
+			}
+			
 		}
 
 		render(){
@@ -110,9 +121,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 				<Grid className="gradient" fluid>
 	          		<div className="flex-container-feed">
 	            		<div className="flex-row">
-			              <h2 className="feed-header">Add a connection</h2>
-			              </div>
-			              <div className="flex-row">
+			              	<h2 className="feed-header">Add a Connection</h2>
+			            </div>
+			            <div className="flex-row">
 			              	<TextField
 				                id="email"
 				                type="email"
@@ -124,9 +135,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 				              	underlineFocusStyle={styles.underlineFocusStyle}
 				              	errorText={this.state.isEmailValid ? '' : 'Please enter a valid email(e.g. email@gmail.com).'}
 				              	errorStyle={styles.errorStyle} />
-
+				        </div>
+				        <br />
+				        <div className="flex-row">
 				            <TextField
-				                name="msg"
+				                id="msg"
+				                type="msg"
 				                textareaStyle={styles.inputStyle}
 				                value={this.state.message}
 				                onChange={this.handleChangeMessage}
@@ -147,9 +161,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 					           	label="Connect"
 					           	disabled={this.state.disabled} />
 
-				              <br/>
-
+				             <br/>
 			            </div>
+
 		            	<div className="flex-row">
 		              		<h1 className="feed-header">My Connections</h1>
 		            	</div>
