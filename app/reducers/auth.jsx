@@ -49,7 +49,7 @@ export const loggedIn = (user) => {
         const newUser = {
           uid: user.uid,
           email: user.email,
-          name: user.displayName,
+          name: user.displayName || '',
           picture: `http://api.adorable.io/avatar/${user.uid}`,
           dateJoined: theDate,
           badges: '',
