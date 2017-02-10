@@ -7,7 +7,7 @@ import ContentCreate from 'material-ui/svg-icons/content/create'
 import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextFieldToggle from './TextFieldToggle'
-import { updateUser, sendNetworkRequest } from '../reducers/auth'
+import { updateUser } from '../reducers/auth'
 
 
 export class Profile extends Component {
@@ -26,7 +26,6 @@ export class Profile extends Component {
 
   componentDidMount() {
     this.props.getMarkers()
-    // this.props.sendNetworkRequest("hyphenlowercase@gmail.com", this.props.currentUser, "adddd mmeeeee!")
   }
 
   componentWillReceiveProps(newProps, oldProps){
@@ -248,6 +247,6 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, updateUser, sendNetworkRequest }
+const mapDispatchToProps = { getMarkers, updateUser }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
