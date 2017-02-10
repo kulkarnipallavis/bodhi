@@ -70,7 +70,6 @@ export const grabUserLocation = () => dispatch => {
    })
 }
 
-
 const findRequester = (request) => {
   return database
   .ref('Users')
@@ -120,7 +119,7 @@ export const getAllMarkers = () => dispatch =>
   })
 })
 
-export const getNetworkMarkers = (currentUserId) => dispatch =>
+  export const getNetworkMarkers = (currentUserId) => dispatch =>
   database.ref('Requests')
   .on('value', snapshot => {
     let requestObjects = snapshot.val()
@@ -141,23 +140,36 @@ export const getNetworkMarkers = (currentUserId) => dispatch =>
             key: key
           })
         }
-    })
-  }
-    const addingRequesterInfo = markers.map(findRequester)
-    return Promise.all(addingRequesterInfo)   
-  .then(markerArr => {
-    return database.ref('Users').child(currentUserId)
-    .on('value', snapshot => {
-      let userNetwork = snapshot.val().network
-      //should be an array of user ids
-      let filteredMarkers = markerArr.map(marker => {
-        if (userNetwork.indexOf(marker.uid) > -1) return marker
       })
-    })
-  })
-  .then(filteredMarkerArray => {
-    dispatch(getMarkers(filteredMarkerArray))
-  })
-})
+    }
+    const addingRequesterInfo = markers.map(findRequester)
+    return Promise.all(addingRequesterInfo)
+      .then(markerArr => {
+          //console.log("MARKERARR", markerArr)
+        database.ref('Users').child(currentUserId)
+        .once('value')
+        .then(snapshot => {
 
+        let userNetwork = snapshot.child("network").val()
+        if(userNetwork){
+            let networkArray = Object.keys(userNetwork)
+            let networkIds = networkArray.map(networkId => {
+              return userNetwork[networkId].uid
+            })
+            //should be an array of user ids
+            console.log("USERNETWORK", networkIds)
+            let filteredMarkers = markerArr.map(marker => {
+              if (networkIds.indexOf(marker.uid) > -1) return marker
+            })
+
+            return filteredMarkers
+          } else {
+            return markerArr
+          }
+        })
+      })
+      .then(filteredMarkerArray => {
+        dispatch(getMarkers(filteredMarkerArray))
+    })
+})
 export default reducer
