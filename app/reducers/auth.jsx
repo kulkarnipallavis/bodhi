@@ -35,7 +35,7 @@ export const loggedIn = (user) => {
         database.ref(`Users/${user.uid}`).set({
           email: user.email,
           name: user.displayName || '',
-          picture: '',
+          picture: `http://api.adorable.io/avatar/${user.uid}`,
           dateJoined: theDate,
           badges: '', // badges === karma
           skills: '',
