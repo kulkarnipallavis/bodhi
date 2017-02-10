@@ -107,19 +107,11 @@ export const addToNetwork = (friendEmail, currentUser) => {
         } else {
           let friendUserId = Object.keys(snapshot.val())[0]
           database
-          .ref(`Users/${currentUser.id}/network`)
+          .ref(`Users/${currentUser.uid}/network`)
           .push({
               uid: friendUserId,
               name: snapshot.val()[friendUserId].name,
               picture: snapshot.val()[friendUserId].picture
-          })
-
-          database
-          .ref(`Users/${friendUserId}/network`)
-          .push({
-              uid: currentUser.uid,
-              name: currentUser.name,
-              picture: currentUser.picture
           })
         }
       })

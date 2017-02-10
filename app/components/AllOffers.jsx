@@ -25,6 +25,7 @@ class AllOffers extends Component {
     }
 
     this.declineAndCheck = this.declineAndCheck.bind(this)
+    this.popupClose = this.popupClose.bind(this)
   }
 
 
@@ -72,15 +73,19 @@ class AllOffers extends Component {
   }
 
   handleRespondNetwork = (response, notification) => (event) => {
+    console.log('notification', notification)
     event.preventDefault()
+    const currentUser = this.props.currentUser
 
     if (response === 'accepted') {
-      const self = this.props.currentUser.name ? this.props.currentUser.name : this.props.currentUser.email
+      const self = currentUser.name ? currentUser.name : currentUser.email
       const msgBody = `You have been added to ${self}'s network!`
 
       this.props.sendResponseMessage(
-        notification.senderEmail, this.props.currentUser,msgBody)
-      this.props.addToNetwork(notification.senderEmail, this.props.currentUser)
+        notification.senderEmail, currentUser, msgBody)
+      this.props.addToNetwork(notification.senderEmail, currentUser)
+      this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})
+      this.setState({ popup: true })
     }
 
   }
@@ -101,7 +106,6 @@ class AllOffers extends Component {
         return b.date - a.date
       })
       : null
-    console.log('notifications ', notifications)
 
     const styles = { color: "white" }
 
