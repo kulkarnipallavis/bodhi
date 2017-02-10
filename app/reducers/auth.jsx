@@ -94,12 +94,12 @@ export const updateUser = updatedUser => dispatch => {
 }
 
 
-export const addToNetwork = (userEmail, currentUserId) => {
+export const addToNetwork = (friendEmail, currentUser) => {
   return dispatch =>
      database
       .ref('Users')
       .orderByChild('email')
-      .equalTo(userEmail)
+      .equalTo(friendEmail)
       .limitToFirst(1)
       .once('value', function(snapshot) {
         if (!snapshot.val()) {
@@ -107,11 +107,19 @@ export const addToNetwork = (userEmail, currentUserId) => {
         } else {
           let friendUserId = Object.keys(snapshot.val())[0]
           database
-          .ref(`Users/${currentUserId}/network`)
+          .ref(`Users/${currentUser.id}/network`)
           .push({
               uid: friendUserId,
               name: snapshot.val()[friendUserId].name,
               picture: snapshot.val()[friendUserId].picture
+          })
+
+          database
+          .ref(`Users/${friendUserId}/network`)
+          .push({
+              uid: currentUser.uid,
+              name: currentUser.name,
+              picture: currentUser.picture
           })
         }
       })
@@ -145,6 +153,8 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
       })
       .then(err => console.log(err))
 }
+
+
 
 export const loggedOut = () => ({
   type: LOGGED_OUT

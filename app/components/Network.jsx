@@ -51,8 +51,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 		}
 
 		handleChange(evt){
+			evt.preventDefault()
 			const email = evt.target.value
-			console.log("email", email)
+			console.log("email", this.state.email)
 			const validEmail = this.validateEmail(email)
 			if(email && validEmail){
 				this.setState({
@@ -63,6 +64,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 			}else{
 				this.setState({
 					disabled: true,
+					email: evt.target.value,
 					isEmailValid: validEmail
 				})
 			}

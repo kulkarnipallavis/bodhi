@@ -6,22 +6,29 @@ import Avatar from 'material-ui/Avatar'
 import smsLink from 'sms-link'
 import { respondToOffer } from '../reducers/offer-help'
 import { findRequestByKey, updateRequestStatus } from '../reducers/request-actions'
+import { addToNetwork, sendNetworkRequest } from '../reducers/auth'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Divider from 'material-ui/Divider'
 import Done from 'material-ui/svg-icons/action/done';
 import Clear from 'material-ui/svg-icons/content/clear';
 import IconButton from 'material-ui/IconButton';
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 
 class AllOffers extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      popup: false
+    }
 
     this.declineAndCheck = this.declineAndCheck.bind(this)
   }
 
-  handleRespond = (newOfferStatus, offer) => (event) => {
+
+  handleRespondOffer = (newOfferStatus, offer) => (event) => {
     event.preventDefault()
 
     const textBody = newOfferStatus === 'declined' ?
@@ -64,12 +71,30 @@ class AllOffers extends Component {
     })
   }
 
+  handleRespondNetwork = (response, notification) => (event) => {
+    event.preventDefault()
+
+    if (response === 'accepted') {
+      const self = this.props.currentUser.name ? this.props.currentUser.name : this.props.currentUser.email
+      const msgBody = `You have been added to ${self}'s network!`
+
+      this.props.sendResponseMessage(
+        notification.senderEmail, this.props.currentUser,msgBody)
+      this.props.addToNetwork(notification.senderEmail, this.props.currentUser)
+    }
+
+  }
+
+  popupClose(event) {
+    event.preventDefault()
+    this.setState({ popup: false })
+  }
 
 
   render() {
     const offers = this.props.offersReceived
     const allOffers = offers ? offers : []
-    const msgs = this.props.currentUser ? this.props.currentUser.msg : null
+    const msgs = this.props.currentUser ? this.props.currentUser.message : null
 
     const notifications = this.props.currentUser ?
       [...allOffers, ...Object.values(msgs)].sort((a, b) => {
@@ -107,12 +132,12 @@ class AllOffers extends Component {
                         <Col xs={2} sm={2} md={2} lg={2}>
                           <IconButton tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
-                            onClick={this.handleRespond('accepted', notification)}>
+                            onClick={this.handleRespondOffer('accepted', notification)}>
                               <Done />
                           </IconButton>
                           <IconButton tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
-                            onClick={this.handleRespond('declined', notification)}>
+                            onClick={this.handleRespondOffer('declined', notification)}>
                             <Clear />
                           </IconButton>
                         </Col>
@@ -131,17 +156,27 @@ class AllOffers extends Component {
                         <Col xs={2} sm={2} md={2} lg={2}>
                           <IconButton tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
-                            >
+                            onClick={this.handleRespondNetwork('accepted', notification)}>
                               <Done />
                           </IconButton>
                           <IconButton tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
-                            >
+                            onClick={this.handleRespondNetwork('declined', notification)}>
                             <Clear />
                           </IconButton>
                         </Col>
                       </div>
                       }
+
+                      <div>
+                        <Dialog
+                          title="You have added a new network connection!"
+                          actions={[<FlatButton
+                          label="OK"
+                          onTouchTap={this.popupClose} />]}
+                          modal={true}
+                          open={this.state.popup}/>
+                      </div>
 
                       </Row>
                       <Divider/>
@@ -161,7 +196,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   respond: (status, offerKey) => dispatch(respondToOffer(status, offerKey)),
   updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey)),
-  findRequestByKey: (reqKey) => dispatch(findRequestByKey(reqKey))
+  findRequestByKey: (reqKey) => dispatch(findRequestByKey(reqKey)),
+  addToNetwork: (userEmail, currentUserId) => dispatch(addToNetwork(userEmail, currentUserId)),
+  sendResponseMessage: (friendEmail, currentUser, msg) => dispatch(sendNetworkRequest(friendEmail, currentUser, msg))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllOffers)
