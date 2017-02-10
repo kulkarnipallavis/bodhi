@@ -139,7 +139,7 @@ class AllOffers extends Component {
                 <div key={index}>
                     <Row className="feed-story">
                       {
-                      notification.offUser ?
+                      notification.offUser &&
                       <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
                             <Avatar size={30} src={notification.offUser.picture}/>
@@ -163,8 +163,10 @@ class AllOffers extends Component {
                           </IconButton>
                         </Col>
                       </div>
+                    }
 
-                    : <div>
+                    { !notification.offUser && notification.network &&
+                      <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
                             <Avatar size={30} src={notification.senderPic}/>
                         </Col>
@@ -174,9 +176,6 @@ class AllOffers extends Component {
                         <Col xs={6} sm={6} md={6} lg={6}>
                           <p className="p-color-white">{notification.msg}</p>
                         </Col>
-
-                      {
-                        notification.network ?
                         <Col xs={2} sm={2} md={2} lg={2}>
                           <IconButton tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
@@ -189,8 +188,20 @@ class AllOffers extends Component {
                             <Clear />
                           </IconButton>
                         </Col>
+                      </div>
+                      }
 
-                       :
+                      { !notification.offUser && !notification.network &&
+                       <div>
+                        <Col xs={1} sm={1} md={1} lg={1}>
+                            <Avatar size={30} src={notification.senderPic}/>
+                        </Col>
+                        <Col xs={3} sm={3} md={3} lg={3}>
+                          <p className="p-color-white">{notification.senderName.split(' ')[0]}</p>
+                        </Col>
+                        <Col xs={6} sm={6} md={6} lg={6}>
+                          <p className="p-color-white">{notification.msg}</p>
+                        </Col>
                          <Col xs={2} sm={2} md={2} lg={2}>
                           <IconButton tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
@@ -198,7 +209,6 @@ class AllOffers extends Component {
                             <Clear />
                           </IconButton>
                         </Col>
-                      }
                       </div>
                     }
 

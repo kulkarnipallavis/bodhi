@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch) => {
 		addToNetworkDispatch : (email, userId) => {
 			dispatch(addToNetwork(email, userId))
 		},
-		sendNetworkRequestDispatch : (friendEmail, currentUser, msg) => {
-			dispatch(sendNetworkRequest(friendEmail, currentUser, msg))
+		sendNetworkRequestDispatch : (friendEmail, currentUser, msg, network) => {
+			dispatch(sendNetworkRequest(friendEmail, currentUser, msg, network))
 		}
 	}
 }
