@@ -53,7 +53,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
   render() {
 
     const user = this.props.currentUser
+    const userMsg = user ? this.props.currentUser.msg : null
     const offers = this.props.offersReceived
+    const notifications = user ? [...offers, ...Object.values(userMsg)] : []
+
     const styles = {
       badgeStyle: { padding: '0', top: '1px', left: '11px' },
       notificationIcon: { color: '#F0B259' }
@@ -67,17 +70,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
           id="navbar"
           className="gradient"
           zDepth={0}
-          showMenuIconButton={offers.length ? true : false}
+          showMenuIconButton={notifications.length ? true : false}
           title={ user ?
            <Link to="/feed">{bodhiButton}</Link> : <Link to="/home">{bodhiButton}</Link> }
-          iconElementLeft={offers.length ?
+          iconElementLeft={notifications.length ?
             <Link to="/offers">
               <Badge
                 style={styles.badgeStyle}
-                badgeContent={Object.keys(offers).length}>
+                badgeContent={notifications.length}>
                   <IconButton
                     iconStyle={styles.notificationIcon}
-                    tooltip="Unread Offers">
+                    tooltip="Notifications">
                     <NotificationsIcon/>
                   </IconButton>
               </Badge>

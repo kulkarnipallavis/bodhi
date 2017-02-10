@@ -143,7 +143,7 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
             senderPic: currentUser.picture,
             senderEmail: currentUser.email,
             senderName: currentUser.name ? currentUser.name : '',
-            msg
+            msg: msg? msg : ''
           })
         }
       })
