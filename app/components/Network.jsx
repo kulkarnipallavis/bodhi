@@ -33,7 +33,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 			this.state = {
 				email: '',
 				disabled: true,
-				isEmailValid: true,
+				emailIsValid: true,
 				message: 'Please add me to your network.',
 				messageIsValid: true
 			}
@@ -41,7 +41,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 			this.handleSubmit = this.handleSubmit.bind(this)
 			this.validateEmail = this.validateEmail.bind(this)
 			this.clearEmail = this.clearEmail.bind(this)
-			this.handleChangeMessage = this.handleChangeMessage.bind(this)
+			this.handleDisable = this.handleDisable.bind(this)
 		}
 
 		handleSubmit(evt){
@@ -50,23 +50,34 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 			this.clearEmail()
 		}
 
-		handleChange(evt){
-			const email = evt.target.value
-			const validEmail = this.validateEmail(email)
-			if(email && validEmail && this.state.message){
+		handleChange = (type) => (evt) => {
+			const {value} = evt.target
+			if(type === 'email'){
+				const validEmail = this.validateEmail(value)				
 				this.setState({
-					disabled: false,
-					email,
-					isEmailValid: validEmail
+					[type]: value,
+					[`${type}IsValid`]: validEmail
 				})
 			}else{
 				this.setState({
-					disabled: true,
-					email,
-					isEmailValid: validEmail
+					[type]: value,
+					[`${type}IsValid`]: !!value
 				})
 			}
+			this.handleDisable()
+		}
 
+		handleDisable(){
+			if(this.state.email && this.state.message){
+				this.setState({
+					disabled: false
+				})
+			}	
+			else{
+				this.setState({
+					disabled: true	
+				})
+			}	
 		}
 
 		validateEmail(email){
@@ -78,25 +89,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 			this.setState({
 				email: '',
 				disabled: true,
-				isEmailValid: true
+				emailIsValid: true,
+				messageIsValid: true
 			})
-		}
-
-		handleChangeMessage(evt){
-			const message = evt.target.value
-			const validEmail = this.validateEmail(this.state.email)
-			if(email && validEmail && message){
-				this.setState({
-					message,
-					messageIsValid: true
-				})
-			}else{
-				this.setState({
-					message,
-					messageIsValid: false
-				})
-			}
-			
 		}
 
 		render(){
@@ -131,19 +126,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 				              	floatingLabelText="Email"
 				              	floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
 				              	inputStyle={styles.inputStyle}
-				              	onChange={this.handleChange}
+				              	onChange={this.handleChange('email')}
 				              	underlineFocusStyle={styles.underlineFocusStyle}
-				              	errorText={this.state.isEmailValid ? '' : 'Please enter a valid email(e.g. email@gmail.com).'}
+				              	errorText={this.state.emailIsValid ? '' : 'Please enter a valid email(e.g. email@gmail.com).'}
 				              	errorStyle={styles.errorStyle} />
 				        </div>
 				        <br />
 				        <div className="flex-row">
 				            <TextField
-				                id="msg"
-				                type="msg"
+				                id="message"
+				                type="message"
 				                textareaStyle={styles.inputStyle}
 				                value={this.state.message}
-				                onChange={this.handleChangeMessage}
+				                onChange={this.handleChange('message')}
 				                multiLine={true}
 				                hintText="Message To Friend"
 				                floatingLabelText="Message To Friend"
