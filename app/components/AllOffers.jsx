@@ -90,11 +90,15 @@ class AllOffers extends Component {
         this.props.removeMsg(notification.msgKey, currentUser.uid)
       })
 
-
       //this.setState({ popup: true })
     } else {
      this.props.removeMsg(notification.msgKey, currentUser.uid)
     }
+  }
+
+  handleMsg= (notification) => (event) => {
+    event.preventDefault()
+    this.props.removeMsg(notification.msgKey, this.props.currentUser.uid)
   }
 
   popupClose(event) {
@@ -108,17 +112,13 @@ class AllOffers extends Component {
     const allOffers = offers ? offers : []
     const msgs = this.props.currentUser ? this.props.currentUser.message : null
 
-this.props.currentUser ?
-    Object.keys(msgs).map( key => {
-      msgs[key].msgKey = key
-    })
-: null
+    this.props.currentUser && msgs ?
+      Object.keys(msgs).map( key => {
+        msgs[key].msgKey = key
+      })
+    : null
 
-console.log('msgs ', msgs)
-
-console.log('msgsWithKeys' , msgs)
-
-    const notifications = this.props.currentUser ?
+    const notifications = this.props.currentUser && msgs ?
       [...allOffers, ...Object.values(msgs)].sort((a, b) => {
         return b.date - a.date
       })
@@ -174,6 +174,9 @@ console.log('msgsWithKeys' , msgs)
                         <Col xs={6} sm={6} md={6} lg={6}>
                           <p className="p-color-white">{notification.msg}</p>
                         </Col>
+
+                      {
+                        notification.network ?
                         <Col xs={2} sm={2} md={2} lg={2}>
                           <IconButton tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
@@ -186,8 +189,18 @@ console.log('msgsWithKeys' , msgs)
                             <Clear />
                           </IconButton>
                         </Col>
-                      </div>
+
+                       :
+                         <Col xs={2} sm={2} md={2} lg={2}>
+                          <IconButton tooltip="Decline"
+                            iconStyle={{color: "#533BD7", background: 'white'}}
+                            onClick={this.handleMsg(notification)}>
+                            <Clear />
+                          </IconButton>
+                        </Col>
                       }
+                      </div>
+                    }
 
                       <div>
                         <Dialog

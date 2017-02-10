@@ -46,7 +46,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 
 		handleSubmit(evt){
 			evt.preventDefault()
-			this.props.sendNetworkRequestDispatch(this.state.email, this.props.currentUser, this.state.message)
+			this.props.sendNetworkRequestDispatch(this.state.email, this.props.currentUser, this.state.message, true)
 			this.clearEmail()
 		}
 

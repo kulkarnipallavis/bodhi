@@ -118,7 +118,7 @@ export const addToNetwork = (friendEmail, currentUser) => {
       .then(err => console.log(err))
 }
 
-export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
+export const sendNetworkRequest = (friendEmail, currentUser, msg, network) => {
   return dispatch =>
     database
       .ref('Users')
@@ -139,7 +139,8 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
             senderPic: currentUser.picture,
             senderEmail: currentUser.email,
             senderName: currentUser.name ? currentUser.name : '',
-            msg: msg? msg : ''
+            msg: msg? msg : '',
+            network: network? network : ''
           })
         }
       })
