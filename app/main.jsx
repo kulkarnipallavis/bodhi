@@ -26,7 +26,7 @@ import Landing from './components/HomeLoggedOut'
 
 import {getOpenRequests, getAcceptedOffers} from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-import { getMarkers, grabUserLocation } from './reducers/map'
+import { getAllMarkers, grabUserLocation } from './reducers/map'
 import { findOffers } from './reducers/receive-help'
 import Network from './components/Network'
 
@@ -47,7 +47,6 @@ auth().onAuthStateChanged(function(user) {
 
 const onEnterApp = () => {
   store.dispatch(grabUserLocation())
-  store.dispatch(getMarkers())
 }
 
 const onFeedEnter = () => {
@@ -63,6 +62,11 @@ const onLoginEnter = () => {
   })
 }
 
+
+const onMapEnter = () => {
+    store.dispatch(getAllMarkers())
+}
+
 injectTapEventPlugin()
 
 render(
@@ -72,7 +76,7 @@ render(
         <IndexRedirect to="/home" />
         <Route path="/home" component={Landing} />
         <Route path="/feed" component={Feed} onEnter={onFeedEnter} />
-        <Route path="/map" component={MapContainer} />
+        <Route path="/map" component={MapContainer} onEnter={onMapEnter} />
         <Route path="/request" component={Request} />
         <Route path="/offerhelp" component={OfferHelp} />
         <Route path="/offerhelpmessage" component={OfferHelpMessage} />
