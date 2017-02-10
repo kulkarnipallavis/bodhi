@@ -83,7 +83,7 @@ export class Profile extends Component {
       text: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
       inputText: { color: 'white' },
-      errorStyle: { color: '#F0B259' }
+      errorStyle: { color: '#FC2A34' },
     }
 
     return (

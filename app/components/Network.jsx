@@ -31,7 +31,7 @@ export default connect(mapStateToProps, null)(
 		handleSubmit(evt){
 			evt.preventDefault()
 			console.log(evt.target.email.value)
-			
+
 		}
 
 		handleChange(evt){
@@ -51,7 +51,7 @@ export default connect(mapStateToProps, null)(
 					isEmailValid: validEmail
 				})
 			}
-			
+
 		}
 
 		validateEmail(email){
@@ -65,7 +65,7 @@ export default connect(mapStateToProps, null)(
 			    floatingLabelFocusStyle: { color: '#FFFFFF' },
 			    underlineFocusStyle: { borderColor: '#FFFFFF' },
 			    inputStyle: { color: '#FFFFFF' },
-		        errorStyle: { color: '#F0B259' }
+		      errorStyle: { color: '#FC2A34' },
 		    }
 
 			const dummyConnections = [{
@@ -106,7 +106,7 @@ export default connect(mapStateToProps, null)(
 					           	disabled={this.state.disabled} />
 
 				              <br/>
-			             
+
 			            </div>
 		            	<div className="flex-row">
 		              		<h1 className="feed-header">All Connections</h1>
