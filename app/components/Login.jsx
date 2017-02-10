@@ -64,7 +64,7 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
     const { email, password } = this.state
     this.clearForm()
     auth().signInWithEmailAndPassword(email, password)
-    .then(() =>  browserHistory.push('/'))
+    .then(() =>  browserHistory.push('/feed'))
     .catch( err => {
       if (err.code === 'auth/invalid-email' || err.code === 'auth/user-disabled' || err.code === 'auth/user-not-found') {
         this.setState({ errmsgEmail: err.message })
