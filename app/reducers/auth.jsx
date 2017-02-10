@@ -134,7 +134,7 @@ export const sendNetworkRequest = (userEmail, currentUserId, msg) => {
           let friendEmail = snapshot.val()[friendUserId].email
           database
           .ref(`Users/${currentUserId}`)
-          .child('msggit')
+          .child('msg')
           .update({
               [friendUserId]: msg
           })

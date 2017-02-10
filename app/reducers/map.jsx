@@ -123,33 +123,32 @@ export const getAllMarkers = () => dispatch =>
 export const getNetworkMarkers = (currentUserId) => dispatch =>
   database.ref('Requests')
   .on('value', snapshot => {
-      let requestObjects = snapshot.val()
-      let markers = []
-      if (Object.keys(requestObjects)) {
-        Object.keys(requestObjects).forEach(key => {
-          if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
-            markers.push({
-              status: requestObjects[key].status,
-              position: {
-                lat: requestObjects[key].location.latitude,
-                lng: requestObjects[key].location.longitude
-              },
-              description: requestObjects[key].description,
-              tag: requestObjects[key].tag,
-              title: requestObjects[key].title,
-              uid: requestObjects[key].uid,
-              key: key
-            })
-          }
-      })
-    }
+    let requestObjects = snapshot.val()
+    let markers = []
+    if (Object.keys(requestObjects)) {
+      Object.keys(requestObjects).forEach(key => {
+        if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
+          markers.push({
+            status: requestObjects[key].status,
+            position: {
+              lat: requestObjects[key].location.latitude,
+              lng: requestObjects[key].location.longitude
+            },
+            description: requestObjects[key].description,
+            tag: requestObjects[key].tag,
+            title: requestObjects[key].title,
+            uid: requestObjects[key].uid,
+            key: key
+          })
+        }
+    })
+  }
     const addingRequesterInfo = markers.map(findRequester)
-    return Promise.all(addingRequesterInfo) 
-  })  
+    return Promise.all(addingRequesterInfo)   
   .then(markerArr => {
-    database.ref('Users').child(currentUser.uid)
+    return database.ref('Users').child(currentUserId)
     .on('value', snapshot => {
-      let userNetwork = snapshot.child("network").val()
+      let userNetwork = snapshot.val().network
       //should be an array of user ids
       let filteredMarkers = markerArr.map(marker => {
         if (userNetwork.indexOf(marker.uid) > -1) return marker
@@ -158,6 +157,7 @@ export const getNetworkMarkers = (currentUserId) => dispatch =>
   })
   .then(filteredMarkerArray => {
     dispatch(getMarkers(filteredMarkerArray))
+  })
 })
 
 export default reducer
