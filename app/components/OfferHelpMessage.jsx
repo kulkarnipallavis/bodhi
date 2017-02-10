@@ -19,11 +19,12 @@ export class OfferHelpMessage extends Component {
 		}
 
 		return (
-			<div className="flex-row" className="gradient flex-container">
+			<div className="gradient flex-container">
+          <div className="flex-row">
             <div className="flex-col-white">
-                {request.requester.name ? 
+                {request.requester.name ?
 	                <h2 style={styles.h2}>{`Thank you for offering help to ${request.requester.name}!`}</h2>
-	                 : 
+	                 :
 	                <h2 style={styles.h2}>Thank you offering help through Bodhi.</h2>
              	}
                 <h3>Here's what to expect next:</h3>
@@ -33,12 +34,13 @@ export class OfferHelpMessage extends Component {
                  	:
                  	<li>Your offer message and phone number will be sent to the requester. It will either be declined or accepted.</li>
                   }
-                 	<li>If accepted, you will receive a text message from the requester and can coordinate meeting from that point. 
+                 	<li>If accepted, you will receive a text message from the requester and can coordinate meeting from that point.
                  	If declined, you will be notified via text by the Bodhi app.</li>
                  	<li>Thank you for using Bodhi!</li>
                  </ul>
                  <Link to="/home" style={styles.link}>Go Back to Home</Link>
            </div>
+          </div>
         </div>
         )
     }

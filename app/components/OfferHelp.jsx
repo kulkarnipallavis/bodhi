@@ -88,7 +88,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         status: 'pending'
       }
 
-      if(this.state.phone !== this.props.currentUser.phone){
+      if (this.state.phone !== this.props.currentUser.phone) {
         const updatedUser = Object.assign({}, this.props.currentUser)
         updatedUser.phone = this.state.phone
         this.props.updateUser(updatedUser)
@@ -110,9 +110,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(
         floatingLabelFocusStyle: { color: '#FFFFFF' },
         underlineFocusStyle: { borderColor: '#FFFFFF' },
         inputStyle: { color: '#FFFFFF' },
-        errorStyle: { color: '#F0B259' }
+        errorStyle: { color: '#FC2A34' },
       }
-  
+
       return (
         <div className="gradient flex-container">
           <div className="flex-row">

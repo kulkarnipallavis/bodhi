@@ -43,8 +43,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
       password: '',
       errmsgEmail: '',
       errmsgPassword: '',
-      emailIsValid: false,
-      passwordIsValid: false
+      emailIsValid: true,
+      passwordIsValid: true
     })
   }
 
@@ -71,7 +71,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
       inputStyle: { color: 'white' },
-      errorStyle: { color: '#F0B259' }
+      errorStyle: { color: '#FC2A34' }
     }
 
     return (
@@ -89,7 +89,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.email}
-              underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('email')}
               errorText={this.state.errmsgEmail}
               errorStyle={styles.errorStyle} />
@@ -102,7 +101,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               underlineFocusStyle={styles.underlineFocusStyle}
               value={this.state.password}
-              underlineFocusStyle={styles.underlineFocusStyle}
               onChange={this.handleChange('password')}
               errorText={this.state.errmsgPassword}
               errorStyle={styles.errorStyle} />

@@ -87,16 +87,18 @@ class AllOffers extends Component {
                       <Col xs={1} sm={1} md={1} lg={1}>
                           <Avatar size={30} src={offer.offUser.picture}/>
                       </Col>
-                      <Col xs={3} sm={3} md={3} lg={3}> <p className="p-color-white">{offer.offUser.name}</p></Col>
-                      <Col xs={4} sm={4} md={4} lg={4}> <p className="p-color-white">{offer.message}</p></Col>
-                      <Col xs={1} sm={1} md={1} lg={1}>
+                      <Col xs={3} sm={3} md={3} lg={3}>
+                        <p className="p-color-white">{offer.offUser.name.split(' ')[0]}</p>
+                      </Col>
+                      <Col xs={6} sm={6} md={6} lg={6}>
+                        <p className="p-color-white">{offer.message}</p>
+                      </Col>
+                      <Col xs={2} sm={2} md={2} lg={2}>
                         <IconButton tooltip="Accept"
                           iconStyle={{color: "#533BD7", background: 'white'}}
                           onClick={this.handleRespond('accepted', offer)}>
                             <Done />
                         </IconButton>
-                      </Col>
-                      <Col xs={1} sm={1} md={1} lg={1}>
                         <IconButton tooltip="Decline"
                           iconStyle={{color: "#533BD7", background: 'white'}}
                           onClick={this.handleRespond('declined', offer)}>

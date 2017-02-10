@@ -79,7 +79,7 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
           floatingLabelFocusStyle: { color: 'white' },
           underlineFocusStyle: { borderColor: 'white' },
           inputText: {color: 'white'},
-          errorStyle: { color: '#F0B259' },
+          errorStyle: { color: '#FC2A34' },
           resetpw: { fontSize: 'small', color: 'white'},
           pwspan: { textAlign: 'center', }
         }

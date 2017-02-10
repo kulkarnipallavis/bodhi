@@ -43,7 +43,7 @@ class EditableProfile extends Component {
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
       inputStyle: { color: 'white' },
-      errorStyle: { color: '#F0B259' }
+      errorStyle: { color: '#FC2A34' },
     }
 
     return (
@@ -108,7 +108,7 @@ class EditableProfile extends Component {
           </div>
           :
           <div className="flex-row">
-            <Link to="/loginenter"><u><p>Please sign in</p></u></Link>
+            <Link to="/loginsignup"><u><p>Please sign in</p></u></Link>
           </div>
        }
       </div>
