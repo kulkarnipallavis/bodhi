@@ -26,7 +26,6 @@ export const addRequest = (request) =>  {
     const newRequestKey = database.ref().child('Requests').push().key;
 
     const time = firebase.database.ServerValue.TIMESTAMP
-
     request.date = time;
 
     // database.ref(`Users/${request.uid}/requests/${newRequestKey}`).set({ date: theDate })
