@@ -4,8 +4,10 @@ import { browserHistory } from 'react-router'
 import Avatar from 'material-ui/Avatar'
 import { getMarkers } from '../reducers/map'
 import ContentCreate from 'material-ui/svg-icons/content/create'
+import ImageAddAPhoto from 'material-ui/svg-icons/image/add-a-photo'
 import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
 import TextFieldToggle from './TextFieldToggle'
 import { updateUser, sendNetworkRequest } from '../reducers/auth'
 
@@ -18,10 +20,12 @@ export class Profile extends Component {
       editingName: false,
       editingEmail: false,
       editingPhone: false,
-      editingBio: false
+      editingBio: false,
+      picture: ''
     }
     this.handleSave = this.handleSave.bind(this)
     this.handleClickHome = this.handleClickHome.bind(this)
+    this.handleImageUpload = this.handleImageUpload.bind(this)
   }
 
   componentDidMount() {
@@ -34,7 +38,8 @@ export class Profile extends Component {
         editingName: false,
         editingEmail: false,
         editingPhone: false,
-        editingBio: false
+        editingBio: false,
+        picture: newProps.currentUser.picture ? newProps.currentUser.picture : ''
       })
       this.setState(state)
     }
@@ -52,6 +57,14 @@ export class Profile extends Component {
     console.log(event.target.value)
     const value = event.target.value
     this.setState({ [field]: value })
+  }
+
+  handleImageUpload(event) {
+    const picture = event.target.files[0]
+    this.setState({
+      picture
+    })
+    //dispatch something here to redux
   }
 
   handleSave = field => event => {
@@ -84,14 +97,23 @@ export class Profile extends Component {
       underlineFocusStyle: { borderColor: 'white' },
       inputText: { color: 'white' },
       errorStyle: { color: '#FC2A34' },
+      input: {display: 'none'},
+      photo: {marginTop: '5px'},
+      iconSize: {height:'30px', width:'40px'}
     }
 
     return (
       <div className="profile gradient flex-container">
         { user ?
           <div>
-            <div className="flex-row" id="avatar">
+            <div className="flex-row" id="avatar" >
               <Avatar size={80} src={user.picture}/>
+            </div>
+            <div className="flex-row" id="photo" style={styles.photo}>
+               <label>
+              <span><ImageAddAPhoto style={styles.iconSize}/></span>
+               <input type="file" style={styles.input} onChange={this.handleImageUpload}/>
+               </label>
             </div>
             <div className="flex-row" id="member-since">
               <h2>Member since:</h2>

@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import { database } from '../firebase'
+import { database, storage } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
 export const LOGGED_OUT = 'LOGGED_OUT'
@@ -40,7 +40,8 @@ export const loggedIn = (user) => {
           badges: '', // badges === karma
           skills: '',
           phone: '',
-          bio: ''
+          bio: '',
+          picture: ''
         })
         const newUser = {
           uid: user.uid,
@@ -51,7 +52,8 @@ export const loggedIn = (user) => {
           badges: '',
           skills: '',
           phone: '',
-          bio: ''
+          bio: '',
+          picture: ''
         }
         dispatch({
           type: LOGGED_IN,
@@ -91,6 +93,10 @@ export const updateUser = updatedUser => dispatch => {
   database.ref('Users')
   .child(updatedUser.uid)
   .update(updates)
+}
+
+export const uploadUserPhoto = picture => dispatch => {
+
 }
 
 
