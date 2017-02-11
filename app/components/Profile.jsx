@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextFieldToggle from './TextFieldToggle'
 import RadioFieldToggle from './RadioFieldToggle'
-import { updateUser } from '../reducers/auth'
+import { updateUser, sendNetworkRequest } from '../reducers/auth'
 
 
 export class Profile extends Component {
@@ -293,6 +293,6 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, updateUser }
+const mapDispatchToProps = { getMarkers, updateUser, sendNetworkRequest }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

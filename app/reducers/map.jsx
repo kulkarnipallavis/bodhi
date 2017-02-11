@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
   return newState
 }
 
-export const getAllMarkers = (markers) => ({
+export const getMarkers = (markers) => ({
   type: GET_ALL_MARKERS,
   markers
 })
@@ -66,38 +66,34 @@ export const grabUserLocation = () => dispatch => {
          latitude: parseFloat(Position.coords.latitude),
          longitude: parseFloat(Position.coords.longitude)
        }
-
-       dispatch(setLocation(center))
+    dispatch(setLocation(center))
    })
 }
 
-
 const findRequester = (request) => {
-  //if (request.uid) {
-    return database
-      .ref('Users')
-      .child(request.uid)
-      .once('value').then( (snapshot) => {
-        let requester = {
-          name: snapshot.val().name,
-          picture: snapshot.val().picture,
-          phone: snapshot.val().phone
-        }
-        let newReqObj = Object.assign({}, request)
-        newReqObj.requester = requester
-        return  newReqObj
-      })
+  return database
+  .ref('Users')
+  .child(request.uid)
+  .once('value').then( (snapshot) => {
+    let requester = {
+      name: snapshot.val().name,
+      picture: snapshot.val().picture,
+      phone: snapshot.val().phone
+    }
+    let newReqObj = Object.assign({}, request)
+    newReqObj.requester = requester
+    return newReqObj
+  })
 }
 
-export const getMarkers = () =>
-  dispatch =>
-    database.ref('Requests')
-    .on('value', snapshot => {
-      let requestObjects = snapshot.val()
-      let markers = [];
+export const getAllMarkers = () => dispatch =>
+  database.ref('Requests')
+  .on('value', snapshot => {
+    let requestObjects = snapshot.val()
+    let markers = [];
 
-      if (Object.keys(requestObjects)) {
-        Object.keys(requestObjects).forEach(key => {
+    if (Object.keys(requestObjects)) {
+      Object.keys(requestObjects).forEach(key => {
         if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
           markers.push({
             status: requestObjects[key].status,
@@ -118,9 +114,58 @@ export const getMarkers = () =>
     const addingRequesterInfo = markers.map(findRequester)
 
     return Promise.all(addingRequesterInfo)
+  .then(markerArr => {
+    dispatch(getMarkers(markerArr))
+  })
+})
+
+  export const getNetworkMarkers = (currentUserId) => dispatch =>
+  database.ref('Requests')
+  .on('value', snapshot => {
+    let requestObjects = snapshot.val()
+    let markers = []
+    if (Object.keys(requestObjects)) {
+      Object.keys(requestObjects).forEach(key => {
+        if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
+          markers.push({
+            status: requestObjects[key].status,
+            position: {
+              lat: requestObjects[key].location.latitude,
+              lng: requestObjects[key].location.longitude
+            },
+            description: requestObjects[key].description,
+            tag: requestObjects[key].tag,
+            title: requestObjects[key].title,
+            uid: requestObjects[key].uid,
+            key: key
+          })
+        }
+      })
+    }
+    const addingRequesterInfo = markers.map(findRequester)
+    return Promise.all(addingRequesterInfo)
     .then(markerArr => {
-      dispatch(getAllMarkers(markerArr))
+      database.ref('Users').child(currentUserId)
+      .once('value')
+      .then(snapshot => {
+        let userNetwork = snapshot.child("network").val()
+        if(userNetwork){
+          let networkArray = Object.keys(userNetwork)
+          let networkIds = networkArray.map(networkId => {
+            return userNetwork[networkId].uid
+          })
+          let filteredMarkers = markerArr.filter(marker => {
+           if (networkIds.indexOf(marker.uid) > -1) return marker
+         })
+          return filteredMarkers
+        } else {
+          return null
+        }
+      })
+      .then(filteredMarkerArray => {
+        dispatch(getMarkers(filteredMarkerArray))
+      })
     })
   })
-
+  
 export default reducer

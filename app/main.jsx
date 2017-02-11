@@ -26,7 +26,7 @@ import Landing from './components/HomeLoggedOut'
 
 import { getOpenRequests, getAcceptedOffers } from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-import { getMarkers, grabUserLocation } from './reducers/map'
+import { getAllMarkers, grabUserLocation } from './reducers/map'
 import { findOffers } from './reducers/receive-help'
 import { grabUserProfileInfo } from './reducers/users'
 import Network from './components/Network'
@@ -47,7 +47,7 @@ auth().onAuthStateChanged(function(user) {
 
 const onEnterApp = () => {
   store.dispatch(grabUserLocation())
-  store.dispatch(getMarkers())
+  store.dispatch(getAllMarkers())
 }
 
 const onFeedEnter = () => {
@@ -63,9 +63,7 @@ const onLoginEnter = () => {
   })
 }
 
-const onNetworkEnter = () => {
 
-}
 
 const onProfileEnter = (nextRouterState) => {
   store.dispatch(grabUserProfileInfo(nextRouterState.params.uid))

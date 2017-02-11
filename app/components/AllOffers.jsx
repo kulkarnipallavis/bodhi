@@ -6,22 +6,29 @@ import Avatar from 'material-ui/Avatar'
 import smsLink from 'sms-link'
 import { respondToOffer } from '../reducers/offer-help'
 import { findRequestByKey, updateRequestStatus } from '../reducers/request-actions'
+import { addToNetwork, sendNetworkRequest, removeMsg } from '../reducers/auth'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Divider from 'material-ui/Divider'
 import Done from 'material-ui/svg-icons/action/done'
 import Clear from 'material-ui/svg-icons/content/clear'
 import IconButton from 'material-ui/IconButton'
-
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 class AllOffers extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      popup: false
+    }
 
     this.declineAndCheck = this.declineAndCheck.bind(this)
+    this.popupClose = this.popupClose.bind(this)
   }
 
-  handleRespond = (newOfferStatus, offer) => (event) => {
+
+  handleRespondOffer = (newOfferStatus, offer) => (event) => {
     event.preventDefault()
 
     const textBody = newOfferStatus === 'declined' ?
@@ -64,19 +71,56 @@ class AllOffers extends Component {
     })
   }
 
+  handleRespondNetwork = (response, notification) => (event) => {
+    event.preventDefault()
+    const currentUser = this.props.currentUser
+
+    if (response === 'accepted') {
+      const self = currentUser.name ? currentUser.name : currentUser.email
+      const msgBody = `You have been added to ${self}'s network!`
+
+      Promise.all([
+      this.props.sendResponseMessage(
+        notification.senderEmail, currentUser, msgBody),
+      this.props.addToNetwork(notification.senderEmail, currentUser),
+      this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})])
+      .then(() => {
+        this.props.removeMsg(notification.msgKey, currentUser.uid)
+      })
+
+      //this.setState({ popup: true })
+    } else {
+     this.props.removeMsg(notification.msgKey, currentUser.uid)
+    }
+  }
+
+  handleMsg= (notification) => (event) => {
+    event.preventDefault()
+    this.props.removeMsg(notification.msgKey, this.props.currentUser.uid)
+  }
+
+  popupClose(event) {
+    event.preventDefault()
+    this.setState({ popup: false })
+  }
 
 
   render() {
     const offers = this.props.offersReceived
     const allOffers = offers ? offers : []
-    const msgs = this.props.currentUser ? this.props.currentUser.msg : null
+    const msgs = this.props.currentUser ? this.props.currentUser.message : null
 
-    const notifications = this.props.currentUser ?
+    this.props.currentUser && msgs ?
+      Object.keys(msgs).map( key => {
+        msgs[key].msgKey = key
+      })
+    : null
+
+    const notifications = this.props.currentUser && msgs ?
       [...allOffers, ...Object.values(msgs)].sort((a, b) => {
         return b.date - a.date
       })
       : null
-    console.log('notifications ', notifications)
 
     const styles = { color: "white" }
 
@@ -93,7 +137,7 @@ class AllOffers extends Component {
                 <div key={index}>
                     <Row className="feed-story">
                       {
-                      notification.offUser ?
+                      notification.offUser &&
                       <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
                             <Avatar size={30} src={notification.offUser.picture}/>
@@ -107,18 +151,20 @@ class AllOffers extends Component {
                         <Col xs={2} sm={2} md={2} lg={2}>
                           <IconButton tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
-                            onClick={this.handleRespond('accepted', notification)}>
+                            onClick={this.handleRespondOffer('accepted', notification)}>
                               <Done />
                           </IconButton>
                           <IconButton tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
-                            onClick={this.handleRespond('declined', notification)}>
+                            onClick={this.handleRespondOffer('declined', notification)}>
                             <Clear />
                           </IconButton>
                         </Col>
                       </div>
+                    }
 
-                    : <div>
+                    { !notification.offUser && notification.network &&
+                      <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
                             <Avatar size={30} src={notification.senderPic}/>
                         </Col>
@@ -131,17 +177,48 @@ class AllOffers extends Component {
                         <Col xs={2} sm={2} md={2} lg={2}>
                           <IconButton tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
-                            >
+                            onClick={this.handleRespondNetwork('accepted', notification)}>
                               <Done />
                           </IconButton>
                           <IconButton tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
-                            >
+                            onClick={this.handleRespondNetwork('declined', notification)}>
                             <Clear />
                           </IconButton>
                         </Col>
                       </div>
                       }
+
+                      { !notification.offUser && !notification.network &&
+                       <div>
+                        <Col xs={1} sm={1} md={1} lg={1}>
+                            <Avatar size={30} src={notification.senderPic}/>
+                        </Col>
+                        <Col xs={3} sm={3} md={3} lg={3}>
+                          <p className="p-color-white">{notification.senderName.split(' ')[0]}</p>
+                        </Col>
+                        <Col xs={6} sm={6} md={6} lg={6}>
+                          <p className="p-color-white">{notification.msg}</p>
+                        </Col>
+                         <Col xs={2} sm={2} md={2} lg={2}>
+                          <IconButton tooltip="Decline"
+                            iconStyle={{color: "#533BD7", background: 'white'}}
+                            onClick={this.handleMsg(notification)}>
+                            <Clear />
+                          </IconButton>
+                        </Col>
+                      </div>
+                    }
+
+                      <div>
+                        <Dialog
+                          title="You have added a new network connection!"
+                          actions={[<FlatButton
+                          label="OK"
+                          onTouchTap={this.popupClose} />]}
+                          modal={true}
+                          open={this.state.popup}/>
+                      </div>
 
                       </Row>
                       <Divider/>
@@ -161,7 +238,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   respond: (status, offerKey) => dispatch(respondToOffer(status, offerKey)),
   updateRequestStatus: (status, markerKey) => dispatch(updateRequestStatus(status, markerKey)),
-  findRequestByKey: (reqKey) => dispatch(findRequestByKey(reqKey))
+  findRequestByKey: (reqKey) => dispatch(findRequestByKey(reqKey)),
+  addToNetwork: (userEmail, currentUserId) => dispatch(addToNetwork(userEmail, currentUserId)),
+  sendResponseMessage: (friendEmail, currentUser, msg) => dispatch(sendNetworkRequest(friendEmail, currentUser, msg)),
+  removeMsg: (msgKey, userId) => dispatch(removeMsg(msgKey, userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllOffers)

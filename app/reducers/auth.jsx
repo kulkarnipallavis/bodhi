@@ -10,18 +10,14 @@ const reducer = (state = null, action) => {
   let newUser
   switch (action.type) {
     case LOGGED_IN: return action.user
-    case UPDATE_USER:
+    case UPDATE_USER: {
       newUser = Object.assign({}, state, action.updatedUser)
       return newUser
-    // case UPDATE_NETWORK:
-      // let newNetwork = Object.assign({}, state.network, action.newFriend)
-      // let newUser1= Object.assign({}, state, {newNetwork})
-      // return newUser1
+    }
     case LOGGED_OUT: return null
     default: return state
   }
 }
-
 
 export default reducer
 
@@ -44,7 +40,7 @@ export const loggedIn = (user) => {
         database.ref(`Users/${user.uid}`).set({
           email: user.email,
           name: user.displayName || '',
-          picture: '',
+          picture: `http://api.adorable.io/avatar/${user.uid}`,
           dateJoined: theDate,
           badges: '', // badges === karma
           skills: '',
@@ -56,7 +52,7 @@ export const loggedIn = (user) => {
         const newUser = {
           uid: user.uid,
           email: user.email,
-          name: user.displayName,
+          name: user.displayName || '',
           picture: `http://api.adorable.io/avatar/${user.uid}`,
           dateJoined: theDate,
           badges: '',
@@ -108,31 +104,31 @@ export const updateUser = updatedUser => dispatch => {
 }
 
 
-export const addToNetwork = (userEmail, currentUserId) => {
+export const addToNetwork = (friendEmail, currentUser) => {
   return dispatch =>
      database
       .ref('Users')
       .orderByChild('email')
-      .equalTo(userEmail)
+      .equalTo(friendEmail)
       .limitToFirst(1)
       .once('value', function(snapshot) {
         if (!snapshot.val()) {
           console.error('user email not found')
         } else {
           let friendUserId = Object.keys(snapshot.val())[0]
-          let friendEmail = snapshot.val()[friendUserId].email
           database
-          .ref(`Users/${currentUserId}`)
-          .child('network')
-          .update({
-              [friendUserId]: friendEmail
+          .ref(`Users/${currentUser.uid}/network`)
+          .push({
+              uid: friendUserId,
+              name: snapshot.val()[friendUserId].name,
+              picture: snapshot.val()[friendUserId].picture
           })
         }
       })
       .then(err => console.error(err))
 }
 
-export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
+export const sendNetworkRequest = (friendEmail, currentUser, msg, network) => {
   return dispatch =>
     database
       .ref('Users')
@@ -146,16 +142,29 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
           let friendUserId = friend.key
           let date = firebase.database.ServerValue.TIMESTAMP
           database
-          .ref(`Users/${friendUserId}/msg`)
+          .ref(`Users/${friendUserId}/message`)
           .push({
             date,
             senderId: currentUser.uid,
             senderPic: currentUser.picture,
             senderEmail: currentUser.email,
             senderName: currentUser.name ? currentUser.name : '',
-            msg: msg ? msg : ''
+            msg: msg? msg : '',
+            network: network ? network : ''
           })
         }
       })
       .then(err => console.error(err))
+}
+
+export const removeMsg = (msgKey, userId) => {
+  return dispatch => {
+  const msgToDelete = database.ref(`Users/${userId}/message/${msgKey}`)
+  msgToDelete.remove(() => {
+    console.error("msg deleted")
+  })
+  .catch((err) => {
+    console.error(err)
+  })
+}
 }

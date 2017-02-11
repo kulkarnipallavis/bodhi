@@ -11,7 +11,8 @@ const MapComponent = withGoogleMap(props => {
     (<GoogleMap
       ref={props.onMapLoad}
       defaultZoom={14}
-      defaultCenter={props.center}>
+      defaultCenter={props.center}
+      options={{mapTypeControl: false}}>
     { props.markers && props.markers.map((marker, index) =>
       <Marker
        key={index}
@@ -38,7 +39,7 @@ const MapComponent = withGoogleMap(props => {
                <div className="flex-row">
                  <FlatButton
                    type="button"
-                   onClick={props.handleButtonClick}
+                   onClick={props.handleInfoButtonClick}
                    className="info-window-button"
                    backgroundColor="#533BD7">
                    Offer Help
