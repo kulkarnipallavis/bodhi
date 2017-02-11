@@ -26,7 +26,6 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(
 
   class Feed extends Component {
@@ -84,7 +83,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             <div className="flex-row">
               <h1 className="feed-header">Recent Activity</h1>
             </div>
-            <Divider/>
+            <Divider />
             { mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
                 reqOrOffer.date ?
                 ( <div key={index}>
@@ -105,7 +104,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                         <p className="p-color-white">{`${reqOrOffer.user.date}`}</p>
                       </Col>
                     </Row>
-                    <Divider/>
+                    <Divider />
                   </div> )
                 :
                 ( <div key={index}>
@@ -115,7 +114,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
                         <p className="p-color-white">
-                          {`${reqOrOffer.offUser.name} helped ${reqOrOffer.reqUser.name}`}
+                          <Link to={`/profile/${reqOrOffer.offUid}`}>{reqOrOffer.offUser.name}</Link>
+                        </p>
+                        <p className="p-color-white">helped</p>
+                        <p className="p-color-white">
+                          <Link to={`/profile/${reqOrOffer.reqUid}`}>{reqOrOffer.reqUser.name}</Link>
                         </p>
                       </Col>
                       <Col xs={1} sm={1} md={1} lg={1}>

@@ -17,29 +17,29 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import LoginSignup from './components/LoginSignup'
 import Profile from './components/Profile'
-import EditableProfile from './components/EditableProfile'
+import ViewableProfile from './components/ViewableProfile'
 import InvitePage from './components/Invite'
 import OfferHelpMessage from './components/OfferHelpMessage'
 import Feed from './components/HomeLoggedIn'
 import AllOffers from './components/AllOffers'
 import Landing from './components/HomeLoggedOut'
 
-import {getOpenRequests, getAcceptedOffers} from './reducers/home'
+import { getOpenRequests, getAcceptedOffers } from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
 import { getMarkers, grabUserLocation } from './reducers/map'
 import { findOffers } from './reducers/receive-help'
+import { grabUserProfileInfo } from './reducers/users'
 import Network from './components/Network'
 
-let offersListener = null
-let userListener = null
+let offersListener, currentUserListener
 
 auth().onAuthStateChanged(function(user) {
   if (user) {
-    userListener = store.dispatch(loggedIn(user))
+    currentUserListener = store.dispatch(loggedIn(user))
     offersListener = store.dispatch(findOffers(user.uid))
   } else {
     store.dispatch(loggedOut())
-    userListener && userListener()
+    currentUserListener && currentUserListener()
     offersListener && offersListener()
     browserHistory.push('/loginsignup')
   }
@@ -67,6 +67,10 @@ const onNetworkEnter = () => {
 
 }
 
+const onProfileEnter = (nextRouterState) => {
+  store.dispatch(grabUserProfileInfo(nextRouterState.params.uid))
+}
+
 injectTapEventPlugin()
 
 render(
@@ -83,8 +87,8 @@ render(
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/loginsignup" component={LoginSignup} onEnter={onLoginEnter} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/editprofile" component={EditableProfile} />
+        <Route path="/profile/:uid" component={ViewableProfile} onEnter={onProfileEnter} />
+        <Route path="/editprofile" component={Profile} />
         <Route path="/invitefriends" component={InvitePage} />
         <Route path="/offers" component={AllOffers} />
         <Route path="/network" component={Network} />

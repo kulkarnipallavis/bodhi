@@ -7,12 +7,13 @@ const UPDATE_USER = 'GET_USER'
 const UPDATE_NETWORK = 'UPDATE_NETWORK'
 
 const reducer = (state = null, action) => {
+  let newUser
   switch (action.type) {
     case LOGGED_IN: return action.user
     case UPDATE_USER:
-      let newUser = Object.assign({}, state, action.updatedUser)
+      newUser = Object.assign({}, state, action.updatedUser)
       return newUser
-    case UPDATE_NETWORK:
+    // case UPDATE_NETWORK:
       // let newNetwork = Object.assign({}, state.network, action.newFriend)
       // let newUser1= Object.assign({}, state, {newNetwork})
       // return newUser1
@@ -23,6 +24,10 @@ const reducer = (state = null, action) => {
 
 
 export default reducer
+
+export const loggedOut = () => ({
+  type: LOGGED_OUT
+})
 
 export const loggedIn = (user) => {
   return dispatch => {
@@ -44,7 +49,9 @@ export const loggedIn = (user) => {
           badges: '', // badges === karma
           skills: '',
           phone: '',
-          bio: ''
+          bio: '',
+          network: {},
+          privacy: ''
         })
         const newUser = {
           uid: user.uid,
@@ -55,7 +62,9 @@ export const loggedIn = (user) => {
           badges: '',
           skills: '',
           phone: '',
-          bio: ''
+          bio: '',
+          network: user.network || {},
+          privacy: ''
         }
         dispatch({
           type: LOGGED_IN,
@@ -89,7 +98,8 @@ export const updateUser = updatedUser => dispatch => {
     email: updatedUser.email,
     name: updatedUser.name,
     phone: updatedUser.phone,
-    picture: updatedUser.picture
+    picture: updatedUser.picture,
+    privacy: updatedUser.privacy
   }
 
   database.ref('Users')
@@ -107,7 +117,7 @@ export const addToNetwork = (userEmail, currentUserId) => {
       .limitToFirst(1)
       .once('value', function(snapshot) {
         if (!snapshot.val()) {
-          console.log("user email not found")
+          console.error('user email not found')
         } else {
           let friendUserId = Object.keys(snapshot.val())[0]
           let friendEmail = snapshot.val()[friendUserId].email
@@ -119,7 +129,7 @@ export const addToNetwork = (userEmail, currentUserId) => {
           })
         }
       })
-      .then(err => console.log(err))
+      .then(err => console.error(err))
 }
 
 export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
@@ -131,7 +141,7 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
       .limitToFirst(1)
       .once('child_added', function(friend) {
         if (!friend.val()) {
-          console.log("friend email not found")
+          console.error('friend email not found')
         } else {
           let friendUserId = friend.key
           let date = firebase.database.ServerValue.TIMESTAMP
@@ -143,14 +153,9 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg) => {
             senderPic: currentUser.picture,
             senderEmail: currentUser.email,
             senderName: currentUser.name ? currentUser.name : '',
-            msg: msg? msg : ''
+            msg: msg ? msg : ''
           })
         }
       })
-      .then(err => console.log(err))
+      .then(err => console.error(err))
 }
-
-
-export const loggedOut = () => ({
-  type: LOGGED_OUT
-})

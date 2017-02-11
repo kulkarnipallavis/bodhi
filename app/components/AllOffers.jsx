@@ -8,9 +8,9 @@ import { respondToOffer } from '../reducers/offer-help'
 import { findRequestByKey, updateRequestStatus } from '../reducers/request-actions'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Divider from 'material-ui/Divider'
-import Done from 'material-ui/svg-icons/action/done';
-import Clear from 'material-ui/svg-icons/content/clear';
-import IconButton from 'material-ui/IconButton';
+import Done from 'material-ui/svg-icons/action/done'
+import Clear from 'material-ui/svg-icons/content/clear'
+import IconButton from 'material-ui/IconButton'
 
 
 class AllOffers extends Component {
