@@ -10,6 +10,7 @@ import { auth } from './firebase'
 import store from './store'
 
 import App from './components/App'
+import Navbar from './components/utilities/Navbar'
 import MapContainer from './components/MapContainer'
 import OfferHelp from './components/OfferHelp'
 import Request from './components/Request'
@@ -70,6 +71,7 @@ injectTapEventPlugin()
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
+      <Route path='/nb' component={Navbar} />
       <Route path="/" component={App} onEnter={onEnterApp}>
         <IndexRedirect to="/home" />
         <Route path="/home" component={Landing} />
