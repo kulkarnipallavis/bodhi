@@ -4,8 +4,8 @@
   "description": "A progressive web app for doing good deeds in your community, built with React.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test-original": "check-node-version --node '>= 6.7.0' && bin/setup && mocha --compilers js:babel-register app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
+    "test-jest": "jest",
+    "test": "check-node-version --node '>= 6.7.0' && bin/setup && mocha --compilers js:babel-register app/**/*.test.js app/**/*.test.jsx app/**/**/*.jsx",
     "test-watch": "check-node-version --node '>= 6.7.0' && bin/setup && mocha --compilers js:babel-register --watch app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
     "build": "check-node-version --node '>= 6.7.0' && bin/setup && webpack",
     "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
@@ -14,21 +14,8 @@
     "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon index.js",
     "seed": "node firebase/seed.js"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "bower_components",
-      "shared"
-    ],
-    "moduleNameMapper": {
-      "^react(.*)$": "<rootDir>/vendor/react-master$1",
-      "^config$": "<rootDir>/configs/app-config.js"
-    }
-  },
+
+  "devServer": { "historyApiFallback" :"true"},
   "repository": {
     "type": "git",
     "url": "https://github.com/kulkarnipallavis/bodhi.git"
