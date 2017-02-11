@@ -15,7 +15,7 @@ describe("<AllOffers />'s connection", () => {
       [{ message: "hey, I like coffee too"  },
        {message: "I found your socks"}, { thing: "third thing"}],
     currentUser: {
-      message: { msg: "Please add me to your network" }
+      message: 1: { msg: "Please add me to your network", network: true }, 2: { msg: "You've been added to Bear's network" }
     }
   }
 
@@ -29,4 +29,6 @@ describe("<AllOffers />'s connection", () => {
   it('gets correct number of offersReceived from state', () => {
     expect(wrapper.props().offersReceived.length).to.equal(3)
   } )
+
+
 })
