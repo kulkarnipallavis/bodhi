@@ -14,8 +14,9 @@
     "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon index.js",
     "seed": "node firebase/seed.js"
   },
-
-  "devServer": { "historyApiFallback" :"true"},
+  "devServer": {
+    "historyApiFallback": "true"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/kulkarnipallavis/bodhi.git"
@@ -43,6 +44,7 @@
     "express": "^4.14.0",
     "firebase": "^3.6.7",
     "firebase-tools": "^3.2.1",
+    "jsdom": "^9.11.0",
     "material-ui": "^0.16.7",
     "material-ui-chip-input": "^0.12.1",
     "nodemon": "^1.11.0",

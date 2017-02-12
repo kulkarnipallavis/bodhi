@@ -24,10 +24,11 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends React.Component {
 
-  constructor() {
-    super()
+export class Navbar extends React.Component {
+
+  constructor(props) {
+    super(props)
     this.state = {
       showMenu: false
     }
@@ -115,4 +116,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
       </div>
     )
   }
-})
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
