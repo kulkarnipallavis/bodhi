@@ -81,10 +81,10 @@ export class AllOffers extends Component {
       const msgBody = `You have been added to ${self}'s network!`
 
       Promise.all([
-      this.props.sendResponseMessage(
-        notification.senderEmail, currentUser, msgBody),
-      this.props.addToNetwork(notification.senderEmail, currentUser),
-      this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})])
+        this.props.sendResponseMessage(
+          notification.senderEmail, currentUser, msgBody),
+        this.props.addToNetwork(notification.senderEmail, currentUser),
+        this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})])
       .then(() => {
         this.props.removeMsg(notification.msgKey, currentUser.uid)
       })
@@ -107,23 +107,22 @@ export class AllOffers extends Component {
 
 
   render() {
-    const offers = this.props.offersReceived
     const currentUser = this.props.currentUser
-    const allOffers = offers ? offers : null
+    const offers = this.props.offersReceived
     const msgs = currentUser ? currentUser.message : null
 
-    const msgsVals = currentUser && msgs ?
+    const msgsVals = msgs ?
       Object.keys(msgs).map( key => {
         msgs[key].msgKey = key
         return msgs[key]
       })
       : []
 
-    const notifications = (currentUser && msgsVals || currentUser && allOffers) ?
-      [...allOffers, ...msgsVals].sort((a, b) => {
+    const notifications = (msgsVals || offers) ?
+      [...offers, ...msgsVals].sort((a, b) => {
         return b.date - a.date
       })
-      : []
+      : null
 
     const styles = { color: "white" }
 
@@ -134,7 +133,7 @@ export class AllOffers extends Component {
             <h1 className="feed-header">Notifications</h1>
           </Row>
             <Divider/>
-             { notifications.length && notifications.map((notification, index) => {
+             { notifications && notifications.map((notification, index) => {
 
                 return (
                 <div key={index}>
