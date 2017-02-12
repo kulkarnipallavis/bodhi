@@ -75,7 +75,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
     }
 
     return (
-      <div id="signup" className="gradient flex-container">
+      <div id="signup">
         <div className="flex-row">
           <h1>Sign Up</h1>
         </div>
