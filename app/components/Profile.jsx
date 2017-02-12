@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import Avatar from 'material-ui/Avatar'
 import { getMarkers } from '../reducers/map'
+import { uploadUserPhoto } from '../reducers/auth'
 import ContentCreate from 'material-ui/svg-icons/content/create'
 import ImageAddAPhoto from 'material-ui/svg-icons/image/add-a-photo'
 import IconButton from 'material-ui/IconButton'
@@ -20,8 +21,7 @@ export class Profile extends Component {
       editingName: false,
       editingEmail: false,
       editingPhone: false,
-      editingBio: false,
-      picture: ''
+      editingBio: false
     }
     this.handleSave = this.handleSave.bind(this)
     this.handleClickHome = this.handleClickHome.bind(this)
@@ -38,8 +38,7 @@ export class Profile extends Component {
         editingName: false,
         editingEmail: false,
         editingPhone: false,
-        editingBio: false,
-        picture: newProps.currentUser.picture ? newProps.currentUser.picture : ''
+        editingBio: false
       })
       this.setState(state)
     }
@@ -61,10 +60,7 @@ export class Profile extends Component {
 
   handleImageUpload(event) {
     const picture = event.target.files[0]
-    this.setState({
-      picture
-    })
-    //dispatch something here to redux
+    this.props.uploadUserPhoto(this.props.currentUser, picture)
   }
 
   handleSave = field => event => {
@@ -76,9 +72,9 @@ export class Profile extends Component {
       email: this.state.email,
       name: this.state.name,
       phone: this.state.phone,
-      picture: this.state.picture,
       skills: this.state.skills,
-      uid: this.state.uid
+      uid: this.state.uid,
+      picture: this.state.picture
     }
 
     this.props.updateUser(user)
@@ -269,6 +265,6 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, updateUser, sendNetworkRequest }
+const mapDispatchToProps = { getMarkers, updateUser, sendNetworkRequest, uploadUserPhoto }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

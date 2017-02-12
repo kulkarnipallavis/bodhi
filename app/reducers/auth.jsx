@@ -40,8 +40,7 @@ export const loggedIn = (user) => {
           badges: '', // badges === karma
           skills: '',
           phone: '',
-          bio: '',
-          picture: ''
+          bio: ''
         })
         const newUser = {
           uid: user.uid,
@@ -52,8 +51,7 @@ export const loggedIn = (user) => {
           badges: '',
           skills: '',
           phone: '',
-          bio: '',
-          picture: ''
+          bio: ''
         }
         dispatch({
           type: LOGGED_IN,
@@ -76,7 +74,6 @@ export const loggedIn = (user) => {
 }
 
 export const updateUser = updatedUser => dispatch => {
-
   dispatch({ type: UPDATE_USER, updatedUser })
 
   const updates = {
@@ -95,8 +92,19 @@ export const updateUser = updatedUser => dispatch => {
   .update(updates)
 }
 
-export const uploadUserPhoto = picture => dispatch => {
+export const uploadUserPhoto = (user, picture) => dispatch => {
+  let newPictureName = picture.name.toString()
+  newPictureName = newPictureName.split(" ").join("_")
 
+  let storageRef = storage.ref(`${user.uid}/${newPictureName}`)
+
+  storageRef.put(picture)
+
+  storageRef.getDownloadURL()
+  .then(userPicture => {
+    user.picture = userPicture
+    dispatch(updateUser(user))
+  })
 }
 
 
