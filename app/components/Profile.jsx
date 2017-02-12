@@ -59,6 +59,8 @@ export class Profile extends Component {
   }
 
   handleImageUpload(event) {
+    event.preventDefault()
+    
     const picture = event.target.files[0]
     this.props.uploadUserPhoto(this.props.currentUser, picture)
   }

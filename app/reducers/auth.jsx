@@ -74,8 +74,6 @@ export const loggedIn = (user) => {
 }
 
 export const updateUser = updatedUser => dispatch => {
-  dispatch({ type: UPDATE_USER, updatedUser })
-
   const updates = {
     badges: updatedUser.badges,
     skills: updatedUser.skills,
@@ -90,6 +88,9 @@ export const updateUser = updatedUser => dispatch => {
   database.ref('Users')
   .child(updatedUser.uid)
   .update(updates)
+  .then(() => {
+    dispatch({ type: UPDATE_USER, updatedUser })
+  })
 }
 
 export const uploadUserPhoto = (user, picture) => dispatch => {
