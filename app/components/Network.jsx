@@ -7,6 +7,8 @@ import Divider from 'material-ui/Divider'
 import Avatar from 'material-ui/Avatar'
 import { addToNetwork, sendNetworkRequest } from '../reducers/auth'
 
+import InvitePage from './Invite'
+
 const mapStateToProps = (state) => {
 	return {
 		currentUser: state.currentUser
@@ -103,6 +105,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 			    underlineFocusStyle: { borderColor: '#FFFFFF' },
 			    inputStyle: { color: '#FFFFFF' },
 		      	errorStyle: { color: '#FC2A34' },
+		      	row: {marginTop: '25px'},
+		      	font: {'color': '#FFF'}
+
 		    }
 
 			const currentUser = this.props.currentUser
@@ -118,7 +123,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 				<Grid className="gradient" fluid>
 	          		<div className="flex-container-feed">
 	            		<div className="flex-row">
-			              	<h2 className="feed-header">Add a Connection</h2>
+			              	<h4 style={styles.font}>Add a Connection</h4>
 			            </div>
 			            <div className="flex-row">
 			              	<TextField
@@ -159,6 +164,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 					           	disabled={this.state.disabled} />
 
 				             <br/>
+			            </div>
+
+			            <div className = "flex-row" style={styles.row}>
+			            	<InvitePage />
+			            	<br />
 			            </div>
 
 		            	<div className="flex-row">
