@@ -81,10 +81,10 @@ export class AllOffers extends Component {
       const msgBody = `You have been added to ${self}'s network!`
 
       Promise.all([
-      this.props.sendResponseMessage(
-        notification.senderEmail, currentUser, msgBody),
-      this.props.addToNetwork(notification.senderEmail, currentUser),
-      this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})])
+        this.props.sendResponseMessage(
+          notification.senderEmail, currentUser, msgBody),
+        this.props.addToNetwork(notification.senderEmail, currentUser),
+        this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})])
       .then(() => {
         this.props.removeMsg(notification.msgKey, currentUser.uid)
       })
@@ -107,18 +107,19 @@ export class AllOffers extends Component {
 
 
   render() {
+    const currentUser = this.props.currentUser
     const offers = this.props.offersReceived
-    const allOffers = offers ? offers : []
-    const msgs = this.props.currentUser ? this.props.currentUser.message : null
+    const msgs = currentUser ? currentUser.message : null
 
-    this.props.currentUser && msgs ?
+    const msgsVals = msgs ?
       Object.keys(msgs).map( key => {
         msgs[key].msgKey = key
+        return msgs[key]
       })
-    : null
+      : []
 
-    const notifications = (this.props.currentUser && msgs || this.props.currentUser && allOffers) ?
-      [...allOffers, ...Object.values(msgs)].sort((a, b) => {
+    const notifications = (msgsVals || offers) ?
+      [...offers, ...msgsVals].sort((a, b) => {
         return b.date - a.date
       })
       : null
@@ -137,7 +138,7 @@ export class AllOffers extends Component {
                 return (
                 <div key={index}>
                     <Row className="feed-story">
-                      {
+                    {
                       notification.offUser &&
                       <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
@@ -188,10 +189,10 @@ export class AllOffers extends Component {
                           </IconButton>
                         </Col>
                       </div>
-                      }
+                    }
 
-                      { !notification.offUser && !notification.network &&
-                       <div>
+                    { !notification.offUser && !notification.network &&
+                      <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
                             <Avatar size={30} src={notification.senderPic}/>
                         </Col>
@@ -221,13 +222,14 @@ export class AllOffers extends Component {
                           open={this.state.popup}/>
                       </div>
 
-                      </Row>
-                      <Divider/>
-                  </div>
+                    </Row>
+                </div>
                 )
-              })  }
-           </div>
-        </Grid>
+              })
+             }
+            <Divider/>
+          </div>
+      </Grid>
     )
   }
 }
