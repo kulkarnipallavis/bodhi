@@ -64,13 +64,13 @@ export class InvitePage extends Component {
     }
 
 		return (
-			<div className="profile gradient flex-container">
+			<div>
 			{ user ?
 				<div>
-					<div className="flex-row" style={styles.column}>
-					<h1>Invite Friends to Bodhi!</h1>
+					<div className="flex-row">
+					<h4>Invite Friends to Join Bodhi</h4>
 					</div>
-					<div className="flex-row" style={styles.column}>
+					<div className="flex-row">
             <form>
 							<TextField
   							onChange={this.handleChange("emails")}
