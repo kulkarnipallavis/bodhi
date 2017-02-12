@@ -88,23 +88,22 @@ export const updateUser = updatedUser => dispatch => {
   database.ref('Users')
   .child(updatedUser.uid)
   .update(updates)
-  .then(() => {
+  .then(()=> {
     dispatch({ type: UPDATE_USER, updatedUser })
   })
 }
 
 export const uploadUserPhoto = (user, picture) => dispatch => {
-  let newPictureName = picture.name.toString()
-  newPictureName = newPictureName.split(" ").join("_")
 
   let storageRef = storage.ref(`${user.uid}/${newPictureName}`)
 
   storageRef.put(picture)
-
-  storageRef.getDownloadURL()
-  .then(userPicture => {
-    user.picture = userPicture
-    dispatch(updateUser(user))
+  .then(result => {
+    storageRef.getDownloadURL() 
+    .then(userPictureURL => {
+      user.picture = userPictureURL
+      dispatch(updateUser(user))
+    })
   })
 }
 
