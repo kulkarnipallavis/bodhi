@@ -95,10 +95,10 @@ export const updateUser = updatedUser => dispatch => {
 
 export const uploadUserPhoto = (user, picture) => dispatch => {
 
-  let storageRef = storage.ref(`${user.uid}/${newPictureName}`)
+  let storageRef = storage.ref(`${user.uid}/${picture.name}`)
 
   storageRef.put(picture)
-  .then(result => {
+  .then(() => {
     storageRef.getDownloadURL() 
     .then(userPictureURL => {
       user.picture = userPictureURL
