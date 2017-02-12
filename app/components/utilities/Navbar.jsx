@@ -54,8 +54,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
 
     const user = this.props.currentUser
     const userMsg = user ? this.props.currentUser.message : null
+    const userMsgArr = userMsg ? Object.values(userMsg) : []
     const offers = this.props.offersReceived
-    const notifications = (userMsg && offers) ? [...offers, ...Object.values(userMsg)] : []
+    const notifications = (userMsgArr || offers) ? [...offers, ...userMsgArr] : []
 
     const styles = {
       badgeStyle: { padding: '0', top: '1px', left: '11px' },

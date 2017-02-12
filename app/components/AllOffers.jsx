@@ -108,17 +108,20 @@ export class AllOffers extends Component {
 
   render() {
     const offers = this.props.offersReceived
-    const allOffers = offers ? offers : []
-    const msgs = this.props.currentUser ? this.props.currentUser.message : null
+    const currentUser = this.props.currentUser
+    const allOffers = offers ? offers : null
+    const msgs = currentUser ? currentUser.message : null
 
-    this.props.currentUser && msgs ?
+    const msgsKeys = currentUser && msgs ?
       Object.keys(msgs).map( key => {
         msgs[key].msgKey = key
       })
     : null
 
-    const notifications = (this.props.currentUser && msgs || this.props.currentUser && allOffers) ?
-      [...allOffers, ...Object.values(msgs)].sort((a, b) => {
+    const msgsVals = msgsKeys? Object.values(msgsKeys): null
+
+    const notifications = (currentUser && msgsVals || currentUser && allOffers) ?
+      [...allOffers, ...msgsVals].sort((a, b) => {
         return b.date - a.date
       })
       : null
@@ -132,7 +135,7 @@ export class AllOffers extends Component {
             <h1 className="feed-header">Notifications</h1>
           </Row>
             <Divider/>
-             { notifications && notifications.map((notification, index) => {
+             { currentUser && notifications && notifications.map((notification, index) => {
 
                 return (
                 <div key={index}>
