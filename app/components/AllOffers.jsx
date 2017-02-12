@@ -116,7 +116,7 @@ class AllOffers extends Component {
       })
     : null
 
-    const notifications = this.props.currentUser && msgs ?
+    const notifications = (this.props.currentUser && msgs || this.props.currentUser && allOffers) ?
       [...allOffers, ...Object.values(msgs)].sort((a, b) => {
         return b.date - a.date
       })
@@ -149,12 +149,12 @@ class AllOffers extends Component {
                           <p className="p-color-white">{notification.message}</p>
                         </Col>
                         <Col xs={2} sm={2} md={2} lg={2}>
-                          <IconButton tooltip="Accept"
+                          <IconButton className="offer-response" tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleRespondOffer('accepted', notification)}>
                               <Done />
                           </IconButton>
-                          <IconButton tooltip="Decline"
+                          <IconButton className="offer-response" tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleRespondOffer('declined', notification)}>
                             <Clear />
@@ -175,12 +175,12 @@ class AllOffers extends Component {
                           <p className="p-color-white">{notification.msg}</p>
                         </Col>
                         <Col xs={2} sm={2} md={2} lg={2}>
-                          <IconButton tooltip="Accept"
+                          <IconButton className="network-response" tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleRespondNetwork('accepted', notification)}>
                               <Done />
                           </IconButton>
-                          <IconButton tooltip="Decline"
+                          <IconButton className="network-response" tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleRespondNetwork('declined', notification)}>
                             <Clear />
@@ -201,7 +201,7 @@ class AllOffers extends Component {
                           <p className="p-color-white">{notification.msg}</p>
                         </Col>
                          <Col xs={2} sm={2} md={2} lg={2}>
-                          <IconButton tooltip="Decline"
+                          <IconButton className="msg-response" tooltip="Delete"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleMsg(notification)}>
                             <Clear />
