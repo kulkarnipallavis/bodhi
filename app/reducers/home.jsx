@@ -37,7 +37,8 @@ const setAcceptedOffers = (acceptedOffers) => ({
 const getUser = (userId) => {
 	return firebase.database().ref('Users')
 			.child(userId)
-			.on('value', snapshot => {
+			.once('value')
+			.then(snapshot => {
 				return snapshot.val()
 			})				
 }
