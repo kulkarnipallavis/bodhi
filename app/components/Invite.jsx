@@ -60,7 +60,8 @@ export class InvitePage extends Component {
     const styles = {
       floatingLabelFocusStyle: { color: 'white' },
       underlineFocusStyle: { borderColor: 'white' },
-      inputStyle: { color: 'white' }
+      inputStyle: { color: 'white' },
+      font: {color: '#FFF'}
     }
 
 		return (
@@ -68,7 +69,7 @@ export class InvitePage extends Component {
 			{ user ?
 				<div>
 					<div className="flex-row">
-					<h4>Invite Friends to Join Bodhi</h4>
+					<h4 style={styles.font}>Invite Friends to Join Bodhi</h4>
 					</div>
 					<div className="flex-row">
             <form>

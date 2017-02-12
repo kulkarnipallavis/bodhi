@@ -105,7 +105,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 			    underlineFocusStyle: { borderColor: '#FFFFFF' },
 			    inputStyle: { color: '#FFFFFF' },
 		      	errorStyle: { color: '#FC2A34' },
-		      	row: {'marginTop': '25px'}
+		      	row: {marginTop: '25px'},
+		      	font: {'color': '#FFF'}
 
 		    }
 
@@ -122,7 +123,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 				<Grid className="gradient" fluid>
 	          		<div className="flex-container-feed">
 	            		<div className="flex-row">
-			              	<h4>Add a Connection</h4>
+			              	<h4 style={styles.font}>Add a Connection</h4>
 			            </div>
 			            <div className="flex-row">
 			              	<TextField
