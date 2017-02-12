@@ -107,7 +107,6 @@ export const uploadUserPhoto = (user, picture) => dispatch => {
   })
 }
 
-
 export const addToNetwork = (friendEmail, currentUser) => {
   return dispatch =>
      database
