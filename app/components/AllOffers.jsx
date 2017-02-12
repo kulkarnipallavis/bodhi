@@ -112,19 +112,18 @@ export class AllOffers extends Component {
     const allOffers = offers ? offers : null
     const msgs = currentUser ? currentUser.message : null
 
-    const msgsKeys = currentUser && msgs ?
+    const msgsVals = currentUser && msgs ?
       Object.keys(msgs).map( key => {
         msgs[key].msgKey = key
+        return msgs[key]
       })
-    : null
-
-    const msgsVals = msgsKeys? Object.values(msgsKeys): null
+      : []
 
     const notifications = (currentUser && msgsVals || currentUser && allOffers) ?
       [...allOffers, ...msgsVals].sort((a, b) => {
         return b.date - a.date
       })
-      : null
+      : []
 
     const styles = { color: "white" }
 
@@ -135,12 +134,12 @@ export class AllOffers extends Component {
             <h1 className="feed-header">Notifications</h1>
           </Row>
             <Divider/>
-             { currentUser && notifications && notifications.map((notification, index) => {
+             { notifications.length && notifications.map((notification, index) => {
 
                 return (
                 <div key={index}>
                     <Row className="feed-story">
-                      {
+                    {
                       notification.offUser &&
                       <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
@@ -191,10 +190,10 @@ export class AllOffers extends Component {
                           </IconButton>
                         </Col>
                       </div>
-                      }
+                    }
 
-                      { !notification.offUser && !notification.network &&
-                       <div>
+                    { !notification.offUser && !notification.network &&
+                      <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
                             <Avatar size={30} src={notification.senderPic}/>
                         </Col>
@@ -224,13 +223,14 @@ export class AllOffers extends Component {
                           open={this.state.popup}/>
                       </div>
 
-                      </Row>
-                      <Divider/>
-                  </div>
+                    </Row>
+                </div>
                 )
-              })  }
-           </div>
-        </Grid>
+              })
+             }
+            <Divider/>
+          </div>
+      </Grid>
     )
   }
 }
