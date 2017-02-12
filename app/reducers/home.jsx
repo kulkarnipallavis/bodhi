@@ -84,7 +84,6 @@ export const getAcceptedOffers = () =>
 					offers.push(snapshot.val()[key])
 				}
 				
-				// mappedOffers: [...[OfferWithUser, OfferWithUser]]
 				const offersWithUsers = offers.map(getOfferWithUsers)
 				Promise.all(offersWithUsers)
 						.then((offUsers)=>{
