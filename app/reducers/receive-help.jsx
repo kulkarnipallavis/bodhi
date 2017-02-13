@@ -49,7 +49,7 @@ export const findOffers = (uid) => {
       if (snapshot.val()) {   //if there is are any offers
 
          for (let offerKey in snapshot.val()) {
-           const offerObj = snapshot.val()[offerKey];
+           const offerObj = snapshot.val()[offerKey]
            offerObj.offKey = offerKey
            offers.push(offerObj)
          }

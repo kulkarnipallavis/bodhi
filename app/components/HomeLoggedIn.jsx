@@ -26,7 +26,6 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(
 
   class Feed extends Component {
@@ -84,7 +83,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             <div className="flex-row">
               <h1 className="feed-header">Recent Activity</h1>
             </div>
-            <Divider/>
+            <Divider />
             { mergedReqAndOffers && mergedReqAndOffers.map((reqOrOffer, index) => (
                 reqOrOffer.title ?
                 ( <div key={index}>
@@ -105,7 +104,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                         <p className="p-color-white">{`${reqOrOffer.user.date}`}</p>
                       </Col>
                     </Row>
-                    <Divider/>
+                    <Divider />
                   </div> )
                 :
                 ( <div key={index}>
@@ -114,9 +113,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.offUser.picture}/>
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
-                        <p className="p-color-white">
-                          {`${reqOrOffer.offUser.name} helped ${reqOrOffer.reqUser.name}`}
-                        </p>
+                        <Link to={`/profile/${reqOrOffer.offUid}`}>
+                          <u className="u-color-white">
+                            <p className="p-color-white">{reqOrOffer.offUser.name}</p>
+                          </u>
+                        </Link>
+                        <p className="p-color-white">helped</p>
+                        <Link to={`/profile/${reqOrOffer.reqUid}`}>
+                          <u className="u-color-white">
+                            <p className="p-color-white">{reqOrOffer.reqUser.name}</p>
+                          </u>
+                        </Link>
                       </Col>
                       <Col xs={1} sm={1} md={1} lg={1}>
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.reqUser.picture}/>

@@ -12,6 +12,7 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 import Divider from 'material-ui/Divider'
 import { getOffers } from '../../reducers/receive-help'
+import { loggedOut } from '../../reducers/auth'
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
@@ -21,6 +22,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getOffers: (offers) => {
     dispatch(getOffers(offers))
+  },
+  loggedOutDispatch: () => {
+    dispatch(loggedOut())
   }
 })
 
@@ -39,7 +43,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
     this.props.getOffers([])
     auth().signOut()
     .then( () => {
-      browserHistory.push('/')
+      this.props.loggedOutDispatch(loggedOut())
+      browserHistory.push('/loginsignup')
+      window.location.reload() 
     }, (err) => {
       console.error(err)
     })
@@ -75,7 +81,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
           title={ user ?
            <Link to="/feed">{bodhiButton}</Link> : <Link to="/home">{bodhiButton}</Link> }
           iconElementLeft={notifications.length ?
-            <Link to="/offers">
+            <Link to="/notifications">
               <Badge
                 style={styles.badgeStyle}
                 badgeContent={notifications.length}>
@@ -102,7 +108,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
                 <div>
                   <Link to="/map"><MenuItem className="nav-item" primaryText="Who's in Need?"/></Link>
                   <Link to="/request"><MenuItem className="nav-item" primaryText="I Need Help!"/></Link>
-                  <Link to="/profile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
+                  <Link to="/editprofile"><MenuItem className="nav-item" primaryText="Profile"/></Link>
                   <Link to="/feed">
                     <MenuItem className="nav-item" primaryText="Activity Feed"></MenuItem>
                   </Link>

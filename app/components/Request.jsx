@@ -118,7 +118,7 @@ class Request extends Component {
               onChange={this.handleChange('title')}
               underlineFocusStyle={styles.underlineFocusStyle}
               errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}
-              errorStyle={styles.errorStyle}/>
+              errorStyle={styles.errorStyle} />
             <br/>
             <TextField
               id="tag"
@@ -129,7 +129,7 @@ class Request extends Component {
               onChange={this.handleChange('tag')}
               underlineFocusStyle={styles.underlineFocusStyle}
               errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}
-              errorStyle={styles.errorStyle}/>
+              errorStyle={styles.errorStyle} />
             <br/>
             <TextField
               id="description"
@@ -142,7 +142,7 @@ class Request extends Component {
               onChange={this.handleChange('description')}
               underlineFocusStyle={styles.underlineFocusStyle}
               errorText={this.state.descriptionIsValid ? '' : 'Please enter a description.'}
-              errorStyle={styles.errorStyle}/>
+              errorStyle={styles.errorStyle} />
             <br />
             <p className="p-color-white p-no-marginLR">Who should see this request?</p>
             <RadioButtonGroup
@@ -157,7 +157,7 @@ class Request extends Component {
                 iconStyle={styles.radioStyle}
                 labelStyle={styles.radioStyle}
                 value="private"
-                label="My Network Only"/>
+                label="My Network Only" />
             </RadioButtonGroup>
           </form>
         </div>
@@ -168,7 +168,7 @@ class Request extends Component {
             backgroundColor="white"
             label="Submit Request"
             onClick={this.handleSubmit}
-            disabled={this.isInvalid()}/>
+            disabled={this.isInvalid()} />
         </div>
         <div>
           <Dialog
@@ -177,7 +177,7 @@ class Request extends Component {
             label="OK"
             onTouchTap={this.redirect} />]}
             modal={true}
-            open={this.state.popup}/>
+            open={this.state.popup} />
         </div>
       </div>
     )

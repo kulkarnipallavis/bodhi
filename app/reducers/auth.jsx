@@ -7,18 +7,23 @@ const UPDATE_USER = 'GET_USER'
 const UPDATE_NETWORK = 'UPDATE_NETWORK'
 
 const reducer = (state = null, action) => {
+  let newUser
   switch (action.type) {
     case LOGGED_IN: return action.user
-    case UPDATE_USER:
-      let newUser = Object.assign({}, state, action.updatedUser)
+    case UPDATE_USER: {
+      newUser = Object.assign({}, state, action.updatedUser)
       return newUser
+    }
     case LOGGED_OUT: return null
     default: return state
   }
 }
 
-
 export default reducer
+
+export const loggedOut = () => ({
+  type: LOGGED_OUT
+})
 
 export const loggedIn = (user) => {
   return dispatch => {
@@ -40,8 +45,9 @@ export const loggedIn = (user) => {
           badges: '', // badges === karma
           skills: '',
           phone: '',
-          privacy: '',
-          bio: ''
+          bio: '',
+          network: {},
+          privacy: ''
         })
         const newUser = {
           uid: user.uid,
@@ -52,8 +58,9 @@ export const loggedIn = (user) => {
           badges: '',
           skills: '',
           phone: '',
-          privacy: '',
-          bio: ''
+          bio: '',
+          network: user.network || {},
+          privacy: ''
         }
         dispatch({
           type: LOGGED_IN,
@@ -85,7 +92,8 @@ export const updateUser = updatedUser => dispatch => {
     privacy: updatedUser.privacy,
     name: updatedUser.name,
     phone: updatedUser.phone,
-    picture: updatedUser.picture
+    picture: updatedUser.picture,
+    privacy: updatedUser.privacy
   }
 
   database.ref('Users')
@@ -102,7 +110,7 @@ export const uploadUserPhoto = (user, picture) => dispatch => {
 
   storageRef.put(picture)
   .then(() => {
-    storageRef.getDownloadURL() 
+    storageRef.getDownloadURL()
     .then(userPictureURL => {
       user.picture = userPictureURL
       dispatch(updateUser(user))
@@ -119,7 +127,7 @@ export const addToNetwork = (friendEmail, currentUser) => {
       .limitToFirst(1)
       .once('value', function(snapshot) {
         if (!snapshot.val()) {
-          console.log("user email not found")
+          console.error('user email not found')
         } else {
           let friendUserId = Object.keys(snapshot.val())[0]
           database
@@ -131,7 +139,7 @@ export const addToNetwork = (friendEmail, currentUser) => {
           })
         }
       })
-      .then(err => console.log(err))
+      .then(err => console.error(err))
 }
 
 export const sendNetworkRequest = (friendEmail, currentUser, msg, network) => {
@@ -143,7 +151,7 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg, network) => {
       .limitToFirst(1)
       .once('child_added', function(friend) {
         if (!friend.val()) {
-          console.log("friend email not found")
+          console.error('friend email not found')
         } else {
           let friendUserId = friend.key
           let date = firebase.database.ServerValue.TIMESTAMP
@@ -156,25 +164,21 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg, network) => {
             senderEmail: currentUser.email,
             senderName: currentUser.name ? currentUser.name : '',
             msg: msg? msg : '',
-            network: network? network : ''
+            network: network ? network : ''
           })
         }
       })
-      .then(err => console.log(err))
+      .catch(err => console.error(err))
 }
 
 export const removeMsg = (msgKey, userId) => {
   return dispatch => {
   const msgToDelete = database.ref(`Users/${userId}/message/${msgKey}`)
   msgToDelete.remove(() => {
-    console.log("msg deleted")
+    console.error("msg deleted")
   })
   .catch((err) => {
-    console.log(err)
+    console.error(err)
   })
 }
 }
-
-export const loggedOut = () => ({
-  type: LOGGED_OUT
-})
