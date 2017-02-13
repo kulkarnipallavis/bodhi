@@ -25,9 +25,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loggedOutDispatch: () => {
     dispatch(loggedOut())
-  },
-  loggedInDispatch: (user) => {
-    dispatch(loggedIn(user))
   }
 })
 
@@ -39,10 +36,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
       showMenu: false
     }
     this.logout = this.logout.bind(this)
-  }
-
-  componentDidMount(){
-     browserHistory.push('/loginsignup')
   }
 
   logout(e) {
