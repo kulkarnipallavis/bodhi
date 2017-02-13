@@ -45,7 +45,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
     .then( () => {
       this.props.loggedOutDispatch(loggedOut())
       browserHistory.push('/loginsignup')
-      window.location.reload() 
+      window.location.reload()
     }, (err) => {
       console.error(err)
     })
@@ -60,7 +60,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
 
     const user = this.props.currentUser
     const userMsg = user ? this.props.currentUser.message : null
-    const userMsgArr = userMsg ? Object.values(userMsg) : []
+    const userMsgArr = userMsg ?
+      Object.keys(userMsg).map((key) => {
+        return userMsg[key]
+      }) : []
     const offers = this.props.offersReceived
     const notifications = (userMsgArr || offers) ? [...offers, ...userMsgArr] : []
 
