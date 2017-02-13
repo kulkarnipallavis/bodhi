@@ -16,7 +16,7 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
 
-class AllOffers extends Component {
+export class AllOffers extends Component {
 
   constructor(props) {
     super(props)
@@ -81,10 +81,10 @@ class AllOffers extends Component {
       const msgBody = `You have been added to ${self}'s network!`
 
       Promise.all([
-      this.props.sendResponseMessage(
-        notification.senderEmail, currentUser, msgBody),
-      this.props.addToNetwork(notification.senderEmail, currentUser),
-      this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})])
+        this.props.sendResponseMessage(
+          notification.senderEmail, currentUser, msgBody),
+        this.props.addToNetwork(notification.senderEmail, currentUser),
+        this.props.addToNetwork(currentUser.email, {uid: notification.senderId, name: notification.senderName, picture: notification.senderPic})])
       .then(() => {
         this.props.removeMsg(notification.msgKey, currentUser.uid)
       })
@@ -107,18 +107,19 @@ class AllOffers extends Component {
 
 
   render() {
+    const currentUser = this.props.currentUser
     const offers = this.props.offersReceived
-    const allOffers = offers ? offers : []
-    const msgs = this.props.currentUser ? this.props.currentUser.message : null
+    const msgs = currentUser ? currentUser.message : null
 
-    this.props.currentUser && msgs ?
+    const msgsVals = msgs ?
       Object.keys(msgs).map( key => {
         msgs[key].msgKey = key
+        return msgs[key]
       })
-    : null
+      : []
 
-    const notifications = this.props.currentUser && msgs ?
-      [...allOffers, ...Object.values(msgs)].sort((a, b) => {
+    const notifications = (msgsVals || offers) ?
+      [...offers, ...msgsVals].sort((a, b) => {
         return b.date - a.date
       })
       : null
@@ -137,7 +138,7 @@ class AllOffers extends Component {
                 return (
                 <div key={index}>
                     <Row className="feed-story">
-                      {
+                    {
                       notification.offUser &&
                       <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
@@ -150,12 +151,12 @@ class AllOffers extends Component {
                           <p className="p-color-white">{notification.message}</p>
                         </Col>
                         <Col xs={2} sm={2} md={2} lg={2}>
-                          <IconButton tooltip="Accept"
+                          <IconButton className="offer-response" tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleRespondOffer('accepted', notification)}>
                               <Done />
                           </IconButton>
-                          <IconButton tooltip="Decline"
+                          <IconButton className="offer-response" tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleRespondOffer('declined', notification)}>
                             <Clear />
@@ -176,22 +177,22 @@ class AllOffers extends Component {
                           <p className="p-color-white">{notification.msg}</p>
                         </Col>
                         <Col xs={2} sm={2} md={2} lg={2}>
-                          <IconButton tooltip="Accept"
+                          <IconButton className="network-response" tooltip="Accept"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleRespondNetwork('accepted', notification)}>
                               <Done />
                           </IconButton>
-                          <IconButton tooltip="Decline"
+                          <IconButton className="network-response" tooltip="Decline"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleRespondNetwork('declined', notification)}>
                             <Clear />
                           </IconButton>
                         </Col>
                       </div>
-                      }
+                    }
 
-                      { !notification.offUser && !notification.network &&
-                       <div>
+                    { !notification.offUser && !notification.network &&
+                      <div>
                         <Col xs={1} sm={1} md={1} lg={1}>
                             <Avatar size={30} src={notification.senderPic}/>
                         </Col>
@@ -202,7 +203,7 @@ class AllOffers extends Component {
                           <p className="p-color-white">{notification.msg}</p>
                         </Col>
                          <Col xs={2} sm={2} md={2} lg={2}>
-                          <IconButton tooltip="Decline"
+                          <IconButton className="msg-response" tooltip="Delete"
                             iconStyle={{color: "#533BD7", background: 'white'}}
                             onClick={this.handleMsg(notification)}>
                             <Clear />
@@ -221,13 +222,14 @@ class AllOffers extends Component {
                           open={this.state.popup}/>
                       </div>
 
-                      </Row>
-                      <Divider/>
-                  </div>
+                    </Row>
+                </div>
                 )
-              })  }
-           </div>
-        </Grid>
+              })
+             }
+            <Divider/>
+          </div>
+      </Grid>
     )
   }
 }

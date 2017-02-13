@@ -13,8 +13,10 @@ require("firebase/auth")
 
 firebase.initializeApp(config);
 var database = firebase.database();
+var storage = firebase.storage();
 
 module.exports = {
 	firebase : firebase,
-	database : database
+	database : database,
+	storage: storage
 }

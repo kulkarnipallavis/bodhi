@@ -3,9 +3,12 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import Avatar from 'material-ui/Avatar'
 import { getMarkers } from '../reducers/map'
+import { uploadUserPhoto } from '../reducers/auth'
 import ContentCreate from 'material-ui/svg-icons/content/create'
+import ImageAddAPhoto from 'material-ui/svg-icons/image/add-a-photo'
 import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
 import TextFieldToggle from './TextFieldToggle'
 import { updateUser, sendNetworkRequest } from '../reducers/auth'
 
@@ -22,6 +25,7 @@ export class Profile extends Component {
     }
     this.handleSave = this.handleSave.bind(this)
     this.handleClickHome = this.handleClickHome.bind(this)
+    this.handleImageUpload = this.handleImageUpload.bind(this)
   }
 
   componentDidMount() {
@@ -54,6 +58,13 @@ export class Profile extends Component {
     this.setState({ [field]: value })
   }
 
+  handleImageUpload(event) {
+    event.preventDefault()
+    
+    const picture = event.target.files[0]
+    this.props.uploadUserPhoto(this.props.currentUser, picture)
+  }
+
   handleSave = field => event => {
     event.preventDefault()
     const user = {
@@ -63,9 +74,9 @@ export class Profile extends Component {
       email: this.state.email,
       name: this.state.name,
       phone: this.state.phone,
-      picture: this.state.picture,
       skills: this.state.skills,
-      uid: this.state.uid
+      uid: this.state.uid,
+      picture: this.state.picture
     }
 
     this.props.updateUser(user)
@@ -84,14 +95,23 @@ export class Profile extends Component {
       underlineFocusStyle: { borderColor: 'white' },
       inputText: { color: 'white' },
       errorStyle: { color: '#FC2A34' },
+      input: {display: 'none'},
+      photo: {marginTop: '5px'},
+      iconSize: {height:'30px', width:'40px'}
     }
 
     return (
       <div className="profile gradient flex-container">
         { user ?
           <div>
-            <div className="flex-row" id="avatar">
+            <div className="flex-row" id="avatar" >
               <Avatar size={80} src={user.picture}/>
+            </div>
+            <div className="flex-row" id="photo" style={styles.photo}>
+               <label>
+              <span><ImageAddAPhoto style={styles.iconSize}/></span>
+               <input type="file" style={styles.input} onChange={this.handleImageUpload}/>
+               </label>
             </div>
             <div className="flex-row" id="member-since">
               <h2>Member since:</h2>
@@ -247,6 +267,6 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, updateUser, sendNetworkRequest }
+const mapDispatchToProps = { getMarkers, updateUser, sendNetworkRequest, uploadUserPhoto }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
