@@ -26,10 +26,6 @@ export class Profile extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.getMarkers()
-  }
-
   componentWillReceiveProps(newProps, oldProps){
     if (newProps.currentUser) {
       const state = Object.assign({}, newProps.currentUser, {

@@ -14,8 +14,7 @@ class MapContainer extends Component {
     super(props)
     this.state = {
       markers: this.props.markers,
-      legendClick: true,
-      showPublic: true
+      legendClick: true
     }
 
     this.handleMarkerClick = this.handleMarkerClick.bind(this)
@@ -64,16 +63,14 @@ class MapContainer extends Component {
 
   networkButtonClick() {
     this.setState({
-      showPublic: false
+      markers: this.props.networkMarkers
     })
-    store.dispatch(getNetworkMarkers(this.props.currentUser.uid))
   }
 
   publicButtonClick() {
     this.setState({
-      showPublic: true
+      markers: this.props.markers
     })
-    store.dispatch(getAllMarkers())
   }
 
   render() {
@@ -143,6 +140,7 @@ MapContainer.propTypes = {
 const mapStateToProps = (state) => ({
   selectedMarker: state.map.selectedMarker,
   markers: state.map.markers,
+  networkMarkers: state.map.networkMarkers,
   center: {
     lat: parseFloat(state.map.center.latitude),
     lng: parseFloat(state.map.center.longitude)
@@ -150,6 +148,6 @@ const mapStateToProps = (state) => ({
   currentUser: state.currentUser
 })
 
-const mapDispatchToProps = { getAllMarkers, getNetworkMarkers, setSelectedMarker }
+const mapDispatchToProps = { setSelectedMarker }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

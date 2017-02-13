@@ -7,6 +7,7 @@ let initialState = {
 }
 
 const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
+const GET_NETWORK_MARKERS = 'GET_NETWORK_MARKERS'
 const SET_LOCATION = 'SET_LOCATION'
 const SET_SELECTED_MARKER = 'SET_SELECTED_MARKER'
 const UPDATE_MARKERS = 'UPDATE_MARKERS'
@@ -19,6 +20,10 @@ const reducer = (state = initialState, action) => {
 
     case GET_ALL_MARKERS:
       newState.markers = action.markers
+      break
+
+    case GET_NETWORK_MARKERS:
+      newState.networkMarkers = action.networkMarkers
       break
 
     case SET_SELECTED_MARKER:
@@ -42,6 +47,11 @@ const reducer = (state = initialState, action) => {
 export const getMarkers = (markers) => ({
   type: GET_ALL_MARKERS,
   markers
+})
+
+export const getNetworkMarkers = (networkMarkers) => ({
+  type: GET_NETWORK_MARKERS,
+  networkMarkers
 })
 
 export const setLocation = (center) => ({
@@ -119,7 +129,7 @@ export const getAllMarkers = () => dispatch =>
   })
 })
 
-  export const getNetworkMarkers = (currentUserId) => dispatch =>
+  export const getUserNetworkMarkers = (currentUserId) => dispatch =>
   database.ref('Requests')
   .on('value', snapshot => {
     let requestObjects = snapshot.val()
@@ -163,7 +173,7 @@ export const getAllMarkers = () => dispatch =>
         }
       })
       .then(filteredMarkerArray => {
-        dispatch(getMarkers(filteredMarkerArray))
+        dispatch(getNetworkMarkers(filteredMarkerArray))
       })
     })
   })
