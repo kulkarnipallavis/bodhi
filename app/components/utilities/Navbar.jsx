@@ -12,6 +12,7 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 import Divider from 'material-ui/Divider'
 import { getOffers } from '../../reducers/receive-help'
+import { loggedIn, loggedOut } from '../../reducers/auth'
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
@@ -21,6 +22,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getOffers: (offers) => {
     dispatch(getOffers(offers))
+  },
+  loggedOutDispatch: () => {
+    dispatch(loggedOut())
+  },
+  loggedInDispatch: (user) => {
+    dispatch(loggedIn(user))
   }
 })
 
@@ -34,12 +41,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Navbar extends
     this.logout = this.logout.bind(this)
   }
 
+  componentDidMount(){
+     browserHistory.push('/loginsignup')
+  }
+
   logout(e) {
     e.preventDefault()
     this.props.getOffers([])
     auth().signOut()
     .then( () => {
-      browserHistory.push('/')
+      this.props.loggedOutDispatch(loggedOut())
+      browserHistory.push('/loginsignup')
+      window.location.reload() 
     }, (err) => {
       console.error(err)
     })
