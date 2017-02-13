@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import { Grid, Row, Col } from 'react-bootstrap'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -183,11 +184,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 				                        <Avatar className="feed-avatar" size={30} src={connection.picture}/>
 				                      </Col>
 				                      <Col xs={8} sm={8} md={8} lg={8}>
-				                      	<u className="u-color-white">
-				                            <p className="p-color-white">
-				                              {connection.name}
-				                            </p>
-				                          </u>
+				                      	<Link to={`/profile/${connection.uid}`}>
+			                            <p className="p-color-white italic">
+			                              {connection.name}
+			                            </p>
+				                        </Link>
 				                      </Col>
 				                	</Row>
                     				<Divider/>

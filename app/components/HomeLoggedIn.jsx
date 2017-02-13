@@ -92,7 +92,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.user.picture} />
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
-                        <Link to={`/profile/${reqOrOffer.user.uid}`}>
+                        <Link to={`/profile/${reqOrOffer.uid}`}>
                           <p className="p-color-white italic">{`${reqOrOffer.user.name}`}</p>
                         </Link>
                         <p className="p-color-white">{`needs help with`}</p>

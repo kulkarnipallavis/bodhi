@@ -27,9 +27,7 @@ const MapComponent = withGoogleMap(props => {
                </div>
                <div className="flex-row flex-row-iw">
                  <Link to={`/profile/${marker.uid}`}>
-                   <u>
-                     <h3>{marker.requester.name}</h3>
-                   </u>
+                    <h3 className="italic">{marker.requester.name}</h3>
                  </Link>
                </div>
                <div className="flex-row flex-row-iw">
