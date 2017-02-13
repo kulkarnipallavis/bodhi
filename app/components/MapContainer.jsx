@@ -14,7 +14,7 @@ class MapContainer extends Component {
     super(props)
     this.state = {
       markers: this.props.markers,
-      legendClick: false
+      legendClick: true
     }
 
     this.handleMarkerClick = this.handleMarkerClick.bind(this)
@@ -79,11 +79,11 @@ class MapContainer extends Component {
 
     return (
       <div>
-        <FlatButton 
+        <FlatButton
           label="My Network"
           onClick={this.networkButtonClick}
         />
-        <FlatButton 
+        <FlatButton
           label="Public"
           onClick={this.publicButtonClick}
         />
