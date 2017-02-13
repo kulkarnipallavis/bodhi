@@ -89,15 +89,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                 ( <div key={index}>
                     <Row className="feed-story">
                       <Col xs={1} sm={1} md={1} lg={1}>
-                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.user.picture}/>
+                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.user.picture} />
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
-                        <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to='/map'>
-                          <u className="u-color-white">
-                            <p className="p-color-white">
-                              {`${reqOrOffer.user.name} needs help with ${reqOrOffer.title}`}
-                            </p>
-                          </u>
+                        <Link to={`/profile/${reqOrOffer.uid}`}>
+                          <p className="p-color-white italic">{`${reqOrOffer.user.name}`}</p>
+                        </Link>
+                        <p className="p-color-white">{`needs help with`}</p>
+                        <Link onClick={() => {this.handleRequestClick(reqOrOffer)}} to="/map">
+                          <p className="p-color-white italic">{`${reqOrOffer.title}`}</p>
                         </Link>
                       </Col>
                       <Col xs={2} xsOffset={1} sm={2} smOffset={1} md={2} mdOffset={1} lg={2} lgOffset={1}>
@@ -110,23 +110,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                 ( <div key={index}>
                     <Row className="feed-story">
                       <Col xs={1} sm={1} md={1} lg={1}>
-                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.offUser.picture}/>
+                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.offUser.picture} />
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
                         <Link to={`/profile/${reqOrOffer.offUid}`}>
-                          <u className="u-color-white">
-                            <p className="p-color-white">{reqOrOffer.offUser.name}</p>
-                          </u>
+                          <p className="p-color-white italic">{reqOrOffer.offUser.name}</p>
                         </Link>
                         <p className="p-color-white">helped</p>
                         <Link to={`/profile/${reqOrOffer.reqUid}`}>
-                          <u className="u-color-white">
-                            <p className="p-color-white">{reqOrOffer.reqUser.name}</p>
-                          </u>
+                          <p className="p-color-white italic">{reqOrOffer.reqUser.name}</p>
                         </Link>
                       </Col>
                       <Col xs={1} sm={1} md={1} lg={1}>
-                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.reqUser.picture}/>
+                        <Avatar className="feed-avatar" size={30} src={reqOrOffer.reqUser.picture} />
                       </Col>
                       <Col xs={2} sm={2} md={2} lg={2}>
                         <p className="p-color-white">{`${reqOrOffer.offUser.date}`}</p>
