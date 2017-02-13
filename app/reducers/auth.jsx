@@ -40,6 +40,7 @@ export const loggedIn = (user) => {
           badges: '', // badges === karma
           skills: '',
           phone: '',
+          privacy: '',
           bio: ''
         })
         const newUser = {
@@ -51,6 +52,7 @@ export const loggedIn = (user) => {
           badges: '',
           skills: '',
           phone: '',
+          privacy: '',
           bio: ''
         }
         dispatch({
@@ -80,6 +82,7 @@ export const updateUser = updatedUser => dispatch => {
     bio: updatedUser.bio,
     dateJoined: updatedUser.dateJoined,
     email: updatedUser.email,
+    privacy: updatedUser.privacy,
     name: updatedUser.name,
     phone: updatedUser.phone,
     picture: updatedUser.picture
