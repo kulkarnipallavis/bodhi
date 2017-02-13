@@ -14,7 +14,8 @@ class MapContainer extends Component {
     super(props)
     this.state = {
       markers: this.props.markers,
-      legendClick: false
+      legendClick: false,
+      showPublic: true
     }
 
     this.handleMarkerClick = this.handleMarkerClick.bind(this)
@@ -62,10 +63,16 @@ class MapContainer extends Component {
   }
 
   networkButtonClick() {
+    this.setState({
+      showPublic: false
+    })
     store.dispatch(getNetworkMarkers(this.props.currentUser.uid))
   }
 
   publicButtonClick() {
+    this.setState({
+      showPublic: true
+    })
     store.dispatch(getAllMarkers())
   }
 
@@ -79,11 +86,11 @@ class MapContainer extends Component {
 
     return (
       <div>
-        <FlatButton 
+        <FlatButton
           label="My Network"
           onClick={this.networkButtonClick}
         />
-        <FlatButton 
+        <FlatButton
           label="Public"
           onClick={this.publicButtonClick}
         />

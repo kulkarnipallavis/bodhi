@@ -55,7 +55,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class Signup extends
     // .then(() => {
     //   let user = auth().currentUser
     //   user.sendEmailVerification()
-      .then(() =>  browserHistory.push('/profile'))
+      .then(() =>  browserHistory.push('/editprofile'))
       // if new account is created, user is signed in automatically
       .catch( err => {
         if (err.code === 'auth/email-already-in-use' || err.code === 'auth/invalid-email') {
