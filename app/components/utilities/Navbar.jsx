@@ -12,7 +12,7 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
 import {auth} from '../../firebase.jsx'
 import Divider from 'material-ui/Divider'
 import { getOffers } from '../../reducers/receive-help'
-import { loggedIn, loggedOut } from '../../reducers/auth'
+import { loggedOut } from '../../reducers/auth'
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
