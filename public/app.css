@@ -93,9 +93,15 @@ body {
 use flex-col when you want a bubble within a flex-row (a la the Offer Help form's
 request details in flex-col-white)  */
 
+.align-left {
+  text-align: left !important;
+  align-items: left !important;
+  justify-content: left !important;
+}
+
 .flex-container {
   width: 100%;
-  padding: 25px 0px 25px 0px;
+  padding: 25px;
   height: 100%;
   min-height: 100vh;
 }
@@ -201,6 +207,18 @@ p {
   margin: 15px 0px !important;
 }
 
+.p-marginLR {
+  margin: 10px;
+}
+
+.p-xs-font {
+  font-size: 1em;
+}
+
+.italic {
+  font-style: italic;
+}
+
 /* This gives us back the default text-dec of a link (<a>) which we override on line 200 so that our react router Links that live in buttons (and #navbar-brand aren't underlined. We can use <u> when we want to make it clear that text is a link */
 u {
   text-decoration: underline;
@@ -208,7 +226,7 @@ u {
 }
 
 u:hover {
-  color: #F0B259;
+  color: #533BD7;
   font-style: italic;
 }
 

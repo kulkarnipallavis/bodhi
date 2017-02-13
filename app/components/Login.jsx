@@ -85,7 +85,7 @@ export default connect(state => ({}), dispatch => ({}))(class Login extends Comp
         }
 
     return (
-      <div id="login" className="gradient flex-container">
+      <div id="login">
         <div className="flex-row">
           <h1>Login</h1>
         </div>

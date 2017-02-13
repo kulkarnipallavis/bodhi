@@ -9,14 +9,13 @@ import { findRequestByKey, updateRequestStatus } from '../reducers/request-actio
 import { addToNetwork, sendNetworkRequest, removeMsg } from '../reducers/auth'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Divider from 'material-ui/Divider'
-import Done from 'material-ui/svg-icons/action/done';
-import Clear from 'material-ui/svg-icons/content/clear';
-import IconButton from 'material-ui/IconButton';
+import Done from 'material-ui/svg-icons/action/done'
+import Clear from 'material-ui/svg-icons/content/clear'
+import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
-
-export class AllOffers extends Component {
+class AllOffers extends Component {
 
   constructor(props) {
     super(props)
