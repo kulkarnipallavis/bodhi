@@ -17,7 +17,6 @@ class Request extends Component {
       uid: '',
       title: '',
       description: '',
-      tag: '',
       privacy: '',
       disabled: true,
       titleIsValid: true,
@@ -48,7 +47,6 @@ class Request extends Component {
       uid: '',
       title: '',
       description: '',
-      tag: '',
       privacy: '',
       disabled: true,
       titleIsValid: true,
@@ -66,7 +64,6 @@ class Request extends Component {
       title: this.state.title,
       description: this.state.description,
       privacy: this.state.privacy,
-      tag: this.state.tag,
       location: this.props.location,
       status: 'open',
     }
@@ -78,12 +75,10 @@ class Request extends Component {
 
   isInvalid() {
     const { title, titleIsValid,
-            tag, tagIsValid,
             description, descriptionIsValid,
             privacy, privacyIsValid } = this.state
 
     return !(title && titleIsValid &&
-             tag && tagIsValid &&
              description && descriptionIsValid &&
              privacy && privacyIsValid)
   }
@@ -119,17 +114,7 @@ class Request extends Component {
               underlineFocusStyle={styles.underlineFocusStyle}
               errorText={this.state.titleIsValid ? '' : 'Please enter a title.'}
               errorStyle={styles.errorStyle} />
-            <br/>
-            <TextField
-              id="tag"
-              floatingLabelText="Tag"
-              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-              inputStyle={styles.inputStyle}
-              value={this.state.tag}
-              onChange={this.handleChange('tag')}
-              underlineFocusStyle={styles.underlineFocusStyle}
-              errorText={this.state.tagIsValid ? '' : 'Please enter a tag.'}
-              errorStyle={styles.errorStyle} />
+
             <br/>
             <TextField
               id="description"
