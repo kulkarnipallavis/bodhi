@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import { Table } from 'react-bootstrap'
 import RaisedButton from 'material-ui/RaisedButton'
 import Avatar from 'material-ui/Avatar'
@@ -144,7 +145,9 @@ class AllOffers extends Component {
                             <Avatar size={30} src={notification.offUser.picture}/>
                         </Col>
                         <Col xs={3} sm={3} md={3} lg={3}>
-                          <p className="p-color-white">{notification.offUser.name.split(' ')[0]}</p>
+                          <Link to={`/profile/${notification.offUid}`}>
+                            <p className="p-color-white italic">{notification.offUser.name.split(' ')[0]}</p>
+                          </Link>
                         </Col>
                         <Col xs={6} sm={6} md={6} lg={6}>
                           <p className="p-color-white">{notification.message}</p>
@@ -170,7 +173,9 @@ class AllOffers extends Component {
                             <Avatar size={30} src={notification.senderPic}/>
                         </Col>
                         <Col xs={3} sm={3} md={3} lg={3}>
-                          <p className="p-color-white">{notification.senderName.split(' ')[0]}</p>
+                          <Link to={`/profile/${notification.senderId}`}>
+                            <p className="p-color-white italic">{notification.senderName.split(' ')[0]}</p>
+                          </Link>
                         </Col>
                         <Col xs={6} sm={6} md={6} lg={6}>
                           <p className="p-color-white">{notification.msg}</p>
@@ -196,7 +201,9 @@ class AllOffers extends Component {
                             <Avatar size={30} src={notification.senderPic}/>
                         </Col>
                         <Col xs={3} sm={3} md={3} lg={3}>
-                          <p className="p-color-white">{notification.senderName.split(' ')[0]}</p>
+                          <Link to={`/profile/${notification.senderId}`}>
+                            <p className="p-color-white italic">{notification.senderName.split(' ')[0]}</p>
+                          </Link>
                         </Col>
                         <Col xs={6} sm={6} md={6} lg={6}>
                           <p className="p-color-white">{notification.msg}</p>
