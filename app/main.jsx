@@ -27,7 +27,7 @@ import Network from './components/Network'
 
 import { getOpenRequests, getAcceptedOffers } from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-import { getAllMarkers, grabUserLocation } from './reducers/map'
+import { getAllMarkers, getUserNetworkMarkers, grabUserLocation } from './reducers/map'
 import { findOffers } from './reducers/receive-help'
 import { grabUserProfileInfo } from './reducers/users'
 
@@ -37,6 +37,7 @@ auth().onAuthStateChanged(function(user) {
   if (user) {
     currentUserListener = store.dispatch(loggedIn(user))
     offersListener = store.dispatch(findOffers(user.uid))
+    store.dispatch(getUserNetworkMarkers(user.uid))
   } else {
     store.dispatch(loggedOut())
     currentUserListener && currentUserListener()
@@ -45,7 +46,7 @@ auth().onAuthStateChanged(function(user) {
   }
 })
 
-const onEnterApp = () => {
+const onEnterApp = (nextState) => {
   store.dispatch(grabUserLocation())
   store.dispatch(getAllMarkers())
 }
