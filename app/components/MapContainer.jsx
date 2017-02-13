@@ -14,7 +14,7 @@ class MapContainer extends Component {
     super(props)
     this.state = {
       markers: this.props.markers,
-      legendClick: false,
+      legendClick: true,
       showPublic: true
     }
 
