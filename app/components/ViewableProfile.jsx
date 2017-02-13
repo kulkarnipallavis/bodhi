@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Avatar from 'material-ui/Avatar'
 import RaisedButton from 'material-ui/RaisedButton'
+import { sendNetworkRequest } from '../reducers/auth'
 
 class ViewableProfile extends Component {
 
@@ -48,9 +49,15 @@ class ViewableProfile extends Component {
               <RaisedButton
                 type="button"
                 className="form-button"
-                label="Request Connection"
+                label="Connect"
                 labelColor="#533BD7"
-                backgroundColor="white" />
+                backgroundColor="white"
+                onClick={() => this.props.handleAddConnection(
+                  userViewing.email,
+                  currentUser,
+                  `${currentUser.name} would like to add you to their network.`,
+                  true
+                )} />
             </div>
           </div>
           :
@@ -69,7 +76,13 @@ class ViewableProfile extends Component {
                 className="form-button"
                 label="Connect"
                 labelColor="#533BD7"
-                backgroundColor="white" />
+                backgroundColor="white"
+                onClick={() => this.props.handleAddConnection(
+                  userViewing.email,
+                  currentUser,
+                  `${currentUser.name} would like to add you to their network.`,
+                  true
+                )} />
             </div>
           </div>
         }
@@ -90,7 +103,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  // handleAddConnection: uid => dispatch(CALL IMPORTED ADDTONETWORK THUNK HERE)
+  handleAddConnection: (userViewingEmail, currentUser, msg, network) => dispatch(sendNetworkRequest(userViewingEmail, currentUser, msg, network))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewableProfile)

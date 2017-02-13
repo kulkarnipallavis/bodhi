@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import { database } from '../firebase'
+import { database, storage } from '../firebase'
 
 const LOGGED_IN = 'LOGGED_IN'
 export const LOGGED_OUT = 'LOGGED_OUT'
@@ -83,9 +83,6 @@ export const loggedIn = (user) => {
 }
 
 export const updateUser = updatedUser => dispatch => {
-
-  dispatch({ type: UPDATE_USER, updatedUser })
-
   const updates = {
     badges: updatedUser.badges,
     skills: updatedUser.skills,
@@ -101,8 +98,24 @@ export const updateUser = updatedUser => dispatch => {
   database.ref('Users')
   .child(updatedUser.uid)
   .update(updates)
+  .then(()=> {
+    dispatch({ type: UPDATE_USER, updatedUser })
+  })
 }
 
+export const uploadUserPhoto = (user, picture) => dispatch => {
+
+  let storageRef = storage.ref(`${user.uid}/${picture.name}`)
+
+  storageRef.put(picture)
+  .then(() => {
+    storageRef.getDownloadURL()
+    .then(userPictureURL => {
+      user.picture = userPictureURL
+      dispatch(updateUser(user))
+    })
+  })
+}
 
 export const addToNetwork = (friendEmail, currentUser) => {
   return dispatch =>
@@ -154,7 +167,7 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg, network) => {
           })
         }
       })
-      .then(err => console.error(err))
+      .catch(err => console.error(err))
 }
 
 export const removeMsg = (msgKey, userId) => {

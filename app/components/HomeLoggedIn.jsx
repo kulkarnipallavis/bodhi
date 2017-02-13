@@ -113,13 +113,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.offUser.picture}/>
                       </Col>
                       <Col xs={7} sm={7} md={7} lg={7}>
-                        <p className="p-color-white">
-                          <Link to={`/profile/${reqOrOffer.offUid}`}>{reqOrOffer.offUser.name}</Link>
-                        </p>
+                        <Link to={`/profile/${reqOrOffer.offUid}`}>
+                          <u className="u-color-white">
+                            <p className="p-color-white">{reqOrOffer.offUser.name}</p>
+                          </u>
+                        </Link>
                         <p className="p-color-white">helped</p>
-                        <p className="p-color-white">
-                          <Link to={`/profile/${reqOrOffer.reqUid}`}>{reqOrOffer.reqUser.name}</Link>
-                        </p>
+                        <Link to={`/profile/${reqOrOffer.reqUid}`}>
+                          <u className="u-color-white">
+                            <p className="p-color-white">{reqOrOffer.reqUser.name}</p>
+                          </u>
+                        </Link>
                       </Col>
                       <Col xs={1} sm={1} md={1} lg={1}>
                         <Avatar className="feed-avatar" size={30} src={reqOrOffer.reqUser.picture}/>

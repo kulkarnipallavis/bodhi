@@ -23,13 +23,13 @@ import OfferHelpMessage from './components/OfferHelpMessage'
 import Feed from './components/HomeLoggedIn'
 import AllOffers from './components/AllOffers'
 import Landing from './components/HomeLoggedOut'
+import Network from './components/Network'
 
 import { getOpenRequests, getAcceptedOffers } from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
 import { getAllMarkers, grabUserLocation } from './reducers/map'
 import { findOffers } from './reducers/receive-help'
 import { grabUserProfileInfo } from './reducers/users'
-import Network from './components/Network'
 
 let offersListener, currentUserListener
 
@@ -88,7 +88,7 @@ render(
         <Route path="/profile/:uid" component={ViewableProfile} onEnter={onProfileEnter} />
         <Route path="/editprofile" component={Profile} />
         <Route path="/invitefriends" component={InvitePage} />
-        <Route path="/offers" component={AllOffers} />
+        <Route path="/notifications" component={AllOffers} />
         <Route path="/network" component={Network} />
       </Route>
     </Router>
