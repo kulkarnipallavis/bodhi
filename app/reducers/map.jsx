@@ -129,10 +129,12 @@ export const getAllMarkers = () => dispatch => {
 }
 
   export const getUserNetworkMarkers = (currentUserId) => dispatch =>
-  database.ref('Requests')
-  .on('value', snapshot => {
+  
+  let markers = []
+
+  return database.ref('Requests')
+  .once('value', snapshot => {
     let requestObjects = snapshot.val()
-    let markers = []
     if (Object.keys(requestObjects)) {
       Object.keys(requestObjects).forEach(key => {
         if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
@@ -151,28 +153,29 @@ export const getAllMarkers = () => dispatch => {
         }
       })
     }
-    const addingRequesterInfo = markers.map(findRequester)
-    return Promise.all(addingRequesterInfo)
-    .then(markerArr => {
-      database.ref('Users').child(currentUserId)
-      .once('value')
-      .then(snapshot => {
-        let userNetwork = snapshot.child("network").val()
-        if(userNetwork){
-          let networkArray = Object.keys(userNetwork)
-          let networkIds = networkArray.map(networkId => {
-            return userNetwork[networkId].uid
-          })
-          let filteredMarkers = markerArr.filter(marker => {
-           if (networkIds.indexOf(marker.uid) > -1) return marker
-         })
-          return filteredMarkers
-        } else {
-          return null
-        }
+    //const addingRequesterInfo = markers.map(findRequester)
+    // return Promise.all(addingRequesterInfo)
+    // .then(markerArr => {
+    //   database.ref('Users').child(currentUserId)
+    //   .once('value')
+    //   .then(snapshot => {
+    //     let userNetwork = snapshot.child("network").val()
+    //     if(userNetwork){
+    //       let networkArray = Object.keys(userNetwork)
+    //       let networkIds = networkArray.map(networkId => {
+    //         return userNetwork[networkId].uid
+    //       })
+    //       let filteredMarkers = markerArr.filter(marker => {
+    //        if (networkIds.indexOf(marker.uid) > -1) return marker
+    //      })
+    //       return filteredMarkers
+    //     } else {
+    //       return null
+    //     }
       })
-      .then(filteredMarkerArray => {
-        dispatch(getNetworkMarkers(filteredMarkerArray))
+      .then(() => {
+        console.log("GETNETWORKMARKERS REDUCER", markers)
+        dispatch(getNetworkMarkers(markers))
       })
     })
   })
