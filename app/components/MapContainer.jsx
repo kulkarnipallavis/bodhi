@@ -13,7 +13,9 @@ class MapContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      markers: this.props.markers,
+      markers: [],
+      networkMarkers: [],
+      showMarkers: [],
       legendClick: true
     }
 
@@ -27,6 +29,12 @@ class MapContainer extends Component {
 
   }
 
+  componentWillReceiveProps(newProps, oldProps){
+    this.setState({markers: newProps.markers})
+    this.setState({showMarkers: newProps.markers})
+    this.setState({networkMarkers: newProps.networkMarkers})
+  }
+
   handleMapLoad(map) {
     this._mapComponent = map
     if (map) map.getZoom()
@@ -34,7 +42,7 @@ class MapContainer extends Component {
 
   handleMarkerClick(targetMarker) {
     this.setState({
-         markers: this.props.markers.map(marker => {
+         showMarkers: this.state.showMarkers.map(marker => {
           if (marker === targetMarker) marker.showDesc = true
           else marker.showDesc = false
       })
@@ -44,7 +52,7 @@ class MapContainer extends Component {
 
   handleMarkerClose(targetMarker) {
    this.setState({
-     markers: this.props.markers.map(marker => {
+     showMarkers: this.state.showMarkers.map(marker => {
        if (marker === targetMarker) marker.showDesc = false
        return marker;
      })
@@ -62,14 +70,16 @@ class MapContainer extends Component {
   }
 
   networkButtonClick() {
+    console.log("NETWORK MARKERS", this.props.networkMarkers)
     this.setState({
-      markers: this.props.networkMarkers
+      showMarkers: this.props.networkMarkers
     })
   }
 
   publicButtonClick() {
+    console.log("PUBLIC BUTTON")
     this.setState({
-      markers: this.props.markers
+      showMarkers: this.props.markers
     })
   }
 
@@ -120,7 +130,7 @@ class MapContainer extends Component {
             containerElement={  <div style={{ height: '90vh', width: '100%' }} />  }
             mapElement={  <div style={{ height: '100%', width: '100%' }} />  }
             onMapLoad={this.handleMapLoad}
-            markers={this.props.markers}
+            showMarkers={this.state.showMarkers}
             center={this.props.center}
             onMarkerClick={this.handleMarkerClick}
             onMarkerClose={this.handleMarkerClose}
@@ -137,7 +147,8 @@ MapContainer.propTypes = {
   center: PropTypes.object
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => (
+{
   selectedMarker: state.map.selectedMarker,
   markers: state.map.markers,
   networkMarkers: state.map.networkMarkers,
@@ -146,7 +157,8 @@ const mapStateToProps = (state) => ({
     lng: parseFloat(state.map.center.longitude)
   },
   currentUser: state.currentUser
-})
+  } 
+)
 
 const mapDispatchToProps = { setSelectedMarker }
 

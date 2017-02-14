@@ -2,6 +2,7 @@ import { database } from '../firebase'
 
 let initialState = {
   markers: [],
+  networkMarkers: [],
   center: {},
   selectedMarker: {}
 }
@@ -96,12 +97,13 @@ const findRequester = (request) => {
   })
 }
 
-export const getAllMarkers = () => dispatch =>
-  database.ref('Requests')
-  .on('value', snapshot => {
-    let requestObjects = snapshot.val()
-    let markers = [];
+export const getAllMarkers = () => dispatch => {
+  let markers = [];
 
+  return database.ref('Requests')
+  .once('value', snapshot => {
+    let requestObjects = snapshot.val()
+    console.log("requestObjects", requestObjects)
     if (Object.keys(requestObjects)) {
       Object.keys(requestObjects).forEach(key => {
         if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
@@ -120,14 +122,11 @@ export const getAllMarkers = () => dispatch =>
         }
       })
     }
-
-    const addingRequesterInfo = markers.map(findRequester)
-
-    return Promise.all(addingRequesterInfo)
-  .then(markerArr => {
-    dispatch(getMarkers(markerArr))
-  })
 })
+  .then(() => {
+    dispatch(getMarkers(markers))
+  })
+}
 
   export const getUserNetworkMarkers = (currentUserId) => dispatch =>
   database.ref('Requests')

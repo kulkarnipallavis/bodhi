@@ -5,7 +5,7 @@ import FlatButton from 'material-ui/FlatButton'
 import { Link } from 'react-router'
 
 const MapComponent = withGoogleMap(props => {
-
+  console.log('anything!', props.showMarkers)
   return (
    props.center.lat ?
     (<GoogleMap
@@ -13,7 +13,7 @@ const MapComponent = withGoogleMap(props => {
       defaultZoom={14}
       defaultCenter={props.center}
       options={{mapTypeControl: false}}>
-    { props.markers && props.markers.map((marker, index) =>
+    { props.showMarkers && props.showMarkers.map((marker, index) =>
       <Marker
        key={index}
        position={marker.position}

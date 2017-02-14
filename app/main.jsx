@@ -46,7 +46,7 @@ auth().onAuthStateChanged(function(user) {
   }
 })
 
-const onEnterApp = (nextState) => {
+const onEnterApp = () => {
   store.dispatch(grabUserLocation())
   store.dispatch(getAllMarkers())
 }
