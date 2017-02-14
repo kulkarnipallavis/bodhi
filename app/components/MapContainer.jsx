@@ -70,14 +70,12 @@ class MapContainer extends Component {
   }
 
   networkButtonClick() {
-    console.log("NETWORK MARKERS", this.props.networkMarkers)
     this.setState({
       showMarkers: this.props.networkMarkers
     })
   }
 
   publicButtonClick() {
-    console.log("PUBLIC BUTTON")
     this.setState({
       showMarkers: this.props.markers
     })

@@ -174,7 +174,6 @@ export const getAllMarkers = () => dispatch => {
     //     }
       })
       .then(() => {
-        console.log("GETNETWORKMARKERS REDUCER", markers)
         dispatch(getNetworkMarkers(markers))
       })
     })
