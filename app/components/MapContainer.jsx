@@ -14,7 +14,7 @@ class MapContainer extends Component {
     super(props)
     this.state = {
       markers: [],
-      networkMarkers: [],
+      networkMarkers: this.props.markers,
       showMarkers: [],
       legendClick: true
     }
