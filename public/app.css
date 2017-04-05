@@ -260,7 +260,7 @@ a {
 /* mobile hero image */
 @media (max-width: 768px){
   .hero {
-    background: url(/img/hero-small-gradient.png) no-repeat center center scroll;
+    background: url(/img/optimized-hero-small-gradient.png) no-repeat center center scroll;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -276,7 +276,7 @@ a {
 /* tablet/desktop hero image */
 @media (min-width: 768px){
   .hero {
-    background: url(/img/hero-large-gradient.png) no-repeat center center scroll;
+    background: url(/img/optimized-hero-large-gradient.png) no-repeat center center scroll;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
