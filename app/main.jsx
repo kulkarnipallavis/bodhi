@@ -27,29 +27,28 @@ import Network from './components/Network'
 
 import { getOpenRequests, getAcceptedOffers } from './reducers/home'
 import { loggedIn, loggedOut } from './reducers/auth'
-import { getAllMarkers, getUserNetworkMarkers, grabUserLocation } from './reducers/map'
+import { getAllMarkers, grabUserLocation } from './reducers/map'
 import { findOffers } from './reducers/receive-help'
 import { grabUserProfileInfo } from './reducers/users'
 
-let offersListener, currentUserListener
+let offersListener, currentUserListener, locationListener, markerListener
 
-auth().onAuthStateChanged(function(user) {
+auth().onAuthStateChanged(user => {
   if (user) {
     currentUserListener = store.dispatch(loggedIn(user))
     offersListener = store.dispatch(findOffers(user.uid))
-    store.dispatch(getUserNetworkMarkers(user.uid))
+    locationListener = store.dispatch(grabUserLocation())
+    markerListener = store.dispatch(getAllMarkers(user.uid))
   } else {
     store.dispatch(loggedOut())
+    // turn off all listeners
     currentUserListener && currentUserListener()
     offersListener && offersListener()
+    locationListener && locationListener()
+    markerListener && markerListener()
     browserHistory.push('/loginsignup')
   }
 })
-
-const onEnterApp = (nextState) => {
-  store.dispatch(grabUserLocation())
-  store.dispatch(getAllMarkers())
-}
 
 const onFeedEnter = () => {
   store.dispatch(getOpenRequests())
@@ -64,8 +63,6 @@ const onLoginEnter = () => {
   })
 }
 
-
-
 const onProfileEnter = (nextRouterState) => {
   store.dispatch(grabUserProfileInfo(nextRouterState.params.uid))
 }
@@ -75,7 +72,7 @@ injectTapEventPlugin()
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App} onEnter={onEnterApp}>
+      <Route path="/" component={App}>
         <IndexRedirect to="/home" />
         <Route path="/home" component={Landing} />
         <Route path="/feed" component={Feed} onEnter={onFeedEnter} />

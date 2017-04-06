@@ -4,22 +4,26 @@ import Avatar from 'material-ui/Avatar'
 import FlatButton from 'material-ui/FlatButton'
 import { Link } from 'react-router'
 
-const MapComponent = withGoogleMap(props => {
-
-  return (
+const MapComponent = withGoogleMap(props => (
    props.center.lat ?
-    (<GoogleMap
+    <GoogleMap
       ref={props.onMapLoad}
       defaultZoom={14}
       defaultCenter={props.center}
-      options={{mapTypeControl: false}}>
+      options={{mapTypeControl: false}}
+    >
     { props.markers && props.markers.map((marker, index) =>
       <Marker
        key={index}
        position={marker.position}
        onClick={() => props.onMarkerClick(marker)}
-       icon={(marker.status === 'pending') ? '/img/purple-marker-map.svg' : '/img/red-marker-map.svg'}>
-       {marker.showDesc && (
+       icon={
+         marker.status === 'pending'
+          ? '/img/purple-marker-map.svg'
+          : '/img/red-marker-map.svg'
+       }
+      >
+       { marker.showDesc &&
          <InfoWindow onCloseClick={() => props.onMarkerClose(marker)}>
            { <div>
                <div className="flex-row">
@@ -44,14 +48,13 @@ const MapComponent = withGoogleMap(props => {
                  </FlatButton>
                </div>
              </div> }
-         </InfoWindow>
-         )}
+         </InfoWindow> }
        </Marker>
       ) }
-    </GoogleMap>)
+    </GoogleMap>
     :
-    (<div></div>)
+    <div />
   )
-})
+)
 
 export default MapComponent
