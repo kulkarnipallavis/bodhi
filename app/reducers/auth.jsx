@@ -139,7 +139,7 @@ export const addToNetwork = (friendEmail, currentUser) => {
           })
         }
       })
-      .then(err => console.error(err))
+      .catch(err => console.error(err))
 }
 
 export const sendNetworkRequest = (friendEmail, currentUser, msg, network) => {
@@ -174,11 +174,7 @@ export const sendNetworkRequest = (friendEmail, currentUser, msg, network) => {
 export const removeMsg = (msgKey, userId) => {
   return dispatch => {
   const msgToDelete = database.ref(`Users/${userId}/message/${msgKey}`)
-  msgToDelete.remove(() => {
-    console.error("msg deleted")
-  })
-  .catch((err) => {
-    console.error(err)
-  })
+  msgToDelete.remove()
+  .catch((err) => console.error(err))
 }
 }

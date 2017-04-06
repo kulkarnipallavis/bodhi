@@ -7,7 +7,6 @@ import FlatButton from 'material-ui/FlatButton'
 import Login from './Login'
 import Signup from './Signup'
 
-
 export default class LoginSignup extends Component {
 
   constructor(props) {
@@ -17,8 +16,6 @@ export default class LoginSignup extends Component {
       showLogin: false,
       showSignup: false
     }
-
-    this.handleClickGmail = this.handleClickGmail.bind(this)
   }
 
   handleClickLoginSignup = (formName, otherForm) => event => {
@@ -31,7 +28,7 @@ export default class LoginSignup extends Component {
     })
   }
 
-  handleClickGmail() {
+  handleClickGmail = () => {
     event.preventDefault()
     var provider = new auth.GoogleAuthProvider()
     auth().signInWithRedirect(provider)
@@ -55,7 +52,7 @@ export default class LoginSignup extends Component {
             labelColor="#4285F4"
             labelStyle={styles.label}
             backgroundColor="white"
-            label="Login or Signup with Google"
+            label="Log in or Sign up with Google"
             icon={logo}
             onClick={this.handleClickGmail}/>
           <RaisedButton
