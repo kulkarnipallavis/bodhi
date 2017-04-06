@@ -101,7 +101,7 @@ request details in flex-col-white)  */
 
 .flex-container {
   width: 100%;
-  padding: 25px;
+  padding: 20px;
   height: 100%;
   min-height: 100vh;
 }
@@ -211,8 +211,16 @@ p {
   margin: 10px;
 }
 
+.p-no-margin {
+  margin: 0 !important;
+}
+
 .p-xs-font {
-  font-size: 1em;
+  font-size: .75em;
+}
+
+p.privacy {
+  font-size: 16px;
 }
 
 .italic {
@@ -307,14 +315,23 @@ a {
   color: white!important;
 }
 
-/* PROFILE */
-
-.profile {
-  color: white!important;
-}
-
 .editable-profile-field {
   margin-left: 15px;
+}
+
+.editable-profile-field.privacy {
+  margin: 0px 10px -30px 10px!important;
+  width: 130px;
+  position: relative;
+  top: 8px;
+}
+
+.p-no-marginLR.privacy {
+  margin: 15px 0px 15px 8px !important;
+}
+
+.flex-row.privacy {
+  display: inline-flex;
 }
 
 /* FORMS */
