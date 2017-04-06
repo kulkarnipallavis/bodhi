@@ -5,76 +5,76 @@ import { browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
+const mapStateToProps = state => ({
+  currentUser: state.currentUser,
+  markers: state.map.markers
+})
 
-export class InvitePage extends Component {
+export default connect(mapStateToProps)(
+  class Invite extends Component {
 
-	constructor(props) {
-		super(props)
+  	constructor(props) {
+  		super(props)
 
-		this.state = {
-			emails : "",
-			message: "",
-      emailsIsValid: false,
-      messageIsValid: true
-		}
-		this.handleChange = this.handleChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
-	}
-
-	componentWillReceiveProps(newProps, oldProps){
-    	if (newProps.currentUser) this.setState(newProps.currentUser)
-    	let defaultMessage = newProps.currentUser.name ?
-      `${newProps.currentUser.name} would like you to join Bodhi! Visit bodhi-7ad02.firebaseapp.com to get started.`
-      : "You've been invited to join Bodhi! Visit bodhi-7ad02.firebaseapp.com to get started."
-
-    	this.setState({
-    		message: defaultMessage
-    	})
+  		this.state = {
+  			emails: '',
+  			message: 'I\'d like to invite you to join Bodhi! Visit bodhi.community to get started.',
+        messageIsValid: true,
+        emailsIsValid: false
+  		}
   	}
 
-  isInvalid() {
-    const { email, message, emailsIsValid, messageIsValid } = this.state
-    return !(email && message && emailsIsValid && messageIsValid)
-  }
+    isInvalid = () => {
+      const { emails, message, emailsIsValid, messageIsValid } = this.state
+      return !(emails && message && emailsIsValid && messageIsValid)
+    }
 
-	handleChange = type => event => {
-	  let value = event.target.value
-		this.setState({
-			[type]: value,
-      [`${type}IsValid`]: !!value
-		})
-	}
+    clearForm = () => {
+      this.setState({
+        emails: '',
+        message: 'I\'d like to invite you to join Bodhi! Visit bodhi.community to get started.',
+        messageIsValid: true,
+        emailsIsValid: false
+      })
+    }
 
-	handleSubmit(e) {
-		let emails = this.state.emails
- 		let emailsString = emails.split(", ").join(",")
-		let a = document.createElement('a')
-    if (this.isInvalid()) {
-      a.href = "mailto:" + emailsString + "?subject=" + this.props.currentUser.name + " wants you to Join Bodhi!&body=" + this.state.message;
+  	handleChange = type => event => {
+  	  let value = event.target.value
+  		this.setState({
+  			[type]: value,
+        [`${type}IsValid`]: !!value
+  		})
+  	}
+
+  	handleSubmit = event => {
+      let user = this.props.currentUser
+  		let emails = this.state.emails
+   		let emailsString = emails.split(", ").join(",")
+  		let a = document.createElement('a')
+      a.href = `mailto:${emailsString}?subject=${user.name} wants you to Join Bodhi!&body="${this.state.message}`
+
+      this.clearForm()
   		a.click()
-    }
-	}
+  	}
 
-	render() {
-		const user = this.props.currentUser
-    const styles = {
-      floatingLabelFocusStyle: { color: 'white' },
-      underlineFocusStyle: { borderColor: 'white' },
-      inputStyle: { color: 'white' },
-      font: {color: '#FFF'}
-    }
+  	render() {
+      const styles = {
+        floatingLabelFocusStyle: { color: 'white' },
+        underlineFocusStyle: { borderColor: 'white' },
+        inputStyle: { color: 'white' },
+        font: {color: 'white'}
+      }
 
-		return (
-			<div>
-			{ user ?
-				<div>
-					<div className="flex-row">
-					<h4 style={styles.font}>Invite Friends to Join Bodhi</h4>
-					</div>
-					<div className="flex-row">
+  		return (
+  			<div>
+  				<div className="flex-row">
+  				<h1 style={styles.font}>Invite Friends to Join Bodhi</h1>
+  				</div>
+  				<div className="flex-row">
             <form>
-							<TextField
-  							onChange={this.handleChange("emails")}
+  						<TextField
+                value={this.state.emails}
+  							onChange={this.handleChange('emails')}
   							multiLine={true}
                 textareaStyle={styles.inputStyle}
                 floatingLabelText="Email(s)"
@@ -82,44 +82,33 @@ export class InvitePage extends Component {
                 underlineFocusStyle={styles.underlineFocusStyle}
   							rowsMax={10}
   							id="email"
-  							hintText={'Up to 10 emails, comma separated'}/>
+  							hintText={'Up to 10 emails, comma separated'}
+              />
               <br/>
   						<TextField
-    						onChange={this.handleChange("message")}
+    						onChange={this.handleChange('message')}
     						multiLine={true}
                 textareaStyle={styles.inputStyle}
                 floatingLabelText="Message"
                 floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                 underlineFocusStyle={styles.underlineFocusStyle}
     						id="message"
-    						defaultValue={this.state.message}/>
+                value={this.state.message}
+              />
             </form>
-					</div>
-					<div className="flex-row" style={styles.column}>
-						<RaisedButton
-						  onClick={this.handleSubmit}
-						  className="form-button"
-						  label="Submit"
+  				</div>
+  				<div className="flex-row" style={styles.column}>
+  					<RaisedButton
+  					  onClick={this.handleSubmit}
+  					  className="form-button"
+  					  label="Submit"
               labelColor="#533BD7"
-						  backgroundColor="white"
-              disabled={this.isInvalid()}/>
-					</div>
-				</div>
-				:
-        <div className="flex-row">
-          <Link to="/loginsignup">
-            <RaisedButton
-              className="form-button"
-              labelColor="#533BD7"
-              label="Please log in or sign up"
-              backgroundColor="white"/>
-          </Link>
-        </div> }
-	    </div>
-	   )
-	}
-}
-
-const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-
-export default connect(mapStateToProps)(InvitePage)
+  					  backgroundColor="white"
+              disabled={this.isInvalid()}
+            />
+  				</div>
+  			</div>
+  	  )
+  	}
+  }
+)
