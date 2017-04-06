@@ -39,10 +39,6 @@ export class Profile extends Component {
     }
   }
 
-  handleClickEdit = field => event => this.setState({ [`editing${field}`]: true })
-
-  handleClickCancelEdit = field => event => this.setState({ [`editing${field}`]: false })
-
   handleClickLoginSignup = event => browserHistory.push('/loginsignup')
 
   handleClickHome = event => browserHistory.push('/feed')
@@ -87,23 +83,6 @@ export class Profile extends Component {
 
     const picture = event.target.files[0]
     this.props.uploadUserPhoto(this.props.currentUser, picture)
-  }
-
-  handleSave = field => {
-    const user = {
-      badges: this.state.badges,
-      bio: this.state.bio,
-      dateJoined: this.state.dateJoined,
-      email: this.state.email,
-      name: this.state.name,
-      phone: this.state.phone,
-      skills: this.state.skills,
-      uid: this.state.uid,
-      privacy: this.state.privacy,
-      picture: this.state.picture
-    }
-
-    this.props.updateUser(user)
   }
 
   humanReadableDate = string => {
