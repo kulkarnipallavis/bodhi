@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import Avatar from 'material-ui/Avatar'
-import { getMarkers } from '../reducers/map'
+import { receiveMarkers } from '../reducers/map'
 import { uploadUserPhoto } from '../reducers/auth'
 import ContentCreate from 'material-ui/svg-icons/content/create'
 import ImageAddAPhoto from 'material-ui/svg-icons/image/add-a-photo'
@@ -306,6 +306,6 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, updateUser, sendNetworkRequest, uploadUserPhoto }
+const mapDispatchToProps = { receiveMarkers, updateUser, sendNetworkRequest, uploadUserPhoto }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

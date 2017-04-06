@@ -31,7 +31,7 @@ export const loggedIn = (user) => {
     .ref('Users').child(user.uid)
 
     const listener = ref
-    .on('value', function(snapshot){
+    .on('value', function(snapshot) {
 
       if (!snapshot.val()){
         const date = new Date

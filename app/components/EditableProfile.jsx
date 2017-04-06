@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { Link, browserHistory } from 'react-router'
-import { getMarkers, getUserLocation } from '../reducers/map'
+import { receiveMarkers, getUserLocation } from '../reducers/map'
 import { updateUser } from '../reducers/auth'
 
 class EditableProfile extends Component {
@@ -16,7 +16,7 @@ class EditableProfile extends Component {
   }
 
   componentDidMount() {
-    this.props.getMarkers();
+    this.props.Markers();
   }
 
   componentWillReceiveProps(newProps, oldProps){
@@ -32,7 +32,7 @@ class EditableProfile extends Component {
 
   handleSubmit(event){
     event.preventDefault()
-    this.props.updateUser(this.state)
+    this.props.handleUpdateUser(this.state)
     browserHistory.push('/profile')
   }
 
@@ -116,7 +116,9 @@ class EditableProfile extends Component {
   }
 }
 
-const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })
-const mapDispatchToProps = { getMarkers, getUserLocation, updateUser }
+const mapStateToProps = state => ({ currentUser: state.currentUser })
+const mapDispatchToProps = dispatch => ({
+  handleUpdateUser: (updateObj) => dispatch(updateUser(updateObj))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditableProfile)

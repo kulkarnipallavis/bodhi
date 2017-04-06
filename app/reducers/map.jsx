@@ -2,28 +2,29 @@ import { database } from '../firebase'
 
 let initialState = {
   markers: [],
+  networkMarkers: [],
   center: {},
   selectedMarker: {}
 }
 
-const GET_ALL_MARKERS = 'GET_ALL_MARKERS'
-const GET_NETWORK_MARKERS = 'GET_NETWORK_MARKERS'
+const RECEIVE_MARKERS = 'RECEIVE_MARKERS'
+const RECEIVE_NETWORK_MARKERS = 'RECEIVE_NETWORK_MARKERS'
 const SET_LOCATION = 'SET_LOCATION'
 const SET_SELECTED_MARKER = 'SET_SELECTED_MARKER'
 const UPDATE_MARKERS = 'UPDATE_MARKERS'
 
 const reducer = (state = initialState, action) => {
 
-  const newState = Object.assign({}, state)
+  const newState = {...state}
 
   switch (action.type) {
 
-    case GET_ALL_MARKERS:
+    case RECEIVE_MARKERS:
       newState.markers = action.markers
       break
 
-    case GET_NETWORK_MARKERS:
-      newState.networkMarkers = action.networkMarkers
+    case RECEIVE_NETWORK_MARKERS:
+      newState.networkMarkers = action.markers
       break
 
     case SET_SELECTED_MARKER:
@@ -44,14 +45,14 @@ const reducer = (state = initialState, action) => {
   return newState
 }
 
-export const getMarkers = (markers) => ({
-  type: GET_ALL_MARKERS,
+export const receiveMarkers = (markers) => ({
+  type: RECEIVE_MARKERS,
   markers
 })
 
-export const getNetworkMarkers = (networkMarkers) => ({
-  type: GET_NETWORK_MARKERS,
-  networkMarkers
+export const receiveNetworkMarkers = (markers) => ({
+  type: RECEIVE_NETWORK_MARKERS,
+  markers
 })
 
 export const setLocation = (center) => ({
@@ -71,16 +72,18 @@ export const updateMarkers = (markers) => ({
 
 //action-creators
 export const grabUserLocation = () => dispatch => {
-  navigator.geolocation.watchPosition(Position => {
-       let center = {
-         latitude: parseFloat(Position.coords.latitude),
-         longitude: parseFloat(Position.coords.longitude)
-       }
+  const locationId = navigator.geolocation.watchPosition(Position => {
+    let center = {
+     latitude: parseFloat(Position.coords.latitude),
+     longitude: parseFloat(Position.coords.longitude)
+    }
     dispatch(setLocation(center))
-   })
+  })
+
+  return () => navigator.geolocation.clearWatch(locationId)
 }
 
-const findRequester = (request) => {
+export const findRequester = (request) => {
   return database
   .ref('Users')
   .child(request.uid)
@@ -90,14 +93,39 @@ const findRequester = (request) => {
       picture: snapshot.val().picture,
       phone: snapshot.val().phone
     }
-    let newReqObj = Object.assign({}, request)
+    let newReqObj = {...request}
     newReqObj.requester = requester
     return newReqObj
   })
 }
 
-export const getAllMarkers = () => dispatch =>
-  database.ref('Requests')
+export const getNetworkMarkers = (network, markers) => dispatch => {
+  if (network) {
+    // first extract all the network keys into an array
+    const networkKeys = Object.keys(network)
+    // then map over the keys, accessing and storing each network connection's id
+    const networkUIDArr = networkKeys.map(key => network[key].uid)
+    // finally once we've widdled down the list of markers based on whether their
+    // associated user is in the currentUser's network, we can rerender the markers
+    const networkMarkers = markers.filter(marker => networkUIDArr.includes(marker.uid))
+
+    dispatch(receiveNetworkMarkers(networkMarkers))
+  }
+}
+
+export const getAllMarkers = userId => dispatch => {
+  let network
+  // we grab the currentUser's network so we can get the networkMarkers later
+  database.ref('Users')
+  .child(userId)
+  .once('value')
+  .then(snapshot => {
+    network = snapshot.val().network
+  })
+  .catch(err => console.error(err))
+
+  const ref = database.ref('Requests')
+  const listener = ref
   .on('value', snapshot => {
     let requestObjects = snapshot.val()
     let markers = [];
@@ -123,59 +151,65 @@ export const getAllMarkers = () => dispatch =>
 
     const addingRequesterInfo = markers.map(findRequester)
 
-    return Promise.all(addingRequesterInfo)
+    Promise.all(addingRequesterInfo)
+    .then(markerArr => {
+      dispatch(receiveMarkers(markerArr))
+      return markerArr
+    })
+    .then(publicMarkers => dispatch(getNetworkMarkers(network, publicMarkers)))
+    .catch(err => console.error(err))
+  })
+
+  return () => ref.off('value', listener)
+}
+
+export const getUserNetworkMarkers = (currentUserId) => dispatch =>
+database.ref('Requests')
+.on('value', snapshot => {
+  let requestObjects = snapshot.val()
+  let markers = []
+  if (Object.keys(requestObjects)) {
+    Object.keys(requestObjects).forEach(key => {
+      if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
+        markers.push({
+          status: requestObjects[key].status,
+          position: {
+            lat: requestObjects[key].location.latitude,
+            lng: requestObjects[key].location.longitude
+          },
+          description: requestObjects[key].description,
+          tag: requestObjects[key].tag,
+          title: requestObjects[key].title,
+          uid: requestObjects[key].uid,
+          key: key
+        })
+      }
+    })
+  }
+  const addingRequesterInfo = markers.map(findRequester)
+  return Promise.all(addingRequesterInfo)
   .then(markerArr => {
-    dispatch(getMarkers(markerArr))
+    database.ref('Users').child(currentUserId)
+    .once('value')
+    .then(snapshot => {
+      let userNetwork = snapshot.child("network").val()
+      if(userNetwork){
+        let networkArray = Object.keys(userNetwork)
+        let networkIds = networkArray.map(networkId => {
+          return userNetwork[networkId].uid
+        })
+        let filteredMarkers = markerArr.filter(marker => {
+         if (networkIds.indexOf(marker.uid) > -1) return marker
+       })
+        return filteredMarkers
+      } else {
+        return null
+      }
+    })
+    .then(filteredMarkerArray => {
+      dispatch(getNetworkMarkers(filteredMarkerArray))
+    })
   })
 })
 
-  export const getUserNetworkMarkers = (currentUserId) => dispatch =>
-  database.ref('Requests')
-  .on('value', snapshot => {
-    let requestObjects = snapshot.val()
-    let markers = []
-    if (Object.keys(requestObjects)) {
-      Object.keys(requestObjects).forEach(key => {
-        if (requestObjects[key].location && (requestObjects[key].status !== 'closed')) {
-          markers.push({
-            status: requestObjects[key].status,
-            position: {
-              lat: requestObjects[key].location.latitude,
-              lng: requestObjects[key].location.longitude
-            },
-            description: requestObjects[key].description,
-            tag: requestObjects[key].tag,
-            title: requestObjects[key].title,
-            uid: requestObjects[key].uid,
-            key: key
-          })
-        }
-      })
-    }
-    const addingRequesterInfo = markers.map(findRequester)
-    return Promise.all(addingRequesterInfo)
-    .then(markerArr => {
-      database.ref('Users').child(currentUserId)
-      .once('value')
-      .then(snapshot => {
-        let userNetwork = snapshot.child("network").val()
-        if(userNetwork){
-          let networkArray = Object.keys(userNetwork)
-          let networkIds = networkArray.map(networkId => {
-            return userNetwork[networkId].uid
-          })
-          let filteredMarkers = markerArr.filter(marker => {
-           if (networkIds.indexOf(marker.uid) > -1) return marker
-         })
-          return filteredMarkers
-        } else {
-          return null
-        }
-      })
-      .then(filteredMarkerArray => {
-        dispatch(getNetworkMarkers(filteredMarkerArray))
-      })
-    })
-  })
-  
 export default reducer
