@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Map from './MapComponent'
 import { connect } from 'react-redux'
-import { receiveNetworkMarkers, receiveMarkers, setSelectedMarker } from '../reducers/map'
+import { setSelectedMarker } from '../reducers/map'
 import { browserHistory } from 'react-router'
 import Avatar from 'material-ui/Avatar'
 import FlatButton from 'material-ui/FlatButton'
@@ -29,8 +29,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
       this.state = {
         legendClick: true,
         filterMarkers: false,
-        publicMarkers: [],
-        networkMarkers: []
+        publicMarkers: this.props.publicMarkers,
+        networkMarkers: this.props.networkMarkers
       }
     }
 
@@ -59,7 +59,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(
     }
 
     handleMarkerClose = (targetMarker) => {
-      const markers = [...this.state.markers]
+      const markers = this.state.markers
+        ? [...this.state.markers] : [...this.state.publicMarkers]
       markers.map(marker => {
         marker.showDesc = false
         return marker
@@ -95,7 +96,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             src="img/expand.svg"
             alt="expand map legend"
           />
-
       return (
         <div>
           <FlatButton
