@@ -6,11 +6,9 @@ import { receiveMarkers } from '../reducers/map'
 import { uploadUserPhoto } from '../reducers/auth'
 import ContentCreate from 'material-ui/svg-icons/content/create'
 import ImageAddAPhoto from 'material-ui/svg-icons/image/add-a-photo'
-import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
-import TextFieldToggle from './TextFieldToggle'
-import RadioFieldToggle from './RadioFieldToggle'
+import TextField from './TextField'
+import RadioField from './RadioField'
 import { updateUser, sendNetworkRequest } from '../reducers/auth'
 
 
@@ -123,16 +121,14 @@ export class Profile extends Component {
                 </p>
             </div>
             <div id="editable-profile-info">
-              <RadioFieldToggle
+              <RadioField
                 styles={styles}
                 field="Privacy"
                 value={this.state.privacy || this.props.currentUser.privacy}
                 user={ user ? user : {} }
                 handleChangeRadio={this.handleChangeRadio}
               />
-              <br />
-              <br />
-              <TextFieldToggle
+              <TextField
                 styles={styles}
                 field="Name"
                 value={this.state.name || this.props.currentUser.name}
@@ -140,23 +136,23 @@ export class Profile extends Component {
                 handleChange={this.handleChange}
               />
               <br />
-              <TextFieldToggle
+              <TextField
                 styles={styles}
-                field="*Email"
+                field="Email"
                 value={this.state.email || this.props.currentUser.email}
                 user={ user ? user : {} }
                 handleChange={this.handleChange}
               />
               <br />
-              <TextFieldToggle
+              <TextField
                 styles={styles}
-                field="*Phone"
+                field="Phone"
                 value={this.state.phone || this.props.currentUser.phone}
                 user={ user ? user : {} }
                 handleChange={this.handleChange}
               />
               <br />
-              <TextFieldToggle
+              <TextField
                 styles={styles}
                 field="Bio"
                 value={this.state.bio || this.props.currentUser.bio}
@@ -196,7 +192,6 @@ export class Profile extends Component {
 Profile.propTypes = {
   currentUser: PropTypes.object.isRequired,
   markers: PropTypes.array.isRequired,
-  grabMarkers: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({ currentUser: state.currentUser, markers: state.map.markers })

@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
-const RadioFieldToggle = props => (
+const RadioField = props => (
   <div>
     <div className="flex-row privacy">
-      <p className="p-color-white p-no-marginLR privacy">Profile Privacy:</p>
+      <p className="p-color-white p-no-marginLR privacy">Profile Visible to:</p>
     </div>
     <div className="flex-row privacy">
       <RadioButtonGroup
@@ -22,17 +22,17 @@ const RadioFieldToggle = props => (
           iconStyle={props.styles.radioStyle}
           labelStyle={props.styles.radioStyle}
           value="private"
-          label="Network" />
+          label="My Network" />
       </RadioButtonGroup>
       <br />
     </div>
   </div>
 )
 
-RadioFieldToggle.propTypes = {
+RadioField.propTypes = {
   value: PropTypes.string.isRequired,
   styles: PropTypes.object.isRequired,
   handleChangeRadio: PropTypes.func.isRequired
 }
 
-export default RadioFieldToggle
+export default RadioField

@@ -315,23 +315,8 @@ a {
   color: white!important;
 }
 
-.editable-profile-field {
-  margin-left: 15px;
-}
-
 .editable-profile-field.privacy {
-  margin: 0px 10px -30px 10px!important;
-  width: 130px;
-  position: relative;
-  top: 8px;
-}
-
-.p-no-marginLR.privacy {
-  margin: 15px 0px 15px 8px !important;
-}
-
-.flex-row.privacy {
-  display: inline-flex;
+  min-width: 150px;
 }
 
 /* FORMS */
